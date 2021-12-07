@@ -1,0 +1,84 @@
+blueprint_spec: device/1.0
+
+display_name: Kilowatt Labs Centauri Energy Server
+description: >
+  Comprehensive and fully integrated power electronics hardware
+  and software platform that delivers utility grade power from
+  any combination of DC or AC sources, including 100% renewable
+  generation and storage.
+icon: enapter-power-supply-unit
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  ac_input_voltage:
+    type: float
+    unit: V
+    display_name: AC Input Voltage
+  ac_output_voltage:
+    type: float
+    unit: V
+    display_name: AC Output Voltage
+  ac_output_freq:
+    type: float
+    unit: Hz
+    display_name: AC Output Frequency
+  ambient_temperature:
+    type: float
+    unit: celsius
+    display_name: Ambient Temperature
+  battery_voltage:
+    type: float
+    unit: V
+    display_name: Battery Voltage
+  battery_percentage:
+    type: float
+    unit: percent
+    display_name: Battery Percentage
+  load_percentage:
+    type: float
+    unit: percent
+    display_name: Load Percentage
+  charge_current:
+    type: float
+    unit: A
+    display_name: Charge Current
+  pv_input_voltage:
+    type: float
+    unit: V
+    display_name: PV Input Voltage
+  pv_power:
+    type: float
+    unit: W
+    display_name: PV Power
+  rated_battery_voltage:
+    type: float
+    unit: V
+    display_name: Rated Battery Voltage
+  rated_voltage:
+    type: float
+    unit: V
+    display_name: Rated Voltage
+  charge_current_grade:
+    type: float
+    unit: A
+    display_name: Charge Current Grade
+
+.cloud:
+  category: renewable_energy_sources

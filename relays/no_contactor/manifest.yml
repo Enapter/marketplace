@@ -1,0 +1,51 @@
+blueprint_spec: device/1.0
+
+display_name: NC Contactor Management
+description: Manages single NC contactor using ENP-RL6.
+icon: enapter-load
+
+communication_module:
+  product: ENP-RL6
+  lua_file: firmware.lua
+
+properties:
+  contactor_type:
+    display_name: Connected Contactor Type
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - "on"
+      - "off"
+      - error
+
+command_groups:
+  power:
+    display_name: Power
+commands:
+  power_on:
+    display_name: Power On
+    description: Powers the loads on.
+    group: power
+    ui:
+      icon: power-on
+      quick_access: true
+  power_off:
+    display_name: Power Off
+    description: Powers the loads off.
+    group: power
+    ui:
+      icon: power-off
+      quick_access: true
+
+alerts:
+  cannot_read_relay:
+    severity: error
+    display_name: Cannot Read Relay Status
+    description: This may happen due to relay malfunctioning. Please contact Enapter support.
+
+.cloud:
+  category: switches

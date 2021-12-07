@@ -1,0 +1,131 @@
+blueprint_spec: device/1.0
+
+display_name: H2Sys ACS 1000
+icon: enapter-fuel-cell
+
+communication_module:
+  product: ENP-CAN
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  state:
+    type: string
+    display_name: State
+    enum:
+      - auto_check
+      - h2_inlet_pressure
+      - waiting
+      - start-up
+      - idle
+      - operation
+      - switch_off
+      - locked_out
+  warning:
+    type: string
+    display_name: Warning
+    enum:
+      - ok
+      - fcvm_board
+      - idle_state
+  voltage:
+    type: float
+    unit: V
+    display_name: Fuel Cell Voltage
+  current:
+    type: float
+    unit: A
+    display_name: Fuel Cell Current
+  temperature:
+    type: float
+    unit: celsius
+    display_name: Fuel Cell Temperature
+  internal_h2_pressure:
+    type: float
+    unit: bar
+    display_name: Internal H2 Pressure
+
+commands:
+  start:
+    display_name: Start
+    group: fuel_cell
+    ui:
+      icon: play-circle
+      quick_access: true
+  stop:
+    display_name: Stop
+    group: fuel_cell
+    ui:
+      icon: stop-circle
+      quick_access: true
+
+command_groups:
+  fuel_cell:
+    display_name: Fuel Cell Control
+alerts:
+  low_cell_voltage:
+    display_name: Low Cell Voltage
+    severity: error
+    code: E01
+  fuel_cell_high_temperature:
+    display_name: Fuel Cell High Temperature
+    severity: error
+    code: E02
+  fuel_cell_low_voltage:
+    display_name: Fuel Cell Low Temperature
+    severity: error
+    code: E03
+  low_h2_pressure:
+    display_name: Low H2 Pressure
+    severity: error
+    code: E04
+  auxilary_voltage:
+    display_name: Auxilary Voltage
+    severity: error
+    code: E05
+  start_phase_error:
+    display_name: Starting Phase Failed
+    severity: error
+    code: E06
+  fccc_board:
+    display_name: FCCC Board
+    severity: error
+    code: E07
+  can_fail:
+    display_name: CAN Fail
+    severity: error
+    code: E08
+  fuel_cell_current:
+    display_name: Fuel Cell Current
+    severity: error
+    code: E09
+  fan_error:
+    display_name: Fan Error
+    severity: error
+    code: E10
+  h2_leakage:
+    display_name: H2 Leakage
+    severity: error
+    code: E11
+  low_internal_pressure:
+    display_name: Low Internal Pressure
+    severity: error
+    code: E12
+  high_internal_pressure:
+    display_name: High Internal Pressure
+    severity: error
+    code: E13
+  fuel_cell_temperature_variation:
+    display_name: Fuel Cell Temperature Variation
+    severity: error
+    code: E14
+
+.cloud:
+  category: fuel_cells

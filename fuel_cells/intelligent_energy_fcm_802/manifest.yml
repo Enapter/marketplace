@@ -1,0 +1,272 @@
+blueprint_spec: device/1.0
+
+display_name: Intelligent Energy FCM 802
+description: Fuel Cell Module use hydrogen gas to provide electrical DC power
+icon: enapter-fuel-cell
+
+communication_module:
+  product: ENP-CAN
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: string
+    display_name: Serial Number
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      # - idle ?
+      - unpowered
+      - inactive
+      - steady
+      - run
+      - fault
+  volt:
+    type: float
+    unit: V
+    display_name: Voltage
+  amp:
+    type: float
+    unit: A
+    display_name: Amperage
+  watt:
+    type: float
+    unit: W
+    display_name: Power
+  anode_pressure:
+    type: float
+    unit: mbar
+    display_name: Anode Pressure
+  inlet_temp:
+    type: float
+    unit: celsuis
+    display_name: Inlet Temperature
+  outlet_temp:
+    type: float
+    unit: celsuis
+    display_name: Outlet Temperature
+  dcdc_volt_setpoint:
+    type: float
+    unit: V
+    display_name: DC/DC Voltage Set Point
+  dcdc_amp_limit:
+    type: float
+    unit: A
+    display_name: DC/DC Current Limit
+  louver_pos:
+    type: float
+    unit: percent
+    display_name: Louver Position Open
+  fan_sp_duty:
+    type: float
+    unit: percent
+    display_name: Fan SP duty
+  run_hours:
+    type: float
+    unit: h
+    display_name: Run Hours
+  total_run_energy:
+    type: float
+    unit: joule
+    display_name: Total Run Energy
+
+alerts:
+  AnodeOverPressure:
+    display_name: Anode Over Pressure
+    severity: error
+    code: E01
+  AnodeUnderPressure:
+    display_name: Anode Under Pressure
+    severity: error
+    code: E02
+  StackOverCurrent:
+    display_name: Stack Over Current
+    severity: error
+    code: E03
+  InletOverTemperature:
+    display_name: Inlet Over Temperature
+    severity: error
+    code: E04
+  OutletOverTemperature:
+    display_name: Outlet Over Temperature
+    severity: error
+    code: E05
+  MinCellUndervoltage:
+    display_name: Min Cell Under Voltage
+    severity: error
+    code: E06
+  StackUnderVoltage:
+    display_name: Stack Under Voltage
+    severity: error
+    code: E07
+  StackOverVoltage:
+    display_name: Stack Over Voltage
+    severity: error
+    code: E08
+  AmbientOverTemperature:
+    display_name: Ambient Over Temperature
+    severity: error
+    code: E09
+  BoardOverTemperature:
+    display_name: Board Over Temperature
+    severity: error
+    code: E10
+  BoardTxSensorFault:
+    display_name: Board Tx Sensor Fault
+    severity: error
+    code: E11
+  HboWatchdogFault:
+    display_name: Hbo Watchdog Fault
+    severity: error
+    code: E12
+  HboAnodeOverPressure:
+    display_name: Hbo Anode Over Pressure
+    severity: error
+    code: E13
+  HboAnodeUnderPressure:
+    display_name: Hbo Anode Under Pressure
+    severity: error
+    code: E14
+  HboBoardUnderTemperature:
+    display_name: Hbo Board Under Pressure
+    severity: error
+    code: E15
+  HboBoardOverTemperature:
+    display_name: Hbo Board Over Pressure
+    severity: error
+    code: E16
+  HboFan1UnderSpeed:
+    display_name: Hbo Fan 1 Under Speed
+    severity: error
+    code: E17
+  Fan1NoTacho:
+    display_name: Fan 1 No Tacho
+    severity: error
+    code: E18
+  Fan1ErrantSpeed:
+    display_name: Fan 1 Errant Speed
+    severity: error
+    code: E19
+  LowLeakTestPressure:
+    display_name: Low Leak Test Pressure
+    severity: error
+    code: E20
+  LouverOpenFault:
+    display_name: Louver Open Fault
+    severity: error
+    code: E21
+  LouverFailedToOpen:
+    display_name: Louver Failed to Open
+    severity: error
+    code: E22
+  DcdcCurrentWhenDisabled:
+    display_name: DC/DC Current When Disabled
+    severity: error
+    code: E23
+  DcdcOverCurrent:
+    display_name: DC/DC Over Current
+    severity: error
+    code: E24
+  StateDependentUnexpectedCurrent:
+    display_name: State Dependent Unexpected Current
+    severity: error
+    code: E25
+  StackVoltageMismatch:
+    display_name: Stack Voltage Mismatch
+    severity: error
+    code: E26
+  FuelOnNoVolts:
+    display_name: Fuel On Now Volts
+    severity: error
+    code: E27
+  LeakDetected:
+    display_name: Leak Detected
+    severity: error
+    code: E28
+  AirCheckFault:
+    display_name: Air Check Fault
+    severity: error
+    code: E29
+  AirCheckFaultShadow:
+    display_name: Air Check Fault Shadow
+    severity: error
+    code: E30
+  Dcdc1OutputFault:
+    display_name: DC/DC 1 Output Fault
+    severity: error
+    code: E31
+  InletTxSensorFault:
+    display_name: Inlet Tx Sensor Fault
+    severity: error
+    code: E32
+  OutletTxSensorFault:
+    display_name: Outlet Tx Sensor Fault
+    severity: error
+    code: E33
+  SibCommsFault:
+    display_name: Sib Comms Fault
+    severity: error
+    code: E34
+  CalcCoreTxSensorFault:
+    display_name: Calc Core Tx Sensor Fault
+    severity: error
+    code: E35
+  CalcCoreOverTemperature:
+    display_name: Calc Core Over Temperature
+    severity: error
+    code: E36
+  SystemTypeFault:
+    display_name: System Type Fault
+    severity: error
+    code: E37
+  ReadConfigFault:
+    display_name: Read Configuration Fault
+    severity: error
+    code: E38
+  CorruptConfigFault:
+    display_name: Corrupt Configuration Fault
+    severity: error
+    code: E39
+  ConfigValueRangeFault:
+    display_name: Configuration Value Range Fault
+    severity: error
+    code: E40
+  InvalidSerialNumber:
+    display_name: Invalid Serial Number
+    severity: error
+    code: E41
+  UnexpectedPurgeInhibit:
+    display_name: Unexpected Purge Inhibit
+    severity: error
+    code: E42
+  PurgeCheckShutdown:
+    display_name: Purge Check Shutdown
+    severity: error
+    code: E43
+  ValveDefeatCheckFault:
+    display_name: Valve Defeat Check Fault
+    severity: error
+    code: E44
+  SafetyObserverMismatch:
+    display_name: Safety Observer Mismatch
+    severity: error
+    code: E45
+
+.cloud:
+  category: fuel_cells
+  mobile_main_chart: watt
+  mobile_telemetry:
+    - watt
+    - volt
+  mobile_charts:
+    - watt
+    - volt

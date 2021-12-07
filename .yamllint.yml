@@ -1,0 +1,47 @@
+yaml-files:
+  - '*.yaml'
+  - '*.yml'
+  - .yamllint
+
+ignore: .github
+
+# Checks documentation:
+# https://yamllint.readthedocs.io/en/stable/rules.html
+rules:
+  braces:
+    min-spaces-inside: 1
+    max-spaces-inside: 1
+    min-spaces-inside-empty: 0
+    max-spaces-inside-empty: 0
+  brackets:
+    min-spaces-inside: 0
+    max-spaces-inside: 0
+    min-spaces-inside-empty: 0
+    max-spaces-inside-empty: 0
+  colons: enable
+  commas: enable
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: enable
+  document-end:
+    present: false
+  document-start:
+    present: false
+  empty-lines:
+    max: 2
+  empty-values: enable
+  hyphens: enable
+  indentation:
+    spaces: 2
+  key-duplicates: enable
+  key-ordering: disable
+  line-length:
+    max: 120
+  new-line-at-end-of-file: enable
+  new-lines: enable
+  octal-values: enable
+  quoted-strings:
+    quote-type: any
+    required: only-when-needed
+  trailing-spaces: enable
+  truthy: enable

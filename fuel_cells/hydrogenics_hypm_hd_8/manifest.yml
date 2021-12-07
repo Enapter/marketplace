@@ -1,0 +1,148 @@
+blueprint_spec: device/1.0
+
+display_name: Hydrogenics HyPM HD 8
+description: 8 kW Fuel Cell Power Module
+icon: enapter-fuel-cell
+
+communication_module:
+  product: ENP-CAN
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  state:
+    type: string
+    display_name: State
+    enum:
+      - standby
+      - startup
+      - run
+      - shutdown
+      - fault
+      - cooldown
+      - cooldown_complete
+      - freeze_prep
+      - freeze_prep_complete
+      - anoge_purge
+      - anode_purge_complete
+      - leak_check
+      - leak_check_complete
+      - prime
+      - prime_complete
+  cda:
+    display_name: Current Draw Allowed
+    type: float
+    unit: A
+  fc_stack_current:
+    display_name: Fuel Cell Stack Current
+    type: float
+    unit: A
+  fc_stack_voltage:
+    display_name: Fuel Cell Stack Voltage
+    type: float
+    unit: A
+  coolant_temp:
+    display_name: Coolant Temperature
+    type: float
+    unit: celsius
+  coolant_setpoint:
+    display_name: Coolant Setpoint
+    type: float
+    unit: celsius
+
+alerts:
+  stack_under_voltage_fault:
+    display_name: Stack Under Voltage Fault
+    severity: error
+  coolant_over_temp_fault:
+    display_name: Coolant Over Temperature Fault
+    severity: error
+  comm_heartbeat_fault:
+    display_name: Command Heartbeat Fault
+    severity: error
+  internal_system_stop_fault:
+    display_name: Internal System Stop Fault
+    severity: error
+  leak_check_failed_fault:
+    display_name: Leak Check Failed Fault
+    severity: error
+  freeze_mode:
+    display_name: Freeze Mode Fault
+    severity: error
+  coolant_low_flow:
+    display_name: Coolant Low Flow Fault
+    severity: error
+  idle_fault:
+    display_name: Idle Fault
+    severity: error
+  anode_purge_fault:
+    display_name: Anode Purge Fault
+    severity: error
+  stack_current_fault:
+    display_name: Stack Current Fault
+    severity: error
+  h2_supply_over_pressure:
+    display_name: H2 Supply Over Pressure Fault
+    severity: error
+  h2_supply_under_pressure:
+    display_name: H2 Supply Under Pressure Fault
+    severity: error
+
+  h2_sensor_out_of_range_alarm:
+    display_name: H2 Sensor Out of Range Alarm
+    severity: warning
+  air_flow_out_of_range_alarm:
+    display_name: Air Flow Out of Range Alarm
+    severity: warning
+  current_sensor_out_of_range:
+    display_name: Current Sensor Out of Range Alarm
+    severity: warning
+  coolant_temp_high_alarm:
+    display_name: Coolant Temperature High Alarm
+    severity: warning
+  system_over_power_alarm:
+    display_name: System Over Power Alarm Alarm
+    severity: warning
+  air_flow_in_nonrun_state_alarm:
+    display_name: Air Flow in Non-run State Alarm
+    severity: warning
+  blower_low_flow_alarm:
+    display_name: Blower Low Flow Alarm
+    severity: warning
+  anode_pump_speed_alarm:
+    display_name: Anode Pump Speed Alarm
+    severity: warning
+  coolant_temp_out_of_range_alarm:
+    display_name: Coolant Temperature Out Of Range Alarm
+    severity: warning
+  blower_low_voltage_alarm:
+    display_name: Blower Low Voltage Alarm
+    severity: warning
+  recovery_alarm:
+    display_name: Recovery Alarm
+    severity: warning
+  coolant_low_flow_alarm:
+    display_name: Coolant Low Flow Alarm
+    severity: warning
+  stack_low_current_alarm:
+    display_name: Stack Low Current Alarm
+    severity: warning
+  eFCVM_bad_finger_alarm:
+    display_name: eFCVM Bad Finger Alarm
+    severity: warning
+  EEPROM_Error_alarm:
+    display_name: EEPROM Error Alarm
+    severity: warning
+  EMP_pump_alarm:
+    display_name: EMP Pump Alarm
+    severity: warning
+
+.cloud:
+  category: fuel_cells

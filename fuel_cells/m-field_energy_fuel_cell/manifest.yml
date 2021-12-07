@@ -1,0 +1,56 @@
+blueprint_spec: device/1.0
+
+display_name: M-Field Fuel Cell
+icon: enapter-fuel-cell
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  serial_number:
+    type: string
+    display_name: Serial Number
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  output_volt:
+    type: float
+    unit: volt
+    display_name: Output Voltage
+  output_current:
+    type: float
+    unit: amp
+    display_name: Output Current
+  output_power:
+    type: float
+    unit: watt
+    display_name: Output Power
+  battery_volt:
+    type: float
+    unit: volt
+    display_name: Battery Voltage
+  battery_current:
+    type: float
+    unit: amp
+    display_name: Battery Current
+  hydrogen_inlet_pressure:
+    type: float
+    unit: bar
+    display_name: Hydrogen Inlet Pressure
+  system_temperature1:
+    type: float
+    unit: celsius
+    display_name: System Temperature 1
+  system_temperature2:
+    type: float
+    unit: celsius
+    display_name: System Temperature 2
+
+.cloud:
+  category: fuel_cells

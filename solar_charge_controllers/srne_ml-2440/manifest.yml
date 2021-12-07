@@ -1,0 +1,41 @@
+blueprint_spec: device/1.0
+
+display_name: SRNE ML-2440
+description: Solar Charge Controller
+icon: enapter-inverter-solar
+
+communication_module:
+  product: ENP-RS232
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  max_voltage:
+    display_name: Maximum Voltage Supported by System
+    type: float
+    unit: V
+  power_l1:
+    display_name: Maximum Current Supported by System
+    type: float
+    unit: A
+
+alerts:
+  communication_failed:
+    display_name: Communication Failed
+    severity: error
+
+.cloud:
+  category: renewable_energy_sources

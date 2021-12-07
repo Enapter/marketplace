@@ -1,0 +1,839 @@
+blueprint_spec: device/1.0
+
+display_name: SMA Sunny Island
+icon: enapter-inverter-battery
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  model:
+    display_name: Model
+    type: string
+  serial_num:
+    display_name: Serial Number
+    type: integer
+  address:
+    display_name: Modbus Address
+    type: string
+  unit_id:
+    display_name: Modbus Unit ID
+    type: integer
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - fault
+      - "off"
+      - warning
+      - ok
+  recom_action:
+    display_name: Recommended Action
+    type: string
+    enum:
+      - contact_manufacturer
+      - contact_installer
+      - ok
+  bat_op_status:
+    display_name: Battery Operation Status
+    type: string
+    enum:
+      - charge
+      - discharge
+
+  power:
+    display_name: Total Power
+    type: float
+    unit: watt
+  bat_soc:
+    display_name: Battery State of Charge
+    type: float
+    unit: percent
+  bat_volt:
+    display_name: Battery Voltage
+    type: float
+    unit: volt
+  bat_amp:
+    display_name: Battery Amperage
+    type: float
+    unit: amp
+  grid_freq:
+    display_name: Grid Frequency
+    type: float
+    unit: hertz
+  power_l1:
+    display_name: Power L1
+    type: float
+    unit: watt
+  power_l2:
+    display_name: Power L2
+    type: float
+    unit: watt
+  power_l3:
+    display_name: Power L3
+    type: integer
+    unit: watt
+
+command_groups:
+  config:
+    display_name: Configuration
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      address:
+        display_name: Modbus Address
+        description: Hostname and port, e.g. 192.168.14.45:512
+        type: string
+        required: true
+      unit_id:
+        display_name: Modbus Unit ID
+        description: Can be obtained from SMA web interface
+        type: integer
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+# yamllint disable rule:line-length
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read Modbus configuration from flash storage. Check logs.
+  not_configured:
+    severity: info
+    display_name: Modbus Not Configured
+    description: Use "Configure" command to set up Modbus connection.
+  volt_high:
+    severity: error
+    display_name: Voltage Too High
+    description: The voltage of the generator or of the utility grid of the Sunny Island Phase Lxx is too high.
+  volt_low:
+    severity: error
+    display_name: Voltage Too Low
+    description: The voltage of the generator or of the utility grid of the Sunny Island Phase Lxx is too low.
+  rise_in_volt_protection:
+    severity: error
+    display_name: Rise-in-voltage Protection
+    description: Ensure that the conductor cross-section of the AC cables is correctly sized.
+  external_grid_disconnect:
+    severity: error
+    display_name: External Grid Disconnection
+    description: Unintended stand-alone grid is present at connection AC2 of the Sunny Island at line conductor Lxx.
+  freq_too_low:
+    severity: error
+    display_name: Frequency Too Low
+    description: The frequency of the generator or the utility grid of the Sunny Island at line conductor Lxx is too low
+  freq_too_high:
+    severity: error
+    display_name: Frequency Too High
+    description: The frequency of the generator or the utility grid of the Sunny Island at line conductor Lxx is too high
+  grid_incident:
+    severity: error
+    display_name: Voltage and/or Frequency Out of Range
+    description: The voltage and/or frequency of the generator or the utility grid is/are outside of the configured range
+  grid_connect_install_error:
+    severity: error
+    display_name: Grid Connection Installation Error
+    description: Ensure that the master is connected to L1, slave 1 is connected to L2, and slave 2 is
+  volt_redundant_measure:
+    severity: error
+    display_name: Voltage is Outside Configured Thresholds
+    description: The voltage of the generator or the utility grid at the Sunny Island at line conductor Lxx is outside the configured thresholds
+  ratio_high:
+    severity: error
+    display_name: AC Voltage and Battery Voltage Ratio Too High
+    description: The Sunny Island at line disconnector Lxx disconnects from the external energy source because the ratio of AC voltage and battery voltage is too high. Either the voltage at connection AC2 is too high or the battery voltage is too low.
+  line_conduct_disconnect:
+    severity: error
+    display_name: The Sunny Island Disconnection
+    description: The Sunny Island at line conductor Lxx disconnects from the utility grid due to phase conductor failure/overload at terminal AC2.
+  short_circuit:
+    severity: error
+    display_name: Short Circuit
+    description: A short circuit is present at connection AC2 of the Sunny Island at line conductor Lxx.
+  volt_freq_ratio_fault:
+    severity: error
+    display_name: Non-Compliance with Voltage-Frequency Ratio
+    description: Disconnection from the utility grid due to non-compliance with the voltage-frequency ratio at line conductor Lxx.
+  gen_reverse_pow_fault:
+    severity: error
+    display_name: Generator Exceeded Reverse Power
+    description: AC sources in the system are driving the generator. The reverse power in the generator has been exceeded for too long.
+  prohibited_feedback:
+    severity: error
+    display_name: Prohibited Feedback
+    description: The Sunny Island disconnects from the utility grid due to prohibited feedback.
+  high_feed_in_current:
+    severity: error
+    display_name: High Feed-in Current
+    description: The feed-in current at line conductor Lxx is higher than the set maximum value (parameter 'Maximum current from utility grid').
+  high_external_current:
+    severity: error
+    display_name: High External Current
+    description: The external current on line conductor Lxx is greater than the permissible maximum current (see parameter 'Maximum current from utility grid' or 'Nominal generator current').
+  open_pre_fuse:
+    severity: error
+    display_name: Open Pre-Fuse
+    description: The pre-fuse F104.1, F104.2 or F104.3 in the Multicluster-Box is open.
+  phase_position_no_match:
+    severity: error
+    display_name: Phase Position Does not Match
+    description: Phase position of the measured AC voltage at ExtVtg and AC2 does not match at line conductor Lxx.
+  tie_switch_no_close:
+    severity: error
+    display_name: Tie switch Does Not Close
+    description: Ensure that the tie switch is correctly wired, its triggering is correct or feedback contact is correctly connected.
+  line_conduct_volt_imbalance:
+    severity: error
+    display_name: Voltage Imbalance Between Line Conductors
+    description: The Sunny Island system disconnects from the generator or utility grid due to voltage imbalance between the line conductors.
+  auto_gen_start:
+    severity: warning
+    display_name: Automatic generator start due to set criteria
+    description: Automatic generator start due to set criteria, e.g. battery state of charge
+  auto_gen_stop:
+    severity: warning
+    display_name: Automatic generator stop due to set criteria
+    description: Automatic generator stop due to set criteria, e.g. battery state of charge
+  manual_gen_start:
+    severity: warning
+    display_name: Manual Generator Start
+    description: Manual Generator Start.
+  manual_gen_stop:
+    severity: warning
+    display_name: Manual Generator Stop
+    description: Manual Generator Stop.
+  manual_gen_err:
+    severity: error
+    display_name: Manual Error Acknowledgment
+    description: Manual error acknowledgment of generator error.
+  gen_requested:
+    severity: error
+    display_name: Generator Requested
+    description: Generator requested.
+  gen_started:
+    severity: info
+    display_name: Generator Started
+    description: Generator started in current-controlled operation.
+  gen_stopped:
+    severity: info
+    display_name: Generator Stopped
+    description: Generator stopped in current-controlled operation.
+  low_battery_soc:
+    severity: warning
+    display_name: Low Battery State Of Charge
+    description: Grid request due to low battery state of charge.
+  grid_disconnect:
+    severity: info
+    display_name: Sufficient Battery State of Charge
+    description: Release of grid disconnection due to sufficient battery state of charge.
+  power_limit_exceed:
+    severity: warning
+    display_name: Power Limit Exceeded
+    description: Grid request due to power limit being exceeded.
+  power_limit_not_reached:
+    severity: info
+    display_name: Power Limit Not Reached
+    description: Grid disconnection release as power limit not reached.
+  manual_grid_request:
+    severity: info
+    display_name: Manual Grid Request
+    description: Manual Grid Request.
+  manual_grid_disconnect:
+    severity: info
+    display_name: Manual Grid Disconnection Release
+    description: Manual Grid Disconnection Release.
+  blocking_of_gen:
+    severity: warning
+    display_name: Locking of generator
+    description: Blocking of generator due to too many interrupted start-ups.
+  no_sync_with_gen:
+    severity: warning
+    display_name: Synchronization Not Executed
+    description: Synchronization with the generator not successful.
+  auto_freq_control_intervene:
+    severity: warning
+    display_name: Automatic Frequency Control Intervenes
+    description: Automatic frequency control intervenes.
+  auto_freq_control_end:
+    severity: warning
+    display_name: Automatic Frequency Control Ends
+    description: Automatic frequency control ends.
+  gen_operation_not_possible:
+    severity: error
+    display_name: Generator Operation Not Possible
+    description: Generator Operation Not Possible.
+  invalid_grid_volt:
+    severity: error
+    display_name: Invalid Grid Voltage
+    description: No valid grid voltage for requested grid operation.
+  multicluster_box_fault:
+    severity: error
+    display_name: Multicluster-Box Malfunction
+    description: A contactor in the Multicluster-Box is not functioning correctly.
+  overvoltage:
+    severity: error
+    display_name: Overvoltage at Connection AC1
+    description: An overvoltage has occurred at connection AC1 of the Sunny Island at line conductor Lxx.
+  overfreq:
+    severity: error
+    display_name: Overfrequency at Connection AC1
+    description: An overfrequency has occurred at connection AC1 of the Sunny Island at line conductor Lxx.
+  underfreq:
+    severity: error
+    display_name: Underfrequency at Connection AC1
+    description: An underfrequency has occurred at connection AC1 of the Sunny Island at line conductor Lxx.
+  volt_ac1_low:
+    severity: error
+    display_name: Too Low Voltage at Terminal AC1
+    description: Voltage at terminal AC1 of the Sunny Island at line conductor Lxx is too low due to AC sources in the system.
+  volt_ac1_undesired:
+    severity: error
+    display_name: Undesired Voltage at Terminal AC1
+    description: The Sunny Island at line conductor Lxx has measured an undesired voltage at terminal AC1.
+  open_tie_switch:
+    severity: warning
+    display_name: Open Tie Switch
+    description: With open tie switch, AC voltage is applied at line conductor Lxx.
+  missing_line_conductor:
+    severity: error
+    display_name: Missing Line Conductor
+    description: The line conductor of a Sunny Island is missing.
+  inverter_bridge_overcurrent:
+    severity: error
+    display_name: Overcurrent in Invertor Bridge
+    description: Too much current is flowing through the DC connection of a Sunny Island at line conductor Lxx.
+  ocu_watchdog_triggered:
+    severity: error
+    display_name: OCU watchdog triggered
+    description: OCU watchdog was triggered (an error has occurred in the program sequence). Contact the Service.
+  measurement_intereference:
+    severity: error
+    display_name: Measurement Intereference
+    description: Voltage or current measurement interferences at external measurement point of the AC subdistribution (Multicluster-Box) at line conductor Lxx.
+  device_fault:
+    severity: error
+    display_name: Device Fault
+    description: Contact the Service.
+  incorrect_processor_volt:
+    severity: error
+    display_name: Incorrect Processor Voltage
+    description: Processor voltage in the device at Lxx is incorrect. Contact the Service.
+  defective_volt_supply:
+    severity: error
+    display_name: Defective Voltage Supply in the Multicluster Box
+    description: 15 V voltage supply or 24 V voltage supply in the Multicluster Box is defective. Contact the Service.
+  overtemperature:
+    severity: error
+    display_name: Overtemperature
+    description: Temperature of the transformer or the heat sink in the Sunny Island at line conductor Lxx is too high (due to overload or ambient temperature).
+  overload_volt_low:
+    severity: error
+    display_name: 'Overload: Low Battery Voltage'
+    description: Battery voltage is too low.
+  overload_volt_high:
+    severity: error
+    display_name: 'Overload: High Battery Voltage'
+    description: Battery voltage is too high.
+  excessive_current:
+    severity: error
+    display_name: Excessive Current
+    description: Excessive current has been applied to the internal transfer relay of the Sunny Island at line conductor Lxx.
+  high_power:
+    severity: error
+    display_name: The Power of the Loads is Too High
+    description: The power of the loads is too high for the Sunny Island at line conductor Lxx.
+  overload_5min_capacity:
+    severity: error
+    display_name: Overload of 5-minute Rated Capacity
+    description: The device at Lxx has been loaded over its 5-minute rated capacity.
+  overload_30min_capacity:
+    severity: error
+    display_name: Overload of 30-minute Rated Capacity
+    description: The device at Lxx has been loaded over its 30-minute rated capacity.
+  overload_shortterm_capacity:
+    severity: error
+    display_name: Overload of Short-Term Rated Capacity
+    description: The device at Lxx has been loaded over its rated short-term capacity.
+  fan_sensor_error:
+    severity: error
+    display_name: Permanent Fan Sensor Error
+    description: There is a short circuit or cable break at a temperature sensor of the device at line conductor Lxx.
+  short_circuit_battery_temp_sensor:
+    severity: error
+    display_name: Short Circuit Battery Temperature Sensor
+    description: Short circuit on battery temperature sensor.
+  cable_break_battery_temp_sensor:
+    severity: error
+    display_name: Cable Break Battery Temperature Sensor
+    description: Cable break, battery temperature sensor.
+  defective_sd_memory_card:
+    severity: error
+    display_name: Defective SD Memory Card
+    description: Micro SD card in the inverter is faulty.
+  param_file_not_found_defective:
+    severity: error
+    display_name: Parameter File Not Found or Defective
+    description: The update failed. Copy the parameter file to the correct folder again.
+  set_param:
+    severity: warning
+    display_name: Set Parameter
+    description: The parameter change has been adopted.
+  set_param_succeeded:
+    severity: info
+    display_name: Parameters Setting Successfully
+    description: The parameter changes were successfully adopted.
+  set_param_failed:
+    severity: error
+    display_name: Parameters Setting Failed
+    description: Parameters could not be set using the memory card.
+  update_failed:
+    severity: error
+    display_name: Update Failed
+    description: Update the firmware again.
+  update_ok:
+    severity: info
+    display_name: Update Succeeded
+    description: The update file is suitable for this inverter and its components and is fully available for the next update step.
+  read_sd_card:
+    severity: info
+    display_name: Reading SD Memory Card
+    description: The inverter is currently reading the SD memory card.
+  no_update_sd_card:
+    severity: warning
+    display_name: No New Update SD Memory Card
+    description: The micro SD memory card contains an update file that has already been used.
+  no_update_file_found:
+    severity: warning
+    display_name: No Update File Found
+    description: No update file found.
+  update_file_copy_success:
+    severity: info
+    display_name: Update File Successfuly Copied
+    description: Update file was copied successfully to the inverter's internal memory.
+  sd_card_protected:
+    severity: info
+    display_name: Memory Card Protected
+    description: The memory card is full or write-protected.
+  update_communication:
+    severity: info
+    display_name: Update Communcation
+    description: The inverter is updating the communication component.
+  update_main_cpu:
+    severity: info
+    display_name: Update Main CPU
+    description: The inverter is updating the inverter component.
+  update_main_cpu_failed:
+    severity: warning
+    display_name: Update Main CPU Failed
+    description: Update main CPU failed. Contact the Service.
+  update_completed:
+    severity: info
+    display_name: Update Completed
+    description: The inverter has successfully completed the update.
+  firmware_update_success:
+    severity: info
+    display_name: Condition Test Successful
+    description: The testing of the update conditions was not successful. The firmware update package is not suitable for this inverter.
+  condition_test_failed:
+    severity: warning
+    display_name: Condition Test Failed
+    description: The conditions of the update file used for the inverter settings are not fulfilled.
+  update_transport_started:
+    severity: info
+    display_name: Update Transport Started
+    description: Update file is being copied.
+  update_transport_success:
+    severity: info
+    display_name: Update Transport Succeeded
+    description: Update file was copied successfully to the inverter's internal memory.
+  update_transport_fail:
+    severity: warning
+    display_name: Update Transport Failed
+    description: Update file could not be copied to the inverter's internal memory. In the event of connection with the inverter via WLAN, poor connection quality can be the cause.
+  update_bootloader:
+    severity: info
+    display_name: Update Bootloader
+    description: The inverter is performing a bootloader update.
+  update_bootloader_failed:
+    severity: warning
+    display_name: Update Bootloader Failed
+    description: Retry update or contact the Service.
+  communication_error_ipc:
+    severity: error
+    display_name: Communication Error IPC
+    description: There is an error in the inverter.
+  internal_can_comm_missing:
+    severity: error
+    display_name: Internal CAN Communication Missing
+    description: Ensure that the terminators in the communication bus are attached, undamaged CAT5e cables are used for communication and they are plugged correctly.
+  cluster_internal_comm_interrupt:
+    severity: error
+    display_name: Cluster-Internal Communication Interrupted
+    description: Cluster-internal communication to the device at line conductor Lxx is interrupted.
+  energy_meter_comm_fault:
+    severity: error
+    display_name: Faulty Communication with Energy Meter
+    description: Ensure that the optical probe is correctly installed and connected.
+  energy_meter_protocol_fault:
+    severity: error
+    display_name: Energy Meter Protocol Not Supported
+    description: Contact the Service.
+  energy_meter_can_fault:
+    severity: error
+    display_name: Energy Meter Faulty CAN Communication
+    description: Ensure that the data cables are correctly installed.
+  mc_box_comm_interrupted:
+    severity: error
+    display_name: Multicluster Box Communication Interrupted
+    description: Communication with Multicluster Box is interrupted.
+  cluster_can_fault:
+    severity: error
+    display_name: Faulty CAN Communication Within Cluster
+    description: Device-internal communication pulse is missing on at least one device (line conductor L2 or L3).
+  meter_unit_comm_fault:
+    severity: error
+    display_name: Faulty Communication with Meter Unit
+    description: The inverter is not receiving any data from the energy meter.
+  grid_power_meter_comm_fault:
+    severity: error
+    display_name: Faulty Communication with Grid Power Meter
+    description: The inverter is not receiving any data from the energy meter.
+  tie_switch_does_not_open:
+    severity: error
+    display_name: Section Switch Does Not Open
+    description: Tie switch does not open.
+  neutral_conduct_relay_fault:
+    severity: error
+    display_name: Neutral Conductor Relay Does Not Open
+    description: Neutral conductor relay of the device at Lxx does not open.
+  transfer_relay_fault:
+    severity: error
+    display_name: Transfer Relay Does Not Open
+    description: Transfer relay does not open at line conductor Lxx. A bypass switch may have bridged the internal transfer relay
+  mc_box_plausibility_check_fail:
+    severity: error
+    display_name: MC-BOX Plausibility Check failed
+    description: Plausibility check on the contactors in the Multicluster-Box has failed.
+  reduced_battery_charge_overheat:
+    severity: warning
+    display_name: Reduced Battery Charging Current Due to Overheating
+    description: The inverter at Lxx reduces the battery charging current due to overheating.
+  comm_impaired:
+    severity: error
+    display_name: Communication Impaired
+    description: The cause must be determined by the Service.
+  slave_fault_status:
+    severity: error
+    display_name: Slave is in Error State
+    description: A slave has a fault status, cluster is stopped.
+  cluster_config_error:
+    severity: error
+    display_name: Cluster Configuration Error
+    description: The addresses of the slaves in the cluster are incorrect. Please change the addresses of the slaves in the cluster.
+  master_comm_interrupt:
+    severity: error
+    display_name: No Message from Cluster Master
+    description: Communication with the master is interrupted.
+  cannot_measure_cluster_volt:
+    severity: error
+    display_name: Main Cluster Voltage Fault
+    description: Voltage of the main cluster cannot be measured at Lxx.
+  box_encoding_fault:
+    severity: error
+    display_name: Box Encoding Fault
+    description: 'Box coding conflicts with software settings: Configuration of the Sunny Island inverters does not match the Multicluster-Box.'
+  short_circuit_on_load_side:
+    severity: error
+    display_name: Short Circuit on Load Side
+    description: Due to a short circuit on the load side, the supply voltage of the Sunny Island at line conductor Lxx drops and can no longer be maintained. This causes the voltage supply of contactor Q10/Q110 of the Multicluster-Box to fail.
+  cluster_incorrect_country_standard:
+    severity: warning
+    display_name: Extension Cluster Incorrect Country Standard
+    description: At least in one extension cluster the Sunny Islands are set to an another country's standard rather than to the Sunny Islands in the main cluster.
+  cluster_another_firmware_version:
+    severity: warning
+    display_name: Extension Cluster Another Firmware Version
+    description: At least one extension cluster has different firmware version than the main cluster. Please update the firmware.
+  setpoint_activated:
+    severity: info
+    display_name: Setpoint spec. activated
+    description: 'System control: Setpoint spec. activated.'
+  setpoint_deactivated:
+    severity: info
+    display_name: Setpoint spec. deactivated
+    description: 'System control: Setpoint spec. deactivated.'
+  saving_mode:
+    severity: info
+    display_name: Saving Mode
+    description: Inverter switches to energy saving mode because battery range reached.
+  sma_grid_guard_code_invalid:
+    severity: warning
+    display_name: SMA Grid Guard Code Invalid
+    description: Enter the correct SMA Grid Guard code.
+  grid_parameter_locked:
+    severity: info
+    display_name: Grid Parameter Locked
+    description: Changes to the grid-relevant parameters are now blocked. In order to be able to make changes to the grid parameters, from now on you must log in using the SMA Grid Guard code.
+  grid_parameters_unchanged:
+    severity: info
+    display_name: Grid Parameters Unchanged
+    description: Grid Parameters Unchanged.
+  reset_battery_management:
+    severity: info
+    display_name: Reset Battery Management Due to New Battery
+    description: Reset Battery Management Due to New Battery.
+  bms_timeout:
+    severity: error
+    display_name: Timeout of BMS Monitoring System
+    description: The timeout monitoring system of the battery management was triggered.
+  temp_low_limit_undercut:
+    severity: warning
+    display_name: Lower limit of Battery Temperature Undercut
+    description: Ensure that the ambient conditions of the battery manufacturer are complied with.
+  temp_upper_limit_exceed:
+    severity: warning
+    display_name: Upper limit of Battery Temperature Exceeded
+    description: Ensure that the ambient conditions of the battery manufacturer are complied with.
+  emergency_charge:
+    severity: warning
+    display_name: Emergency Charge
+    description: Emergency Charge.
+  battery_float_charge:
+    severity: info
+    display_name: Battery Float Charge
+    description: Status change to battery float charge.
+  battery_boost_charge:
+    severity: info
+    display_name: Battery Boost Charge
+    description: Status change to battery boost charge.
+  battery_full_charge:
+    severity: info
+    display_name: Battery Full Charge
+    description: Status change to battery full charge.
+  calibration_20_per_done:
+    severity: info
+    display_name: Recalibration of State of Charge to 20%
+    description: Sunny Island detected an unexpectedly sharp battery voltage drop during electric discharge, resulting in a lower battery voltage for the given discharging current than expected at a certain state of charge, thus a recalibration of the state of charge to 20% has been performed.
+  low_soh:
+    severity: error
+    display_name: Current Battery Capacity (SOH) is Below 70%
+    description: Please verify the plausibility of the error message or replace the battery if necessary.
+  recalibration_jump:
+    severity: warning
+    display_name: A 20% Recalibration Performed With A Jump More than 10%
+    description: A 20% recalibration of the battery state of charge has been performed with a jump of more than 10%. Please check the battery.
+  battery_protection_mode_on:
+    severity: warning
+    display_name: Battery Protection Mode 1, 2, or 3 is Activated
+    description: Disconnect the loads, start the generator, start the Sunny Island and charge the battery.
+  battery_voltage_above_range:
+    severity: warning
+    display_name: Battery Voltage Is Above Measurement Range
+    description: Battery voltage in the Sunny Island at Lxx is above the permissible measurement range.
+  bms_not_configured:
+    severity: warning
+    display_name: Battery Management Not Configured
+    description: Start the installation assistant and configure a new system with external energy management (e.g., system with lithium-ion battery).
+  battery_voltage_below_range:
+    severity: warning
+    display_name: Battery Voltage Is Below Measurement Range
+    description: Battery voltage in the Sunny Island at Lxx is below the permissible measurement range.
+  battery_equalization_charge:
+    severity: info
+    display_name: Battery Equalization Charge
+    description: Status change to battery equalization charge.
+  deep_discharge_area:
+    severity: error
+    display_name: Deep Discharge Area or Deep Discharge Protection Area
+    description: The area for protection against deep discharge (Deep discharge protection area) or the area for protection during deep discharge (Deep discharge area) has been reached.
+  saving_mode_slaves_single_phase:
+    severity: info
+    display_name: Energy Saving Mode of Slaves in Single-Phase Parallel Operation
+    description: Energy Saving Mode of Slaves in Single-Phase Parallel Operation.
+  saving_mode_at_grid:
+    severity: info
+    display_name: Energy Saving Mode at Grid
+    description: Energy Saving Mode at Grid.
+  saving_mode_start:
+    severity: info
+    display_name: Energy Saving Mode Start
+    description: Energy Saving Mode Start.
+  saving_mode_stop:
+    severity: info
+    display_name: Energy Saving Mode Stop
+    description: Energy Saving Mode Stop.
+  di_status_changed:
+    severity: info
+    display_name: Digital Input at XX has Changed Its Status to XX
+    description: Digital Input at XX has Changed Its Status to XX
+  parallel_grid_operation:
+    severity: info
+    display_name: Parallel Grid Operation
+    description: Parallel Grid Operation.
+  operation_status:
+    severity: info
+    display_name: Operation Status
+    description: Operation Status
+  cold_start_status:
+    severity: info
+    display_name: Cold Start Status
+    description: Cold Start Status
+  startup_status:
+    severity: info
+    display_name: Startup Status
+    description: Startup Status
+  stop_status:
+    severity: info
+    display_name: Stop Status
+    description: Stop Status
+  restart_diagnosis_system:
+    severity: info
+    display_name: Restart Diagnosis System in Device
+    description: Restart Diagnosis System in Device.
+  gen_operation:
+    severity: info
+    display_name: Operation at Generator (At External Point)
+    description: Operation at Generator (At External Point).
+  feeding_network_op:
+    severity: info
+    display_name: Feeading Network Op (At External Point)
+    description: Feeading Network Op (At External Point).
+  param_set_success:
+    severity: info
+    display_name: Parameter Set Successfully
+    description: Parameter Set Successfully.
+  param_set_fail:
+    severity: warning
+    display_name: Parameter Setting Failed
+    description: Ensure thresholds of the parameters are complied with and change the parameter again.
+  old_time:
+    severity: info
+    display_name: Time Adjusted / Old Time
+    description: Time Adjusted / Old Time
+  new_time:
+    severity: info
+    display_name: Time Adjusted / New Time
+    description: Time Adjusted / New Time
+  time_sync_failed:
+    severity: warning
+    display_name: Time Synchronization Failed
+    description: Time Synchronization Failed.
+  ntp_server_no_info:
+    severity: warning
+    display_name: No Time Information from NTP Server
+    description: Ensure that the NTP server was configured correctly and the inverter is integrated into a local network with Internet connection.
+  invalid_time:
+    severity: warning
+    display_name: Invaid System Time
+    description: Set the Date and Device Time via the installation assistant.
+  param_upload_success:
+    severity: info
+    display_name: Parameter Upload Successfully Performed
+    description: The configuration file was loaded successfully.
+  param_xx_set_fail1:
+    severity: warning
+    display_name: Parameter Setting Failed
+    description: Setting of parameter XX failed. Device must be stopped first.
+  param_xx_set_fail2:
+    severity: warning
+    display_name: Parameter Setting Failed
+    description: Setting of parameter Lxx failed. Installation assistant must be started.
+  network_busy:
+    severity: warning
+    display_name: Network Busy / Network Overloaded
+    description: Reduce the number of devices in the network. If necessary, increase the data query intervals.
+  package_error_rate_changed:
+    severity: warning
+    display_name: Package Error Rate Changed
+    description: If the package error rate is high, the network is overloaded or the connection to the network switch or DHCP server (router) is disturbed.
+  wifi_module_fault:
+    severity: error
+    display_name: Wi-Fi Module Fault
+    description: The Wi-Fi module integrated in the inverter is defective. Please contact the Service
+  shutdown_due_to_fault:
+    severity: error
+    display_name: Shutdown Due to Fault
+    description: Shutdown Due to Fault.
+  automatic_start:
+    severity: info
+    display_name: Automatic Start
+    description: Automatic Start.
+  manual_start:
+    severity: info
+    display_name: Manual Start
+    description: Manual start (change-over from standby to op).
+  manual_stop:
+    severity: info
+    display_name: Manual Stop
+    description: Manual stop (change-over from op to standby).
+  system_control_start:
+    severity: info
+    display_name: Start via System Control
+    description: Ext. start via system control (chg-over from op to standby).
+  system_control_stop:
+    severity: info
+    display_name: Stop via System Control
+    description: Ext. stop via system control (chg-over from op to standby).
+  self_consumpt_control_start:
+    severity: info
+    display_name: Self-Consumption Control Started
+    description: The battery is automatically charged or discharged depending on the purchased electricity or the grid feed-in.
+  self_consumpt_control_stop:
+    severity: info
+    display_name: Self-Consumption Control Stopped
+    description: The automatic charging or discharging of the battery stopped due to an external control command.
+  self_consumpt_only_charge:
+    severity: info
+    display_name: Only Charging Operation Self-Consumption Mode
+    description: The battery is charged only when increased self-consumption is active. The battery is only charged again once there is sufficient PV power in the system.
+  charge_active_self_consumpt:
+    severity: info
+    display_name: Full or Equalization Charge with Active Increased Self-Consumption
+    description: Full or Equalization Charge with Active Increased Self-Consumption.
+  back_to_self_consumption:
+    severity: info
+    display_name: Increased Self-Consumption After Full/Equalization Charge
+    description: Switch back to increased self-consumption after completion of full or equalization charge.
+  switch_off:
+    severity: info
+    display_name: Device Switches Off
+    description: Device Switches Off.
+  dynamic_act_pow_limit_start:
+    severity: info
+    display_name: Dynamic Active Power Limitation Started
+    description: The inverter limits active power of the PV inverters to the set limit.
+  dynamic_act_pow_limit_terminate:
+    severity: info
+    display_name: Dynamic Active Power Limitation Terminated
+    description: The inverter terminated active power limitation of the PV inverters.
+  current_sensor_defective:
+    severity: error
+    display_name: Defective Current Sensor
+    description: The current sensor is not connected, not available or defective. Contact the Service.
+# yamllint enable rule:line-length
+
+.cloud:
+  category: batteries
+  mobile_main_chart: bat_soc
+  mobile_telemetry:
+    - bat_soc
+    - bat_volt
+    - power
+    - bat_amp
+  mobile_charts:
+    - power
+    - bat_soc
+    - bat_volt
+    - bat_amp

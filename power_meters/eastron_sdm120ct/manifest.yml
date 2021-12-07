@@ -1,0 +1,44 @@
+blueprint_spec: device/1.0
+
+display_name: Eastron SDM120CT
+description: DIN rail mounted meter
+icon: enapter-power-meter
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  volt_l1n:
+    type: float
+    unit: V
+    display_name: Phase 1 Voltage
+  power_l1:
+    type: float
+    unit: W
+    display_name: Phase 1 Power
+  acc_power_l1:
+    type: float
+    unit: Wh
+    display_name: Phase 1 Accumulated Energy
+  freq:
+    type: float
+    unit: Hz
+    display_name: Frequency
+
+.cloud:
+  category: power_meters

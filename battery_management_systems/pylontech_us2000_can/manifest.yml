@@ -1,0 +1,144 @@
+blueprint_spec: device/1.0
+
+display_name: Pylontech Battery US200
+icon: enapter-battery-storage
+
+communication_module:
+  product: ENP-CAN
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - warning
+  has_protection1:
+    type: boolean
+    display_name: Has Protection 1
+  has_protection2:
+    type: boolean
+    display_name: Has Protection 2
+  has_alarm1:
+    type: boolean
+    display_name: Has Alarm 1
+  has_alarm2:
+    type: boolean
+    display_name: Has Alarm 2
+  request_force_charge:
+    display_name: Request Force Charge
+    type: boolean
+  request_force_charge_1:
+    display_name: Request Force Charge I
+    type: boolean
+  request_force_charge_2:
+    display_name: Request Force Charge II
+    type: boolean
+  charge_enable:
+    display_name: Charge Enable
+    type: boolean
+  discharge_enable:
+    display_name: Discharge Enable
+    type: boolean
+
+  battery_charge_voltage:
+    display_name: Battery Charge Voltage
+    type: float
+    unit: V
+  charge_current_limit:
+    display_name: Charge Current Limit
+    type: float
+    unit: A
+  discharge_current_limit:
+    display_name: Discharge Current Limit
+    type: float
+    unit: A
+  discharge_voltage:
+    display_name: Discharge Voltage
+    type: float
+    unit: V
+  soh:
+    display_name: State of Health
+    type: float
+    unit: percent
+  soc:
+    display_name: State of Charge
+    type: float
+    unit: percent
+  voltage:
+    display_name: Voltage
+    type: float
+    unit: V
+  total_current:
+    display_name: Total Current
+    type: float
+    unit: A
+  average_cell_temperature:
+    display_name: Cell Average Temperature
+    type: float
+    unit: celsius
+
+alerts:
+  cell_or_module_over_voltage:
+    display_name: Protection 1 - Cell or Module Over Voltage
+    severity: warning
+  cell_or_module_under_voltage:
+    display_name: Protection 1 - Cell or Module Under Voltage
+    severity: warning
+  cell_over_temperature:
+    display_name: Protection 1 - Cell Over Temperature
+    severity: warning
+  cell_under_temperature:
+    display_name: Protection 1 - Cell Under Temperature
+    severity: warning
+  discharge_over_current:
+    display_name: Protection 1 - Discharge Over Current
+    severity: warning
+  charge_over_current:
+    display_name: Protection 2 - Charge Over Current
+    severity: warning
+  system_error:
+    display_name: Protection 2 - System Error
+    severity: warning
+  cell_or_module_high_voltage:
+    display_name: Alarm 1 - Cell or Module High Voltage
+    severity: warning
+  cell_or_module_low_voltage:
+    display_name: Alarm 1 - Cell or Module Low Voltage
+    severity: warning
+  cell_high_temperature:
+    display_name: Alarm 1 - Cell High Temperature
+    severity: warning
+  cell_low_temperature:
+    display_name: Alarm 1 - Cell Low Temperature
+    severity: warning
+  discharge_high_current:
+    display_name: Alarm 1 - Discharge High Current
+    severity: warning
+  charge_high_current:
+    display_name: Alarm 2 - Charge High Current
+    severity: warning
+  internal_communication_fail:
+    display_name: Alarm 2 - Internal Communication Fail
+    severity: warning
+
+.cloud:
+  category: batteries
+  mobile_main_chart: soc
+  mobile_telemetry:
+    - soh
+    - soc
+    - voltage
+  mobile_charts:
+    - soc
+    - voltage
+    - total_current

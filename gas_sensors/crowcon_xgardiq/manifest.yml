@@ -1,0 +1,56 @@
+blueprint_spec: device/1.0
+
+display_name: Crowcon XgardIQ
+description: Intelligent gas detector and transmitter
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      - ok
+      - reminder
+      - warning
+      - fault
+      - read_error
+  sensor_ready:
+    type: string
+    display_name: Sensor Ready
+    enum:
+      - undetected
+      - invalid
+      - initializing
+      - ready
+  alarm1:
+    type: boolean
+    display_name: Alarm 1 State
+  alarm2:
+    type: boolean
+    display_name: Alarm 2 State
+  h2_concentration:
+    type: float
+    unit: '%LEL'
+    display_name: H2 Concentration
+  last_calibration:
+    type: integer
+    unit: h
+    display_name: Last Calibration
+  calibration_due:
+    type: integer
+    unit: h
+    display_name: Calibration Due
+
+.cloud:
+  category: sensors

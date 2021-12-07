@@ -1,0 +1,96 @@
+blueprint_spec: device/1.0
+
+display_name: Mercury 230 Power Meter
+description: DIN rail mounted meter
+icon: enapter-power-meter
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+alerts:
+  communication_failed:
+    display_name: RS485 communication failed
+    severity: warning
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  total_power:
+    type: float
+    unit: watt
+    display_name: Total Power
+  total_energy_since_reset:
+    type: float
+    unit: watth
+    display_name: Total Energy
+  l1n_volt:
+    type: float
+    unit: V
+    display_name: Phase 1 Voltage
+  current_l1:
+    type: float
+    unit: A
+    display_name: Phase 1 Current
+  total_energy_l1:
+    type: float
+    unit: watth
+    display_name: Phase 1 Accumulated Energy
+  power_l1:
+    type: float
+    unit: watt
+    display_name: Phase 1 Power
+  l2n_volt:
+    type: float
+    unit: V
+    display_name: Phase 2 Voltage
+  current_l2:
+    type: float
+    unit: A
+    display_name: Phase 2 Current
+  total_energy_l2:
+    type: float
+    unit: watth
+    display_name: Phase 2 Accumulated Energy
+  power_l2:
+    type: float
+    unit: watt
+    display_name: Phase 2 Power
+  l3n_volt:
+    type: float
+    unit: V
+    display_name: Phase 3 Voltage
+  current_l3:
+    type: float
+    unit: A
+    display_name: Phase 3 Current
+  total_energy_l3:
+    type: float
+    unit: watth
+    display_name: Phase 3 Accumulated Energy
+  power_l3:
+    type: float
+    unit: watt
+    display_name: Phase 3 Power
+  frequency:
+    type: float
+    unit: Hz
+    display_name: Frequency
+
+.cloud:
+  category: power_meters
+  mobile_telemetry:
+    - total_power
+    - total_energy_since_reset

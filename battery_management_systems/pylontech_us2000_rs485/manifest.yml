@@ -1,0 +1,82 @@
+blueprint_spec: device/1.0
+
+display_name: Pylontech Battery US2000
+icon: enapter-battery-storage
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  serial_number:
+    type: string
+    display_name: Serial Number
+
+telemetry:
+  b0_total_current:
+    type: float
+    unit: amp
+    display_name: Total Current - Battery 0
+  b0_total_voltage:
+    type: float
+    unit: volt
+    display_name: Total Voltage - Battery 0
+  b0_total_power:
+    type: float
+    unit: watt
+    display_name: Total Power - Battery 0
+  b0_battery_level:
+    type: float
+    unit: percent
+    display_name: Battery Level - Battery 0
+  b1_total_current:
+    type: float
+    unit: amp
+    display_name: Total Current - Battery 1
+  b1_total_voltage:
+    type: float
+    unit: volt
+    display_name: Total Voltage - Battery 1
+  b1_total_power:
+    type: float
+    unit: watt
+    display_name: Total Power - Battery 1
+  b1_battery_level:
+    type: float
+    unit: percent
+    display_name: Battery Level - Battery 1
+  b2_total_current:
+    type: float
+    unit: amp
+    display_name: Total Current - Battery 2
+  b2_total_voltage:
+    type: float
+    unit: volt
+    display_name: Total Voltage - Battery 2
+  b2_total_power:
+    type: float
+    unit: watt
+    display_name: Total Power - Battery 2
+  b2_battery_level:
+    type: float
+    unit: percent
+    display_name: Battery Level - Battery 2
+  b3_total_current:
+    type: float
+    unit: amp
+    display_name: Total Current - Battery 3
+  b3_total_voltage:
+    type: float
+    unit: volt
+    display_name: Total Voltage - Battery 3
+  b3_total_power:
+    type: float
+    unit: watt
+    display_name: Total Power - Battery 3
+  b3_battery_level:
+    type: float
+    unit: percent
+    display_name: Battery Level - Battery 3
+
+.cloud:
+  category: batteries

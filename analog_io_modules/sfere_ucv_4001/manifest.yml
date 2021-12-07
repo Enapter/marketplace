@@ -1,0 +1,81 @@
+blueprint_spec: device/1.0
+
+display_name: Sfere uCv 4001
+description: Programmable signal conditioner.
+icon: enapter-module-din-1
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      - ok
+      - warning
+      - error
+      - read_error
+  gas_acceptable:
+    type: boolean
+    display_name: Gas Acceptable
+  relay1:
+    type: boolean
+    display_name: Relay 1
+  relay2:
+    type: boolean
+    display_name: Relay 2
+  relay3:
+    type: boolean
+    display_name: Relay 3
+  relay4:
+    type: boolean
+    display_name: Relay 4
+  o2_concentration:
+    type: float
+    unit: percent
+    display_name: O2 Concentration
+
+alerts:
+  communication_failed:
+    display_name: Communication failed
+    severity: error
+  measure_overload:
+    display_name: Measure Overload
+    severity: error
+  sensor_break:
+    display_name: Sensor Break
+    severity: error
+  measure_overrange:
+    display_name: Measure Overrrange
+    severity: error
+  cjc_error:
+    display_name: CJC Error
+    severity: error
+  calibration_error:
+    display_name: Calibration Error
+    severity: error
+  offset_error:
+    display_name: Offset Error
+    severity: error
+  programming_error:
+    display_name: Programming Error
+    severity: error
+
+.cloud:
+  category: sensors
+  mobile_main_chart: o2_concentration
+  mobile_telemetry:
+    - o2_concentration
+    - gas_acceptable
+  mobile_charts:
+    - o2_concentration

@@ -1,0 +1,46 @@
+blueprint_spec: device/1.0
+
+display_name: IMT Solar Irradiance Sensor Si-RS485TC-2T
+icon: enapter-solar-panel
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - modbus_error
+  solar_irrad:
+    display_name: Solar Irradiance
+    type: float
+    unit: W/m2
+  module_temp:
+    display_name: Module Temperature
+    type: float
+    unit: celsius
+  ambient_temp:
+    display_name: Ambient Temperature
+    type: float
+    unit: celsius
+
+.cloud:
+  category: renewable_energy_sources
+  mobile_main_chart: solar_irrad
+  mobile_telemetry:
+    - solar_irrad
+    - module_temp
+  mobile_charts:
+    - solar_irrad
+    - module_temp

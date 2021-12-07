@@ -1,0 +1,55 @@
+blueprint_spec: device/1.0
+
+display_name: Seneca S203T
+description: 3-phase network analyzer for electric-line voltage
+icon: enapter-power-meter
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Modbus status
+    type: string
+    enum:
+      - ok
+      - read_error
+  volt_l1n:
+    type: float
+    unit: volt
+    display_name: Phase 1 Voltage
+  current_l1:
+    type: float
+    unit: amp
+    display_name: Phase 1 Current
+  active_power_l1:
+    type: float
+    unit: watt
+    display_name: Phase 1 Active Power
+  reactive_power_l1:
+    type: float
+    unit: voltampreact
+    display_name: Phase 1 Reactive Power
+  apparent_power_l1:
+    type: float
+    unit: voltamp
+    display_name: Phase 1 Apparent Power
+  cos_phi_l1:
+    type: float
+    display_name: Phase 1 Cos φ
+  freq:
+    type: float
+    unit: hertz
+    display_name: Frequency
+
+.cloud:
+  category: power_meters

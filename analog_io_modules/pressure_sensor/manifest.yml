@@ -1,0 +1,74 @@
+blueprint_spec: device/1.0
+
+display_name: Pressure Sensor
+description: Analog pressure sensor based on voltage signal.
+icon: enapter-hydrogen-storage
+
+category: sensors
+profile: pressure_sensor
+
+communication_module:
+  product: ENP-AI4
+  lua_file: firmware.lua
+
+properties:
+  calib_slope:
+    display_name: Calibration Slope
+    type: float
+  calib_intercept:
+    display_name: Calibration Intercept
+    type: float
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - error
+  pressure:
+    display_name: Pressure
+    description: Calibrated pressure reading.
+    type: float
+    unit: bar
+  adc_voltage:
+    display_name: Voltage
+    description: Raw voltage reading of the sensor analog signal as it seen by ADC.
+    type: float
+    unit: volts
+
+command_groups:
+  config:
+    display_name: Configuration
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      calib_slope:
+        display_name: Calibration Slope
+        description: "`k` in calibration line equation `Pressure = k * Voltage + b`"
+        type: float
+        required: true
+      unit_id:
+        display_name: Calibration Intercept
+        description: "`b` in calibration line equation `Pressure = k * Voltage + b`"
+        type: float
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+.cloud:
+  category: sensors
+  mobile_main_chart: pressure
+  mobile_telemetry:
+    - pressure
+  mobile_charts:
+    - pressure
+    - voltage

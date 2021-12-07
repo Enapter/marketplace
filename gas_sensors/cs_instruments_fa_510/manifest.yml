@@ -1,0 +1,50 @@
+blueprint_spec: device/1.0
+
+display_name: CS Instruments FA 510
+description: >
+  The CS dew point sensor FA 510 with 3-wire technology 4...20 mA and
+  RS485 Modbus output enables reliable and long-term stable monitoring
+  of the dew point in industrial applications.
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      - ok
+      - warning
+      - read_error
+  gas_acceptable:
+    type: boolean
+    display_name: Gas Acceptable
+  dew_point:
+    type: float
+    unit: celsius
+    display_name: Dew Point
+  atm_dew_point:
+    type: float
+    unit: celsius
+    display_name: Atmospheric Dew Point
+  partial_vapor_pressure:
+    type: float
+    unit: bar
+    display_name: Partial Vapor Pressure
+  calibration_due:
+    type: float
+    unit: date
+    display_name: Calibration Due
+
+.cloud:
+  category: sensors

@@ -1,0 +1,17 @@
+# Use dash for lists
+MD004: { style: dash }
+
+# Unordered list indentation
+MD007: { indent: 2 }
+
+# Allow long lines/paragraphs, but not too long
+MD013: { line_length: 2000 }
+
+# Do not check ordered list item prefix
+MD029: false
+
+# Allow inline HTML
+MD033: false
+
+# Sometimes emphasis can be used instead of a heading
+MD036: false
