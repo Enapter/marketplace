@@ -18,18 +18,18 @@ The blueprint is an entity containing all aspects pertaining to device integrati
 
 There are two types of hardware that can run your blueprint:
 
-- a physical [UCM](https://handbook.enapter.com/modules/modules.html) that implements communication over [RS-485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html), [CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html), and other standards,
-- a [virtual UCM](https://handbook.enapter.com/software/software.html#💎-virtual-ucm) on an Intel-based server with [Enapter Gateway](https://handbook.enapter.com/software/software.html#📡-enapter-gateway) software installed that implements communication over Ethernet or USB connection.
+- a physical [Enapter UCM](https://handbook.enapter.com/modules/modules.html) that implements communication over [RS-485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html), [CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html), and other standards,
+- a [virtual UCM](https://handbook.enapter.com/software/software.html#💎-virtual-ucm) - a software part of [Enapter Gateway 2.X](https://handbook.enapter.com/software/software.html#📡-enapter-gateway) (runs on Intel-based server) that implements communication over a local network (Ethernet) or by using direct USB connection (serial communication).
 
 Regardless of an underlying hardware, UCM provides a runtime for Lua execution and exposes APIs for [Enapter Cloud connection](https://developers.enapter.com/docs/reference/ucm/enapter) and physical connections and protocols (e.g. [6-channel relay](https://developers.enapter.com/docs/reference/ucm/rl6), [RS-485](https://developers.enapter.com/docs/reference/ucm/rs485) serial communication, [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus), [Modbus TCP](https://developers.enapter.com/docs/reference/vucm/modbustcp), etc).
 
-Use Enapter [Web IDE](https://developers.enapter.com/docs/tutorial/what-you-need#web-ide) or [CLI](https://developers.enapter.com/docs/tutorial/what-you-need#command-line-interface) to develop and upload your blueprint to a specific UCM.
-
 ## How To Use These Blueprints
+
+Use Enapter [Web IDE](https://developers.enapter.com/docs/tutorial/what-you-need#web-ide) or [CLI](https://developers.enapter.com/docs/tutorial/what-you-need#command-line-interface) to develop and upload your blueprint to a specific UCM.
 
 If you prefer Web IDE, just drag-n-drop the blueprint files into the IDE or copy and paste its contents. Then you can upload the blueprint to a selected UCM.
 
-If you work with CLI, use `enapter devices upload --hardware-id UCMID --blueprint-dir .` within the blueprint directory.
+If you work with CLI, use `enapter-cli devices upload --hardware-id UCMID --blueprint-dir .` within the blueprint directory.
 
 After uploading the blueprint, your device data will appear on the device page in Enapter Cloud and Mobile application.
 
