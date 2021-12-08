@@ -36,7 +36,6 @@ Regardless of an underlying hardware, UCM provides a runtime for Lua execution a
 3. Press "Upload to" to upload the blueprint.
 
 ### Using [Enapter CLI](https://developers.enapter.com/docs/tutorial/what-you-need#command-line-interface)
-Write
 
 1. Follow the steps described in [the tutorial](https://developers.enapter.com/docs/tutorial/what-you-need#command-line-interface) to get the CLI tool and your API access token.
 2. Switch the current directory to the desired blueprint.
