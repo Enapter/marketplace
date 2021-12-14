@@ -24,7 +24,7 @@ If the blueprint doesn't collect telemetry, you can install additional jumpers i
 - Carefully push module control board down
 - Install jumper J5, jumper J3 H.speed or both (see the picture below)
 
-<p align="left"><img height="auto" width="800" src=".assets/enp-can_troubleshooting.png"></p>
+<p align="left"><img height="auto" width="800" src=".assets/enp_can-troubleshooting.png"></p>
 
 ## References
 
