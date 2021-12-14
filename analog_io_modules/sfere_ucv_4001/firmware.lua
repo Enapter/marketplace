@@ -1,9 +1,15 @@
+-- RS485 serial interface parameters
+BAUD_RATE = 9600
+DATA_BITS = 8
+PARITY = "N"
+STOP_BITS = 1
+
 -- Default Modbus address of Sfere module
 MODBUS_ADDRESS = 254
 
 -- Initiate device firmware. Called at the end of the file.
 function main()
-  local result = rs485.init(9600, 8, "N", 1)
+  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
   if result ~= 0 then
     enapter.log("RS485 init error: " .. modbus.err_to_str(result), "error", true)
   end
@@ -19,6 +25,7 @@ end
 function send_telemetry()
   local telemetry = {}
   local alerts = {}
+  local read_error = false
   local status = "ok"
 
   local ok, err = pcall(function()
@@ -29,8 +36,7 @@ function send_telemetry()
     else
       enapter.log("Reading register 2: "..modbus.err_to_str(result1), "error")
       enapter.log("Reading register 3: "..modbus.err_to_str(result2), "error")
-      alerts = {"communication_failed"}
-      status = "read_error"
+      read_error = true
     end
   end)
   if not ok then
@@ -62,10 +68,10 @@ function send_telemetry()
     end
   else
     enapter.log("Register 51 reading: "..modbus.err_to_str(result))
-    alerts = {"communication_failed"}
-    status = "read_error"
+    read_error = true
   end
 
+  local gas_acceptable
   local ok, err = pcall(function()
     local data1, result1 = modbus.read_holdings(MODBUS_ADDRESS, 100, 1, 1000)
     local data2, result2 = modbus.read_holdings(MODBUS_ADDRESS, 101, 1, 1000)
@@ -73,7 +79,6 @@ function send_telemetry()
       local relay1, relay2 = relay_check(data1)
       local relay3, relay4 = relay_check(data2)
 
-      local gas_acceptable
       if relay1 or relay2 or relay3 or relay4 then
         gas_acceptable = false
         telemetry["gas_acceptable"] = false
@@ -86,14 +91,6 @@ function send_telemetry()
       telemetry["relay2"] = relay2
       telemetry["relay3"] = relay3
       telemetry["relay4"] = relay4
-
-      if #alerts ~= 0 then
-        status = "error"
-      elseif not gas_acceptable then
-        status = "warning"
-      else
-        status = "ok"
-      end
     else
       enapter.log("register 100 reading: "..modbus.err_to_str(result1))
       enapter.log("register 101 reading: "..modbus.err_to_str(result2))
@@ -101,8 +98,19 @@ function send_telemetry()
   end)
   if not ok then
     enapter.log("Registers 100 and/or 101 reading failed: "..err, "error")
-    alerts = {"communication_failed"}
+    read_error = true
+  end
+
+  if #alerts > 0 then
+    status = "error"
+  elseif not gas_acceptable then
+    status = "warning"
+    table.insert(alerts, "gas_not_acceptable")
+  end
+
+  if read_error then
     status = "read_error"
+    table.insert(alerts, "communication_failed")
   end
 
   telemetry["alerts"] = alerts
