@@ -24,7 +24,7 @@ Remove the back side of the module
 Carefully push module control board down
 Install jumper J5, jumper J3 H.speed or both (see the picture below)
 
-<p align="left"><img height="auto" width="800" src=".assets/enp-can_troubleshooting.png"></p>
+<p align="left"><img height="auto" width="800" src="./.assets/enp-can_troubleshooting.png"></p>
 
 ## References
 
