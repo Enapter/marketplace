@@ -15,7 +15,7 @@ ENP-RL6 connected to D-type connector of Intelligent Energy FCM 802. You can cho
 
 ## ENP-RL6 Connection Diagram
 
-<p align="left"><img height="auto" width="800" src="./.assets/IE_FC_connection.png"></p>
+<p align="left"><img height="auto" width="800" src=".assets/IE_FC_connection.png"></p>
 
 ## References
 
