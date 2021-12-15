@@ -1,15 +1,21 @@
 # Sfere µCv 4001
 
-This _Enapter Device Blueprint_ integrates **Sfere µCv 4001** - programmable signal conditioner with [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus) over [RS-485 communication interface](https://developers.enapter.com/docs/reference/ucm/rs485).
+This [Enapter Device Blueprint](https://github.com/Enapter/wip-marketplace#blue_book-enapter-device-blueprints) integrates **Sfere µCv 4001** - programmable signal conditioner with [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus) over [RS-485 communication interface](https://developers.enapter.com/docs/reference/ucm/rs485).
 
-Use [Enapter ENP-RS485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html) module for physical connection. See [connection instructions](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html#connection-examples) in the module manual.
+Sfere µCv 4001 is used here as a gas acceptability controller that:
 
-## RS-485 Communication Interface Parameters
+- gathers analog signal from gas concentration sensor (O2 in H2 in our case),
+- manages solenoid valve through internal relay to close a pipe if the gas is not acceptable (concentration is higher than a configured threshold),
+- exposes digital sensor value and relay state over Modbus RTU for ENP-RS485.
 
-- Baud rate: `9600` bps;
-- Data bits: `8`;
-- Parity: `N` (no parity);
-- Stop bits: `1`.
+ENP-RS485 transmits the gas sensor value, µCv relay state, and gas acceptability status to Enapter Cloud for monitoring purposes.
+
+## Connect to Enapter
+
+- Sign up to Enapter Cloud using [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
+- Use [Enapter ENP-RS485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html) module for physical connection. See [connection instructions](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html#connection-examples) in the module manual.
+- [Add ENP-RS485 to your site](https://handbook.enapter.com/software/mobile/android_mobile_app.html#adding-sites-and-devices) using the mobile app.
+- [Upload](https://developers.enapter.com/docs/tutorial/uploading-blueprint/) this blueprint to ENP-RS485.
 
 ## References
 
