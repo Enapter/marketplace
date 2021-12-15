@@ -12,7 +12,7 @@ ENP-RS485 transmits the gas sensor value, µCv relay state, and gas acceptabilit
 
 ## Connect to Enapter
 
-- Sign up to using [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
+- Sign up to Enapter Cloud using [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
 - Use [Enapter ENP-RS485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html) module for physical connection. See [connection instructions](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html#connection-examples) in the module manual.
 - [Add ENP-RS485 to your site](https://handbook.enapter.com/software/mobile/android_mobile_app.html#adding-sites-and-devices) using the mobile app.
 - [Upload](https://developers.enapter.com/docs/tutorial/uploading-blueprint/) this blueprint to ENP-RS485.
