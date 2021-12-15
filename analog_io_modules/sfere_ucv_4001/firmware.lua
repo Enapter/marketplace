@@ -103,7 +103,7 @@ function send_telemetry()
 
   if #alerts > 0 then
     status = "error"
-  elseif not gas_acceptable then
+  elseif gas_acceptable == false then
     status = "warning"
     table.insert(alerts, "gas_not_acceptable")
   end
