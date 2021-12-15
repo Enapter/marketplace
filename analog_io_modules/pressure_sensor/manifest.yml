@@ -2,10 +2,7 @@ blueprint_spec: device/1.0
 
 display_name: Pressure Sensor
 description: Analog pressure sensor based on voltage signal.
-icon: enapter-hydrogen-storage
-
-category: sensors
-profile: pressure_sensor
+icon: enapter-gauge
 
 communication_module:
   product: ENP-AI4

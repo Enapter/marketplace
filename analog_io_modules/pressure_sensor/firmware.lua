@@ -17,7 +17,7 @@ function send_telemetry()
   local telemetry = { status = 'ok', alerts = {} }
 
   local volt = ai4.read_volts(1)
-  telemetry.volt1 = volt
+  telemetry.adc_voltage = volt
 
   local values, err = config.read_all()
   if err then
