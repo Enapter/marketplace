@@ -46,6 +46,9 @@ telemetry:
     display_name: O2 Concentration
 
 alerts:
+  gas_not_acceptable:
+    display_name: Gas not Acceptable
+    severity: warning
   communication_failed:
     display_name: Communication failed
     severity: error
