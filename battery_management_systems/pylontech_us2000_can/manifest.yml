@@ -22,6 +22,8 @@ telemetry:
     enum:
       - ok
       - warning
+      - read_error
+      - error
   has_protection1:
     type: boolean
     display_name: Has Protection 1
@@ -88,6 +90,13 @@ telemetry:
     unit: celsius
 
 alerts:
+  can_init_failed:
+    display_name: CAN Driver Initialization Failed
+    description: CAN driver could not initialize. Try to reboot device or contact Enapter support.
+    severity: error
+  can_fail:
+    display_name: CAN Communication Failed
+    severity: error
   cell_or_module_over_voltage:
     display_name: Protection 1 - Cell or Module Over Voltage
     severity: warning
