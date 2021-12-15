@@ -17,6 +17,7 @@ Use [Enapter ENP-CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html)
 ## Troubleshooting
 
 If the module is not receiving telemetry:
+
 - Check the wiring and the resistor location according to [the diagram above](#enp-can-connection-diagram).
 - Check the jumpers inside the ENP-CAN module (install if needed):
   - Dismount the antenna from the ENP-CAN module.
