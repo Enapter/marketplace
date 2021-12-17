@@ -16,9 +16,9 @@ properties:
     display_name: Model
 
 telemetry:
-  state:
+  status:
     type: string
-    display_name: State
+    display_name: Status
     enum:
       - auto_check
       - h2_inlet_pressure
@@ -28,6 +28,7 @@ telemetry:
       - operation
       - switch_off
       - locked_out
+      - read_error
   warning:
     type: string
     display_name: Warning
@@ -69,7 +70,15 @@ commands:
 command_groups:
   fuel_cell:
     display_name: Fuel Cell Control
+
 alerts:
+  can_init_failed:
+    display_name: CAN Driver Init Failed
+    severity: error
+    description: CAN driver initialization failed. Try to reboot device or contact Enapter support.
+  communication_failed:
+    display_name: CAN Communication Failed
+    severity: error
   low_cell_voltage:
     display_name: Low Cell Voltage
     severity: error
@@ -129,3 +138,11 @@ alerts:
 
 .cloud:
   category: fuel_cells
+  mobile_telemetry:
+    - voltage
+    - current
+    - internal_h2_pressure
+    - temperature
+  mobile_charts:
+    - voltage
+    - current
