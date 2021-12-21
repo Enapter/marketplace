@@ -10,6 +10,25 @@ Use [Enapter ENP-CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html)
 
 - Baud rate: `500` kbps.
 
+## ENP-CAN Connection Diagram
+
+<p align="left"><img height="auto" width="800" src=".assets/IE_FC_connection.png"></p>
+
+## Troubleshooting
+
+If the module is not receiving telemetry:
+
+- Check the wiring and the resistor location according to [the diagram above](#enp-can-connection-diagram).
+- Check the jumpers inside the ENP-CAN module (install if needed):
+  - Dismount the antenna from the ENP-CAN module.
+  - Remove the front cover.
+  - Remove the back side of the module.
+  - Carefully push the module control board down.
+  - Install jumper `J5`, jumper `J3` H.speed or both according to the photo below:
+    <details><summary>Jumper locations photo</summary>
+    <p align="left"><img height="auto" width="800" src=".assets/enp_can-troubleshooting.png"></p>
+    </details>
+
 ## References
 
 - [Intelligent Energy FCM 802 technical specification](https://www.intelligent-energy.com/uploads/product_docs/IE-Lift_802.pdf)

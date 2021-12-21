@@ -13,6 +13,10 @@ ENP-RL6 connected to D-type connector of Intelligent Energy FCM 802. You can cho
 - Relay `channel 1` - start/stop Intelligent Energy FCM 802;
 - Relay `channel 4` - power on/off Intelligent Energy FCM 802.
 
+## ENP-RL6 Connection Diagram
+
+<p align="left"><img height="auto" width="800" src=".assets/IE_FC_connection.png"></p>
+
 ## References
 
 - [Intelligent Energy FCM 802 technical specification](https://www.intelligent-energy.com/uploads/product_docs/IE-Lift_802.pdf)
