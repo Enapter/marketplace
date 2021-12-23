@@ -28,7 +28,7 @@ function send_telemetry()
 end
 
 -- The logic below is inverted since we are managing the load
--- trought the NC contactor.
+-- through the NC contactor.
 
 -- RL6 channel where contactor is connected to
 RELAY_CHANNEL_ID = 1
