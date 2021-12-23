@@ -1,18 +1,24 @@
+-- RS485 communication interface parameters
+BAUD_RATE = 2400
+DATA_BITS = 8
+PARITY = 'N'
+STOP_BITS = 1
+
 function main()
-  local result = rs485.init(2400, 8, "N", 1)
+  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
   if result ~= 0 then
     enapter.log("RS-485 failed: "..result.." "..rs485.err_to_str(result), "error", true)
   end
 
-  scheduler.add(30000, properties)
-  scheduler.add(1000, metrics)
+  scheduler.add(30000, send_properties)
+  scheduler.add(1000, send_telemetry)
 end
 
-function properties()
+function send_properties()
   enapter.send_properties({vendor = "Eastron", model = "SDM120CT"})
 end
 
-function metrics()
+function send_telemetry()
   local ADDRESS = 1
   local telemetry = {}
   local status = "ok"
