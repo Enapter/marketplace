@@ -54,3 +54,10 @@ telemetry:
 
 .cloud:
   category: fuel_cells
+  mobile_telemetry:
+    - battery_volt
+    - battery_current
+    - output_volt
+    - output_current
+    - output_power
+    - hydrogen_inlet_pressure
