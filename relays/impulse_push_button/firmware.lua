@@ -32,7 +32,9 @@ IMPULSE_DURATION = 1000
 function impulse(ctx)
   local ret = rl6.impulse(RELAY_CHANNEL_ID, IMPULSE_DURATION)
   if ret ~= 0 then
-    ctx.error('Cannot impulse for '..IMPULSE_DURATION..' ms relay channel #'..RELAY_CHANNEL_ID..': '..rl6.err_to_str(ret))
+    ctx.error('Cannot impulse for '..IMPULSE_DURATION..
+              ' ms relay channel #'..RELAY_CHANNEL_ID..': '..rl6.err_to_str(ret)
+    )
   end
 end
 
