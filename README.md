@@ -1,6 +1,6 @@
 # :blue_book: Enapter Device Blueprints
 
-This is the collection of device blueprints for integration of your energy devices into [Enapter platform](https://developers.enapter.com). Once integrated, you can monitor and control your devices using mobile app or Web dashboards. You can also automate your devices interoperation with Lua scripting.
+This is a collection of device blueprints for integration of your energy devices into [Enapter platform](https://developers.enapter.com). Once integrated, you can monitor and control your devices using mobile app or Web dashboards. You can also automate your devices interoperation with Lua scripting.
 
 Walk through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
 
