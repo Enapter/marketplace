@@ -39,7 +39,7 @@ Regardless of the underlying hardware, UCMs provide a runtime for Lua execution 
 
 1. Follow the steps described in [the tutorial](https://developers.enapter.com/docs/tutorial/what-you-need/#command-line-interface) to get the CLI tool and your API access token.
 2. Switch the current directory to the desired blueprint.
-3. Execute the command `enapter-cli devices upload --hardware-id UCMID --blueprint-dir .`. Substitute `UCMID` with your UCM ID. 
+3. Execute the command `enapter-cli devices upload --hardware-id UCMID --blueprint-dir .`. Substitute `UCMID` with your UCM ID.
 
 After uploading the blueprint, your device data will appear on the device page in the Enapter Cloud and the mobile application.
 
