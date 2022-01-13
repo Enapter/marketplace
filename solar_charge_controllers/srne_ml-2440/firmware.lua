@@ -1,13 +1,20 @@
+-- RS232 communication interface parameters
+BAUD_RATE = 9600
+DATA_BITS = 8
+PARITY = 'N'
+STOP_BITS = 1
+
+-- Device Modbus address
 ADDRESS = 1
 
 function main()
-  local result = rs232.init(9600, 8, "N", 1)
+  local result = rs232.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
   if result ~= 0 then
     enapter.log("RS-232 failed: "..result.." "..rs232.err_to_str(result), "error", true)
   end
 
   scheduler.add(30000, send_properties)
-  scheduler.add(1000, metrics)
+  scheduler.add(1000, send_telemetry)
 end
 
 function send_properties()
@@ -27,7 +34,7 @@ function send_properties()
   enapter.send_properties(properties)
 end
 
-function metrics()
+function send_telemetry()
   local telemetry = {}
   local alerts = {}
   local status = "ok"
@@ -294,7 +301,7 @@ function metrics()
   if data then
     telemetry["load_status"] = is_on(data[1] >> 15)
     telemetry["load_brightness"] = (data[1] >> 8) & 0x7F
-    telemetry["charging_state"] = data[1] >> 0xFF
+    telemetry["charging_state"] = get_charging_state(data[1] >> 0xFF)
   else
     enapter.log("Register 0x120 reading failed: "..modbus.err_to_str(result), "error")
     alerts = {"communication_failed"}
@@ -304,7 +311,7 @@ function metrics()
   --- TEST ---
   local data, result = modbus.read_holdings(ADDRESS, 0xE01D, 1, 1000)
   if data then
-    telemetry["load_working_mode"] = data[1]
+    telemetry["load_working_mode"] = get_load_working_mode(data[1])
   else
     enapter.log("Register 0xE01D reading failed: "..modbus.err_to_str(result), "error")
     alerts = {"communication_failed"}
@@ -334,14 +341,12 @@ function metrics()
       table.insert(alerts, "high_ambient_temp")
     elseif (data[1] << 10) >> 15 == 1 then
       table.insert(alerts, "high_controller_temp")
-    elseif (data[1] << 10) >> 15 == 1 then
-      table.insert(alerts, "high_controller_temp")
     elseif (data[1] << 11) >> 15 == 1 then
       table.insert(alerts, "load_overpower")
     elseif (data[1] << 12) >> 15 == 1 then
       table.insert(alerts, "load_short_circuit")
     elseif (data[1] << 13) >> 15 == 1 then
-      table.insert(alerts, "battery_under_voltage") --warning
+      table.insert(alerts, "battery_under_voltage")
     elseif (data[1] << 14) >> 15 == 1 then
       table.insert(alerts, "battery_over_voltage")
     elseif (data[1] << 15) >> 15 == 1 then
@@ -359,30 +364,7 @@ function metrics()
   enapter.send_telemetry(telemetry)
 end
 
-function is_on(value)
-  if value == 1 then
-    return true
-  else
-    return false
-  end
-end
-
-function toint(register)
-  local raw_str = string.pack("BBBB", register[1]>>8, register[1]&0xff, register[2]>>8, register[2]&0xff)
-  return string.unpack(">I4", raw_str)
-end
-
-function tosignedint(value)
-  local byte7 = value >> 7
-  local result = value & 0x7F
-  if byte7 == 1 then
-    return result * (-1)
-  else
-    return result
-  end
-end
-
-function read_controller_parameters(ctx)
+function read_configuration(ctx)
   local parameters = {}
 
   local data, result = modbus.read_holdings(ADDRESS, 0xE002, 13, 1000)
@@ -417,7 +399,7 @@ function read_controller_parameters(ctx)
   return parameters
 end
 
-function write_controller_parameters(ctx, args)
+function write_configuration(ctx, args)
   local nominal_battery_capacity = {args["nominal_battery_capacity"]}
   local result = modbus.write_multiple_holdings(ADDRESS, 0xE014, nominal_battery_capacity, 1000)
   if result ~= 0 then
@@ -425,13 +407,99 @@ function write_controller_parameters(ctx, args)
   end
 end
 
-enapter.register_command_handler("read_controller_parameters", read_controller_parameters)
-enapter.register_command_handler("write_controller_parameters", write_controller_parameters)
+enapter.register_command_handler("read_configuration", read_configuration)
+enapter.register_command_handler("write_configuration", write_configuration)
+
+function is_on(value)
+  if value == 1 then
+    return true
+  elseif value == 0 then
+    return false
+  else
+    enapter.log("Unknown load status", "error")
+    return nil
+  end
+end
+
+function get_charging_state(value)
+  if value then
+    if value == 0x00 then
+      return "charging_deactivated"
+    elseif value == 0x01 then
+      return "charging_activated"
+    elseif value == 0x02 then
+      return "mppt_charging_mode"
+    elseif value == 0x03 then
+      return "equalizing_charging_mode"
+    elseif value == 0x04 then
+      return "boost_charging_mode"
+    elseif value == 0x05 then
+      return "floating_charging_mode"
+    elseif value == 0x06 then
+      return "current_limiting"
+    else
+      return "unknown"
+    end
+  end
+end
+
+function get_load_working_mode(value)
+  if value then
+    if value == 0x00 then
+      return "sole_light_control"
+    elseif value == 0x01 then
+      return "light_control_off_after_1h"
+    elseif value == 0x02 then
+      return "light_control_off_after_2h"
+    elseif value == 0x03 then
+      return "light_control_off_after_3h"
+    elseif value == 0x04 then
+      return "light_control_off_after_4h"
+    elseif value == 0x05 then
+      return "light_control_off_after_5h"
+    elseif value == 0x06 then
+      return "light_control_off_after_6h"
+    elseif value == 0x07 then
+      return "light_control_off_after_7h"
+    elseif value == 0x08 then
+      return "light_control_off_after_8h"
+    elseif value == 0x09 then
+      return "light_control_off_after_9h"
+    elseif value == 0x0A then
+      return "light_control_off_after_10h"
+    elseif value == 0x0B then
+      return "light_control_off_after_11h"
+    elseif value == 0x0C then
+      return "light_control_off_after_12h"
+    elseif value == 0x0D then
+      return "light_control_off_after_13h"
+    elseif value == 0x0E then
+      return "light_control_off_after_14h"
+    elseif value == 0x0F then
+      return "manual_mode"
+    elseif value == 0x10 then
+      return "debugging_mode"
+    elseif value == 0x11 then
+      return "normal_on_mode"
+    else
+      return "unknown"
+    end
+  end
+end
+
+function toint(register)
+  local raw_str = string.pack("BBBB", register[1]>>8, register[1]&0xff, register[2]>>8, register[2]&0xff)
+  return string.unpack(">I4", raw_str)
+end
+
+function tosignedint(value)
+  local byte7 = value >> 7
+  local result = value & 0x7F
+  if byte7 == 1 then
+    return result * (-1)
+  else
+    return result
+  end
+end
 
 main()
-
---[[function from_float_to_int32(number)
-  local raw_str = string.pack(">f", number)
-  local byte1, byte0 = string.unpack(">I2", raw_str)
-  return {byte1, byte0}
-end]]

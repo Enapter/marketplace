@@ -15,6 +15,14 @@ properties:
   model:
     type: string
     display_name: Model
+  max_voltage:
+    display_name: Maximum Voltage Supported by System
+    type: float
+    unit: volt
+  power_l1:
+    display_name: Maximum Current Supported by System
+    type: float
+    unit: amp
 
 telemetry:
   status:
@@ -23,19 +31,232 @@ telemetry:
     enum:
       - ok
       - read_error
-  max_voltage:
-    display_name: Maximum Voltage Supported by System
+  battery_soc:
+    display_name: Battery SOC
     type: float
-    unit: V
-  power_l1:
-    display_name: Maximum Current Supported by System
+    unit: percent
+  battery_voltage:
+    display_name: Battery Voltage
     type: float
-    unit: A
+    unit: volt
+  charging_current:
+    display_name: Charging Current
+    type: float
+    unit: amp
+  controller_temp:
+    display_name: Controller Temperature
+    type: float
+    unit: celsius
+  battery_temp:
+    display_name: Battery Temperature
+    type: float
+    unit: celsius
+  load_dc_voltage:
+    display_name: Load DC Voltage
+    type: float
+    unit: volt
+  load_dc_current:
+    display_name: Load DC Current
+    type: float
+    unit: amp
+  load_dc_power:
+    display_name: Load DC Power
+    type: float
+    unit: watt
+  solar_panel_voltage:
+    display_name: Solar Panel Voltage
+    type: float
+    unit: volt
+  solar_panel_current:
+    display_name: Solar Panel Current
+    type: float
+    unit: amp
+  charging_power:
+    display_name: Charging Power
+    type: float
+    unit: watt
+  today_min_battery_volt:
+    display_name: Today Minimal Battery Voltage
+    type: float
+    unit: volt
+  today_max_battery_volt:
+    display_name: Today Maximal Battery Voltage
+    type: float
+    unit: volt
+  today_max_charging_curr:
+    display_name: Today Maximal Charging Current
+    type: float
+    unit: amp
+  today_max_discharging_curr:
+    display_name: Today Maximal Discharging Current
+    type: float
+    unit: amp
+  today_max_charging_power:
+    display_name: Today Maximal Charging Current
+    type: float
+    unit: amp
+  today_max_discharging_power:
+    display_name: Today Maximal Discharging Current
+    type: float
+    unit: amp
+  today_charging_amp_hrs:
+    display_name: Today Charging Ampere Hours
+    type: float
+    unit: amph
+  today_discharging_amp_hrs:
+    display_name: Today Discharging Ampere Hours
+    type: float
+    unit: amph
+  today_power_generation:
+    display_name: Today Power Generation
+    type: float
+    unit: watt
+  today_power_consumption:
+    display_name: Today Power Consumption
+    type: float
+    unit: watt
+  operating_days:
+    display_name: Operating Days
+    type: float
+    unit: d
+  battery_over_discharges:
+    display_name: Battery Over Discharges
+    type: float
+    unit: h
+  battery_full_charges:
+    display_name: Battery Full Charges
+    type: float
+    unit: h
+  charging_amp_hrs:
+    display_name: Charging Ampere Hours
+    type: float
+    unit: amph
+  discharging_amp_hrs:
+    display_name: Discharging Ampere Hours
+    type: float
+    unit: amph
+  cumulative_power_consum:
+    display_name: Cumulative Power Consumption
+    type: float
+    unit: watt
+  cumulative_power_gen:
+    display_name: Cumulative Power Generation
+    type: float
+    unit: watt
+  load_status:
+    display_name: Load is On
+    type: boolean
+  load_brightness:
+    display_name: Load Brightness
+    type: float
+    unit: percent
+  charging_state:
+    display_name: Charging State
+    type: string
+    enum:
+      - charging_deactivated
+      - charging_activated
+      - mppt_charging_mode
+      - equalizing_charging_mode
+      - boost_charging_mode
+      - floating_charging_mode
+      - current_limiting
+      - unknown
+  load_working_mode:
+    display_name: Load Working Mode
+    type: string
+    enum:
+      - sole_light_control
+      - light_control_off_after_1h
+      - light_control_off_after_2h
+      - light_control_off_after_3h
+      - light_control_off_after_4h
+      - light_control_off_after_5h
+      - light_control_off_after_6h
+      - light_control_off_after_7h
+      - light_control_off_after_8h
+      - light_control_off_after_9h
+      - light_control_off_after_10h
+      - light_control_off_after_11h
+      - light_control_off_after_12h
+      - light_control_off_after_13h
+      - light_control_off_after_14h
+      - manual_mode
+      - debugging_mode
+      - normal_on_mode
+      - unknown
 
 alerts:
   communication_failed:
     display_name: Communication Failed
     severity: error
+  charge_mos_short_circuit:
+    display_name: Charge MOS Short Circuit
+    severity: error
+  anti_reverse_mos_short:
+    display_name: Anti-reverse MOS Short
+    severity: error
+  solar_panel_reverse_connect:
+    display_name: Solar Panel Reversely Connected
+    severity: error
+  solar_panel_over_voltage:
+    display_name: Solar Panel Overvoltage
+    severity: error
+  solar_panel_ctr_current:
+    display_name: Solar Panel Counter-current
+    severity: error
+  pv_input_over_voltage:
+    display_name: PV Input Side Overvoltage
+    severity: error
+  pv_input_short_circuit:
+    display_name: PV Input Side Short Circuit
+    severity: error
+  pv_input_overpower:
+    display_name: PV Input Overpower
+    severity: error
+  high_ambient_temp:
+    display_name: High Ambient Temperature
+    severity: error
+  high_controller_temp:
+    display_name: High Controller Temperature
+    severity: error
+  load_overpower:
+    display_name: Load Overpower
+    severity: error
+  load_short_circuit:
+    display_name: Load Short Circuit
+    severity: error
+  battery_under_voltage:
+    display_name: Battery Under Voltage
+    severity: warning
+  battery_over_voltage:
+    display_name: Battery Over Voltage
+    severity: error
+  battery_over_discharge:
+    display_name: Battery Over Discharge
+    severity: error
+
+command_groups:
+  configuration:
+    display_name: Configuration
+
+commands:
+  read_configuration:
+    display_name: Read Configuration
+    group: configuration
+    ui:
+      icon: eye
+      quick_access: true
+  write_configuration:
+    display_name: Write Configuration
+    group: configuration
+    ui:
+      icon: lead-pencil
+      quick_access: true
+    arguments:
+      nominal_battery_capacity:
+        display_name: Nominal Battery Capacity
+        type: float
 
 .cloud:
   category: renewable_energy_sources
