@@ -1,22 +1,26 @@
--- Pylontech US2000 Battery
--- Serial over RS485
--- Baud rate = 9600 bps, 8 data bits, no parity, 1 stop bit
+-- RS485 serial interface parameters
+BAUD_RATE = 9600
+DATA_BITS = 8
+PARITY = "N"
+STOP_BITS = 1
 
 function main()
-  local result = rs485.init(9600, 8, "N", 1)
+  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
   if result ~= 0 then
     enapter.log("RS485 init failed: "..rs485.err_to_str(result))
   end
 
-  scheduler.add(30000, properties)
-  scheduler.add(1000, telemetry)
+  scheduler.add(30000, send_properties)
+  scheduler.add(1000, send_telemetry)
 end
 
-function properties()
+function send_properties()
   enapter.send_properties({ vendor = "Pylontech", model = "US2000" })
 end
 
-function telemetry()
+function send_telemetry()
+  -- get analog values from 4 batteries. address can be in range 2..8/12
+  -- (depends on specification)
   local b0_TotalCurrent, b0_TotalVoltage, b0_RemainingCapacity, b0_TotalCapacity = get_analog_value(0)
   local b1_TotalCurrent, b1_TotalVoltage, b1_RemainingCapacity, b1_TotalCapacity = get_analog_value(1)
   local b2_TotalCurrent, b2_TotalVoltage, b2_RemainingCapacity, b2_TotalCapacity = get_analog_value(2)
@@ -62,45 +66,55 @@ function get_analog_value(addr)
   local TempCount = binary_data:byte(CellsCount * 2 + 4)
 
   local data_pos = CellsCount * 2 + TempCount * 2 + 9
-  local TotalCurrent = get_int2_complement(binary_data:sub(data_pos, data_pos + 1)) / 100.0
+  local TotalCurrent = to_signed_int(binary_data:sub(data_pos, data_pos + 1)) / 100.0
   data_pos = data_pos + 2
-  local TotalVoltage = get_int2(binary_data:sub(data_pos, data_pos + 1)) / 100.0
+  local TotalVoltage = to_unsigned_int(binary_data:sub(data_pos, data_pos + 1)) / 100.0
   data_pos = data_pos + 2
-  local RemainingCapacity = get_int2(binary_data:sub(data_pos, data_pos + 1)) / 100.0
+  local RemainingCapacity = to_unsigned_int(binary_data:sub(data_pos, data_pos + 1)) / 100.0
   data_pos = data_pos + 2
-  local TotalCapacity = get_int2(binary_data:sub(data_pos, data_pos + 1)) / 100.0
+  local TotalCapacity = to_unsigned_int(binary_data:sub(data_pos, data_pos + 1)) / 100.0
   data_pos = data_pos + 2
-  local Cycles = get_int2(binary_data:sub(data_pos, data_pos + 1))
+  local Cycles = to_unsigned_int(binary_data:sub(data_pos, data_pos + 1))
 
   return TotalCurrent, TotalVoltage, RemainingCapacity, TotalCapacity, Cycles
 end
 
 function make_message(addr, cid2, command)
+  local SOI = "\x7E"
+  local VER = "\x20"
+  local CID1 = "\x4A"
+  local EOI = "\x0D"
+
   local len = 0
   if command then
     len = 2
   end
-  local message = "\x20" .. string.char(addr) .. "\x4A" .. string.char(cid2) .. get_length(len)
+  local LENGTH = encode_info_length(len)
+
+  local message = VER .. string.char(addr) .. CID1 .. string.char(cid2) .. LENGTH
+
   if command then
     message = message .. string.char(command)
   end
+
   local payload = to_ascii(message)
-  payload = "\x7E" .. payload .. get_checksum(payload) .. "\x0D"
+  payload = SOI .. payload .. get_checksum(payload) .. EOI
   return payload
 end
 
+-- converts hexadecimal XX values from literal string to ASCII symbols
 function fromhex(str)
   return (str:gsub('..', function(cc)
     return string.char(tonumber(cc, 16))
   end))
 end
 
-function get_int2(data)
+function to_unsigned_int(data)
   local val = data:byte(1) << 8 | data:byte(2)
   return val
 end
 
-function get_int2_complement(data)
+function to_signed_int(data)
   local val = data:byte(1) << 8 | data:byte(2)
   if (val & 0x8000) == 0x8000 then
     val = val - 0x10000
@@ -129,7 +143,7 @@ function get_checksum(message)
   return to_ascii(string.pack(">i2", sum))
 end
 
-function get_length(value)
+function encode_info_length(value)
   if value > 0xfff or value < 0 then
     error("Invalid length")
   end
@@ -142,28 +156,5 @@ function get_length(value)
 
   return string.pack(">i2", val)
 end
-
---[[function hex_dump(str)
-    local len = string.len(str)
-    local dump = ""
-    local hex = ""
-    local asc = ""
-    for i = 1, len do
-        if 1 == i % 8 then
-            dump = dump .. hex .. asc .. "\n"
-            hex = string.format("%04x: ", i - 1)
-            asc = ""
-        end
-        local ord = string.byte(str, i)
-        hex = hex .. string.format("%02x ", ord)
-        if ord >= 32 and ord <= 126 then
-            asc = asc .. string.char(ord)
-        else
-            asc = asc .. "."
-        end
-    end
-    return dump .. hex
-            .. string.rep(" ", 8 - len % 8) .. asc
-end]]--
 
 main()
