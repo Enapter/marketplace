@@ -1,14 +1,14 @@
 # Control Relay for Intelligent Energy FCM 802
 
-This _Enapter Device Blueprint_ integrates **control relay for Intelligent Energy FCM 802** via [Enapter rl6 library](https://developers.enapter.com/docs/reference/ucm/rl6).
+This _Enapter Device Blueprint_ integrates **control relay for Intelligent Energy FCM 802** via the [Enapter rl6 library](https://developers.enapter.com/docs/reference/ucm/rl6).
 
-This blueprint controls the fuel cell, while [`intelligent_energy_fcm_802`](../intelligent_energy_fcm_802) blueprint collects the fuel cell telemetry.
+This blueprint controls the fuel cell, while the [`intelligent_energy_fcm_802`](../intelligent_energy_fcm_802) blueprint collects the fuel cell telemetry.
 
-Use [Enapter ENP-RL6](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html) module for physical connection. See [connection instructions](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html#connection-example) in the module manual.
+Use the [Enapter ENP-RL6](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html) module for physical connection. See the [connection instructions](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html#connection-example) in the module manual.
 
 ## Relay Channels Connection
 
-ENP-RL6 connected to D-type connector of Intelligent Energy FCM 802. You can choose any other (1-6) relay channels.
+ENP-RL6 is connected to the D-type connector of Intelligent Energy FCM 802. You can choose any other (1-6) relay channels.
 
 - Relay `channel 1` - start/stop Intelligent Energy FCM 802;
 - Relay `channel 4` - power on/off Intelligent Energy FCM 802.
