@@ -1,8 +1,8 @@
 # SRNE ML2440
 
-This _Enapter Device Blueprint_ integrates **SRNE ML2440** - Solar Panel Regulator Charge Controller with [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus) over [RS-232 communication interface](https://developers.enapter.com/docs/reference/ucm/rs232).
+This _Enapter Device Blueprint_ integrates the **SRNE ML2440** Solar Panel Regulator Charge Controller with [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus) over the [RS-232 communication interface](https://developers.enapter.com/docs/reference/ucm/rs232).
 
-Use [Enapter ENP-RS232](https://handbook.enapter.com/modules/ENP-RS232/ENP-RS232.html) module for physical connection. See [connection instructions](https://handbook.enapter.com/modules/ENP-RS232/ENP-RS232.html#connection-example) in the module manual.
+Use the [Enapter ENP-RS232](https://handbook.enapter.com/modules/ENP-RS232/ENP-RS232.html) module for physical connection. See the [connection instructions](https://handbook.enapter.com/modules/ENP-RS232/ENP-RS232.html#connection-example) in the module manual.
 
 ## RS-232 Communication Interface Parameters
 
