@@ -1,6 +1,6 @@
 # Tesla Powerwall 2
 
-This [Enapter Device Blueprint](https://github.com/Enapter/wip-marketplace#blue_book-enapter-device-blueprints) integrates the **Tesla Powerwall 2** - a rechargeable home battery system - via [HTTP API](https://developers.enapter.com/docs/reference/vucm/http) implemented on the [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm).
+This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **Tesla Powerwall 2** - a rechargeable home battery system - via [HTTP API](https://developers.enapter.com/docs/reference/vucm/http) implemented on [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm).
 
 ## Connect to Enapter
 
