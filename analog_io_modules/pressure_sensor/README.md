@@ -1,6 +1,6 @@
 # Analog Pressure Sensor
 
-This _Enapter Device Blueprint_ integrates any **analog pressure sensor** using a voltage-based [analog input interface](https://developers.enapter.com/docs/reference/ucm/ai4).
+This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates any **analog pressure sensor** using voltage-based [analog input interface](https://developers.enapter.com/docs/reference/ucm/ai4).
 
 ## Connect to Enapter
 
