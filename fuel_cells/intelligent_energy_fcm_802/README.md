@@ -2,7 +2,7 @@
 
 This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **Intelligent Energy FCM 802** - fuel cell module products for stationary and portable applications with [CAN bus](https://developers.enapter.com/docs/reference/ucm/can).
 
-This blueprint collects the fuel cell telemetry, while [`intelligent_energy_fcm_802_rl6`](../intelligent_energy_fcm_802_rl6) blueprint controls the fuel cell.
+This blueprint collects the fuel cell telemetry, while the [`intelligent_energy_fcm_802_rl6`](../intelligent_energy_fcm_802_rl6) blueprint controls the fuel cell.
 
 ## Connect to Enapter
 
