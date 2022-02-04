@@ -1,6 +1,6 @@
 # Sfere µCv 4001
 
-This [Enapter Device Blueprint](https://github.com/Enapter/wip-marketplace#blue_book-enapter-device-blueprints) integrates the **Sfere µCv 4001** - programmable signal conditioner with [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus) over the [RS-485 communication interface](https://developers.enapter.com/docs/reference/ucm/rs485).
+This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **Sfere µCv 4001** - programmable signal conditioner with [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus) over [RS-485 communication interface](https://developers.enapter.com/docs/reference/ucm/rs485).
 
 Sfere µCv 4001 is used here as a gas acceptability controller that:
 
