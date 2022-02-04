@@ -1,18 +1,24 @@
+-- RS485 communication interface parameters
+BAUD_RATE = 9600
+DATA_BITS = 8
+PARITY = 'N'
+STOP_BITS = 2
+
 function main()
-  local result_comm = rs485.init(9600, 8, 'N', 2)
+  local result_comm = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
   if result_comm ~= 0 then
     enapter.log("RS485 init failed: " .. rs485.err_to_str(result_comm), "error")
   end
 
-  scheduler.add(30000, properties)
-  scheduler.add(1000, metrics)
+  scheduler.add(30000, send_properties)
+  scheduler.add(1000, send_telemetry)
 end
 
-function properties()
+function send_properties()
   enapter.send_properties({vendor = "Mercury", model = "230"})
 end
 
-function metrics()
+function send_telemetry()
   local ADDRESS = 0
   local TIMEOUT = 1000
   local TRANSFORMATION_COEFFICIENT = 120
@@ -21,8 +27,10 @@ function metrics()
   local alerts = {}
   local status = "ok"
 
+  -- You have to send login request in order to read data from Mercury 230
+  -- 00 00 01 B0 - valid response for login
   local login = {0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01}
-  read_data(ADDRESS, login, TIMEOUT) -- 00 00 01 B0 - valid response for login
+  send_and_receive(ADDRESS, login, TIMEOUT)
 
   local voltage_l1 = {0x08, 0x11, 0x11}
   local voltage_l2 = {0x08, 0x11, 0x12}
@@ -36,7 +44,7 @@ function metrics()
   local total_energy_by_phases = {0x05, 0x60, 0x00}
 
   local ok, err = pcall(function()
-    local data = read_data(ADDRESS, voltage_l1, TIMEOUT)
+    local data = send_and_receive(ADDRESS, voltage_l1, TIMEOUT)
     local bytes = totable(data)
     telemetry["l1n_volt"] = parse_4_bytes(bytes) / 100
   end)
@@ -47,7 +55,7 @@ function metrics()
   end
 
   local ok, err = pcall(function()
-    local data = read_data(ADDRESS, voltage_l2, TIMEOUT)
+    local data = send_and_receive(ADDRESS, voltage_l2, TIMEOUT)
     local bytes = totable(data)
     telemetry["l2n_volt"] = parse_4_bytes(bytes) / 100
   end)
@@ -58,7 +66,7 @@ function metrics()
   end
 
   local ok, err = pcall(function()
-    local data = read_data(ADDRESS, voltage_l3, TIMEOUT)
+    local data = send_and_receive(ADDRESS, voltage_l3, TIMEOUT)
     local bytes = totable(data)
     telemetry["l3n_volt"] = parse_4_bytes(bytes) / 100
   end)
@@ -69,7 +77,7 @@ function metrics()
   end
 
   local ok, err = pcall(function()
-    local data = read_data(ADDRESS, current_l1, TIMEOUT)
+    local data = send_and_receive(ADDRESS, current_l1, TIMEOUT)
     local bytes = totable(data)
     telemetry["current_l1"] = parse_4_bytes(bytes) / 1000  * TRANSFORMATION_COEFFICIENT
   end)
@@ -80,7 +88,7 @@ function metrics()
   end
 
   local ok, err = pcall(function()
-    local data = read_data(ADDRESS, current_l2, TIMEOUT)
+    local data = send_and_receive(ADDRESS, current_l2, TIMEOUT)
     local bytes = totable(data)
     telemetry["current_l2"] = parse_4_bytes(bytes) / 1000  * TRANSFORMATION_COEFFICIENT
   end)
@@ -91,7 +99,7 @@ function metrics()
   end
 
   local ok, err = pcall(function()
-    local data = read_data(ADDRESS, current_l3, TIMEOUT)
+    local data = send_and_receive(ADDRESS, current_l3, TIMEOUT)
     local bytes = totable(data)
     telemetry["current_l3"] = parse_4_bytes(bytes) / 1000  * TRANSFORMATION_COEFFICIENT
   end)
@@ -102,7 +110,7 @@ function metrics()
   end
 
   local ok, err = pcall(function()
-    local data = read_data(ADDRESS, frequency, TIMEOUT)
+    local data = send_and_receive(ADDRESS, frequency, TIMEOUT)
     local bytes = totable(data)
     telemetry["frequency"] = parse_4_bytes(bytes) / 100
   end)
@@ -113,7 +121,7 @@ function metrics()
   end
 
   local ok, err = pcall(function()
-    local data = read_data(ADDRESS, active_power, TIMEOUT)
+    local data = send_and_receive(ADDRESS, active_power, TIMEOUT)
     local bytes = totable(data)
     local bytes_total = slice(bytes, 2, 4)
     table.insert(bytes_total, 1, 0)
@@ -136,7 +144,7 @@ function metrics()
   end
 
   local ok, err = pcall(function()
-    local data = read_data(ADDRESS, total_energy, TIMEOUT)
+    local data = send_and_receive(ADDRESS, total_energy, TIMEOUT)
     local bytes = totable(data)
     local bytes_total = slice(bytes, 2, 5)
     telemetry["total_energy_since_reset"] = parse_4_bytes(bytes_total) * TRANSFORMATION_COEFFICIENT
@@ -148,7 +156,7 @@ function metrics()
   end
 
   local ok, err = pcall(function()
-    local data = read_data(ADDRESS, total_energy_by_phases, TIMEOUT)
+    local data = send_and_receive(ADDRESS, total_energy_by_phases, TIMEOUT)
     local bytes = totable(data)
     local bytes_l1 = slice(bytes, 2, 5)
     local bytes_l2 = slice(bytes, 6, 9)
@@ -169,7 +177,7 @@ function metrics()
   enapter.send_telemetry(telemetry)
 end
 
-function read_data(ADDRESS, command, TIMEOUT)
+function send_and_receive(ADDRESS, command, TIMEOUT)
   -- sample request: string.pack('<BBBBBBBBBBB', 00, 01, 01, 01, 01, 01, 01, 01, 01, 0x77, 0x81)
   local cmd = {}
   table.insert(cmd, ADDRESS)
@@ -201,7 +209,7 @@ function read_data(ADDRESS, command, TIMEOUT)
   end
 
   if not data then
-    enapter.log('No data received: result='..tostring(result)..' data='..tostring(data), 'error')
+    enapter.log('No data received: result='..tostring(result), 'error')
     return
   end
 

@@ -1,18 +1,24 @@
+-- RS845 communication interface parameters
+BAUD_RATE = 19200
+DATA_BITS = 8
+PARITY = 'E'
+STOP_BITS = 1
+
 function main()
-  local result = rs485.init(19200, 8, "E", 1)
+  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
   if result ~= 0 then
     enapter.log("RS485 init error: " .. rs485.err_to_str(result))
   end
 
-  scheduler.add(30000, properties)
-  scheduler.add(1000, metrics)
+  scheduler.add(30000, send_properties)
+  scheduler.add(1000, send_telemetry)
 end
 
-function properties()
+function send_properties()
   enapter.send_properties({ vendor = "CS Instruments", model = "FA 510" })
 end
 
-function metrics()
+function send_telemetry()
   local ADDRESS = 1
   local telemetry = {}
   local status = "ok"
@@ -21,7 +27,7 @@ function metrics()
   if data then
     telemetry["calibration_due"] = todate(data)
   else
-    enapter.log("Modbus error: " .. modbus.err_to_str(result))
+    enapter.log("Reading register 10 failed " .. modbus.err_to_str(result))
     status = "read_error"
   end
 
@@ -29,7 +35,7 @@ function metrics()
   if data then
     telemetry["temperature"] = tofloat(data)
   else
-    enapter.log("Modbus error: " .. modbus.err_to_str(result))
+    enapter.log("Reading register 1000 failed " .. modbus.err_to_str(result))
     status = "read_error"
   end
 
@@ -37,7 +43,7 @@ function metrics()
   if data then
     telemetry["dew_point"] = tofloat(data)
   else
-    enapter.log("Modbus error: " .. modbus.err_to_str(result))
+    enapter.log("Reading register 1006 failed: " .. modbus.err_to_str(result))
     status = "read_error"
   end
 
@@ -45,7 +51,7 @@ function metrics()
   if data then
     telemetry["partial_vapor_pressure"] = tofloat(data)/1000 -- from hPa to bar
   else
-    enapter.log("Modbus error: " .. modbus.err_to_str(result))
+    enapter.log("Reading register 1020 failed: " .. modbus.err_to_str(result))
     status = "read_error"
   end
 
@@ -62,7 +68,7 @@ function metrics()
       telemetry["status"] = "warning"
     end
   else
-    enapter.log("Modbus error: " .. modbus.err_to_str(result))
+    enapter.log("Reading register 1022 failed: " .. modbus.err_to_str(result))
     status = "read_error"
   end
 
