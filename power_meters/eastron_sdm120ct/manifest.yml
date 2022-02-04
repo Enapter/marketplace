@@ -42,3 +42,8 @@ telemetry:
 
 .cloud:
   category: power_meters
+  mobile_telemetry:
+    - acc_power_l1
+    - power_l1
+    - volt_l1n
+    - freq
