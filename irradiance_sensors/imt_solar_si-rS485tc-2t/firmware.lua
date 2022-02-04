@@ -1,7 +1,11 @@
-ADDRESS = 1
+-- RS485 communication interface parameters
+BAUD_RATE = 9600
+DATA_BITS = 8
+PARITY = 'N'
+STOP_BITS = 1
 
 function main()
-  local result = rs485.init(9600, 8, "N", 1)
+  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
   if result ~= 0 then
     error("RS485 init error: "..rs485.err_to_str(result))
   end
@@ -16,6 +20,7 @@ end
 
 function send_telemetry()
   local telemetry = {}
+  local ADDRESS = 1
 
   local data, result = modbus.read_inputs(ADDRESS, 0, 1, 1000)
   if data then
