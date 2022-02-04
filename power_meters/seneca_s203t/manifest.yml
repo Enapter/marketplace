@@ -53,3 +53,17 @@ telemetry:
 
 .cloud:
   category: power_meters
+  mobile_telemetry:
+    - volt_l1n
+    - current_l1n
+    - active_power_l1
+    - reactive_power_l1
+    - apparent_power_l1
+  mobile_charts:
+    - volt_l1n
+    - current_l1n
+    - active_power_l1
+    - reactive_power_l1
+    - apparent_power_l1
+    - cos_phi_l1
+    - freq
