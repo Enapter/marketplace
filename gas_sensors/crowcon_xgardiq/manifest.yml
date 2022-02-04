@@ -2,6 +2,7 @@ blueprint_spec: device/1.0
 
 display_name: Crowcon XgardIQ
 description: Intelligent gas detector and transmitter
+icon: enapter-module-din-1
 
 communication_module:
   product: ENP-RS485
@@ -54,3 +55,9 @@ telemetry:
 
 .cloud:
   category: sensors
+  mobile_main_chart: h2_concentration
+  mobile_telemetry:
+    - h2_concentration
+    - sensor_ready
+    - alarm1
+    - alarm2
