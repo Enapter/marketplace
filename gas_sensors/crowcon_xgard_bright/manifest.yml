@@ -34,3 +34,5 @@ alerts:
 
 .cloud:
   category: sensors
+  mobile_telemetry:
+    - h2_concentration
