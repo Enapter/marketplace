@@ -1,10 +1,10 @@
 # Intelligent Energy FCM 802
 
-This _Enapter Device Blueprint_ integrates **Intelligent Energy FCM 802** - fuel cell module products for stationary and portable applications with [CAN bus](https://developers.enapter.com/docs/reference/ucm/can).
+This _Enapter Device Blueprint_ integrates **Intelligent Energy FCM 802** fuel cell module products for stationary and portable applications with [CAN bus](https://developers.enapter.com/docs/reference/ucm/can).
 
-This blueprint collects the fuel cell telemetry, while [`intelligent_energy_fcm_802_rl6`](../intelligent_energy_fcm_802_rl6) blueprint controls the fuel cell.
+This blueprint collects the fuel cell telemetry, while the [`intelligent_energy_fcm_802_rl6`](../intelligent_energy_fcm_802_rl6) blueprint controls the fuel cell.
 
-Use [Enapter ENP-CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html) module for physical connection. See [connection instructions](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html#connection-examples) in the module manual.
+Use the [Enapter ENP-CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html) module for physical connection. See the [connection instructions](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html#connection-examples) in the module manual.
 
 ## CAN bus Communication Interface Parameters
 
