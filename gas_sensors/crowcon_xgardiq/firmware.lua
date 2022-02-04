@@ -1,18 +1,24 @@
+-- RS485 communication interface parameters
+BAUD_RATE = 38400
+DATA_BITS = 8
+PARITY = 'N'
+STOP_BITS = 2
+
 function main()
-  local result = rs485.init(38400, 8, "N", 2)
+  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
   if result ~= 0 then
     enapter.log("RS485 init error: " .. rs485.err_to_str(result))
   end
 
-  scheduler.add(30000, properties)
-  scheduler.add(1000, metrics)
+  scheduler.add(30000, send_properties)
+  scheduler.add(1000, send_telemetry)
 end
 
-function properties()
+function send_properties()
   enapter.send_properties({ vendor = "Crowcon", model = "XgardIQ" })
 end
 
-function metrics()
+function send_telemetry()
   local ADDRESS = 1
   local telemetry = {}
   local status = "ok"
