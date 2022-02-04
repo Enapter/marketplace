@@ -1,54 +1,56 @@
+-- RS485 communication interface parameters
+BAUD_RATE = 9600
+DATA_BITS = 8
+PARITY = 'N'
+STOP_BITS = 1
+
 function main()
-  local result = rs485.init(9600, 8, "N", 1)
+  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
   if result ~= 0 then
-    enapter.log("RS-485 failed: "..result.." "..rs485.err_to_str(result), "error", true)
+    enapter.log("RS-485 failed: " .. result .. " " .. rs485.err_to_str(result), "error", true)
   end
 
-  scheduler.add(30000, properties)
-  scheduler.add(1000, telemetry)
+  scheduler.add(30000, send_properties)
+  scheduler.add(1000, send_telemetry)
 end
 
-function properties()
+function send_properties()
   enapter.send_properties({
     vendor = "M-Field",
     model = "MF-UEH"
   })
 end
 
-function telemetry()
-  local telemetry = {}
-  local status = "ok"
-
+function send_telemetry()
   local DEVICE_ID = "\x25"
   local FUNCTION = "\x03"
   local STARTING_ADDR_MSB = "\x00"
   local STARTING_ADDR_LSB = "\x00"
   local DATA_SIZE = "\x24"
+
+  local telemetry = {}
+  local status = "ok"
   -- commant to read all registers from p. 6.1 (QW-RD-09)
-  local read_command = DEVICE_ID..FUNCTION..STARTING_ADDR_MSB..STARTING_ADDR_LSB..DATA_SIZE
+  local read_command = DEVICE_ID .. FUNCTION .. STARTING_ADDR_MSB .. STARTING_ADDR_LSB .. DATA_SIZE
   local read_request = read_command .. string.char(check_crc(read_command)) -- add checksum
   local result = rs485.send(read_request) -- send the data to RS-485 network
   if result ~= 0 then
-    enapter.log("RS-485 sending data failed: "..result.." "..rs485.err_to_str(result), "error", true)
-  else
-    enapter.log("Data sent: " .. hex_dump(read_request))
+    enapter.log("RS-485 sending data failed: " .. result .. " " .. rs485.err_to_str(result), "error", true)
   end
 
-  local raw_data, result = rs485.receive(1000) --[[ receive with 1 second timeout.
+  local raw_data, result = read_data() --[[ receive with 1 second timeout.
   The answer is in format described in p. 6.5.3 (QW-RD-09) --]]
 
   if not raw_data then
-    enapter.log("RS485 receiving data failed: "..result.." "..rs485.err_to_str(result), "error", true)
-    status = "read_error"
+    enapter.log("RS485 receiving data failed: " .. result .. " " .. rs485.err_to_str(result), "error", true)
   else
-    enapter.log("Data received: " .. hex_dump(raw_data) .. " Sting length: " .. string.len(raw_data))
     -- How to convert received values - p. 6.1.2 (QW-RD-08)
     local volt = string.unpack("<I2", raw_data:sub(9, 10)) / 100
     local current = string.unpack("<I2", raw_data:sub(11, 12)) / 100
     telemetry["output_volt"] = volt
     telemetry["output_current"] = current
     telemetry["output_power"] = volt * current
-    telemetry["hydrogen_inlet_pressure"] = (string.unpack("<I2", raw_data:sub(13, 14))-1000) / 4000 * 10
+    telemetry["hydrogen_inlet_pressure"] = (string.unpack("<I2", raw_data:sub(13, 14)) - 1000) / 4000 * 10
     telemetry["battery_volt"] = string.unpack("<I2", raw_data:sub(19, 20)) / 100
     telemetry["battery_current"] = string.unpack("<I2", raw_data:sub(21, 22)) / 100
     telemetry["system_temperature1"] = string.unpack("<i2", raw_data:sub(23, 24)) / 100
@@ -57,6 +59,36 @@ function telemetry()
 
   telemetry["status"] = status
   enapter.send_telemetry(telemetry)
+end
+
+function read_data()
+  local READ_TIMEOUT = 2
+  local FULL_LENGTH = 40
+  local RS485_RESPONSE_TIMEOUT = 1000
+
+  local full_data = ""
+  local timeout = os.time() + READ_TIMEOUT
+
+  while #full_data < FULL_LENGTH do
+    if os.time() > timeout then
+      return nil, 2
+    end
+    local raw_data, result = rs485.receive(RS485_RESPONSE_TIMEOUT)
+
+    if raw_data == nil then
+      return nil, result
+    end
+    full_data = full_data .. raw_data
+    while #full_data > 2 and full_data:sub(1, 3) ~= "\x25\x03\x24" do
+      full_data = full_data:sub(2, -1)
+    end
+  end
+  full_data = full_data:sub(1, 40)
+
+  if full_data:byte(40) == check_crc(full_data:sub(1, 39)) then
+    return full_data:sub(1, 39)
+  end
+  return nil, 2
 end
 
 function check_crc(newdata)
@@ -68,29 +100,6 @@ function check_crc(newdata)
     crc = (((crc << 4) & 0xFF) ~ (CRC8_TABLE[((crc >> 4) ~ (newdata:byte(i) & 0x0F)) + 1])) & 0xFF
   end
   return crc
-end
-
-function hex_dump (str)
-  local len = string.len(str)
-  local dump = ""
-  local hex = ""
-  local asc = ""
-  for i = 1, len do
-    if 1 == i % 8 then
-      dump = dump .. hex .. asc .. "\n"
-      hex = string.format("%04x: ", i - 1)
-      asc = ""
-    end
-    local ord = string.byte(str, i)
-    hex = hex .. string.format("%02x ", ord)
-    if ord >= 32 and ord <= 126 then
-      asc = asc .. string.char(ord)
-    else
-      asc = asc .. "."
-    end
-  end
-  return dump .. hex
-  .. string.rep("   ", 8 - len % 8) .. asc
 end
 
 main()

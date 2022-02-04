@@ -28,7 +28,7 @@ function send_telemetry()
 end
 
 -- The logic below is straight since we are managing the load
--- trought the NO contactor.
+-- through the NO contactor.
 
 -- RL6 channel where contactor is connected to
 RELAY_CHANNEL_ID = 1
