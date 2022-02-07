@@ -1,17 +1,15 @@
 # Control Relay for Intelligent Energy FCM 802
 
-This _Enapter Device Blueprint_ integrates **control relay for Intelligent Energy FCM 802** via the [Enapter rl6 library](https://developers.enapter.com/docs/reference/ucm/rl6).
+This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **control relay for Intelligent Energy FCM 802** via [Enapter rl6 library](https://developers.enapter.com/docs/reference/ucm/rl6).
 
 This blueprint controls the fuel cell, while the [`intelligent_energy_fcm_802`](../intelligent_energy_fcm_802) blueprint collects the fuel cell telemetry.
 
-Use the [Enapter ENP-RL6](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html) module for physical connection. See the [connection instructions](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html#connection-example) in the module manual.
+## Connect to Enapter
 
-## Relay Channels Connection
-
-ENP-RL6 is connected to the D-type connector of Intelligent Energy FCM 802. You can choose any other (1-6) relay channels.
-
-- Relay `channel 1` - start/stop Intelligent Energy FCM 802;
-- Relay `channel 4` - power on/off Intelligent Energy FCM 802.
+- Sign up to Enapter Cloud using [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
+- Use [Enapter ENP-RL6](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html) module for physical connection. See [connection diagram.](#enp-rl6-connection-diagram)
+- [Add ENP-RL6 to your site](https://handbook.enapter.com/software/mobile/android_mobile_app.html#adding-sites-and-devices) using the mobile app.
+- [Upload](https://developers.enapter.com/docs/tutorial/uploading-blueprint/) this blueprint to ENP-RL6.
 
 ## ENP-RL6 Connection Diagram
 

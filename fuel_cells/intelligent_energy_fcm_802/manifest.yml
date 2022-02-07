@@ -260,6 +260,10 @@ alerts:
     display_name: Safety Observer Mismatch
     severity: error
     code: E45
+  can_init_failed:
+    display_name: CAN Driver Initialization Failed
+    description: CAN driver initialization failed. Try to reboot device or contact Enapter support.
+    severity: error
 
 .cloud:
   category: fuel_cells
