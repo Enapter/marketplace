@@ -54,7 +54,7 @@ function send_telemetry()
 
     dc_amp = sma:read_s32_fix3(30769),
     dc_volt = sma:read_s32_fix2(30771),
-    dc_power = sma:read_s32_fix2(30773),
+    dc_power = sma:read_s32_fix0(30773),
     ac_power = sma:read_s32_fix0(30775),
     total_yield = sma:read_u32_fix0(30529),
     daily_yield = sma:read_u32_fix0(30535),
