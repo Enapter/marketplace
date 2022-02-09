@@ -1,6 +1,6 @@
 blueprint_spec: device/1.0
 
-display_name: Control Relay for Intelligent Energy FCM 802
+display_name: Control Relay for Intelligent Energy FCM 800 Series
 icon: enapter-module-din-1
 
 communication_module:
