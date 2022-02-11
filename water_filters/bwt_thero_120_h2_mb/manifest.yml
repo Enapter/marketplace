@@ -1,0 +1,326 @@
+blueprint_spec: device/1.0
+
+display_name: BWT Thero 120 H2 MB
+icon: enapter-water-filter
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    display_name: Vendor
+    type: string
+  model:
+    display_name: Model
+    type: string
+  ip_address:
+    display_name: IP Address
+    type: string
+  unit_id:
+    display_name: Unit ID
+    type: integer
+  fw_version:
+    display_name: Firmware version
+    type: string
+  hw_version:
+    display_name: Hardware version
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - warning
+      - error
+  ro_status:
+    display_name: RO Status
+    type: string
+    enum:
+      - ready
+      - working
+      - rinse
+      - dripping_faucet_recovery_attempt
+      - pause
+      - alarm
+      - warning
+      - unknown
+  outlet_permeate_temperature:
+    display_name: Outlet Permeate Temperature
+    type: float
+    unit: celsius
+  outlet_flow:
+    display_name: Outlet Flow
+    type: float
+    unit: litreh
+  inlet_flow:
+    display_name: Inlet Flow
+    type: float
+    unit: litreh
+  demin_tank_pressure:
+    display_name: Demin Tank Pressure
+    type: float
+    unit: bar
+  demin_out_conducibility:
+    display_name: Demin Out Conducibility
+    type: float
+    unit: μS/cm
+  membrane_out_conducibility:
+    display_name: Membrane Out Conducibility
+    type: float
+    unit: μS/cm
+  demin_partial_counter:
+    display_name: Demin Partial Counter
+    type: float
+    unit: litre
+  ro_membrane_partial_counter:
+    display_name: RO Membrane Partial Counter
+    type: float
+    unit: litre
+  demin_total_counter:
+    display_name: Demin Total Counter
+    type: float
+    unit: litre
+  ro_membrane_total_counter:
+    display_name: RO Membrane Total Counter
+    type: float
+    unit: litre
+  ro_pump_service_time:
+    display_name: RO Pump Service Time
+    type: float
+    unit: h
+  demin_capacity:
+    display_name: Service Limit for Demin Counter
+    type: float
+    unit: litre
+  membrane_capacity:
+    display_name: Service Limit for Membrane Counter
+    type: float
+    unit: litre
+  membrane_day_counter_service_limit:
+    display_name: Service Limit for Membrane Day Counter
+    type: float
+  ro_membrane_life_days:
+    display_name: RO Membrane Life Days
+    type: float
+    unit: d
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: BWT Thero Connection Not Configured
+    description: Use "Configure" command to setup BWT Thero connection.
+  A:
+    severity: error
+    display_name: Membrane End-of-life
+    description: Service days > membrane life days.
+  B:
+    severity: error
+    display_name: Membrane Partial Counter Over Service Limit
+    description: Membrane partial counter is over service limit.
+  C:
+    severity: error
+    display_name: Demin Partial Counter Over Service Limit
+    description: Demin partial counter is over service limit.
+  D:
+    severity: error
+    display_name: WCF Too Low
+    description: Water Concentration Factor is too low.
+  AB:
+    severity: error
+    display_name: Membrane Issues
+    description: |
+      1. Service days > membrane life days.
+      2. Membrane partial counter is over service limit.
+  AC:
+    severity: error
+    display_name: Membrane and Demin Counter Issues
+    description: |
+      1. Service days > membrane life days.
+      2. Demin partial counter is over service limit.
+  BC:
+    severity: error
+    display_name: Partial Counters Issues
+    description: |
+      1. Membrane partial counter is over service limit.
+      2. Demin partial counter is over service limit.
+  ABC:
+    severity: error
+    display_name: Membrane and Partial Counters Issues
+    description: |
+      1. Service days > membrane life days.
+      2. Membrane partial counter is over service limit.
+      3. Demin partial counter is over service limit.
+  AD:
+    severity: error
+    display_name: Membrane and Demin Counter Issues
+    description: |
+      1. Service days > membrane life days.
+      2. Water Concentration Factor is too low.
+  BD:
+    severity: error
+    display_name: Membrane and WCF Issues
+    description: |
+      1. Membrane partial counter is over service limit.
+      2. Water Concentration Factor is too low.
+  CD:
+    severity: error
+    display_name: Demin Partial Counter and WCF Issues
+    description: |
+      1. Demin partial counter is over service limit.
+      2. Water Concentration Factor is too low.
+  ABD:
+    severity: error
+    display_name: Membrane and WCF Issues
+    description: |
+      1. Service days > membrane life days.
+      2. Membrane partial counter is over service limit.
+      3. Water Concentration Factor is too low.
+  ACD:
+    severity: error
+    display_name: Membrane, Demin Counter and WCF Issues
+    description: |
+      1. Service days > membrane life days.
+      2. Demin partial counter is over service limit.
+      3. Water Concentration Factor is too low.
+  BCD:
+    severity: error
+    display_name: Partial Counters and WCF Issues
+    description: |
+      1. Membrane partial counter is over service limit.
+      2. Demin partial counter is over service limit.
+      3. Water Concentration Factor is too low.
+  ABCD:
+    severity: error
+    display_name: Membrane, Partial Counters and WCF Issues
+    description: |
+      1. Service days > membrane life days.
+      2. Membrane partial counter is over service limit.
+      3. Demin partial counter is over service limit.
+      4. Water Concentration Factor is too low.
+  unknown:
+    severity: warning
+    display_name: Unknown Service Status
+  inlet_no_water:
+    severity: error
+    display_name: No Inlet Water
+  internal_leak_detected:
+    severity: error
+    display_name: Internal Leak Detected
+  dripping_faucet:
+    severity: error
+    display_name: Dripping Faucet
+    description: Dripping faucet. Pump starts too often. This alarm needs to be manually reset by command.
+  outlet_pressure_transducer_failure:
+    severity: error
+    display_name: Outlet Pressure Transducer Failure
+  RO_pump_thermal_protection:
+    severity: error
+    display_name: RO Pump Thermal Protection
+  run_by_modbus:
+    severity: info
+    display_name: Enable Reverse Osmosis
+    description: Enable RO manually using command.
+  inlet_flow_meter:
+    severity: warning
+    display_name: Inlet Flow Meter
+  inlet_flow_meter_failure:
+    severity: warning
+    display_name: Inlet Flow Meter Failure
+  internal_pressure_sensor_failure:
+    severity: error
+    display_name: Internal Pressure Sensor Failure
+  membrane_conductivity_too_high:
+    severity: error
+    display_name: Membrane Conductivity Too High
+    description: This alarm needs to be manually reset by command.
+  demin_conductivity_too_high:
+    severity: error
+    display_name: Demin Conductivity Too High
+    description: This alarm needs to be manually reset by command.
+  wcf_too_low:
+    severity: warning
+    display_name: WCF Too Low
+    description: Water Concentration Factor
+  RO_pump_error:
+    severity: error
+    display_name: RO Pump Error
+
+
+command_groups:
+  bwt_thero:
+    display_name: BWT Thero
+  connection:
+    display_name: Connection
+commands:
+  # Connection Config
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure Connection
+    group: connection
+    ui:
+      icon: wrench-outline
+    arguments:
+      ip_address:
+        display_name: IP Address
+        description: IP address of BWT Thero in a local network
+        type: string
+        required: true
+      modbus_unit_id:
+        display_name: Modbus Unit ID
+        description: Modbus Unit ID of BWT Thero
+        type: integer
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: connection
+    ui:
+      icon: wrench-outline
+      mobile_quick_access: true
+  # BWT Thero commands
+  reset:
+    display_name: Reset
+    group: bwt_thero
+    ui:
+      icon: counter
+    arguments:
+      value:
+        display_name: Counter or Alarm
+        description: Select counter or alarm you want to reset
+        type: string
+        required: true
+        enum:
+          - Membrane partial counter
+          - Demin partial counter
+          - Dripping facet alarm
+  control_ro:
+    display_name: Enable Reverse Osmosis
+    description: Enable or disable reverse osmosis
+    group: bwt_thero
+    ui:
+      icon: filter
+      mobile_quick_access: true
+    arguments:
+      enable:
+        display_name: Enable Reverse Osmosis
+        type: boolean
+
+.cloud:
+  category: water_management
+  mobile_main_chart: outlet_flow
+  mobile_telemetry:
+    - demin_out_conducibility
+    - membrane_out_conducibility
+    - ro_membrane_total_counter
+    - demin_total_counter
+    - ro_membrane_life_days
+  mobile_charts:
+    - demin_out_conducibility
+    - membrane_out_conducibility
+    - demin_tank_pressure
