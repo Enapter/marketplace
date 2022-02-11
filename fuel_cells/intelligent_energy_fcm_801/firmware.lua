@@ -1,3 +1,6 @@
+VENDOR = "Intelligent Energy"
+MODEL = "FCM 801"
+
 telemetry = {}
 alerts = {}
 total_can_packets = 0
@@ -19,7 +22,7 @@ function main()
 end
 
 function send_properties()
-  local info = { vendor = "Intelligent Energy", model = "FCM 802" }
+  local info = { vendor = VENDOR, model = MODEL }
 
   if is_serial_number_completed then
     info["serial_number"] = serial_number

@@ -1,6 +1,6 @@
 blueprint_spec: device/1.0
 
-display_name: Intelligent Energy FCM 802
+display_name: Intelligent Energy FCM 801
 description: Fuel Cell Module use hydrogen gas to provide electrical DC power
 icon: enapter-fuel-cell
 
