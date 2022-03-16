@@ -51,7 +51,7 @@ stds.ucm = {
 stds.vucm = {
   read_globals = {
     modbustcp = {
-      fields = {'new'}
+      fields = {'new', 'err_to_str'}
     },
     http = {
       fields = {'get', 'post', 'post_form', 'client', 'request'}
