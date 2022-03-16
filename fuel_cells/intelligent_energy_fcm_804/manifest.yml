@@ -1,0 +1,500 @@
+blueprint_spec: device/1.0
+
+display_name: Intelligent Energy FCM 804
+description: Fuel Cell Module use hydrogen gas to provide electrical DC power
+icon: enapter-fuel-cell
+
+communication_module:
+  product: ENP-CAN
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: string
+    display_name: Serial Number
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      # - idle ?
+      - unpowered
+      - inactive
+      - steady
+      - run
+      - fault
+  volt:
+    type: float
+    unit: V
+    display_name: Voltage
+  amp:
+    type: float
+    unit: A
+    display_name: Amperage
+  watt:
+    type: float
+    unit: W
+    display_name: Power
+  anode_pressure:
+    type: float
+    unit: mbar
+    display_name: Anode Pressure
+  inlet_temp:
+    type: float
+    unit: celsuis
+    display_name: Inlet Temperature
+  outlet_temp:
+    type: float
+    unit: celsuis
+    display_name: Outlet Temperature
+  dcdc_volt_setpoint:
+    type: float
+    unit: V
+    display_name: DC/DC Voltage Set Point
+  dcdc_amp_limit:
+    type: float
+    unit: A
+    display_name: DC/DC Current Limit
+  louver_pos:
+    type: float
+    unit: percent
+    display_name: Louver Position Open
+  fan_sp_duty:
+    type: float
+    unit: percent
+    display_name: Fan SP duty
+  run_hours:
+    type: float
+    unit: h
+    display_name: Run Hours
+  total_run_energy:
+    type: float
+    unit: joule
+    display_name: Total Run Energy
+
+alerts:
+  AnodeOverPressure:
+    display_name: Anode Over Pressure
+    severity: error
+    code: A01
+  AnodeUnderPressure:
+    display_name: Anode Under Pressure
+    severity: error
+    code: A02
+  Stack1OverCurrent:
+    display_name: Stack 1 Over Current
+    severity: error
+    code: A03
+  Outlet1OverTemperature:
+    display_name: Outlet 1 Over Temperature
+    severity: error
+    code: A04
+  Stack1MinCellUndervoltage:
+    display_name: Stack 1 Min Cell Under Voltage
+    severity: error
+    code: A05
+  Inlet1OverTemperature:
+    display_name: Inlet 1 Over Temperature
+    severity: error
+    code: A06
+  SafetyObserverWatchdogTrip:
+    display_name: Safety Observer Watchdog Trip
+    severity: error
+    code: A07
+  BoardOverTemperature:
+    display_name: Board Over Temperature
+    severity: error
+    code: A08
+  SafetyObserverFanTrip:
+    display_name: Safety Observer Fan Trip
+    severity: error
+    code: A09
+  ValveDefeatCheckFault:
+    display_name: Valve Defeat Check Fault
+    severity: error
+    code: A10
+  Stack1UnderVoltage:
+    display_name: Stack 1 Under Voltage
+    severity: error
+    code: A11
+  Stack1OverVoltage:
+    display_name: Stack 1 Over Voltage
+    severity: error
+    code: A12
+  SafetyObserverMismatch:
+    display_name: Safety Observer Mismatch
+    severity: error
+    code: A13
+  Stack2MinCellUndervoltage:
+    display_name: Stack 2 Min Cell Under Voltage
+    severity: error
+    code: A14
+  SafetyObserverPressureTrip:
+    display_name: Safety Observer Pressure Trip
+    severity: error
+    code: A15
+  SafetyObserverBoardTxTrip:
+    display_name: Safety Observer Board Tx Trip
+    severity: error
+    code: A16
+  Stack3MinCellUndervoltage:
+    display_name: Stack 3 Min Cell Under Voltage
+    severity: error
+    code: A17
+  SafetyObserverSoftwareTrip:
+    display_name: Safety Observer Software Trip
+    severity: error
+    code: A18
+  Fan2NoTacho:
+    display_name: Fan 2 No Tacho
+    severity: error
+    code: A19
+  Fan1NoTacho:
+    display_name: Fan 1 No Tacho
+    severity: error
+    code: A20
+  Fan3NoTacho:
+    display_name: Fan 1 No Tacho
+    severity: error
+    code: A21
+  Fan3ErrantSpeed:
+    display_name: Fan 3 Errant Speed
+    severity: error
+    code: A22
+  Fan2ErrantSpeed:
+    display_name: Fan 2 Errant Speed
+    severity: error
+    code: A23
+  Fan1ErrantSpeed:
+    display_name: Fan 1 Errant Speed
+    severity: error
+    code: A24
+  Sib1Fault:
+    display_name: Sib 1 Fault
+    severity: error
+    code: A25
+  Sib2Fault:
+    display_name: Sib 2 Fault
+    severity: error
+    code: A26
+  Sib3Fault:
+    display_name: Sib 3 Fault
+    severity: error
+    code: A27
+  Inlet1TxSensorFault:
+    display_name: Inlet 1 Tx Sensor Fault
+    severity: error
+    code: A28
+  Outlet1TxSensorFault:
+    display_name: Outlet 1 Tx Sensor Fault
+    severity: error
+    code: A29
+  InvalidSerialNumber:
+    display_name: Invalied Serial Number
+    severity: error
+    code: A30
+  Dcdc1CurrentWhenDisabled:
+    display_name: DC/DC 1 Current When Disabled
+    severity: error
+    code: A31
+  Dcdc1OverCurrent:
+    display_name: DC/DC 1 Over Current
+    severity: error
+    code: A32
+  AmbientOverTemperature:
+    display_name: Ambient Over Temperature
+    severity: error
+    code: B01
+  Sib1CommsFault:
+    display_name: Sib 1 Comms Fault
+    severity: error
+    code: B02
+  BoardTxSensorFault:
+    display_name: Board Tx Sensor Fault
+    severity: error
+    code: B03
+  Sib2CommsFault:
+    display_name: Sib 2 Comms Fault
+    severity: error
+    code: B04
+  LowLeakTestPressure:
+    display_name: Low Leak Test Pressure
+    severity: error
+    code: B05
+  Sib3CommsFault:
+    display_name: Sib 3 Comms Fault
+    severity: error
+    code: B06
+  LouverOpenFault:
+    display_name: Louver Open Fault
+    severity: error
+    code: B07
+  StateDependentUnexpectedCurrent1:
+    display_name: State Dependent Unexpected Current 1
+    severity: error
+    code: B08
+  SystemTypeFault:
+    display_name: System Type Fault
+    severity: error
+    code: B09
+  SystemTypeChanged:
+    display_name: System Type Changed
+    severity: error
+    code: B10
+  Dcdc2CurrentWhenDisabled:
+    display_name: DC/DC 2 Current When Disabled
+    severity: error
+    code: B11
+  Dcdc3CurrentWhenDisabled:
+    display_name: DC/DC 3 Current When Disabled
+    severity: error
+    code: B12
+  Dcdc2OverCurrent:
+    display_name: DC/DC 2 Over Current
+    severity: error
+    code: B13
+  ReadConfigFault:
+    display_name: Read Config Fault
+    severity: error
+    code: B14
+  CorruptConfigFault:
+    display_name: Corrupt Config Fault
+    severity: error
+    code: B15
+  ConfigValueRangeFault:
+    display_name: Config Value Range Fault
+    severity: error
+    code: B16
+  Stack1VoltageMismatch:
+    display_name: Stack 1 Voltage Mismatch
+    severity: error
+    code: B17
+  Dcdc3OverCurrent:
+    display_name: DC/DC 3 Over Current
+    severity: error
+    code: B18
+  UnexpectedPurgeInhibit:
+    display_name: Unexpected Purge Inhibit
+    severity: error
+    code: B19
+  FuelOnNoVolts:
+    display_name: Fuel On No Volts
+    severity: error
+    code: B20
+  LeakDetected:
+    display_name: Leak Detected
+    severity: error
+    code: B21
+  AirCheckFault:
+    display_name: Air Check Fault
+    severity: error
+    code: B22
+  AirCheckFaultShadow:
+    display_name: Air Check Fault Shadow
+    severity: error
+    code: B23
+  DenyStartUnderVoltage:
+    display_name: Deny Start Under Voltage
+    severity: error
+    code: B24
+  StateDependentUnexpectedCurrent2:
+    display_name: State Dependent Unexpected Current 2
+    severity: error
+    code: B25
+  StateDependentUnexpectedCurrent3:
+    display_name: State Dependent Unexpected Current 3
+    severity: error
+    code: B26
+  Stack2UnderVoltage:
+    display_name: Stack 2 Under Voltage
+    severity: error
+    code: B27
+  Stack3UnderVoltage:
+    display_name: Stack 3 Under Voltage
+    severity: error
+    code: B28
+  Stack2OverVoltage:
+    display_name: Stack 2 Over Voltage
+    severity: error
+    code: B29
+  Stack3OverVoltage:
+    display_name: Stack 3 Over Voltage
+    severity: error
+    code: B30
+  Stack2OverCurrent:
+    display_name: Stack 2 Over Voltage
+    severity: error
+    code: B31
+  Stack3OverCurrent:
+    display_name: Stack 3 Over Voltage
+    severity: error
+    code: B32
+  Stack2VoltageMismatch:
+    display_name: Stack 2 Voltage Mismatch
+    severity: error
+    code: C01
+  Stack3VoltageMismatch:
+    display_name: Stack 3 Voltage Mismatch
+    severity: error
+    code: C02
+  Outlet2OverTemperature:
+    display_name: Outlet 2 Over Temperature
+    severity: error
+    code: C03
+  Outlet3OverTemperature:
+    display_name: Outlet 3 Over Temperature
+    severity: error
+    code: C04
+  Inlet2OverTemperature:
+    display_name: Inlet 2 Over Temperature
+    severity: error
+    code: C05
+  Inlet3OverTemperature:
+    display_name: Inlet 3 Over Temperature
+    severity: error
+    code: C06
+  Inlet2TxSensorFault:
+    display_name: Inlet 2 Tx Sensor Fault
+    severity: error
+    code: C07
+  Inlet3TxSensorFault:
+    display_name: Inlet 3 Tx Sensor Fault
+    severity: error
+    code: C08
+  Outlet2TxSensorFault:
+    display_name: Outlet 2 Tx Sensor Fault
+    severity: error
+    code: C09
+  Outlet3TxSensorFault:
+    display_name: Outlet 3 Tx Sensor Fault
+    severity: error
+    code: C10
+  FuelOn1LowMeanVoltage:
+    display_name: Fuel On 1 Low Mean Voltage
+    severity: error
+    code: C11
+  FuelOn2LowMeanVoltage:
+    display_name: Fuel On 2 Low Mean Voltage
+    severity: error
+    code: C12
+  FuelOn3LowMeanVoltage:
+    display_name: Fuel On 3 Low Mean Voltage
+    severity: error
+    code: C13
+  FuelOn1LowMinVoltage:
+    display_name: Fuel On 1 Low Min Voltage
+    severity: error
+    code: C14
+  FuelOn2LowMinVoltage:
+    display_name: Fuel On 2 Low Min Voltage
+    severity: error
+    code: C15
+  FuelOn3LowMinVoltage:
+    display_name: Fuel On 3 Low Min Voltage
+    severity: error
+    code: C16
+  SoftwareTripShutdown:
+    display_name: Software Trip Shutdown
+    severity: error
+    code: C17
+  SoftwareTripFault:
+    display_name: Software Trip Fault
+    severity: error
+    code: C18
+  TurnAroundTimeWarning:
+    display_name: Turn Around Time Warning
+    severity: error
+    code: C19
+  PurgeCheckShutdown:
+    display_name: Purge Check Shutdown
+    severity: error
+    code: C20
+  OutputUnderVoltage:
+    display_name: Output Under Voltage
+    severity: error
+    code: C21
+  OutputOverVoltage:
+    display_name: Output Over Voltage
+    severity: error
+    code: C22
+  SafetyObserverVoltRailTrip:
+    display_name: Safety Observer Volt Rail Trip
+    severity: error
+    code: C23
+  SafetyObserverDiffPressureTrip:
+    display_name: Safety Observer Diff Pressure Trip
+    severity: error
+    code: C24
+  PurgeMissedOnePxOpen:
+    display_name: Purge Missed One Px Open
+    severity: error
+    code: C25
+  PurgeMissedOneIxOpen:
+    display_name: Purge Missed One Ix Open
+    severity: error
+    code: C27
+  PurgeMissedOneIxSolSaver:
+    display_name: Purge Missed One Ix Sol Saver
+    severity: error
+    code: C28
+  PurgeMissedOneIxClose:
+    display_name: Purge Missed One Ix Close
+    severity: error
+    code: C29
+  InRangeFaultPx01:
+    display_name: In Range Fault Px 01
+    severity: error
+    code: C30
+  NoisyInputPx01:
+    display_name: Noisy Input Px 01
+    severity: error
+    code: C31
+  NoisyInputTx68:
+    display_name: Noisy Input Tx 68
+    severity: error
+    code: C32
+  NoisyInputDiffP:
+    display_name: Noisy Input Diff P
+    severity: error
+    code: D01
+  ValveClosedPxRising:
+    display_name: Valve Closed Px Rising
+    severity: error
+    code: D02
+  DiffPSensorFault:
+    display_name: Diff P Sensor Fault
+    severity: error
+    code: D03
+  LossOfVentilation:
+    display_name: Loss Of Ventilation
+    severity: error
+    code: D04
+  DiffPSensorHigh:
+    display_name: Diff P Sensor High
+    severity: error
+    code: D05
+  FanOverrun:
+    display_name: Fan Overrun
+    severity: error
+    code: D06
+  BlockedAirFlow:
+    display_name: Blocked Air Flow
+    severity: error
+    code: D07
+
+.cloud:
+  category: fuel_cells
+  mobile_main_chart: watt
+  mobile_telemetry:
+    - watt
+    - volt
+  mobile_charts:
+    - watt
+    - volt
