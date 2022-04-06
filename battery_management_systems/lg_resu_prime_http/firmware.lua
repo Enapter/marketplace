@@ -16,9 +16,7 @@ function main()
 
 end
 
--- To send data to Enapter Cloud use `enapter` variable as shown below.
 function registration()
---  enapter.send_registration({ vendor = "C-Labs", model = "LG RESU PRIME" })
 end
 
 function sendmyproperties()
@@ -58,11 +56,8 @@ function sendmytelemetry()
     end
     
     local tres=response.body
-    tres=string.gsub(tres, '<caption>BMS Data</caption><tr><th class=','')
-    tres=string.gsub(tres, '>Item</th><th class=','')
-    tres=string.gsub(tres, '\"text','')
-    tres=string.gsub(tres, '%-center\"','')
-    tres=string.gsub(tres, '>Value</th></tr>', '{')
+    -- http results in a html block that needs to be converted to json
+    tres=string.gsub(tres, '<caption>BMS Data</caption><tr><th class=\"text%-center\">Item</th><th class=\"text%-center\">Value</th></tr>','{')
     tres=string.gsub(tres, '</td></tr><tr><td>', '", "')
     tres=string.gsub(tres, '<tr><td>',' "')
     tres=string.gsub(tres, '</td><td>','": "')
@@ -72,8 +67,10 @@ function sendmytelemetry()
     local deco=json.decode(tres)
     telemetry["battery_soc"] = tonumber(deco.SOC)/100
     telemetry["battery_power"]= tonumber(deco.Current)
+    local cur=tonumber(deco.Current)
     telemetry["battery_temp"]= tonumber(deco.Temperature)/10
     telemetry["lastresponse"]='All Good'
+    -- this should have the correct battery status but shows only 0x0001 no matter of state
     local tcur=tonumber(deco.OperationModeStatus);
     telemetry["battery_energy"]= tonumber(deco.SOH)
     telemetry["battery_voltage"]= tonumber(deco.AvgCellVoltage)/100
@@ -101,6 +98,16 @@ function sendmytelemetry()
     elseif (tcur==7) then
       telemetry["status"]='Idle'
     end
+
+-- fallback since OperationModeStatus does not work correctly
+    if (cur==0) then
+      telemetry["status"]='Standby'
+    elseif (cur>0) then
+      telemetry["status"]='Charging'
+    else
+      telemetry["status"]='Discharging'
+    end
+
     enapter.send_telemetry(telemetry)
   end
 end
