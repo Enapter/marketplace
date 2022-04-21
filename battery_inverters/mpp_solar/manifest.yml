@@ -5,8 +5,6 @@ icon: enapter-inverter-battery
 communication_module:
   product: ENP-RS232
   lua_file: firmware.lua
-  telemetry_preprocessor:
-    lua_file: telemetry.lua
 
 properties:
   model:
@@ -14,15 +12,33 @@ properties:
     type: string
   serial_num:
     display_name: Serial Number
-    type: integer
+    type: string
+  output_mode:
+    display_name: Output Mode
+    type: string
   fw_ver:
     display_name: Firmware version
     type: string
   protocol_ver:
     display_name: Protocol version
     type: string
-  connection_scheme:
-    display_name: Connection scheme
+  serial_num0:
+    display_name: Inverter 1 Serial Number
+    type: string
+  output_mode0:
+    display_name: Inverter 1 Output Mode
+    type: string
+  serial_num1:
+    display_name: Inverter 2 Serial Number
+    type: string
+  output_mode1:
+    display_name: Inverter 2 Output Mode
+    type: string
+  serial_num2:
+    display_name: Inverter 3 Serial Number
+    type: string
+  output_mode2:
+    display_name: Inverter 3 Output Mode
     type: string
 
 telemetry:
@@ -40,15 +56,15 @@ telemetry:
     display_name: Output Source Priority
     type: string
     enum:
-      - utility_first
-      - solar_first
-      - sbu_first
+      - "Utility first"
+      - "Solar first"
+      - "SBU first"
   charger_source_priority:
     display_name: Charger Source Priority
     type: string
     enum:
-      - utility_first
-      - solar_first
+      - "Utility first"
+      - "Solar first"
       - solar_and_utility
       - only_solar
   pv_input_power:
@@ -83,6 +99,10 @@ telemetry:
     display_name: Battery Voltage
     type: float
     unit: volt
+  battery_volt_scc:
+    display_name: Battery Voltage SCC
+    type: float
+    unit: volt
   battery_charge_amp:
     display_name: Battery Charge Current
     type: float
@@ -95,6 +115,10 @@ telemetry:
     display_name: Battery Capacity
     type: float
     unit: percent
+  dc_bus_volt:
+    display_name: DC Bus Voltage
+    type: float
+    unit: volt
   grid_volt:
     display_name: Grid Voltage
     type: float
@@ -103,6 +127,10 @@ telemetry:
     display_name: Grid Frequency
     type: float
     unit: percent
+  heat_sink_temperature:
+    display_name: Heat Sink Temperature
+    type: float
+    unit: celsius
 
 command_groups:
   inverter:
@@ -120,10 +148,10 @@ commands:
         type: string
         required: true
         enum:
-          - utility_first
-          - solar_first
-          - solar_and_utility
-          - only_solar
+          - "Utility first"
+          - "Solar first"
+          - "Solar and utility"
+          - "Only solar"
   set_output_priority:
     display_name: Set Output Priority
     group: inverter
@@ -136,12 +164,15 @@ commands:
         type: string
         required: true
         enum:
-          - utility_first
-          - solar_first
-          - sbu_first
+          - "Utility first"
+          - "Solar first"
+          - "SBU first"
 
-# yamllint disable rule:line-length
 alerts:
+  rules_unavailable:
+    severity: error
+    display_name: Rules Unavailable
+    description: Can not get data from device, rules applying is not working.
   inverter_fault:
     severity: error
     display_name: Inverter Fault
@@ -234,7 +265,7 @@ alerts:
     display_name: Battery Voltage High
   over_load_w:
     severity: warning
-    drisplay_name: Overload
+    display_name: Overload
 
 .cloud:
   category: batteries
@@ -255,7 +286,7 @@ alerts:
     - battery_charge_amp
     - battery_discharge_amp
     - battery_capacity
-      #- bus_volt #??
+    - dc_bus_volt
     - pv_input_amp
     - pv_input_volt
     - grid_volt
