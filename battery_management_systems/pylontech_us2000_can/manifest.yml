@@ -1,6 +1,6 @@
 blueprint_spec: device/1.0
 
-display_name: Pylontech Battery US200
+display_name: Pylontech Battery US200 (CAN)
 icon: enapter-battery-storage
 
 communication_module:
