@@ -1,5 +1,5 @@
 blueprint_spec: device/1.0
-display_name: ENP-DI7
+display_name: ENP-DI7 with alerts
 
 communication_module:
   product: ENP-DI7
@@ -15,59 +15,27 @@ properties:
   description:
     type: string
     display_name: Description
-
 telemetry:
-  status:
-    display_name: Status
-    type: string
-    enum:
-      - ok
-      - error
-  uptime:
-    display_name: Uptime
-    type: integer
-    unit: s
   di1_closed:
     display_name: DI1 is closed
-    type: boolean
-  di1_opened:
-    display_name: DI1 is opened
     type: boolean
   di2_closed:
     display_name: DI2 is closed
     type: boolean
-  di2_opened:
-    display_name: DI2 is opened
-    type: boolean
   di3_closed:
     display_name: DI3 is closed
-    type: boolean
-  di3_opened:
-    display_name: DI3 is opened
     type: boolean
   di4_closed:
     display_name: DI4 is closed
     type: boolean
-  di4_opened:
-    display_name: DI4 is opened
-    type: boolean
   di5_closed:
     display_name: DI5 is closed
-    type: boolean
-  di5_opened:
-    display_name: DI5 is opened
     type: boolean
   di6_closed:
     display_name: DI6 is closed
     type: boolean
-  di6_opened:
-    display_name: DI6 is opened
-    type: boolean
   di7_closed:
     display_name: DI7 is closed
-    type: boolean
-  di7_opened:
-    display_name: DI7 is opened
     type: boolean
   di1_counter:
     display_name: DI1 counter
@@ -120,24 +88,31 @@ telemetry:
     unit: s
 
 alerts:
-  DI1_read_closed_failed:
-    display_name: DI1 reading closed failed
-    severity: error
-  DI2_read_closed_failed:
-    display_name: DI2 reading closed failed
-    severity: error
-  DI3_read_closed_failed:
-    display_name: DI3 reading closed failed
-    severity: error
-  DI4_read_closed_failed:
-    display_name: DI4 reading closed failed
-    severity: error
-  DI5_read_closed_failed:
-    display_name: DI5 reading closed failed
-    severity: error
-  DI6_read_closed_failed:
-    display_name: DI6 reading closed failed
-    severity: error
-  DI7_read_closed_failed:
-    display_name: DI7 reading closed failed
-    severity: error
+  DI1_closed_alert:
+    display_name: DI1 is closed
+    description: Digital input 1 is closed
+    severity: info
+  DI2_closed_alert:
+    display_name: DI2 is closed
+    description: Digital input 2 is closed
+    severity: info
+  DI3_closed_alert:
+    display_name: DI3 is closed
+    description: Digital input 3 is closed
+    severity: info
+  DI4_closed_alert:
+    display_name: DI4 is closed
+    description: Digital input 4 is closed
+    severity: info
+  DI5_closed_alert:
+    display_name: DI5 is closed
+    description: Digital input 5 is closed
+    severity: info
+  DI6_closed_alert:
+    display_name: DI6 is closed
+    description: Digital input 6 is closed
+    severity: info
+  DI7_closed_alert:
+    display_name: DI7 is closed
+    description: Digital input 7 is closed
+    severity: info
