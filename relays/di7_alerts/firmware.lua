@@ -13,7 +13,7 @@ function send_telemetry ()
   for id = 1, 7 do
       local status, err = di7.is_closed(id)
       if status == nil then
-        enapter.log("Reading closed di"..id.." failed: "..di7.err_to_st(err))
+        enapter.log("Reading closed di"..id.." failed: "..di7.err_to_str(err))
       else
         telemetry["di"..id.."_closed"] = status
         if status == true then
@@ -22,7 +22,7 @@ function send_telemetry ()
       end
       local counter, reset_time, err = di7.read_counter(id)
       if counter == nil then
-        enapter.log("Reading counter di"..id.." failed: "..di7.err_to_st(err))
+        enapter.log("Reading counter di"..id.." failed: "..di7.err_to_str(err))
       else
         telemetry["di"..id.."_counter"] = counter
         telemetry["di"..id.."_reset_time"] = reset_time
