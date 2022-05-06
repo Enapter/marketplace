@@ -1,0 +1,143 @@
+blueprint_spec: device/1.0
+display_name: ENP-DI7
+
+communication_module:
+  product: ENP-DI7
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  description:
+    type: string
+    display_name: Description
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - error
+  uptime:
+    display_name: Uptime
+    type: integer
+    unit: s
+  di1_closed:
+    display_name: DI1 is closed
+    type: boolean
+  di1_opened:
+    display_name: DI1 is opened
+    type: boolean
+  di2_closed:
+    display_name: DI2 is closed
+    type: boolean
+  di2_opened:
+    display_name: DI2 is opened
+    type: boolean
+  di3_closed:
+    display_name: DI3 is closed
+    type: boolean
+  di3_opened:
+    display_name: DI3 is opened
+    type: boolean
+  di4_closed:
+    display_name: DI4 is closed
+    type: boolean
+  di4_opened:
+    display_name: DI4 is opened
+    type: boolean
+  di5_closed:
+    display_name: DI5 is closed
+    type: boolean
+  di5_opened:
+    display_name: DI5 is opened
+    type: boolean
+  di6_closed:
+    display_name: DI6 is closed
+    type: boolean
+  di6_opened:
+    display_name: DI6 is opened
+    type: boolean
+  di7_closed:
+    display_name: DI7 is closed
+    type: boolean
+  di7_opened:
+    display_name: DI7 is opened
+    type: boolean
+  di1_counter:
+    display_name: DI1 counter
+    type: integer
+  di2_counter:
+    display_name: DI2 counter
+    type: integer
+  di3_counter:
+    display_name: DI3 counter
+    type: integer
+  di4_counter:
+    display_name: DI4 counter
+    type: integer
+  di5_counter:
+    display_name: DI5 counter
+    type: integer
+  di6_counter:
+    display_name: DI6 counter
+    type: integer
+  di7_counter:
+    display_name: DI7 counter
+    type: integer
+  di1_reset_time:
+    display_name: DI1 reset time
+    type: integer
+    unit: s
+  di2_reset_time:
+    display_name: DI2 reset time
+    type: integer
+    unit: s
+  di3_reset_time:
+    display_name: DI3 reset time
+    type: integer
+    unit: s
+  di4_reset_time:
+    display_name: DI4 reset time
+    type: integer
+    unit: s
+  di5_reset_time:
+    display_name: DI5 reset time
+    type: integer
+    unit: s
+  di6_reset_time:
+    display_name: DI6 reset time
+    type: integer
+    unit: s
+  di7_reset_time:
+    display_name: DI7 reset time
+    type: integer
+    unit: s
+
+alerts:
+  DI1_read_closed_failed:
+    display_name: DI1 reading closed failed
+    severity: error
+  DI2_read_closed_failed:
+    display_name: DI2 reading closed failed
+    severity: error
+  DI3_read_closed_failed:
+    display_name: DI3 reading closed failed
+    severity: error
+  DI4_read_closed_failed:
+    display_name: DI4 reading closed failed
+    severity: error
+  DI5_read_closed_failed:
+    display_name: DI5 reading closed failed
+    severity: error
+  DI6_read_closed_failed:
+    display_name: DI6 reading closed failed
+    severity: error
+  DI7_read_closed_failed:
+    display_name: DI7 reading closed failed
+    severity: error
