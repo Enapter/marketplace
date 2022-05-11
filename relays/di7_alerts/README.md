@@ -1,6 +1,6 @@
-# Digital Input Module DI7
+# Enapter Digital Input Module DI7
 
-This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **DI7 module** and allows you to track inputs' states with alerts. 
+This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **DI7 module** and allows you to track inputs' states with alerts.
 
 ## Connect to Enapter
 
