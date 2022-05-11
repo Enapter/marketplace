@@ -1,6 +1,6 @@
 # Digital Input Module DI7
 
-This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **DI7 module** 
+This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **DI7 module**
 
 ## Connect to Enapter
 
