@@ -8,5 +8,3 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
 - Use the [Enapter ENP-DI7](https://handbook.enapter.com/modules/ENP-DI7/ENP-DI7.html) module for physical connection. See [connection examples](https://handbook.enapter.com/modules/ENP-DI7/ENP-DI7.html#connection-example) in the module manual.
 - [Add ENP-DI7 to your site](https://handbook.enapter.com/software/mobile/android_mobile_app.html#adding-sites-and-devices) using the mobile app.
 - [Upload](https://developers.enapter.com/docs/tutorial/uploading-blueprint/) this blueprint to ENP-DI7.
-
-
