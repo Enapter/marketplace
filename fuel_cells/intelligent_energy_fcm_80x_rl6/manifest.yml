@@ -1,7 +1,7 @@
 blueprint_spec: device/1.0
 
 display_name: Control Relay for Intelligent Energy FCM 800 Series
-icon: enapter-module-din-1
+icon: enapter-module-din-2
 
 communication_module:
   product: ENP-RL6
