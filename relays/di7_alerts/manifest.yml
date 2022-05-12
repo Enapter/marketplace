@@ -18,7 +18,14 @@ properties:
   description:
     type: string
     display_name: Description
+
 telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - error
   di1_closed:
     display_name: DI1 is closed
     type: boolean
