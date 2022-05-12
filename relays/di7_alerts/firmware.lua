@@ -4,7 +4,7 @@ function main()
 end
 
 function send_properties()
-  enapter.send_properties({ vendor = 'Enapter', model = 'ENP-DI7', description ='Enapter ENP-DI7 with alerts for digital inputs'})
+  enapter.send_properties({ vendor = 'Enapter', model = 'ENP-DI7', description ='Enapter ENP-DI7 with input alerts'})
 end
 
 function send_telemetry ()
