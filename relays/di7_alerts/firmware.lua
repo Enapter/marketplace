@@ -11,7 +11,7 @@ function send_telemetry ()
   local telemetry = {}
   local alerts = {}
   local status = "ok"
-  
+
   for id = 1, 7 do
     local relay_status, err = di7.is_closed(id)
     if relay_status ~= nil then
@@ -23,7 +23,7 @@ function send_telemetry ()
       status = "error"
       enapter.log("Reading closed di"..id.." failed: "..di7.err_to_str(err))
     end
-    
+
     local counter, reset_time, err = di7.read_counter(id)
     if counter ~= nil then
       telemetry["di"..id.."_counter"] = counter
@@ -33,7 +33,7 @@ function send_telemetry ()
       enapter.log("Reading counter di"..id.." failed: "..di7.err_to_str(err))
     end
   end
-  
+
   telemetry["status"] = status
   telemetry["alerts"] = alerts
   enapter.send_telemetry(telemetry)
