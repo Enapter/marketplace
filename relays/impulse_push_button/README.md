@@ -1,6 +1,6 @@
 # Impulse Push Button via ENP-RL6
 
-This _Enapter Device Blueprint_ integrates **impulse push button** functionality based on [Enapter ENP-RL6](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html).
+This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **impulse push button** functionality based on [Enapter ENP-RL6](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html).
 
 Push buttons are used for the activation of automatic gate drives (openers), fans, dampers, air handling units etc. With the help of this blueprint it is possible to introduce **remote push button** functionality using the Enapter Mobile Application or the Enapter Cloud.
 
