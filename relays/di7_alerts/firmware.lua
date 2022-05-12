@@ -10,24 +10,28 @@ end
 function send_telemetry ()
   local telemetry = {}
   local alerts = {}
+  local status = "ok"
   for id = 1, 7 do
       local status, err = di7.is_closed(id)
-      if status == nil then
-        enapter.log("Reading closed di"..id.." failed: "..di7.err_to_str(err))
-      else
+      if status ~= nil then
         telemetry["di"..id.."_closed"] = status
-        if status == true then
-          table.insert(alerts,"DI"..id.."_closed_alert")
-        end
+          if status == true then
+            table.insert(alerts,"DI"..id.."_closed_alert")
+          end
+      else
+        status = "error"
+        enapter.log("Reading closed di"..id.." failed: "..di7.err_to_str(err))
       end
       local counter, reset_time, err = di7.read_counter(id)
-      if counter == nil then
-        enapter.log("Reading counter di"..id.." failed: "..di7.err_to_str(err))
-      else
+      if counter ~= nil then
         telemetry["di"..id.."_counter"] = counter
         telemetry["di"..id.."_reset_time"] = reset_time
+      else
+        status = "error"
+        enapter.log("Reading counter di"..id.." failed: "..di7.err_to_str(err))
       end
   end
+  telemetry["status"] = status
   telemetry["alerts"] = alerts
   enapter.send_telemetry(telemetry)
 end
