@@ -1,7 +1,7 @@
 blueprint_spec: device/1.0
 
 display_name: ENP-DI7 with alerts
-description:  Enapter ENP-DI7 with alerts for digital inputs
+description:  Enapter ENP-DI7 with input alerts
 icon: enapter-module-din-2
 
 communication_module:
