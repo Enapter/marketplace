@@ -1,6 +1,6 @@
 # SMA Sunny Boy/Tripower
 
-This _Enapter Device Blueprint_ integrates the **SMA Sunny Boy/Tripower** solar inverter via [Modbus TCP API](https://developers.enapter.com/docs/reference/vucm/modbustcp) implemented on the [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm)
+This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates the **SMA Sunny Boy/Tripower** solar inverter via [Modbus TCP API](https://developers.enapter.com/docs/reference/vucm/modbustcp) implemented on the [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm)
 
 Use the [Enapter Gateway](https://handbook.enapter.com/software/gateway/2.0.0/setup/) to run the Virtual UCM.
 
