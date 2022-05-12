@@ -15,9 +15,9 @@ function send_telemetry ()
       local relay_status, err = di7.is_closed(id)
       if relay_status ~= nil then
         telemetry["di"..id.."_closed"] = relay_status
-          if relay_status == true then
-            table.insert(alerts,"DI"..id.."_closed_alert")
-          end
+        if relay_status == true then
+          table.insert(alerts,"DI"..id.."_closed_alert")
+        end
       else
         status = "error"
         enapter.log("Reading closed di"..id.." failed: "..di7.err_to_str(err))
