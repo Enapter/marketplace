@@ -1,7 +1,7 @@
 blueprint_spec: device/1.0
 
 display_name: ENP-DI7 with alerts
-description: Blueprint for DI7 with alerts
+description:  Enapter ENP-DI7 with alerts for digital inputs
 icon: enapter-module-din-2
 
 communication_module:
@@ -129,3 +129,18 @@ alerts:
 
 .cloud:
   category: Sensors
+  mobile_charts:
+    - di1_counter
+    - di2_counter
+    - di3_counter
+    - di4_counter
+    - di5_counter
+    - di6_counter
+    - di7_counter
+    - di1_reset_time
+    - di2_reset_time
+    - di3_reset_time
+    - di4_reset_time
+    - di5_reset_time
+    - di6_reset_time
+    - di7_reset_time
