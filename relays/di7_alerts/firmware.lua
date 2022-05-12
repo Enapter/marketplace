@@ -19,7 +19,7 @@ function send_telemetry ()
             table.insert(alerts,"DI"..id.."_closed_alert")
           end
       else
-        relay_status = "error"
+        status = "error"
         enapter.log("Reading closed di"..id.." failed: "..di7.err_to_str(err))
       end
       local counter, reset_time, err = di7.read_counter(id)
@@ -27,7 +27,7 @@ function send_telemetry ()
         telemetry["di"..id.."_counter"] = counter
         telemetry["di"..id.."_reset_time"] = reset_time
       else
-        relay_status = "error"
+        status = "error"
         enapter.log("Reading counter di"..id.." failed: "..di7.err_to_str(err))
       end
   end
