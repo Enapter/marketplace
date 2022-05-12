@@ -44,6 +44,12 @@ stds.ucm = {
     },
     ai4 = {
       fields = {'read_volts', 'read_milliamps', 'err_to_str'}
+    },
+    di7 = {
+      fields = {
+        'is_closed', 'is_opened', 'read_counter',
+        'set_counter', 'set_debounce', 'err_to_str'
+      }
     }
   }
 }

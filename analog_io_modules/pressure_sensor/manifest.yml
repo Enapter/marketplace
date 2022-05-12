@@ -5,7 +5,7 @@ description: Analog pressure sensor based on voltage signal.
 icon: enapter-gauge
 
 communication_module:
-  product: ENP-AI4
+  product: ENP-AI4-50V
   lua_file: firmware.lua
 
 properties:
