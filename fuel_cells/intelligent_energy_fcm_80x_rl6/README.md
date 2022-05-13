@@ -1,10 +1,15 @@
 # Control Relay for Intelligent Energy FCM 800 series
 
-This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **control relay for Intelligent Energy FCM 800 series** via the [Enapter rl6 library](https://developers.enapter.com/docs/reference/ucm/rl6).
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **control relay for Intelligent Energy FCM 800 series** via the [Enapter rl6 library](https://go.enapter.com/developers-enapter-rl6).
 
 This blueprint controls the fuel cell, while the [`intelligent_energy_fcm_801`](../intelligent_energy_fcm_801) or [`intelligent_energy_fcm_804`](../intelligent_energy_fcm_804) blueprint collects the fuel cell telemetry.
 
-Use the [Enapter ENP-RL6](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html) module for physical connection. See the [connection instructions](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html#connection-example) in the module manual.
+## Connect to Enapter
+
+- Sign up to the Enapter Cloud using the [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
+- Use the [Enapter ENP-RL6](https://go.enapter.com/handbook-enp-rl6) module for physical connection. See [connection instructions](https://go.enapter.com/handbook-enp-rl6-conn) in the module manual.
+- [Add ENP-RL6 to your site](https://go.enapter.com/handbook-mobile-app) using the mobile app.
+- [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to ENP-RL6.
 
 ## Relay Channels Connection
 
@@ -19,6 +24,6 @@ ENP-RL6 is connected to the D-type connector of Intelligent Energy FCM 800 serie
 
 ## References
 
-- [Intelligent Energy FCM 802 technical specification](https://www.intelligent-energy.com/uploads/product_docs/IE-Lift_802.pdf)
-- [Intelligent Energy FCM 802/804 User Manual](https://www.intelligent-energy.com/uploads/product_guides/FCM_802__804_User_Manual_WEB.pdf)
-- [Intelligent Energy FCM 801 User Manual](https://www.intelligent-energy.com/uploads/product_guides/FCM_801_User_Manual_2022_l6kbzNC.pdf)
+- [Intelligent Energy FCM 802 technical specification](https://go.enapter.com/intelligent-energy-fcm802-spec)
+- [Intelligent Energy FCM 802/804 User Manual](https://go.enapter.com/intelligent-energy-user-manual)
+- [Intelligent Energy FCM 801 User Manual](https://go.enapter.com/intelligent-energy-fcm801-user-manual)

@@ -1,13 +1,13 @@
 # Normally Closed Contactor via ENP-RL6
 
-This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates a **normally closed contactor** based on [Enapter ENP-RL6](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html).
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates a **normally closed contactor** based on [Enapter ENP-RL6](https://go.enapter.com/handbook-enp-rl6).
 
 ## Connect to Enapter
 
-- Sign up to the Enapter Cloud using [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
-- Use the [Enapter ENP-RL6](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html) module for physical connection. See the [connection instructions.](https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html#connection-example)
-- [Add ENP-RL6 to your site](https://handbook.enapter.com/software/mobile/android_mobile_app.html#adding-sites-and-devices) using the mobile app.
-- [Upload](https://developers.enapter.com/docs/tutorial/uploading-blueprint/) this blueprint to ENP-RL6.
+- Sign up to the Enapter Cloud using the [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
+- Use the [Enapter ENP-RL6](https://go.enapter.com/handbook-enp-rl6) module for physical connection. See [connection instructions](https://go.enapter.com/handbook-enp-rl6-conn) in the module manual.
+- [Add ENP-RL6 to your site](https://go.enapter.com/handbook-mobile-app) using the mobile app.
+- [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to ENP-RL6.
 
 ## Used Relay Channels
 
@@ -15,4 +15,4 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
 
 ## References
 
-- [Enapter ENP-RL6 Lua API](https://developers.enapter.com/docs/reference/ucm/rl6)
+- [Enapter ENP-RL6 Lua API](https://go.enapter.com/developers-enapter-rl6)
