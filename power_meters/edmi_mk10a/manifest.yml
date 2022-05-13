@@ -1,0 +1,220 @@
+blueprint_spec: device/1.0
+
+display_name: EDMI Mk10A
+description: Three Phase CT/WC Smart Meter
+icon: enapter-power-meter
+
+communication_module:
+  product: ENP-RS232
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: integer
+    display_name: Serial Number
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  total_power:
+    display_name: Total Power
+    type: float
+    unit: watt
+  total_current:
+    display_name: Total Current
+    type: float
+    unit: amp
+  voltage_a:
+    display_name: Phase A Voltage
+    type: float
+    unit: volt
+  current_a:
+    display_name: Phase A Current
+    type: float
+    unit: amp
+  phase_angle_a:
+    display_name: Phase A Angle
+    type: float
+    unit: degree
+  power_a:
+    display_name: Phase A Power
+    type: float
+    unit: watt
+  react_power_a:
+    display_name: Phase A Reactive Power
+    type: float
+    unit: VAr
+  app_power_a:
+    display_name: Phase A Apparent Power
+    type: float
+    unit: VA
+  voltage_b:
+    display_name: Phase B Voltage
+    type: float
+    unit: volt
+  current_b:
+    display_name: Phase B Current
+    type: float
+    unit: amp
+  phase_angle_b:
+    display_name: Phase B Angle
+    type: float
+    unit: degree
+  power_b:
+    display_name: Phase B Power
+    type: float
+    unit: watt
+  react_power_b:
+    display_name: Phase B Reactive Power
+    type: float
+    unit: VAr
+  app_power_b:
+    display_name: Phase B Apparent Power
+    type: float
+    unit: VA
+  voltage_c:
+    display_name: Phase C Voltage
+    type: float
+    unit: volt
+  current_c:
+    display_name: Phase C Current
+    type: float
+    unit: amp
+  phase_angle_c:
+    display_name: Phase C Angle
+    type: float
+    unit: degree
+  power_c:
+    display_name: Phase C Power
+    type: float
+    unit: watt
+  react_power_c:
+    display_name: Phase C Reactive Power
+    type: float
+    unit: VAr
+  app_power_c:
+    display_name: Phase C Apparent Power
+    type: float
+    unit: VA
+  frequency:
+    display_name: Frequency
+    type: float
+    unit: hertz
+  power_factor:
+    display_name: Power Factor
+    type: float
+  angle_between_ab:
+    display_name: Angle between AB phases
+    type: float
+    unit: degree
+  angle_between_ac:
+    display_name: Angle between AC phases
+    type: float
+    unit: degree
+  tou_delivered_wh:
+    display_name: Delivered TOU (Wh)
+    type: float
+    unit: watth
+  tou_delivered_varh:
+    display_name: Delivered TOU (VArh)
+    type: float
+    unit: varh
+  tou_received_wh:
+    display_name: Received TOU (Wh)
+    type: float
+    unit: watth
+  tou_received_varh:
+    display_name: Received TOU (VArh)
+    type: float
+    unit: varh
+  voltage_ab:
+    display_name: Voltage between A and B phases
+    type: float
+    unit: volt
+  voltage_bc:
+    display_name: Voltage between B and C phases
+    type: float
+    unit: volt
+  voltage_ca:
+    display_name: Voltage between C and A phases
+    type: float
+    unit: volt
+  thd_a:
+    display_name: Phase A THD
+    type: float
+  current_thd_a:
+    display_name: Phase A THD Current
+    type: float
+    unit: amp
+  thd_b:
+    display_name: Phase B THD
+    type: float
+  current_thd_b:
+    display_name: Phase B THD Current
+    type: float
+    unit: amp
+  thd_c:
+    display_name: Phase C THD
+    type: float
+  current_thd_c:
+    display_name: Phase C THD Current
+    type: float
+    unit: amp
+  power_factor_a:
+    display_name: Phase A power factor
+    type: float
+  power_factor_b:
+    display_name: Phase B power factor
+    type: float
+  power_factor_c:
+    display_name: Phase C power factor
+    type: float
+  date:
+    display_name: Date
+    type: integer
+  time:
+    display_name: Time
+    type: integer
+
+alerts:
+  communication_failed:
+    display_name: Modbus Communication Failed
+    description: |
+      'Please check:'
+      1. If device is powered off.
+      2. Wiring between device and ENP-RS232
+      3. Communication parameters
+    severity: error
+  init_error:
+    display_name: RS232 Initialization Failed
+    description: >
+      Initialization of RS232 interface is failed.
+      Please contact support@enapter.com.
+    severity: error
+
+.cloud:
+  category: power_meters
+  mobile_main_chart: total power
+  mobile_charts:
+    - power_a
+    - power_b
+    - power_c
+    - total_power
+    - voltage_a
+    - voltage_b
+    - voltage_c
+    - current_a
+    - current_b
+    - current_c
+    - frequency
+    - power_factor
