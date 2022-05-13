@@ -1,6 +1,6 @@
 # Kilowatt Labs Centauri Energy Server
 
-This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates the **Kilowatt Labs Centauri Energy Server** - a power electronics hardware and software platform that delivers utility grade power from any combination of DC or AC sources, including 100% renewable generation and storage - via [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) over the [RS-485 communication interface](https://go.enapter.com/developers-enapter-rs485)
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates the **Kilowatt Labs Centauri Energy Server** - a power electronics hardware and software platform that delivers utility grade power from any combination of DC or AC sources, including 100% renewable generation and storage - via [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) over the [RS-485 communication interface](https://go.enapter.com/developers-enapter-rs485).
 
 ## Connect to Enapter
 

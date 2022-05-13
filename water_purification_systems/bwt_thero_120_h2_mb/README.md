@@ -1,6 +1,6 @@
 # BWT Thero 120 H2 MB
 
-This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **BWT Thero 120 H2 MB** - ultra compact reverse osmosis cartridge system - via [Modbus TCP](https://go.enapter.com/developers) implemented on [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm).
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **BWT Thero 120 H2 MB** - ultra compact reverse osmosis cartridge system - via [Modbus TCP](https://go.enapter.com/developers-modbustcp) implemented on [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm).
 
 ## Connect to Enapter
 

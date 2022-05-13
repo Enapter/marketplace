@@ -1,8 +1,6 @@
 # Pylontech US200 (RS485)
 
-This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Pylontech US2000** lithium battery control and monitoring via the [RS-485 communication interface](https://go.enapter.com/developers-enapter-rs485) The device can also support the CAN communication interface (configured by vendor).
-
-Use the [Enapter ENP-RS485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html) module for physical connection. See the [connection instructions](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html#connection-examples) in the module manual.
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Pylontech US2000** lithium battery control and monitoring via the [RS-485 communication interface](https://go.enapter.com/developers-enapter-rs485). The device can also support the CAN communication interface (configured by vendor).
 
 ## Connect to Enapter
 
