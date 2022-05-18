@@ -1,13 +1,14 @@
 # Pylontech US2000 (CAN bus)
 
-This _Enapter Device Blueprint_ integrates **Pylontech US2000** lithium battery control and monitoring via [CAN bus](https://developers.enapter.com/docs/reference/ucm/can). The device can also support the RS-485 and RS-232 communication interfaces (configured by vendor).
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Pylontech US2000** lithium battery control and monitoring via [CAN bus](https://go.enapter.com/developers-enp-can) The device can also support the RS-485 and RS-232 communication interfaces (configured by vendor).
 
-Use the [Enapter ENP-CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html) module for physical connection. See the [connection instructions](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html#connection-examples) in the module manual.
+## Connect to Enapter
 
-## CAN bus Communication Interface Parameters
-
-- Baud rate: `500` kbps.
+- Sign up to the Enapter Cloud using the [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
+- Use the [Enapter ENP-CAN](https://go.enapter.com/handbook-enp-can) module for physical connection. See [connection instructions](https://go.enapter.com/handbook-enp-can-conn) in the module manual.
+- [Add ENP-CAN to your site](https://go.enapter.com/handbook-mobile-app) using the mobile app.
+- [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to ENP-CAN.
 
 ## References
 
-- [Pylontech US2000 product page](http://en.pylontech.com.cn/pro_detail.aspx?id=114&cid=23)
+- [Pylontech US2000 product page](https://go.enapter.com/pylontech)

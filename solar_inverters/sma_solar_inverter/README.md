@@ -1,19 +1,20 @@
 # SMA Sunny Boy/Tripower
 
-This _Enapter Device Blueprint_ integrates the **SMA Sunny Boy/Tripower** solar inverter via [Modbus TCP API](https://developers.enapter.com/docs/reference/vucm/modbustcp) implemented on the [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm)
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates the **SMA Sunny Boy/Tripower** solar inverter via [Modbus TCP API](https://go.enapter.com/developers-modbustcp) implemented on the [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm).
 
-Use the [Enapter Gateway](https://handbook.enapter.com/software/gateway/2.0.0/setup/) to run the Virtual UCM.
+## Connect to Enapter
 
-## Setup and Connection
-
-You will need the following information about your SMA Sunny Boy/Tripower:
-
-- Modbus IP address (use either static IP or DHCP reservation);
-- Modbus Unit ID (can be found in the SMA Web interface).
+- Sign up to Enapter Cloud using [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
+- Use [Enapter Gateway](https://go.enapter.com/handbook-gateway-setup) to run Virtual UCM.
+- Create [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm).
+- [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to Enapter Virtual UCM.
+- Use `Configure` command in Enapter mobile app or Web to set up SMA Sunny Boy/Tripower communication parameters:
+  - _Modbus IP address_, use either static IP or DHCP reservation. Check your network router manual for configuration instructions.
+  - _Modbus Unit ID_, can be found in SMA Web interface.
 
 ## References
 
-- [SMA Sunny Tripower 17000TL-10 data sheet](https://files.sma.de/downloads/STPTL10121517-DUS122614W.pdf)
-- [SMA Sunny Tripower 17000TL-10 Modbus Interface](https://files.sma.de/downloads/SMA_Modbus-de-en_V25.zip)
-- [SMA Sunny Tripower 17000TL-10 Parameter List](https://files.sma.de/downloads/PARAMETER-HTML_STP10-17TL-10_V10.zip)
-- [SMA Sunny Tripower 17000TL-10 SunSpec Modbus Interface](https://files.sma.de/downloads/SunSpec_Modbus-de-en_V22.zip)
+- [SMA Sunny Tripower 17000TL-10 data sheet](https://go.enapter.com/sma-sunny-tripower-17000tl10-datasheet)
+- [SMA Sunny Tripower 17000TL-10 Modbus Interface](https://go.enapter.com/sma-modbus-zip)
+- [SMA Sunny Tripower 17000TL-10 Parameter List](https://go.enapter.com/sma-paramaters-zip)
+- [SMA Sunny Tripower 17000TL-10 SunSpec Modbus Interface](https://go.enapter.com/sma-sunspec-modbus-v22-zip)
