@@ -1,16 +1,14 @@
 # SRNE ML2440
 
-This _Enapter Device Blueprint_ integrates the **SRNE ML2440** Solar Panel Regulator Charge Controller with [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus) over the [RS-232 communication interface](https://developers.enapter.com/docs/reference/ucm/rs232).
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates the **SRNE ML2440** Solar Panel Regulator Charge Controller with [Modbus RTU](https://go.enapter.com/developers-enapter-modbus) over the [RS-232 communication interface](https://go.enapter.com/developers-enapter-rs232).
 
-Use the [Enapter ENP-RS232](https://handbook.enapter.com/modules/ENP-RS232/ENP-RS232.html) module for physical connection. See the [connection instructions](https://handbook.enapter.com/modules/ENP-RS232/ENP-RS232.html#connection-example) in the module manual.
+## Connect to Enapter
 
-## RS-232 Communication Interface Parameters
-
-- Baud rate: `9600` bps;
-- Data bits: `8`;
-- Parity: `N` (no parity);
-- Stop bits: `1`.
+- Sign up to the Enapter Cloud using the [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
+- Use the [Enapter ENP-RS232](https://go.enapter.com/handbook-enp-rs232) module for physical connection. See [connection instructions](https://go.enapter.com/handbook-enp-rs232-conn) in the module manual.
+- [Add ENP-RS232 to your site](https://go.enapter.com/handbook-mobile-app) using the mobile app.
+- [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to ENP-RS232.
 
 ## References
 
-- [SRNE ML2440 product page](http://www.srneenergy.com/sale-12723837-40a-mppt-solar-panel-regulator-charge-controller-ml2440-with-100v-input.html)
+- [SRNE ML2440 product page](https://go.enapter.com/srne-ml2440)
