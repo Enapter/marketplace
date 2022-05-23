@@ -16,9 +16,6 @@ function main()
 
 end
 
-function registration()
-end
-
 function sendmyproperties()
   local properties = {}
   local values, err = config.read_all()
@@ -36,8 +33,6 @@ function sendmyproperties()
 end
 
 function sendmytelemetry()
-  local json = require('json')
-
   local values, err = config.read_all()
   if err then
     enapter.log('cannot read config: '..tostring(err), 'error')
@@ -49,15 +44,15 @@ function sendmytelemetry()
     local response, err = http.get('http://'..ip_address..'/getbmsdata')
     if err then
       enapter.log('Cannot do request: '..err, 'error')
-      return 
+      return
     elseif response.code ~= 200 then
       enapter.log('Request returned non-OK code: '..response.code, 'error')
-      return 
+      return
     end
-    
     local tres=response.body
     -- http results in a html block that needs to be converted to json
-    tres=string.gsub(tres, '<caption>BMS Data</caption><tr><th class=\"text%-center\">Item</th><th class=\"text%-center\">Value</th></tr>','{')
+    tres=string.gsub(tres, '<caption>BMS Data</caption><tr>','')
+    tres=string.gsub(tres, '<th class=\"text%-center\">Item</th><th class=\"text%-center\">Value</th></tr>','{')
     tres=string.gsub(tres, '</td></tr><tr><td>', '", "')
     tres=string.gsub(tres, '<tr><td>',' "')
     tres=string.gsub(tres, '</td><td>','": "')
