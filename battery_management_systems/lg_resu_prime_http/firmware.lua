@@ -7,8 +7,8 @@ IP_ADDRESS_CONFIG = 'ip_address'
 MYModel=''
 
 function main()
-  scheduler.add(30000, sendmyproperties)
-  scheduler.add(15000, sendmytelemetry)
+  scheduler.add(30000, send_my_properties)
+  scheduler.add(15000, send_my_telemetry)
 
   config.init({
     [IP_ADDRESS_CONFIG] = { type = 'string', required = true }
@@ -16,7 +16,7 @@ function main()
 
 end
 
-function sendmyproperties()
+function send_my_properties()
   local properties = {}
   local values, err = config.read_all()
   if err then
@@ -26,13 +26,13 @@ function sendmyproperties()
       properties[name] = val
     end
   end
-  if (MYModel~='') then
-    properties['model']=MYModel
+  if (MYModel ~= '') then
+    properties['model'] = MYModel
   end
   enapter.send_properties(properties)
 end
 
-function sendmytelemetry()
+function send_my_telemetry()
   local values, err = config.read_all()
   if err then
     enapter.log('cannot read config: '..tostring(err), 'error')
@@ -70,37 +70,37 @@ function sendmytelemetry()
     telemetry["battery_energy"]= tonumber(deco.SOH)
     telemetry["battery_voltage"]= tonumber(deco.AvgCellVoltage)/100
 
-    if (MYModel=='') then
+    if (MYModel == '') then
       if (tonumber(deco.SOH)==10000) then
-        MYModel="LG RESU10 Prime"
+        MYModel = "LG RESU10 Prime"
       else
-        MYModel="LG RESU16 Prime"
+        MYModel = "LG RESU16 Prime"
       end
     end
 
-    if (tcur==0) then
-      telemetry["status"]='Off'
-    elseif (tcur==1) then
-      telemetry["status"]='Standby'
-    elseif (tcur==2) then
-      telemetry["status"]='Initializing'
-    elseif (tcur==3) then
-      telemetry["status"]='Charging'
-    elseif (tcur==4) then
-      telemetry["status"]='Discharging'
-    elseif (tcur==5) then
-      telemetry["status"]='Fault'
-    elseif (tcur==7) then
-      telemetry["status"]='Idle'
+    if (tcur == 0) then
+      telemetry["status"] = 'Off'
+    elseif (tcur == 1) then
+      telemetry["status"] = 'Standby'
+    elseif (tcur == 2) then
+      telemetry["status"] = 'Initializing'
+    elseif (tcur == 3) then
+      telemetry["status"] = 'Charging'
+    elseif (tcur == 4) then
+      telemetry["status"] = 'Discharging'
+    elseif (tcur == 5) then
+      telemetry["status"] = 'Fault'
+    elseif (tcur == 7) then
+      telemetry["status"] = 'Idle'
     end
 
 -- fallback since OperationModeStatus does not work correctly
     if (cur==0) then
-      telemetry["status"]='Standby'
+      telemetry["status"] = 'Standby'
     elseif (cur>0) then
-      telemetry["status"]='Charging'
+      telemetry["status"] = 'Charging'
     else
-      telemetry["status"]='Discharging'
+      telemetry["status"] = 'Discharging'
     end
 
     enapter.send_telemetry(telemetry)

@@ -23,12 +23,12 @@ telemetry:
     display_name: State of Charge
     description: Current State of Charge
     type: float
-    unit: precentage
+    unit: percent
   battery_energy:
     display_name: Battery Energy
     description: Amount Energy of the Battery
     type: float
-    unit: watts
+    unit: watt
   battery_voltage:
     display_name: Battery Voltage
     type: float
@@ -37,7 +37,7 @@ telemetry:
     display_name: Power Flow
     description: Amount of power flowing in or out of the battery
     type: float
-    unit: watts
+    unit: watt
   battery_temp:
     display_name: Battery Temperature
     description: Current temperature of the battery
@@ -77,7 +77,7 @@ commands:
     display_name: Configure Connection
     group: connection
     ui:
-      icon: wrench-outline
+      icon: write_configuration
     arguments:
       ip_address:
         display_name: IP Address
@@ -88,7 +88,7 @@ commands:
     display_name: Read Connection Config
     group: connection
     ui:
-      icon: wrench-outline
+      icon: read_configuration
 
 .cloud:
   category: batteries
