@@ -77,7 +77,7 @@ commands:
     display_name: Configure Connection
     group: connection
     ui:
-      icon: write_configuration
+      icon: file-settings-outline
     arguments:
       ip_address:
         display_name: IP Address
@@ -88,7 +88,7 @@ commands:
     display_name: Read Connection Config
     group: connection
     ui:
-      icon: read_configuration
+      icon: file-settings-outline
 
 .cloud:
   category: batteries

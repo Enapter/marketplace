@@ -4,7 +4,7 @@ json = require 'json'
 -- in `write_configuration` command arguments in manifest.yml
 IP_ADDRESS_CONFIG = 'ip_address'
 
-MYModel=''
+MYModel = ''
 
 function main()
   scheduler.add(30000, send_my_properties)
@@ -49,29 +49,29 @@ function send_my_telemetry()
       enapter.log('Request returned non-OK code: '..response.code, 'error')
       return
     end
-    local tres=response.body
+    local tres = response.body
     -- http results in a html block that needs to be converted to json
-    tres=string.gsub(tres, '<caption>BMS Data</caption><tr>','')
-    tres=string.gsub(tres, '<th class=\"text%-center\">Item</th><th class=\"text%-center\">Value</th></tr>','{')
-    tres=string.gsub(tres, '</td></tr><tr><td>', '", "')
-    tres=string.gsub(tres, '<tr><td>',' "')
-    tres=string.gsub(tres, '</td><td>','": "')
-    tres=string.gsub(tres, '</td></tr>', '" }')
+    tres = string.gsub(tres, '<caption>BMS Data</caption><tr>','')
+    tres = string.gsub(tres, '<th class=\"text%-center\">Item</th><th class=\"text%-center\">Value</th></tr>','{')
+    tres = string.gsub(tres, '</td></tr><tr><td>', '", "')
+    tres = string.gsub(tres, '<tr><td>',' "')
+    tres = string.gsub(tres, '</td><td>','": "')
+    tres = string.gsub(tres, '</td></tr>', '" }')
     --enapter.log('Request succeeded: '..tres, 'info')
 
-    local deco=json.decode(tres)
+    local deco = json.decode(tres)
     telemetry["battery_soc"] = tonumber(deco.SOC)/100
-    telemetry["battery_power"]= tonumber(deco.Current)
-    local cur=tonumber(deco.Current)
-    telemetry["battery_temp"]= tonumber(deco.Temperature)/10
-    telemetry["lastresponse"]='All Good'
+    telemetry["battery_power"] = tonumber(deco.Current)
+    local cur = tonumber(deco.Current)
+    telemetry["battery_temp"] = tonumber(deco.Temperature)/10
+    telemetry["lastresponse"] = 'All Good'
     -- this should have the correct battery status but shows only 0x0001 no matter of state
-    local tcur=tonumber(deco.OperationModeStatus);
-    telemetry["battery_energy"]= tonumber(deco.SOH)
-    telemetry["battery_voltage"]= tonumber(deco.AvgCellVoltage)/100
+    local tcur = tonumber(deco.OperationModeStatus);
+    telemetry["battery_energy"] = tonumber(deco.SOH)
+    telemetry["battery_voltage"] = tonumber(deco.AvgCellVoltage)/100
 
     if (MYModel == '') then
-      if (tonumber(deco.SOH)==10000) then
+      if (tonumber(deco.SOH) == 10000) then
         MYModel = "LG RESU10 Prime"
       else
         MYModel = "LG RESU16 Prime"
@@ -95,9 +95,9 @@ function send_my_telemetry()
     end
 
 -- fallback since OperationModeStatus does not work correctly
-    if (cur==0) then
+    if (cur == 0) then
       telemetry["status"] = 'Standby'
-    elseif (cur>0) then
+    elseif (cur > 0) then
       telemetry["status"] = 'Charging'
     else
       telemetry["status"] = 'Discharging'
