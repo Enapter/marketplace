@@ -1,0 +1,120 @@
+blueprint_spec: device/1.0
+
+display_name: Demo Fuel Cell
+icon: enapter-fuel-cell
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: string
+    display_name: Serial Number
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - idle
+      - running
+      - error
+  voltage:
+    type: float
+    unit: V
+    display_name: Voltage
+  amperage:
+    type: float
+    unit: A
+    display_name: Amperage
+  power:
+    type: float
+    unit: W
+    display_name: Power
+  production_rate:
+    type: float
+    unit: "%"
+    display_name: Production Rate
+  anode_pressure:
+    type: float
+    unit: mbar
+    display_name: Anode Pressure
+  run_hours:
+    type: float
+    unit: h
+    display_name: Run Hours
+  total_run_energy:
+    type: float
+    unit: kWh
+    display_name: Total Run Energy
+
+alerts:
+  anode_over_pressure:
+    display_name: Anode Over Pressure
+    description: |
+      Anode pressure is too high. Please check the pressure regulator or contact our support.
+    severity: error
+    code: A01
+
+command_groups:
+  fc:
+    display_name: Fuel Cell
+  alerts:
+    display_name: Alerts
+commands:
+  start:
+    display_name: Start
+    group: fc
+    ui:
+      quick_access: true
+  stop:
+    display_name: Stop
+    group: fc
+    ui:
+      quick_access: true
+  configure:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: fc
+    ui:
+      quick_access: true
+    arguments:
+      production_rate:
+        display_name: Production Rate
+        description: The target production rate in percent
+        type: integer
+        min: 0
+        max: 100
+  read_configuration:
+    display_name: Read Configuration
+    group: fc
+  enable_alert:
+    display_name: Enable Alert
+    group: alerts
+    ui:
+      quick_access: true
+  disable_alert:
+    display_name: Disable Alert
+    group: alerts
+    ui:
+      quick_access: true
+
+.cloud:
+  category: fuel_cells
+  mobile_main_chart: power
+  mobile_telemetry:
+    - power
+    - production_rate
+    - anode_pressure
+    - run_hours
+    - total_run_energy
+  mobile_charts:
+    - power
+    - anode_pressure
