@@ -1,7 +1,7 @@
 blueprint_spec: device/1.0
 
 display_name: Tesla Powerwall
-icon: enapter-inverter-battery
+icon: enapter-wall-battery-storage
 
 communication_module:
   product: ENP-VIRTUAL
