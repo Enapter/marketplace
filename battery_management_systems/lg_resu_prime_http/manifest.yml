@@ -77,13 +77,18 @@ commands:
     display_name: Configure Connection
     group: connection
     ui:
-      icon: file-settings-outline
+      icon: file-document-edit-outline
     arguments:
       ip_address:
         display_name: IP Address
         description: IP address of the LG Prime Battery
         type: string
         required: true
+  read_configuration:
+    display_name: Read Connection Config
+    group: connection
+    ui:
+      icon: file-settings-outline
 
 .cloud:
   category: batteries
