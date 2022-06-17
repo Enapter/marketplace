@@ -84,6 +84,11 @@ commands:
         description: IP address of the LG Prime Battery
         type: string
         required: true
+   read_configuration:
+    display_name: Read Connection Config
+    group: connection
+    ui:
+      icon: file-settings-outline
 
 .cloud:
   category: batteries
