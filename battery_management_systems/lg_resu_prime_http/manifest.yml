@@ -1,0 +1,109 @@
+blueprint_spec: device/1.0
+display_name: LG RESU Prime
+icon: enapter-battery-storage
+
+communication_modules:
+  eth:
+    product: ENP-VIRTUAL
+    lua_file: firmware.lua
+
+properties:
+  model:
+    display_name: Device Model
+    type: string
+    enum:
+      - LG RESU10 Prime
+      - LG RESU16 Prime
+  ip_address:
+    display_name: IP Address
+    type: string
+
+telemetry:
+  battery_soc:
+    display_name: State of Charge
+    description: Current State of Charge
+    type: float
+    unit: percent
+  battery_energy:
+    display_name: Battery Energy
+    description: Amount Energy of the Battery
+    type: float
+    unit: watt
+  battery_voltage:
+    display_name: Battery Voltage
+    type: float
+    unit: volt
+  battery_power:
+    display_name: Power Flow
+    description: Amount of power flowing in or out of the battery
+    type: float
+    unit: watt
+  battery_temp:
+    display_name: Battery Temperature
+    description: Current temperature of the battery
+    type: float
+    unit: celsius
+  status:
+    display_name: Battery status
+    type: string
+    enum:
+      - 'Off'
+      - Standby
+      - Initializing
+      - Charging
+      - Discharging
+      - Fault
+      - Idle
+  lastresponse:
+    display_name: Last Response
+    description: Last Response from battery
+    type: string
+
+alerts:
+  lowbattery:
+    severity: error
+    code: E001
+    display_name: Low battery
+    description: Battery has less then 10% load
+
+command_groups:
+  connection:
+    display_name: Connection
+  internals:
+    display_name: Internals
+
+commands:
+  # Connection Config
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure Connection
+    group: connection
+    ui:
+      icon: file-settings-outline
+    arguments:
+      ip_address:
+        display_name: IP Address
+        description: IP address of the LG Prime Battery
+        type: string
+        required: true
+  read_configuration:
+    display_name: Read Config
+    group: internals
+    ui:
+      icon: file-settings-outline
+
+.cloud:
+  category: batteries
+  mobile_main_chart: battery_soc
+  mobile_telemetry:
+    - battery_soc
+    - battery_power
+    - battery_temp
+    - battery_energy
+    - battery_voltage
+    - operation_mode
+  mobile_charts:
+    - battery_soc
+    - battery_power
+    - battery_temp
+    - battery_energy
