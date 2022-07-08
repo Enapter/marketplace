@@ -837,3 +837,11 @@ alerts:
     - bat_soc
     - bat_volt
     - bat_amp
+
+license: MIT  
+author: enapter # имя пользователя github
+contributors:
+  - anataty
+support:
+  url: "https://enapter.com/support"
+  email: "support@enapter.com"
