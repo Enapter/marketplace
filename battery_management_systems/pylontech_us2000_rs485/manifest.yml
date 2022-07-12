@@ -80,3 +80,10 @@ telemetry:
 
 .cloud:
   category: batteries
+
+license: MIT  
+author: enapter # имя пользователя github
+contributors:
+  - anataty
+support:
+  url: "https://enapter.com/support"

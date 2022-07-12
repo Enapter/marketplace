@@ -142,3 +142,10 @@ alerts:
     - soc
     - voltage
     - total_current
+
+license: MIT  
+author: enapter # имя пользователя github
+contributors:
+  - anataty
+support:
+  email: "support@enapter.com"
