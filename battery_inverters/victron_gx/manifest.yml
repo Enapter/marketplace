@@ -1,0 +1,397 @@
+blueprint_spec: device/1.0
+
+display_name: Victron MultiPlus
+icon: enapter-inverter-battery
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  ip_address:
+    display_name: IP Address
+    type: string
+  vebus_unit_id:
+    display_name: VE Bus Unit ID
+    type: integer
+    #mode2_unit_id:
+    #  display_name: Mode 2 Unit ID
+    #  type: integer
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - off
+      - low_power
+      - fault
+      - bulk
+      - absorption
+      - float
+      - storage
+      - equalize
+      - passthru
+      - inverting
+      - power_assist
+      - power_supply
+      - bulk_protection
+      - connection_error
+  # read_uint16(telemetry, "alarm_low_battery", 45, 1)
+  battery_soc:
+    display_name: Battery State of Charge
+    type: float
+    unit: percent
+  grid_l1_power:
+    display_name: Phase 1 Grid Power
+    type: float
+    unit: watt
+  grid_l1_freq:
+    display_name: Phase 1 Grid Frequency
+    type: float
+    unit: hertz
+  grid_l1_voltage:
+    display_name: Phase 1 Grid Voltage
+    type: float
+    unit: volt
+  grid_l1_amperage:
+    display_name: Phase 1 Grid Amperage
+    type: float
+    unit: amp
+  ac_l1_power:
+    display_name: Phase 1 AC Power
+    type: float
+    unit: watt
+  ac_freq:
+    display_name: AC Frequency
+    type: float
+    unit: hertz
+  ac_l1_voltage:
+    display_name: Phase 1 AC Voltage
+    type: float
+    unit: volt
+  ac_l1_amperage:
+    display_name: Phase 1 AC Amperage
+    type: float
+    unit: amp
+  dc_voltage:
+    display_name: DC Voltage
+    type: float
+    unit: volt
+  dc_amperage:
+    display_name: DC Amperage
+    type: float
+    unit: amp
+  grid_l2_power:
+    display_name: Phase 2 Grid Power
+    type: float
+    unit: watt
+  grid_l2_freq:
+    display_name: Phase 2 Grid Frequency
+    type: float
+    unit: hertz
+  grid_l2_voltage:
+    display_name: Phase 2 Grid Voltage
+    type: float
+    unit: volt
+  grid_l2_amperage:
+    display_name: Phase 2 Grid Amperage
+    type: float
+    unit: amp
+  ac_l2_power:
+    display_name: Phase 2 AC Power
+    type: float
+    unit: watt
+  ac_l2_voltage:
+    display_name: Phase 2 AC Voltage
+    type: float
+    unit: volt
+  ac_l2_amperage:
+    display_name: Phase 2 AC Amperage
+    type: float
+    unit: amp
+  grid_l3_power:
+    display_name: Phase 3 Grid Power
+    type: float
+    unit: watt
+  grid_l3_freq:
+    display_name: Phase 3 Grid Frequency
+    type: float
+    unit: hertz
+  grid_l3_voltage:
+    display_name: Phase 3 Grid Voltage
+    type: float
+    unit: volt
+  grid_l3_amperage:
+    display_name: Phase 3 Grid Amperage
+    type: float
+    unit: amp
+  ac_l3_power:
+    display_name: Phase 3 AC Power
+    type: float
+    unit: watt
+  ac_l3_voltage:
+    display_name: Phase 3 AC Voltage
+    type: float
+    unit: volt
+  ac_l3_amperage:
+    display_name: Phase 3 AC Amperage
+    type: float
+    unit: amp
+
+command_groups:
+  config:
+    display_name: Configuration
+  connection:
+    display_name: Connection
+commands:
+  # Connection Config
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure Connection
+    group: connection
+    ui:
+      icon: file-settings-outline
+    arguments:
+      ip_address:
+        display_name: IP Address
+        description: IP address of the LG Prime Battery
+        type: string
+        required: true
+      vebus_unit_id:
+        display_name: VE Bus Unit ID
+        description: VE Bus Unit ID
+        type: integer
+        required: true
+      mode2_unit_id:
+        display_name: Mode 2 Unit ID
+        description: Mode 2 Unit ID
+        type: integer
+        required: true
+  read_configuration:
+    display_name: Read Config
+    group: connection
+    ui:
+      icon: file-settings-outline
+  read_inverter_charger_mode:
+    display_name: Read Inverter/Charger Mode
+    group: config
+    ui:
+      icon: lightning-bolt
+  switch_inverter_charger_mode:
+    display_name: Switch Inverter/Charger Mode
+    description: >
+      See Venus-OS manual for limitations, for example when VE.Bus
+      BMS or DMC is installed.
+    group: config
+    populate_values_command: read_inverter_charger_mode
+    ui:
+      icon: lightning-bolt
+      mobile_quick_access: true
+    arguments:
+      value:
+        display_name: Mode
+        type: string
+        enum:
+          - charger_only
+          - inverter_only
+          - 'on'
+          - 'off'
+
+  read_state_of_charge:
+    display_name: Read State of Charge
+    group: config
+    ui:
+      icon: car-battery
+  write_state_of_charge:
+    display_name: Write State of Charge
+    description: Writes VE.Bus state of charge (%).
+    group: config
+    populate_values_command: read_state_of_charge
+    ui:
+      icon: car-battery
+      mobile_quick_access: true
+    arguments:
+      value:
+        display_name: State of Charge (%)
+        description: Positive number between 0 and 100.
+        type: string
+
+  # read_mode2_maximum_inverter_power:
+  #   display_name: Read Maximum Inverter Power
+  #   group: config
+  #   ui:
+  #     icon: sine-wave
+  # write_mode2_maximum_inverter_power:
+  #   display_name: Write Maximum Inverter Power
+  #   description: Maximum power in Watt that the Multi will feed to the loads.
+  #   group: config
+  #   populate_values_command: read_mode2_maximum_inverter_power
+  #   ui:
+  #     icon: sine-wave
+  #     mobile_quick_access: true
+  #   arguments:
+  #     value:
+  #       display_name: Maximum Power
+  #       description: Any positive number. -1 for no limit.
+  #       type: string
+
+  read_mode2_grid_power_setpoint:
+    display_name: Read Grid Power Setpoint
+    group: config
+    ui:
+      icon: sine-wave
+  write_mode2_grid_power_setpoint:
+    display_name: Write Grid Power Setpoint
+    description: Maximum power in Watt that the Multi will feed to the loads.
+    group: config
+    populate_values_command: read_mode2_grid_power_setpoint
+    ui:
+      icon: sine-wave
+      mobile_quick_access: true
+    arguments:
+      value:
+        display_name: Maximum Power
+        description: Any positive number. -1 for no limit.
+        type: string
+
+  read_mode2_enable_charge:
+    display_name: Read Charger Status
+    group: config
+    ui:
+      icon: arrow-down-circle-outline
+  write_mode2_enable_charge:
+    display_name: Enable/Disable Charger
+    description: >
+      This setting may be used for time shifting.
+      For example by disabling charging the battery when feeding
+      back to the grid is profitable, and leaving battery capacity
+      for later.
+    group: config
+    populate_values_command: read_mode2_enable_charge
+    ui:
+      icon: arrow-down-circle-outline
+      mobile_quick_access: true
+    arguments:
+      value:
+        display_name: Value
+        type: string
+        enum:
+          - charge_disabled
+          - charge_enabled
+
+  read_mode2_enable_inverter:
+    display_name: Read Inverter Status
+    group: config
+    ui:
+      icon: arrow-up-circle-outline
+  write_mode2_enable_inverter:
+    display_name: Enable/Disable Inverter
+    group: config
+    populate_values_command: read_mode2_enable_inverter
+    ui:
+      icon: arrow-up-circle-outline
+      mobile_quick_access: true
+    arguments:
+      value:
+        display_name: Value
+        type: string
+        enum:
+          - inverter_disabled
+          - inverter_enabled
+
+  read_feedin_allowance:
+    display_name: Read Feed-in Allowance
+    group: config
+    ui:
+      icon: arrow-up-circle-outline
+  switch_feedin_allowance:
+    display_name: Switch Feed-in Allowance
+    description: >
+      ESS Mode 3 - Enables/Disables feedback.
+      Note that power setpoint will yield to this setting.
+    group: config
+    populate_values_command: read_feedin_allowance
+    ui:
+      icon: arrow-up-circle-outline
+      mobile_quick_access: true
+    arguments:
+      value:
+        display_name: Allowance
+        type: string
+        enum:
+          - feed_in_allowed
+          - feed_in_disabled
+
+  read_charge_allowance:
+    display_name: Read Charge Allowance
+    group: config
+    ui:
+      icon: arrow-down-circle-outline
+  switch_charge_allowance:
+    display_name: Switch Charge Allowance
+    description: >
+      ESS Mode 3 - Enables/Disables charge.
+      Note that power setpoint will yield to this setting.
+    group: config
+    populate_values_command: read_charge_allowance
+    ui:
+      icon: arrow-down-circle-outline
+      mobile_quick_access: true
+    arguments:
+      value:
+        display_name: Allowance
+        type: string
+        enum:
+          - charge_allowed
+          - charge_disabled
+
+  read_power_setpoints:
+    display_name: Read Power Setpoints
+    group: config
+    ui:
+      icon: lightning-bolt
+  write_power_setpoints:
+    display_name: Write Power Setpoints
+    description: |
+      ESS Mode 3 - Instructs the MultiPlus to charge/discharge
+      with giving power. Negative = discharge.
+    group: config
+    populate_values_command: read_power_setpoints
+    ui:
+      icon: lightning-bolt
+      mobile_quick_access: true
+    arguments:
+      phase_1:
+        display_name: Phase 1
+        type: string
+      phase_2:
+        display_name: Phase 2
+        type: string
+      phase_3:
+        display_name: Phase 3
+        type: string
+alerts:
+  low_battery_w:
+    display_name: Low Battery
+    description: Low Battery
+    severity: warning
+  low_battery_e:
+    display_name: Very Low Battery
+    description: Very Low Battery
+    severity: error
+  connection_error:
+    display_name: Connection Error
+    severity: error
+    description: >
+      Make sure connection parameters are correct.
+      You can change them using 'Configure Connection' command.
+
+.cloud:
+  category: batteries
+  mobile_main_chart: battery_soc
+  mobile_telemetry:
+    - battery_soc
+    - grid_l1_power
+  mobile_charts:
+    - battery_soc
+    - grid_l1_power
