@@ -1,0 +1,67 @@
+blueprint_spec: device/1.0
+
+display_name: Sonoff MINI R2
+description: Smart Relay
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  serial_number:
+    type: string
+    display_name: Serial Number
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    type: string
+    display_name: State
+    enum:
+      - okay
+      - no_data
+
+command_groups:
+  connection:
+    display_name: Connection
+
+commands:
+  write_configuration:
+    display_name: Set Up Connection
+    description: Set your Sonoff account parameters
+    group: connection
+    populate_values_command: read_configuration
+    arguments:
+      ip_address:
+        display_name: Sonoff IP address
+        type: string
+        required: true
+      port:
+        display_name: Sonoff port
+        type: string
+        required: true
+  read_configuration:
+    display_name: Read Connection Parameters
+    description: Read your Sonoff IP Address and port information
+    group: connection
+  turn_switch_on:
+    display_name: Switch on/off
+    description: Turns relay chanel on and off
+    group: connection
+    arguments:
+      action:
+        display_name: action
+        required: true
+        type: string
+        enum:
+          - 'on'
+          - 'off'
+  wifi_signal_strength:
+    display_name: WiFi Signal Strength
+    description: WiFi Signal Strength information
+    group: connection
