@@ -1,0 +1,121 @@
+blueprint_spec: device/1.0
+
+display_name: EDMI Mk10A
+description: Three Phase CT/WC Smart Meter
+icon: enapter-power-meter
+
+communication_module:
+  product: ENP-RS232
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: integer
+    display_name: Serial Number
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+      - error
+  total_power:
+    display_name: Total Power
+    type: float
+    unit: watt
+  total_current:
+    display_name: Total Current
+    type: float
+    unit: amp
+  voltage_a:
+    display_name: Phase A Voltage
+    type: float
+    unit: volt
+  current_a:
+    display_name: Phase A Current
+    type: float
+    unit: amp
+  voltage_b:
+    display_name: Phase B Voltage
+    type: float
+    unit: volt
+  current_b:
+    display_name: Phase B Current
+    type: float
+    unit: amp
+  voltage_c:
+    display_name: Phase C Voltage
+    type: float
+    unit: volt
+  current_c:
+    display_name: Phase C Current
+    type: float
+    unit: amp
+  power_a:
+    display_name: Phase A Power
+    type: float
+    unit: watt
+  power_b:
+    display_name: Phase B Power
+    type: float
+    unit: watt
+  power_c:
+    display_name: Phase C Power
+    type: float
+    unit: watt
+  frequency:
+    display_name: Frequency
+    type: float
+    unit: hertz
+  power_factor:
+    display_name: Power Factor
+    type: float
+  tou_delivered:
+    display_name: Delivered Time of Use
+    type: float
+    unit: watth
+  tou_received:
+    display_name: Received Time of Use
+    type: float
+    unit: watth
+
+alerts:
+  communication_failed:
+    display_name: Modbus Communication Failed
+    description: |
+      'Please check:'
+      1. If device is powered off.
+      2. Wiring between device and ENP-RS232
+      3. Communication parameters
+    severity: error
+  init_error:
+    display_name: RS232 Initialization Failed
+    description: >
+      Initialization of RS232 interface is failed.
+      Please contact support@enapter.com.
+    severity: error
+
+.cloud:
+  category: power_meters
+  mobile_main_chart: total power
+  mobile_charts:
+    - power_a
+    - power_b
+    - power_c
+    - total_power
+    - voltage_a
+    - voltage_b
+    - voltage_c
+    - current_a
+    - current_b
+    - current_c
+    - frequency
+    - power_factor
