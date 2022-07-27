@@ -1,0 +1,88 @@
+# Manifest describes the core concepts of your device: properties,
+# telemetry, alerts, and commands.
+#
+# See https://developers.enapter.com/docs/reference
+
+blueprint_spec: device/1.0
+
+display_name: Enel JuiceBox 32
+icon: enapter-car-charger
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  serial_number:
+    type: string
+    display_name: Serial Number
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    type: string
+    display_name: State
+    enum:
+      - standby
+      - plugged
+      - charging
+      - error
+      - disconnect
+  charging_time_left:
+    type: float
+    display_name: Charging Time Left
+    unit: min
+  voltage:
+    type: float
+    unit: V
+    display_name: Grid Voltage
+  current:
+    type: float
+    unit: A
+    display_name: Charging Current
+  chargetime:
+    type: integer
+    unit: seconds
+    display_name: Charging Time
+  chargeenergy:
+    type: integer
+    unit: Wh
+    display_name: Current Amount of Energy Poured to The Vehicle 
+  frequency:
+    type: float
+    unit: Hz
+    display_name: Grid Frequency
+  power:
+    type: float
+    unit: kW
+    display_name: Current power value which a car charge at  
+  temperature:
+    type: integer
+    unit: C
+    display_name: Temperature
+  totalenergy:
+    type: float
+    unit: kWh
+    display_name: Total Energy Poured to Vehicles During Lifetime
+
+alerts:
+  charging_started:
+    severity: info
+    display_name: Vehicle charging started
+  charging_stopped:
+    severity: info
+    display_name: Vehicle charging finished
+
+.cloud:
+  mobile_main_chart: power
+  mobile_charts:
+    - power
+    - current
+    - totalenergy
+
+  
+  
+
+  
