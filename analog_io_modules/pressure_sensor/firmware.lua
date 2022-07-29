@@ -2,7 +2,7 @@
 -- in `write_configuration` command arguments in manifest.yml
 CALIB_SLOPE_CONFIG = 'calib_slope'
 CALIB_INTERCEPT_CONFIG = 'calib_intercept'
-
+-- Hm what is it?
 -- Initiate device firmware. Called at the end of the file.
 function main()
   scheduler.add(1000, send_telemetry)

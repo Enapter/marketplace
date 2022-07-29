@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Hello world action step
-        uses: nsmak/my-action@v2
+        uses: ./
         id: hello
         with:
           who-to-greet: 'Enapter'
