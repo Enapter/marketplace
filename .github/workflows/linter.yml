@@ -26,3 +26,12 @@ jobs:
           YAML_CONFIG_FILE: .yamllint.yml
           LUA_CONFIG_FILE: .luacheckrc
           MARKDOWN_CONFIG_FILE: .markdownlint.yml
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Hello world action step
+        uses: ./
+        id: hello
+        with:
+          who-to-greet: 'Enapter'
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
