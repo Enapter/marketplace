@@ -29,7 +29,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Hello world action step
-        uses: nsmak/my-action@v1
+        uses: nsmak/my-action
         id: hello
         with:
           who-to-greet: 'Enapter'
