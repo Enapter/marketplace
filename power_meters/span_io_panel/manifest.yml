@@ -48,6 +48,9 @@ telemetry:
   breaker_1_name:
     type: string
     display_name: B1 Name
+  breaker_1_id:
+    type: string
+    display_name: B1 Id
   breaker_2:
     type: float
     unit: watt
@@ -55,6 +58,9 @@ telemetry:
   breaker_2_name:
     type: string
     display_name: B2 Name
+  breaker_2_id:
+    type: string
+    display_name: B2 Id
   breaker_2_status:
     display_name: B2 Status
     type: string

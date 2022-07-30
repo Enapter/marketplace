@@ -29,11 +29,9 @@ function sendmytelemetry()
     local response, err = http.get('http://'..ip_address..'/api/v1/circuits')
     if err then
       enapter.log('Cannot do request: '..err, 'error')
-      alerts = {"communication_failed"}
       return
     elseif response.code ~= 200 then
       enapter.log('Request returned non-OK code: '..response.code, 'error')
-      alerts = {"communication_failed"}
       return
     end
 
@@ -45,6 +43,7 @@ function sendmytelemetry()
       telemetry['breaker_'..cnt..'_status'] = circuit.relayState
       if cnt < 3 then
         telemetry['breaker_'..cnt..'_name'] = circuit.name
+        telemetry['breaker_'..cnt..'_id'] = key
       end
     end
     enapter.send_telemetry(telemetry)
