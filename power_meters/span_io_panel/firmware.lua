@@ -26,7 +26,7 @@ function sendmytelemetry()
     local ip_address = values[IP_ADDRESS_CONFIG]
     local telemetry = {}
 
-    local response, err = http.get('http://'..ip_address..'/api/v1/panel')
+    local response, err = http.get('http://'..ip_address..'/api/v1/circuits')
     if err then
       enapter.log('Cannot do request: '..err, 'error')
       alerts = {"communication_failed"}
@@ -38,9 +38,12 @@ function sendmytelemetry()
     end
 
     local deco=json.decode(response.body)
-    telemetry["total_power"] = tonumber(deco.instantGridPowerW)
-    telemetry["status"]=deco.mainRelayState
-
+    local cnt=0
+    for key, circuit in pairs(deco.circuits) do
+      cnt = cnt + 1
+      telemetry['breaker_'..cnt] = tonumber(circuit.instantPowerW)
+      telemetry['breaker_'..cnt..'_status'] = circuit.relayState
+    end
     enapter.send_telemetry(telemetry)
   end
 end
