@@ -43,6 +43,9 @@ function sendmytelemetry()
       cnt = cnt + 1
       telemetry['breaker_'..cnt] = tonumber(circuit.instantPowerW)
       telemetry['breaker_'..cnt..'_status'] = circuit.relayState
+      if cnt < 3 then
+        telemetry['breaker_'..cnt..'_name'] = circuit.name
+      end
     end
     enapter.send_telemetry(telemetry)
   end

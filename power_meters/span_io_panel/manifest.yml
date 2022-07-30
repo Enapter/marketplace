@@ -45,10 +45,16 @@ telemetry:
     enum:
       - OPEN
       - CLOSED
+  breaker_1_name:
+    type: string
+    display_name: B1 Name
   breaker_2:
     type: float
     unit: watt
     display_name: B2 Power
+  breaker_2_name:
+    type: string
+    display_name: B2 Name
   breaker_2_status:
     display_name: B2 Status
     type: string
