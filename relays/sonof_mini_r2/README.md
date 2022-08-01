@@ -24,16 +24,11 @@ There are two ways:
 - Write down IP Address and port information.
 - Factory settings reset the device in the app and get it into the [Pairing Mod](https://sonoff.tech/wp-content/uploads/2021/03/%E8%AF%B4%E6%98%8E%E4%B9%A6-MINIR2-V1.1-20210305.pdf))
 - On your PC or phone access ITEAD-****** Wi-Fi SSID and enter the password 12345678.
-- Visit http://10.10.7.1/ and fill in WiFI SSID and password to your network.
+- Visit this [website](http://10.10.7.1/) and fill in WiFI SSID and password to your network.
 - Sonoff MINI R2 is connected to your Wi-Fi and ready to be used.
-
-
 
 ### via mDNS
 
-
-
-
 ## References
 
-- [Enel JuiceBox 32 product page](https://go.enapter.com/enel-juicebox32).
+- [Sonoff MINI R2 product page](https://sonoff.tech/product/diy-smart-switch/minir2/.
