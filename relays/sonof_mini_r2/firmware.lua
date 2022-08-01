@@ -5,44 +5,39 @@ json = require("json")
 IP_ADDRESS = 'ip_address'
 PORT = 'port'
 
-local ip_address
-local port
-local client
-
 -- Initiate device firmware. Called at the end of the file.
 function main()
+  scheduler.add(30000, send_properties)
+  scheduler.add(1000, send_telemetry)
 
+  enapter.register_command_handler('activate_switch', command_switch)
   config.init({
     [IP_ADDRESS] = {type = 'string', required = true},
     [PORT] = {type = 'string', required = true}
   })
+end
 
-  local sonoff, err = connect_sonoff()
+function send_properties()
+  local sonoff, err  = connect_sonoff()
   if err then
-    enapter.log("[main]: can't connect to Sonoff: "..err, 'error')
-    enapter.send_telemetry({
-      status = 'connection_error',
-      alerts = { 'connection_error' }
-    })
+    enapter.log("Can't connect to Sonoff: "..err)
     return
   else
     ip_address = sonoff.ip_address
     port = sonoff.port
     client = sonoff.client
 
-    scheduler.add(30000, send_properties)
-    scheduler.add(1000, send_telemetry)
-
-    enapter.register_command_handler('turn_switch_on', command_turn_switch_on)
-    enapter.register_command_handler('wifi_signal_strength', command_wifi_signal_strength)
-  end
-end
-
-function send_properties()
-    enapter.send_properties({
+    local snf_data = sonoff:get_device_info()
+    if next(snf_data) then
+      enapter.send_properties({
       vendor = 'Sonoff',
-      model = 'MINI R2'
+      model = 'MINI R2',
+      fw_version = snf_data['data']['fwVersion'],
+      ip_address = ip_address,
+      port = port
     })
+    end
+  end
 end
 
 -- holds global array of alerts that are currently active
@@ -50,40 +45,48 @@ active_alerts = {}
 
 function send_telemetry()
   local sonoff, err  = connect_sonoff()
+  local status
+  local connection_status
   if err then
-    enapter.log("Can't connect to Sonoff module: "..err)
+    enapter.log("Can't connect to Sonoff: "..err)
     enapter.send_telemetry({
-      status = 'no_data',
+    connection_status = 'no_data',
       alerts = {'connection_err'}
     })
-    return nill
+    return
   else
-      enapter.send_properties({
-      ip_address =sonoff.ip_address,
-      port = sonoff.port
-    })
     local snf_data = sonoff:get_device_info()
-    if next(snf_data) then
+    if snf_data ~= nil then
       local telemetry = {}
 
-      telemetry.alerts = active_alerts
-      if telemetry.status == "on" then
-        active_alerts = { }
-      end
+      telemetry.status = pretty_status(snf_data["data"]["switch"])
+      telemetry.signal = snf_data['data']['signalStrength']
+      telemetry.connection_status = 'ok'
       enapter.send_telemetry(telemetry)
     else
-      enapter.send_telemetry({status = 'no_data', alerts = {'no_data'}})
+      enapter.send_telemetry({status = 'no_data', connection_status = 'error', alerts = {'no_data'}})
     end
   end
 end
 
+function pretty_status(switch_state)
+  if switch_state == 'on' then
+    return 'switch_on'
+  else if switch_state == 'off' then
+    return 'switch_off'
+  else
+    enapter.log("Can't read device state "..err)
+  end
+  end
+end
 
 -- holds global Sonoff connection
 local sonoff
 
 function connect_sonoff()
-  if sonoff then return sonoff, nil end
-
+if sonoff and sonoff:get_device_info() then
+   return sonoff, nil
+ else
   local values, err = config.read_all()
   if err then
     enapter.log('cannot read config: '..tostring(err), 'error')
@@ -97,6 +100,7 @@ function connect_sonoff()
       return sonoff, nil
     end
   end
+end
 end
 
 function has_value (tab, val)
@@ -246,7 +250,7 @@ function config.build_read_configuration_command(_config_options)
 end
 
 ---------------------------------
--- Sonoff MINI R2 API
+--Sonoff API
 ---------------------------------
 
 Sonoff = {}
@@ -257,11 +261,8 @@ function Sonoff.new(ip_address, port)
 
   local self = setmetatable({}, { __index = Sonoff })
   self.ip_address = ip_address
-  self.port= port
+  self.port = port
   self.client = http.client({timeout = 10})
-
-  Sonoff.ip_address= ip_address
-  Sonoff.port = port
   return self
 end
 
@@ -271,21 +272,22 @@ function Sonoff:get_device_info()
     deviceid =''
   })
 
-  local response, err = client:post('http://'..ip_address..':'..port..'/zeroconf/info', 'application/json', body)
+  local response, err = self.client:post('http://'..self.ip_address..':'..self.port..'/zeroconf/info',
+   'application/json', body)
 
   if err then
     enapter.log('Cannot do request: '..err, 'error')
   elseif response.code ~= 200 then
     enapter.log('Request returned non-OK code: '..response.code, 'error')
   else
-    enapter.log('Request succeeded: '..response.body)
-    return response
+    return json.decode(response.body)
   end
+  return nil
 end
 
--- Turn switch on and off
 
-function command_turn_switch_on(ctx, args)
+
+function command_switch(ctx, args)
   if args['action'] then
     local body = json.encode({
       data = {switch = args['action']},
@@ -304,26 +306,5 @@ function command_turn_switch_on(ctx, args)
   return nil
   end
 end
-
---Get WiFI Signal info
-
-function command_wifi_signal_strength(ctx)
-    local body = json.encode({
-      data = {},
-      deviceid = ''
-    })
-
-  local response, err = client:post('http://'..ip_address..':'..port..'/zeroconf/signal_strength', 'json',body)
-
-  if err then
-    ctx.error('Cannot do request: '..err, 'error')
-  elseif response.code ~= 200 then
-    ctx.error('Request returned non-OK code: '..response.code, 'error')
-  else
-    return json.decode(response.body)
-  end
-  return nil
-end
-
 
 main()
