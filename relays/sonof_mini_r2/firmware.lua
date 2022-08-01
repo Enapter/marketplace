@@ -85,8 +85,8 @@ local sonoff
 
 function connect_sonoff()
 if sonoff and sonoff:get_device_info() then
-   return sonoff, nil
- else
+    return sonoff, nil
+else
   local values, err = config.read_all()
   if err then
     enapter.log('cannot read config: '..tostring(err), 'error')
@@ -273,7 +273,7 @@ function Sonoff:get_device_info()
   })
 
   local response, err = self.client:post('http://'..self.ip_address..':'..self.port..'/zeroconf/info',
-   'application/json', body)
+  'application/json', body)
 
   if err then
     enapter.log('Cannot do request: '..err, 'error')
