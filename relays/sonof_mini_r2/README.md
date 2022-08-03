@@ -14,20 +14,19 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integ
 
 ## How to find device IP Adress and port informatiom
 
-There are two ways:
+### via mDNS tools
 
-### via eWELink app
+There are a great many mDNS tools to choose from, so use whichever works best for you. For example purposes, we will cover [Discovery App](https://apps.apple.com/us/app/discovery-dns-sd-browser/id1381004916?mt=12) and [Avahi](https://avahi.org/).
 
-- Follow installation instructions given in the [manual](https://sonoff.tech/wp-content/uploads/2021/03/%E8%AF%B4%E6%98%8E%E4%B9%A6-MINIR2-V1.1-20210305.pdf).
-- After the device was added, in the app go to device information and look for MAC address.
-- Access your router's admin page and search for the device with the same MAC Address.
-- Write down IP Address and port information.
-- Factory settings reset the device in the app and get it into the [Pairing Mod](https://sonoff.tech/wp-content/uploads/2021/03/%E8%AF%B4%E6%98%8E%E4%B9%A6-MINIR2-V1.1-20210305.pdf))
-- On your PC or phone access ITEAD-****** Wi-Fi SSID and enter the password 12345678.
-- Visit this [website](http://10.10.7.1/) and fill in WiFI SSID and password to your network.
-- Sonoff MINI R2 is connected to your Wi-Fi and ready to be used.
-
-### via mDNS
+- Get your device into [DYI Mode](https://sonoff.tech/diy-developer/).
+- After your device was connected to Wi-Fi, you can start scanning local network with [Discovery](https://apps.apple.com/us/app/discovery-dns-sd-browser/id1381004916?mt=12) or [Avahi](https://avahi.org/).
+- Sonoff MINI R2 in local network can usually be detected as  _ewelink._tcp (for Ahavi) and  _ewelink._tcp (eWeLink devices supporting LAN control for Discovery).
+- In [Discovery](https://apps.apple.com/us/app/discovery-dns-sd-browser/id1381004916?mt=12) click on the drop down list next to _ewelink._tcp and look for IP address and port informatiin (e.g. 192.168.42.100:8081, 192.168.42.100 being IP address and 8081 being port).
+- In [Avahi](https://avahi.org/) IP address and. port might look something like this 
+    - hostname = [eWeLink_<>.local]
+    - address = [192.168.42.100]
+    - port = [8081]
+- Write down IP address and port information.
 
 ## References
 
