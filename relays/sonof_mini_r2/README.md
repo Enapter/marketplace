@@ -30,4 +30,4 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integ
 
 ## References
 
-- [Sonoff MINI R2 product page](https://sonoff.tech/product/diy-smart-switch/minir2/)
+- [Sonoff MINI R2 product page](https://sonoff.tech/product/diy-smart-switch/minir2/).
