@@ -5,6 +5,10 @@ json = require("json")
 IP_ADDRESS = 'ip_address'
 PORT = 'port'
 
+ip_address = nil
+port = nil
+client = nil
+
 -- Initiate device firmware. Called at the end of the file.
 function main()
   scheduler.add(30000, send_properties)
