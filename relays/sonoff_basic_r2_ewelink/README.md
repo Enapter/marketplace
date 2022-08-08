@@ -7,9 +7,7 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
 1. **eWelink account**
   
   You require to have **email** and **password** used for login as well as **region**.
-  
   The **eWelink** account can be created in the [eWelink Mobile App](https://sonoff.tech/ewelink/).
-  
 1. **Sonoff Device ID**
   
   You can find it in the eWelink app:
