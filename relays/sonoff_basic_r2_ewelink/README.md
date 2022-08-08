@@ -124,7 +124,7 @@ The status data should be available on your **Sonoff Basic R2** dashboard as wel
 
 ## References
 
-- https://sonoff.tech/
+- https://sonoff.tech
 
 - https://hub.docker.com/r/doganm95/ewelink-rest-api-server
 
