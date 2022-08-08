@@ -10,10 +10,10 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
   You can find it in the eWelink app:
   1. Tap on Device
   2. Click ... in top right corner
-     <img src="./images/more.jpg" alt="more" style="zoom:25%;" />
+     <img src="./images/more.jpg" alt="more" width="25%" />
   3. Scroll down to Device ID
   4. Write down Device ID
-     <img src="./images/device_id.jpg" alt="device_id" style="zoom:25%;" />
+     <img src="./images/device_id.jpg" alt="device_id" width="25%" />
 3. **Enapter Gateway with latest software**
    Enapter Gateway Software must support Virtual UCM and Docker containers runtime.
 
@@ -93,12 +93,12 @@ If everything is fine you are ready to connect your device to Enapter Cloud!
 
 - As soon as Blueprint will start the `Module Not Configured` event will be triggered.
 
-- Navigate to `Settings` (<img src="./images/settings.jpg" alt="settings" style="zoom:25%;" />).
+- Navigate to `Settings` (<img src="./images/settings.jpg" alt="settings" width="25%" />).
 
 - Click `Commands`.
 
 - In the  `Settings` section of the `Commands` screen click on `Main Configuration` command in the Enapter mobile or Web app to set main settings for your Virtual UCM:
-  <img src="/Users/nvk/enapter/marketplace/relays/sonoff_basic_r2_ewelink/images/main_settiings.jpg" alt="main_settiings" style="zoom:25%;" />
+  <img src="./images/main_settiings.jpg" alt="main_settiings" width="25%" />
 
   You need to set the following parameters you got during previous steps:
 
