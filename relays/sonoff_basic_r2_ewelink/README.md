@@ -16,11 +16,11 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
     1. Tap on Device.
     2. Click ... in top right corner.
     
-    <img src="./images/more.jpg" alt="more" width="25%" />
+       <img src="./images/more.jpg" alt="more" width="25%" />
     
     3. Scroll down to Device ID. Write it down for future use.
     
-    <img src="./images/device_id.jpg" alt="device_id" width="25%" />
+       <img src="./images/device_id.jpg" alt="device_id" width="25%" />
     
 3. **Latest version of Enapter Gateway Software**
   
