@@ -5,6 +5,7 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
 ## Requirements
 
 1. **eWelink account**
+    
     You require to have **email** and **password** used for login as well as **region**.
     The **eWelink** account can be created in the [eWelink Mobile App](https://sonoff.tech/ewelink/).
 2. **Sonoff Device ID**
@@ -13,10 +14,10 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
   
   1. Tap on Device.
   2. Click ... in top right corner.
-     
+    
      <img src="./images/more.jpg" alt="more" width="25%" />
   2. Scroll down to Device ID. Write it down for future use.
-     
+    
      <img src="./images/device_id.jpg" alt="device_id" width="25%" />
 3. **Latest version of Enapter Gateway Software**
   
