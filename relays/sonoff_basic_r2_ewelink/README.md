@@ -7,24 +7,21 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
 1. **eWelink account**
     
     You require to have **email** and **password** used for login as well as **region**.
-    
     The **eWelink** account can be created in the [eWelink Mobile App](https://sonoff.tech/ewelink/).
     
 2. **Sonoff Device ID**
+    You can find it in the eWelink app:
   
-  
-  You can find it in the eWelink app:
-  
-  1. Tap on Device.
-  2. Click ... in top right corner.
+    1. Tap on Device.
+    2. Click ... in top right corner.
     
      <img src="./images/more.jpg" alt="more" width="25%" />
-  2. Scroll down to Device ID. Write it down for future use.
+    3. Scroll down to Device ID. Write it down for future use.
     
      <img src="./images/device_id.jpg" alt="device_id" width="25%" />
 3. **Latest version of Enapter Gateway Software**
   
-  Enapter Gateway Software must support Virtual UCM and Docker containers runtime.
+    Enapter Gateway Software must support Virtual UCM and Docker containers runtime.
 
 ## Running eWelink REST API Server
 
