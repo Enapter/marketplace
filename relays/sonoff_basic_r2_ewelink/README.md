@@ -5,7 +5,7 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
 ## Requirements
 
 1. **eWelink account**
-    
+  
     You require to have **email** and **password** used for login as well as **region**.
 
     The **eWelink** account can be created in the [eWelink Mobile App](https://sonoff.tech/ewelink/).
@@ -45,13 +45,13 @@ In this example we will use Docker Hub method.
 2. Run docker container
 
    ```
-   docker 	run -d --restart unless-stopped \
-   				-p LOCAL_TCP_PORT:3000 \
-   				-e 'EWELINK_USERNAME=EMAIL' \
-   				-e 'EWELINK_PASSWORD=PASSWORD' \
-   				-e 'EWELINK_REGION=REGION' \
-   				-e 'SERVER_MODE=dev' \
-   				doganm95/ewelink-rest-api-server
+   docker run -d --restart unless-stopped \
+          -p LOCAL_TCP_PORT:3000 \
+          -e 'EWELINK_USERNAME=EMAIL' \
+          -e 'EWELINK_PASSWORD=PASSWORD' \
+          -e 'EWELINK_REGION=REGION' \
+          -e 'SERVER_MODE=dev' \
+          doganm95/ewelink-rest-api-server
    ```
 
    Put the correct values for:
