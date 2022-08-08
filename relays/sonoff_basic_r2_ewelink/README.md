@@ -12,6 +12,7 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
     
 2. **Sonoff Device ID**
   
+  
   You can find it in the eWelink app:
   
   1. Tap on Device.
