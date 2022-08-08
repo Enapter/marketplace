@@ -85,29 +85,35 @@ If everything is fine you are ready to connect your device to Enapter Cloud!
 
 ## Connect to Enapter
 
-- Sign up to the Enapter Cloud using the [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
+1. Sign up to the Enapter Cloud using the [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
 
-- Use the [Enapter Gateway](https://handbook.enapter.com/software/gateway/2.0.0/setup/) to run the Virtual UCM. If you are running eWelink REST API server on diiferent computer, ensure it is available from the Enapter Gateway.
+2. Use the [Enapter Gateway](https://handbook.enapter.com/software/gateway/2.0.0/setup/) to run the Virtual UCM. If you are running eWelink REST API server on diiferent computer, ensure it is available from the Enapter Gateway.
 
-- Create the [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm).
+3. Create the [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm).
 
-- Upload thie Blueprint using [Enapter Marketplace](https://marketplace.enapter.com) on your mobile device. Advanced users can upload using Web IDE or CLI by following [Developer Documentation](https://developers.enapter.com/docs/tutorial/uploading-blueprint/).
+4. Upload thie Blueprint using [Enapter Marketplace](https://marketplace.enapter.com) on your mobile device. Advanced users can upload using Web IDE or CLI by following [Developer Documentation](https://developers.enapter.com/docs/tutorial/uploading-blueprint/).
 
-- As soon as Blueprint will start the `Module Not Configured` event will be triggered.
+5. As soon as Blueprint will start the `Module Not Configured` event will be triggered.
 
-- Navigate to `Settings` (<img src="./images/settings.jpg" alt="settings" width="5%" />).
+6. Navigate to `Settings` (<img src="./images/settings.jpg" alt="settings" width="5%" />).
 
-- Click `Commands`.
+7. Click `Commands`.
 
-- In the  `Settings` section of the `Commands` screen click on `Main Configuration` command in the Enapter mobile or Web app to set main settings for your Virtual UCM:
-  
-  <img src="./images/main_settiings.jpg" alt="main_settiings" width="25%" />
-  
-  You need to set the following parameters you got during previous steps:
-  
-  - IP Address of eWelink REST API server
-  - IP Port
-  - Device ID
+8. In the  `Settings` section of the `Commands` screen click on `Main Configuration` command in the Enapter mobile or Web app to set main settings for your Virtual UCM:
+
+   <img src="./images/main_settiings.jpg" alt="main_settiings" width="25%" />
+
+   You need to set the following parameters you got during previous steps:
+
+   * IP Address of eWelink REST API server
+
+   - IP Port
+
+   - Device ID
+
+9. Press `Run` button
+
+The status data should be available on your **Sonoff Basic R2** dashboard as well as you can control your relay manually or automatic way with [Enapter Rules Engine](https://developers.enapter.com/docs/reference/rules/time)
 
 ## References
 
