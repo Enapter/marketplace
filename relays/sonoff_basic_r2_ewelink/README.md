@@ -56,14 +56,14 @@ In this example we will use Docker Hub method.
 
    Put the correct values for:
 
-   * EMAIL - your eWelink email, for example, test@test.com
-   * PASSWORD - your eWelink password
-   * REGION - your eWelink Region:
+   * **EMAIL** - your eWelink email, for example, test@test.com
+   * **PASSWORD** - your eWelink password
+   * **REGION** - your eWelink Region:
      * Mainland China: CN
      * Asia: AS
      * Americas: US
      * Europe: EU
-   * LOCAL_TCP_PORT: any free TCP port on which HTTP server will be listening. This port will be needed for Virtual UCM configurattion in next steps. For example, 8081.
+   * **LOCAL_TCP_PORT**: any free TCP port on which HTTP server will be listening. This port will be needed for Virtual UCM configurattion in next steps. For example, 8081.
 
 3. Check docker container is running and healthy by running command:
 
