@@ -49,6 +49,28 @@ function get_data()
         end
     end
 end
+
+function switch_on()
+  
+  local jb, err = get_data()
+  if err then
+      return nil, false
+  else
+      local json_body = {"deviceid": jb["deviceid"], "params": {"switches": [{"switch": "on", "outlet": 0}]}}
+
+      local response, err = http.post('http://localhost:3001', 'application/json', json_body)
+      
+      if err then
+        enapter.log('Cannot do request: '..err, 'error')
+      elseif response.code ~= 200 then
+        enapter.log('Request returned non-OK code: '..response.code, 'error')
+      else
+        enapter.log('Request succeeded: '..response.body)
+        return true, nil 
+      end
+  end
+  
+end
   
   
   -- main() sets up scheduled functions and command handlers,
@@ -67,7 +89,7 @@ function main()
         })
 
     -- Register command handlers
-    -- enapter.register_command_handler('switch_on', switch_on)
+    enapter.register_command_handler('switch_on', switch_on)
     -- enapter.register_command_handler('switch_off', switch_off)
 end
   
