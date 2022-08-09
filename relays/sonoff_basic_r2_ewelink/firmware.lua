@@ -89,7 +89,7 @@ function switch(state, outlet)
 end
 
 function switch_on(ctx, args)
-  local outlet = 1
+  local outlet = nil
 
   local state, err = switch( 'on' , outlet)
   if err then
@@ -98,7 +98,7 @@ function switch_on(ctx, args)
 end
 
 function switch_off(ctx, args)
-  local outlet = 1
+  local outlet = nil
 
   local state, err = switch( 'off' , outlet)
   if err then
@@ -322,6 +322,3 @@ function config.build_read_configuration_command(_config_options)
 end
 
 main()
-  
-
-  

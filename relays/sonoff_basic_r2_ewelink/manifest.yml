@@ -42,8 +42,8 @@ telemetry:
   switch:
     type: string
     enum:
-      - On
-      - Off
+      - 'On'
+      - 'Off'
     display_name: Switch Status
   rssi:
     type: float

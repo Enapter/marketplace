@@ -24,7 +24,7 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
     
 3. **Latest version of Enapter Gateway Software**
   
-   Enapter Gateway Software must support Virtual UCM and Docker containers runtime.
+    Enapter Gateway Software must support Virtual UCM and Docker containers runtime.
     
 ## Running eWelink REST API Server
 
