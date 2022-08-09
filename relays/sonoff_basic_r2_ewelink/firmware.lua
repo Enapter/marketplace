@@ -82,12 +82,12 @@ function switch(state, outlet)
       return nil, 'Request returned non-OK code: '..response.code
     else
       enapter.log('Request succeeded: '..response.body)
-      return state, nil 
+      return state, nil
     end
-  end  
+  end
 end
 
-function switch_on(ctx, args)
+function switch_on(ctx)
   local outlet = nil
 
   local state, err = switch( 'on' , outlet)
@@ -96,7 +96,7 @@ function switch_on(ctx, args)
   end
 end
 
-function switch_off(ctx, args)
+function switch_off(ctx)
   local outlet = nil
 
   local state, err = switch( 'off' , outlet)
