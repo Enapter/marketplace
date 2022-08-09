@@ -6,7 +6,15 @@
 blueprint_spec: device/1.0
 
 display_name: Sonoff Basic2
+description: This Enapter Blueprint enables Sonoff Basic R2 support in Enapter Cloud via eWelink REST API. 
 icon: electric-switch
+author: enapter
+contributors:
+   - nkrasko
+support:
+   url: "https://enapter.com/support"
+   email: "support@enapter.com"
+license: MIT
 
 communication_module:
   product: ENP-VIRTUAL

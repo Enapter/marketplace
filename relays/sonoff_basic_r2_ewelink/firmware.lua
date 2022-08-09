@@ -13,101 +13,99 @@ json = require("json")
 client = http.client({timeout = 10})
 
 function get_data()
-    local values, err = config.read_all()
-    if err then
-        enapter.log('cannot read config: '..tostring(err), 'error')
-        return nil, 'cannot_read_config'
-    else
-        local ip_address, ip_port, device_id = values[IP_ADDRESS_CONFIG], values[IP_PORT_CONFIG], values[DEVICEID_CONFIG]
-        
-        if not ip_address or not ip_port or not device_id then
-            return nil, 'not_configured'
-        end
+  local values, err = config.read_all()
+  if err then
+    enapter.log('cannot read config: '..tostring(err), 'error')
+    return nil, 'cannot_read_config'
+  else
+    local ip_address, ip_port, device_id = values[IP_ADDRESS_CONFIG], values[IP_PORT_CONFIG], values[DEVICEID_CONFIG]
     
-        local response, err = http.get('http://'..ip_address..':'..ip_port)
-
-        if err then
-            enapter.log('Cannot do request: '..err, 'error')
-            return nil, 'no_connection'
-        elseif response.code ~= 200 then
-            enapter.log('Request returned non-OK code: '..response.code, 'error')
-            return nil, 'wrong_request'
-        else
-            local index
-            local jb = json.decode(response.body)
-            for k, v in pairs(jb) do
-                if v['deviceid'] == device_id then
-                    index = k
-                end
-            end
-
-            if not index then
-                return nil, 'deviceid_not_found'
-            end
-            
-            return jb[index], nil
-        end
+    if not ip_address or not ip_port or not device_id then
+      return nil, 'not_configured'
     end
+
+    local response, err = http.get('http://'..ip_address..':'..ip_port)
+
+    if err then
+      enapter.log('Cannot do request: '..err, 'error')
+      return nil, 'no_connection'
+    elseif response.code ~= 200 then
+      enapter.log('Request returned non-OK code: '..response.code, 'error')
+      return nil, 'wrong_request'
+    else
+      local index
+      local jb = json.decode(response.body)
+      for k, v in pairs(jb) do
+        if v['deviceid'] == device_id then
+          index = k
+        end
+      end
+
+      if not index then
+        return nil, 'deviceid_not_found'
+      end
+        
+      return jb[index], nil
+    end
+  end
 end
 
 function switch(state, outlet)
-  
   if not state == "on" or not state == "off" then
     return nil, "Wrong switch state: "..state
   end
-
- 
-
-  local jb, err = get_data()
+  
+  local values, err = config.read_all()
   if err then
-      return nil, "Cannot get data from eWelink API"
+    enapter.log('cannot read config: '..tostring(err), 'error')
+    return nil, 'Cannot read configuration.'
   else
-  
-      
-      local json_body = {}
-      if outlet == nil then
-        json_body = '{"deviceid":'..jb['deviceid']..',"params":{"switch": "'..state..'"}}'
-      else
-        json_body = '{"deviceid":'..jb['deviceid']..',"params":{"switch": "'..state..'", "outlet":'..tostring(outlet) ..'}}'
-      end
-  
-      local response, err = http.post('http://192.168.123.134:3001', 'application/json', json_body)
-      
-      if err then
-        enapter.log('Cannot do request: '..err, 'error')
-        return nil, "Cannot do request: "..err
-      elseif response.code ~= 200 then
-        enapter.log('Request returned non-OK code: '..response.code, 'error')
-        return nil, 'Request returned non-OK code: '..response.code
-      else
-        enapter.log('Request succeeded: '..response.body)
-        return state, nil 
-      end
-  end
-  
+    local ip_address, ip_port, device_id = values[IP_ADDRESS_CONFIG], values[IP_PORT_CONFIG], values[DEVICEID_CONFIG]
+    if not ip_address or not ip_port or not device_id then
+      return nil, 'Configuration is empty. Use Main Configuration command to make initial setup.'
+    end
+    
+    local json_body = {}
+    if outlet == nil then
+      json_body = '{"deviceid":'..device_id..',"params":{"switch": "'..state..'"}}'
+    else
+      json_body = '{"deviceid":'..device_id..',"params":{"switch": "'..state..'", "outlet":'..tostring(outlet) ..'}}'
+    end
+
+    enapter.log(json_body)
+
+    local response, err = http.post('http://'..ip_address..':'..ip_port, 'application/json', json_body)
+    if err then
+      enapter.log('Cannot do request: '..err, 'error')
+      return nil, "Cannot do request: "..err
+    elseif response.code ~= 200 then
+      enapter.log('Request returned non-OK code: '..response.code, 'error')
+      return nil, 'Request returned non-OK code: '..response.code
+    else
+      enapter.log('Request succeeded: '..response.body)
+      return state, nil 
+    end
+  end  
 end
 
 function switch_on(ctx, args)
-  local outlet = 0
+  local outlet = 1
+
   local state, err = switch( 'on' , outlet)
   if err then
     ctx.error(tostring(err))
-  else
-    enapter.log('Switch Outlet '..tostring(outlet)..' turned'..tostring(state))
   end
 end
 
 function switch_off(ctx, args)
-  local outlet = 0
+  local outlet = 1
+
   local state, err = switch( 'off' , outlet)
   if err then
     ctx.error(tostring(err))
-  else
-    enapter.log('Switch Outlet '..tostring(outlet)..' turned'..tostring(state))
   end
 end
 
-  
   -- main() sets up scheduled functions and command handlers,
   -- it's called explicitly at the end of the file
 function main()
@@ -129,10 +127,9 @@ function main()
 end
   
 function send_properties()
-    
     local brandName, productModel, chipid
-    local jb, err = get_data()
 
+    local jb, err = get_data()
     if err then
         brandName = ''
         productModel = ''
@@ -156,15 +153,13 @@ active_alerts = {}
 function send_telemetry()
     local telemetry = {}
 
-
     local jb, err = get_data()
     if err then
         active_alerts = { err }
     else
         active_alerts = {}
-    
+
         local status
-        
         if jb["online"] then
             status = "Online"
         else
@@ -172,7 +167,6 @@ function send_telemetry()
         end
 
         local switch
-    
         if jb["params"]["switch"] == "on" then
             switch = "On"
         elseif jb["params"]["switch"] == "off" then
@@ -181,15 +175,12 @@ function send_telemetry()
 
         telemetry.switch = switch
         telemetry.status = status
-
         telemetry.rssi = jb["params"]["rssi"]
 
     end
     
-  
     telemetry.alerts = active_alerts
     enapter.send_telemetry(telemetry)
-
 end
 
 
@@ -330,7 +321,6 @@ function config.build_read_configuration_command(_config_options)
   end
 end
 
-  
 main()
   
 
