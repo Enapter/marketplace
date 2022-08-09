@@ -51,17 +51,17 @@ end
 
 function switch(state, outlet)
   if not state == "on" or not state == "off" then
-    return nil, "Wrong switch state: "..state
+    return "Wrong switch state: "..state
   end
 
   local values, err = config.read_all()
   if err then
     enapter.log('cannot read config: '..tostring(err), 'error')
-    return nil, 'Cannot read configuration.'
+    return 'Cannot read configuration.'
   else
     local ip_address, ip_port, device_id = values[IP_ADDRESS_CONFIG], values[IP_PORT_CONFIG], values[DEVICEID_CONFIG]
     if not ip_address or not ip_port or not device_id then
-      return nil, 'Configuration is empty. Use Main Configuration command to make initial setup.'
+      return "Configuration is empty. Use Main Configuration command to make initial setup."
     end
 
     local json_body
@@ -74,13 +74,13 @@ function switch(state, outlet)
     local response, err = http.post('http://'..ip_address..':'..ip_port, 'application/json', json_body)
     if err then
       enapter.log('Cannot do request: '..err, 'error')
-      return nil, "Cannot do request: "..err
+      return "Cannot do request: "..err
     elseif response.code ~= 200 then
       enapter.log('Request returned non-OK code: '..response.code, 'error')
-      return nil, 'Request returned non-OK code: '..response.code
+      return 'Request returned non-OK code: '..response.code
     else
       enapter.log('Request succeeded: '..response.body)
-      return state, nil
+      return nil
     end
   end
 end
@@ -88,15 +88,9 @@ end
 function switch_on(ctx)
   local outlet = 0
 
-  local state, err = switch( 'on' , outlet)
+  local err = switch( 'on' , outlet)
   if err then
     ctx.error(tostring(err))
-  else
-    if outlet then
-      enapter.log("Outlet "..tostring(outlet).." switched "..tostring(state),"info")
-    else
-      enapter.log("Outlet switched "..tostring(state),"info")
-    end  
   end
 end
 
@@ -106,12 +100,6 @@ function switch_off(ctx)
   local state, err = switch( 'off' , outlet)
   if err then
     ctx.error(tostring(err))
-  else
-    if outlet then
-      enapter.log("Outlet "..tostring(outlet).." switched "..tostring(state),"info")
-    else
-      enapter.log("Outlet switched "..tostring(state),"info")
-    end
   end
 end
 
