@@ -86,13 +86,17 @@ function switch(state, outlet)
 end
 
 function switch_on(ctx)
-  local outlet = nil
+  local outlet = 0
 
   local state, err = switch( 'on' , outlet)
   if err then
     ctx.error(tostring(err))
   else
-    enapter.log("Outlet "..tostring(outlet).." switched "..tostring(state),"info")
+    if outlet then
+      enapter.log("Outlet "..tostring(outlet).." switched "..tostring(state),"info")
+    else
+      enapter.log("Outlet switched "..tostring(state),"info")
+    end  
   end
 end
 
@@ -103,7 +107,11 @@ function switch_off(ctx)
   if err then
     ctx.error(tostring(err))
   else
-    enapter.log("Outlet "..tostring(outlet).." switched "..tostring(state),"info")
+    if outlet then
+      enapter.log("Outlet "..tostring(outlet).." switched "..tostring(state),"info")
+    else
+      enapter.log("Outlet switched "..tostring(state),"info")
+    end
   end
 end
 
