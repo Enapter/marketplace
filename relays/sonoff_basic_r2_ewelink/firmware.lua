@@ -92,7 +92,7 @@ function switch_on(ctx)
   if err then
     ctx.error(tostring(err))
   else
-    enapter.log("Outlet "..outlet.." switched on","info")
+    enapter.log("Outlet "..tostring(outlet).." switched "..tostring(state),"info")
   end
 end
 
@@ -103,7 +103,7 @@ function switch_off(ctx)
   if err then
     ctx.error(tostring(err))
   else
-    enapter.log("Outlet "..outlet.." switched off","info")
+    enapter.log("Outlet "..tostring(outlet).." switched "..tostring(state),"info")
   end
 end
 
