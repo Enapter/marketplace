@@ -97,7 +97,7 @@ end
 function switch_off(ctx)
   local outlet = nil
 
-  local state, err = switch( 'off' , outlet)
+  local err = switch( 'off' , outlet)
   if err then
     ctx.error(tostring(err))
   end
