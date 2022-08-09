@@ -6,14 +6,14 @@
 blueprint_spec: device/1.0
 
 display_name: Sonoff Basic2
-description: This Enapter Blueprint enables Sonoff Basic R2 support in Enapter Cloud via eWelink REST API. 
-icon:  enapter-light-switch
+description: This Enapter Blueprint enables Sonoff Basic R2 support in Enapter Cloud via eWelink REST API.
+icon: enapter-light-switch
 author: enapter
 contributors:
-   - nkrasko
+  - nkrasko
 support:
-   url: "https://enapter.com/support"
-   email: "support@enapter.com"
+  url: https://enapter.com/support
+  email: support@enapter.com
 license: MIT
 
 communication_module:
@@ -36,14 +36,14 @@ telemetry:
   status:
     type: string
     enum:
-        - "Online"
-        - "Offline"
+      - Online
+      - Offline
     display_name: Module Status
   switch:
     type: string
     enum:
-        - "On"
-        - "Off"
+      - On
+      - Off
     display_name: Switch Status
   rssi:
     type: float
@@ -120,4 +120,3 @@ alerts:
     severity: error
     display_name: Device ID was not found.
     description: Check your Device ID.
-
