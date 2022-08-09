@@ -10,7 +10,6 @@ IP_PORT_CONFIG = 'ip_port'
 DEVICEID_CONFIG = 'device_id'
 
 json = require("json")
-client = http.client({timeout = 10})
 
 function get_data()
   local values, err = config.read_all()
@@ -19,7 +18,7 @@ function get_data()
     return nil, 'cannot_read_config'
   else
     local ip_address, ip_port, device_id = values[IP_ADDRESS_CONFIG], values[IP_PORT_CONFIG], values[DEVICEID_CONFIG]
-    
+
     if not ip_address or not ip_port or not device_id then
       return nil, 'not_configured'
     end
@@ -44,7 +43,7 @@ function get_data()
       if not index then
         return nil, 'deviceid_not_found'
       end
-        
+
       return jb[index], nil
     end
   end
@@ -54,7 +53,7 @@ function switch(state, outlet)
   if not state == "on" or not state == "off" then
     return nil, "Wrong switch state: "..state
   end
-  
+
   local values, err = config.read_all()
   if err then
     enapter.log('cannot read config: '..tostring(err), 'error')
@@ -64,7 +63,7 @@ function switch(state, outlet)
     if not ip_address or not ip_port or not device_id then
       return nil, 'Configuration is empty. Use Main Configuration command to make initial setup.'
     end
-    
+
     local json_body = {}
     if outlet == nil then
       json_body = '{"deviceid":'..device_id..',"params":{"switch": "'..state..'"}}'
@@ -125,7 +124,7 @@ function main()
     enapter.register_command_handler('switch_on', switch_on)
     enapter.register_command_handler('switch_off', switch_off)
 end
-  
+
 function send_properties()
     local brandName, productModel, chipid
 
@@ -146,10 +145,10 @@ function send_properties()
         serial_number = chipid
     })
 end
-  
-  -- holds global array of alerts that are currently active
+
+-- holds global array of alerts that are currently active
 active_alerts = {}
-  
+
 function send_telemetry()
     local telemetry = {}
 
@@ -178,7 +177,7 @@ function send_telemetry()
         telemetry.rssi = jb["params"]["rssi"]
 
     end
-    
+
     telemetry.alerts = active_alerts
     enapter.send_telemetry(telemetry)
 end
