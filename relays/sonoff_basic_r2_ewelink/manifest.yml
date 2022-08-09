@@ -47,13 +47,13 @@ commands:
     display_name: "On"
     group: control
     ui:
-      icon: bell-ring-outline
+      icon: power-plug
       quick_access: true
   switch_off:
     display_name: "Off"
     group: control
     ui:
-      icon: alert-outline
+      icon: power-plug-off
       quick_access: true
   # Configuration
   write_configuration:

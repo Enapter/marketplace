@@ -50,28 +50,63 @@ function get_data()
     end
 end
 
-function switch_on()
+function switch(state, outlet)
   
+  if not state == "on" or not state == "off" then
+    return nil, "Wrong switch state: "..state
+  end
+
+ 
+
   local jb, err = get_data()
   if err then
-      return nil, false
+      return nil, "Cannot get data from eWelink API"
   else
-      local json_body = {"deviceid": jb["deviceid"], "params": {"switches": [{"switch": "on", "outlet": 0}]}}
-
-      local response, err = http.post('http://localhost:3001', 'application/json', json_body)
+  
+      
+      local json_body = {}
+      if outlet == nil then
+        json_body = '{"deviceid":'..jb['deviceid']..',"params":{"switch": "'..state..'"}}'
+      else
+        json_body = '{"deviceid":'..jb['deviceid']..',"params":{"switch": "'..state..'", "outlet":'..tostring(outlet) ..'}}'
+      end
+  
+      local response, err = http.post('http://192.168.123.134:3001', 'application/json', json_body)
       
       if err then
         enapter.log('Cannot do request: '..err, 'error')
+        return nil, "Cannot do request: "..err
       elseif response.code ~= 200 then
         enapter.log('Request returned non-OK code: '..response.code, 'error')
+        return nil, 'Request returned non-OK code: '..response.code
       else
         enapter.log('Request succeeded: '..response.body)
-        return true, nil 
+        return state, nil 
       end
   end
   
 end
-  
+
+function switch_on(ctx, args)
+  local outlet = 0
+  local state, err = switch( 'on' , outlet)
+  if err then
+    ctx.error(tostring(err))
+  else
+    enapter.log('Switch Outlet '..tostring(outlet)..' turned'..tostring(state))
+  end
+end
+
+function switch_off(ctx, args)
+  local outlet = 0
+  local state, err = switch( 'off' , outlet)
+  if err then
+    ctx.error(tostring(err))
+  else
+    enapter.log('Switch Outlet '..tostring(outlet)..' turned'..tostring(state))
+  end
+end
+
   
   -- main() sets up scheduled functions and command handlers,
   -- it's called explicitly at the end of the file
@@ -90,7 +125,7 @@ function main()
 
     -- Register command handlers
     enapter.register_command_handler('switch_on', switch_on)
-    -- enapter.register_command_handler('switch_off', switch_off)
+    enapter.register_command_handler('switch_off', switch_off)
 end
   
 function send_properties()
