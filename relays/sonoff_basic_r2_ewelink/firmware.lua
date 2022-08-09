@@ -64,14 +64,12 @@ function switch(state, outlet)
       return nil, 'Configuration is empty. Use Main Configuration command to make initial setup.'
     end
 
-    local json_body = {}
+    local json_body
     if outlet == nil then
       json_body = '{"deviceid":'..device_id..',"params":{"switch": "'..state..'"}}'
     else
       json_body = '{"deviceid":'..device_id..',"params":{"switch": "'..state..'", "outlet":'..tostring(outlet) ..'}}'
     end
-
-    enapter.log(json_body)
 
     local response, err = http.post('http://'..ip_address..':'..ip_port, 'application/json', json_body)
     if err then
@@ -93,6 +91,8 @@ function switch_on(ctx)
   local state, err = switch( 'on' , outlet)
   if err then
     ctx.error(tostring(err))
+  else
+    enapter.log("Outlet "..outlet.." switched on","info")
   end
 end
 
@@ -102,6 +102,8 @@ function switch_off(ctx)
   local state, err = switch( 'off' , outlet)
   if err then
     ctx.error(tostring(err))
+  else
+    enapter.log("Outlet "..outlet.." switched off","info")
   end
 end
 
