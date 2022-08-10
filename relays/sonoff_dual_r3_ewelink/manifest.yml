@@ -160,3 +160,13 @@ alerts:
     severity: error
     display_name: Device ID was not found.
     description: Check your Device ID.
+
+.cloud:
+  category: switches
+  mobile_charts:
+    - voltage0
+    - current0
+    - power0
+    - voltage1
+    - current1
+    - power1
