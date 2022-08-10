@@ -11,19 +11,6 @@ DEVICEID_CONFIG = 'device_id'
 
 json = require("json")
 
-function dump(o)
-  if type(o) == 'table' then
-     local s = '{ '
-     for k,v in pairs(o) do
-        if type(k) ~= 'number' then k = '"'..k..'"' end
-        s = s .. '['..k..'] = ' .. dump(v) .. ','
-     end
-     return s .. '} '
-  else
-     return tostring(o)
-  end
-end
-
 function get_data()
   local values, err = config.read_all()
   if err then
@@ -208,7 +195,7 @@ function send_telemetry()
           telemetry["switch"..tostring(v["outlet"])] = switch
           relays_num = k
         end
-        
+
         for i = 0,relays_num - 1,1 do
           telemetry["voltage"..tostring(i)] = jb["params"]["voltage_0"..tostring(i)] / 100
           telemetry["current"..tostring(i)] = jb["params"]["current_0"..tostring(i)] / 100
