@@ -16,11 +16,11 @@ This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book
     1. Tap on Device.
     2. Click ... in top right corner.
 
-        <img src="./assets/more.jpg" alt="more" width="25%" />
+        <img src="./.assets/more.jpg" alt="more" width="25%" />
 
     3. Scroll down to Device ID. Write it down for future use.
 
-        <img src="./assets/device_id.jpg" alt="device_id" width="25%" />
+        <img src="./.assets/device_id.jpg" alt="device_id" width="25%" />
 
 3. **Latest version of Enapter Gateway Software**
 
@@ -102,13 +102,13 @@ If everything is fine you are ready to connect your device to Enapter Cloud!
 
 5. As soon as Blueprint will start the `Module Not Configured` event will be triggered.
 
-6. Navigate to `Settings` (<img src="./assets/settings.jpg" alt="settings" width="5%" />).
+6. Navigate to `Settings` (<img src="./.assets/settings.jpg" alt="settings" width="5%" />).
 
 7. Click `Commands`.
 
 8. In the  `Settings` section of the `Commands` screen click on `Main Configuration` command in the Enapter mobile or Web app to set main settings for your Virtual UCM:
 
-    <img src="./assets/main_settiings.jpg" alt="main_settiings" width="25%" />
+    <img src="./.assets/main_settiings.jpg" alt="main_settiings" width="25%" />
 
     You need to set the following parameters you got during previous steps:
 
