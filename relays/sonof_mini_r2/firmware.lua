@@ -45,7 +45,7 @@ function send_properties()
 end
 
 -- holds global array of alerts that are currently active
-active_alerts = {}
+alerts = {}
 
 function send_telemetry()
   local sonoff, err  = connect_sonoff()
@@ -79,7 +79,7 @@ function pretty_status(switch_state)
   else if switch_state == 'off' then
     return 'switch_off'
   else
-    enapter.log("Can't read device state "..err)
+    enapter.log("Can't read device state "..(err))
   end
   end
 end
@@ -107,7 +107,7 @@ else
 end
 end
 
-function has_value (tab, val)
+function has_value(tab, val)
   for _, value in ipairs(tab) do
     if value == val then
       return true
