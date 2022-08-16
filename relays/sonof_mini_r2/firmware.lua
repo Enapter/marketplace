@@ -79,7 +79,7 @@ function pretty_status(switch_state)
   else if switch_state == 'off' then
     return 'switch_off'
   else
-    enapter.log("Can't read device state "..(err))
+    enapter.log("Can't read device state "..err)
   end
   end
 end
