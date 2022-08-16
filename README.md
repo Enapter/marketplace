@@ -53,7 +53,6 @@ Blueprints in the marketplace should be under MIT license. Please [`license: MIT
 
 Also you can specify authorship and support information via [`author`](https://developers.enapter.com/docs/reference/#author), [`contributors`](https://developers.enapter.com/docs/reference/#contributors) and [`support`](https://developers.enapter.com/docs/reference/#support) fields.
 
-
 ### Note About Dot-Fields
 
 `manifest.yml` is validated against [the specification](https://cloud.enapter.com/schemas/json-schemas/blueprints/device/v1/schema.json), although not every aspect of the manifest is ready to be fixed in the specification. Some in-progress features are backed by YAML fields that start with a dot (e.g. `.cloud`). These fields are not documented and ignored in the manifest validation. When the feature is ready, the field will be moved into the main manifest body, and the blueprints will be updated.
