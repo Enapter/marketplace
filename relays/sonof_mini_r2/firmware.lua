@@ -58,7 +58,6 @@ function send_telemetry()
     local snf_data = sonoff:get_device_info()
     if snf_data ~= nil then
       local telemetry = {}
-      local status
       telemetry.status = pretty_status(snf_data["data"]["switch"])
       telemetry.signal = snf_data['data']['signalStrength']
       telemetry.connection_status = 'ok'
