@@ -47,7 +47,6 @@ end
 
 function send_telemetry()
   local sonoff, err  = connect_sonoff()
-  local alerts = {}
   if err then
     enapter.log("Can't connect to Sonoff: "..err)
     enapter.send_telemetry({
