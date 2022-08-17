@@ -49,7 +49,7 @@ We welcome any contributions when it comes to integrating new devices into the s
 
 ### License and Authorship
 
-Blueprints in the marketplace should be under MIT license. Please [`license: MIT`](https://developers.enapter.com/docs/reference/#license) in your `manifest.yml`.
+Blueprints in the marketplace should be licensed under the MIT license. Please add [`license: MIT`](https://developers.enapter.com/docs/reference/#license) in your `manifest.yml`.
 
 Also you can specify authorship and support information via [`author`](https://developers.enapter.com/docs/reference/#author), [`contributors`](https://developers.enapter.com/docs/reference/#contributors) and [`support`](https://developers.enapter.com/docs/reference/#support) fields.
 
