@@ -59,10 +59,11 @@ function send_telemetry()
     local snf_data = sonoff:get_device_info()
     if snf_data ~= nil then
       local telemetry = {}
-      local status -- та же песня,unused variable status
+      local status
       telemetry.status = pretty_status(snf_data["data"]["switch"])
       telemetry.signal = snf_data['data']['signalStrength']
       telemetry.connection_status = 'ok'
+      telemetry.alerts = {}
       enapter.send_telemetry(telemetry)
     else
       enapter.send_telemetry({status = 'no_data', connection_status = 'error', alerts = {'no_data'}})
@@ -76,7 +77,8 @@ function pretty_status(switch_state)
   else if switch_state == 'off' then
     return 'switch_off'
   else
-    enapter.log("Can't read device state "..err) -- ругается на err, может поменять на ctx.error?
+    enapter.log("Unknown device state ", 'error')
+    return switch_state
   end
   end
 end
