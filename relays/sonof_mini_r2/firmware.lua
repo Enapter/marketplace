@@ -44,13 +44,10 @@ function send_properties()
   end
 end
 
--- holds global array of alerts that are currently active
-alerts = {}
 
 function send_telemetry()
   local sonoff, err  = connect_sonoff()
-  local status
-  local connection_status
+  local alerts = {}
   if err then
     enapter.log("Can't connect to Sonoff: "..err)
     enapter.send_telemetry({
@@ -62,7 +59,7 @@ function send_telemetry()
     local snf_data = sonoff:get_device_info()
     if snf_data ~= nil then
       local telemetry = {}
-
+      local status -- та же песня,unused variable status
       telemetry.status = pretty_status(snf_data["data"]["switch"])
       telemetry.signal = snf_data['data']['signalStrength']
       telemetry.connection_status = 'ok'
@@ -79,7 +76,7 @@ function pretty_status(switch_state)
   else if switch_state == 'off' then
     return 'switch_off'
   else
-    enapter.log("Can't read device state "..err)
+    enapter.log("Can't read device state "..err) -- ругается на err, может поменять на ctx.error?
   end
   end
 end
@@ -279,8 +276,6 @@ function Sonoff:get_device_info()
   end
   return nil
 end
-
-
 
 function command_switch(ctx, args)
   if args['action'] then
