@@ -65,7 +65,7 @@ command_groups:
 commands:
   write_configuration:
     display_name: Set Up Connection
-    description: Set your Sonoff account parameters.
+    description: Set your Sonoff account parameters
     group: connection
     populate_values_command: read_configuration
     ui:
