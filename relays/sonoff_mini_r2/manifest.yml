@@ -28,12 +28,12 @@ telemetry:
     enum:
       - switch_on
       - switch_off
+      - no_data
   connection_status:
     type: string
     display_name: Connection Status
     enum:
       - ok
-      - no_data
       - error
   signal:
     type: integer
