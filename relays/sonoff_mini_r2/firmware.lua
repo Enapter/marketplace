@@ -278,7 +278,9 @@ function control_switch(ctx, args)
       deviceid = ''
     })
 
-  local connected_sonoff, err = connect_sonoff() if not err then local response, err = connected_sonoff.client:post('http://'..connected_sonoff.ip_address..':'..connected_sonoff.port..'/zeroconf/switch', 'json',body)
+  local connected_sonoff, err = connect_sonoff() if not err then local response, err = 
+  connected_sonoff.client:post('http://'..connected_sonoff.ip_address..':'..connected_sonoff.port
+  ..'/zeroconf/switch', 'json',body)
 
   if err then
     ctx.error('Cannot do request: '..err, 'error')
