@@ -37,11 +37,17 @@ telemetry:
       - error
   signal:
     type: integer
-    display_name: Internet Signal Strength
+    display_name: Wi-Fi Signal Strength
     unit: dBm
   fwversion:
     type: string
     display_name: Sonoff Firmware Version
+  ip_address:
+    type: string
+    display_name: Sonoff IP address
+  port:
+    type: string
+    display_name: Sonoff Port 
 
 alerts:
   connection_err:
@@ -93,7 +99,7 @@ commands:
       icon: play-outline
     arguments:
       action:
-        display_name: action
+        display_name: Action
         required: true
         type: string
         enum:
