@@ -5,16 +5,12 @@ json = require("json")
 IP_ADDRESS = 'ip_address'
 PORT = 'port'
 
-ip_address = nil
-port = nil
-client = nil
-
 -- Initiate device firmware. Called at the end of the file.
 function main()
   scheduler.add(30000, send_properties)
   scheduler.add(1000, send_telemetry)
 
-  enapter.register_command_handler('activate_switch', command_switch)
+  enapter.register_command_handler('control_switch', control_switch)
   config.init({
     [IP_ADDRESS] = {type = 'string', required = true},
     [PORT] = {type = 'string', required = true}
@@ -22,36 +18,32 @@ function main()
 end
 
 function send_properties()
-  local sonoff, err  = connect_sonoff()
+  local sonoff, err = connect_sonoff()
   if err then
     enapter.log("Can't connect to Sonoff: "..err)
     return
   else
-    ip_address = sonoff.ip_address
-    port = sonoff.port
-    client = sonoff.client
-
     local snf_data = sonoff:get_device_info()
     if next(snf_data) then
       enapter.send_properties({
       vendor = 'Sonoff',
       model = 'MINI R2',
       fw_version = snf_data['data']['fwVersion'],
-      ip_address = ip_address,
-      port = port
-    })
+      ip_address = sonoff.ip_address,
+      port = sonoff.port
+      })
     end
   end
 end
 
-
 function send_telemetry()
-  local sonoff, err  = connect_sonoff()
+  local sonoff, err = connect_sonoff()
   if err then
     enapter.log("Can't connect to Sonoff: "..err)
     enapter.send_telemetry({
-    connection_status = 'no_data',
-      alerts = {'connection_err'}
+    connection_status = 'error',
+    status = 'no_data',
+    alerts = {'connection_err'}
     })
     return
   else
@@ -64,7 +56,10 @@ function send_telemetry()
       telemetry.alerts = {}
       enapter.send_telemetry(telemetry)
     else
-      enapter.send_telemetry({status = 'no_data', connection_status = 'error', alerts = {'no_data'}})
+      enapter.send_telemetry({ status = 'no_data',
+      connection_status = 'error',
+      alerts = {'no_data'}
+      })
     end
   end
 end
@@ -72,12 +67,11 @@ end
 function pretty_status(switch_state)
   if switch_state == 'on' then
     return 'switch_on'
-  else if switch_state == 'off' then
+  elseif switch_state == 'off' then
     return 'switch_off'
   else
     enapter.log("Unknown device state ", 'error')
     return switch_state
-  end
   end
 end
 
@@ -242,7 +236,7 @@ function config.build_read_configuration_command(_config_options)
 end
 
 ---------------------------------
---Sonoff API
+-- Sonoff API
 ---------------------------------
 
 Sonoff = {}
@@ -277,14 +271,14 @@ function Sonoff:get_device_info()
   return nil
 end
 
-function command_switch(ctx, args)
+function control_switch(ctx, args)
   if args['action'] then
     local body = json.encode({
       data = {switch = args['action']},
       deviceid = ''
     })
 
-  local response, err = client:post('http://'..ip_address..':'..port..'/zeroconf/switch', 'json',body)
+  local connected_sonoff, err = connect_sonoff() if not err then local response, err = connected_sonoff.client:post('http://'..connected_sonoff.ip_address..':'..connected_sonoff.port..'/zeroconf/switch', 'json',body)
 
   if err then
     ctx.error('Cannot do request: '..err, 'error')
@@ -295,6 +289,7 @@ function command_switch(ctx, args)
   end
   return nil
   end
+end
 end
 
 main()
