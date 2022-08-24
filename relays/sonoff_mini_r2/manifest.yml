@@ -47,7 +47,7 @@ telemetry:
     display_name: Sonoff IP address
   port:
     type: string
-    display_name: Sonoff Port 
+    display_name: Sonoff Port
 
 alerts:
   connection_err:
