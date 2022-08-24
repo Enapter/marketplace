@@ -28,7 +28,6 @@ telemetry:
     enum:
       - switch_on
       - switch_off
-      - no_data
   connection_status:
     type: string
     display_name: Connection Status
@@ -39,6 +38,7 @@ telemetry:
   signal:
     type: integer
     display_name: Internet Signal Strength
+    unit: dBm
   fwversion:
     type: string
     display_name: Sonoff Firmware Version
@@ -65,7 +65,7 @@ command_groups:
 commands:
   write_configuration:
     display_name: Set Up Connection
-    description: Set your Sonoff account parameters
+    description: Set connection parameters of your Sonoff Mini R2
     group: connection
     populate_values_command: read_configuration
     ui:
@@ -85,9 +85,9 @@ commands:
     group: connection
     ui:
       icon: file-check-outline
-  activate_switch:
-    display_name: Activate Switch
-    description: Turns relay chanel on and off
+  control_switch:
+    display_name: Control Switch
+    description: Turns switch on and off
     group: connection
     ui:
       icon: play-outline
