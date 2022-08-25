@@ -20,6 +20,13 @@ properties:
   fw_version:
     type: string
     display_name: Sonoff Firmware Version
+  ip_address:
+    type: string
+    display_name: Sonoff IP address
+  port:
+    type: string
+    display_name: Sonoff Port
+
 
 telemetry:
   status:
@@ -42,12 +49,6 @@ telemetry:
   fwversion:
     type: string
     display_name: Sonoff Firmware Version
-  ip_address:
-    type: string
-    display_name: Sonoff IP address
-  port:
-    type: string
-    display_name: Sonoff Port
 
 alerts:
   connection_err:
