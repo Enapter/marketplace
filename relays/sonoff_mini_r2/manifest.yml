@@ -2,6 +2,7 @@ blueprint_spec: device/1.0
 
 display_name: Sonoff MINI R2
 description: Smart Relay
+icon: enpater-light-switch
 
 communication_module:
   product: ENP-VIRTUAL

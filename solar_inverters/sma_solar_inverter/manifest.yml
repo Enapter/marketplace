@@ -1,6 +1,7 @@
 blueprint_spec: device/1.0
 
 display_name: SMA Solar Inverter
+description: Sunny Tripower solar inverter
 icon: enapter-inverter-solar
 
 communication_module:

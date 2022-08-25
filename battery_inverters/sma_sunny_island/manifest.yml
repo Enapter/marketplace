@@ -1,6 +1,7 @@
 blueprint_spec: device/1.0
 
 display_name: SMA Sunny Island
+description: Sunny Island battery solar inverter
 icon: enapter-inverter-battery
 
 communication_module:
