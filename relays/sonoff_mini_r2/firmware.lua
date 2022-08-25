@@ -26,11 +26,11 @@ function send_properties()
     local snf_data = sonoff:get_device_info()
     if next(snf_data) then
       enapter.send_properties({
-      vendor = 'Sonoff',
-      model = 'MINI R2',
-      fw_version = snf_data['data']['fwVersion'],
-      ip_address = sonoff.ip_address,
-      port = sonoff.port
+        vendor = 'Sonoff',
+        model = 'MINI R2',
+        fw_version = snf_data['data']['fwVersion'],
+        ip_address = sonoff.ip_address,
+        port = sonoff.port
       })
     end
   end
@@ -41,9 +41,9 @@ function send_telemetry()
   if err then
     enapter.log("Can't connect to Sonoff: "..err)
     enapter.send_telemetry({
-        connection_status = 'error',
-        status = 'no_data',
-        alerts = {'connection_err'}
+      connection_status = 'error',
+      status = 'no_data',
+      alerts = {'connection_err'}
     })
     return
   else
@@ -56,10 +56,10 @@ function send_telemetry()
       telemetry.alerts = {}
       enapter.send_telemetry(telemetry)
     else
-      enapter.send_telemetry({ 
-          status = 'no_data',
-          connection_status = 'error',
-          alerts = {'no_data'}
+      enapter.send_telemetry({
+        status = 'no_data',
+        connection_status = 'error',
+        alerts = {'no_data'}
       })
     end
   end
@@ -274,30 +274,30 @@ end
 
 function control_switch(ctx, args)
   if args['action'] then
-	    local body = json.encode({
-	      data = {switch = args['action']},
-	      deviceid = ''
-	    })
-	    local connected_sonoff, sonoff_err = connect_sonoff()
-	    if not sonoff_err then 
-	      local response, err = connected_sonoff.client:post(
-	        'http://'..connected_sonoff.ip_address..':'..connected_sonoff.port..'/zeroconf/switch',
-	        'json', body
-	      )
-	     
-	      if err then
-	        ctx.error('Cannot do request: '..err, 'error')
-	      elseif response.code ~= 200 then
-	        ctx.error('Request returned non-OK code: '..response.code, 'error')
-	      else
-	        return json.decode(response.body)
-	      end
-	    else
-	      ctx.error("Can't connect to Sonoff device: "..sonoff_err)
-	    end
-	  else
-	    ctx.error('No action argument')
-	  end
-	end
+    local body = json.encode({
+      data = {switch = args['action']},
+      deviceid = ''
+    })
+    local connected_sonoff, sonoff_err = connect_sonoff()
+    if not sonoff_err then
+      local response, err = connected_sonoff.client:post(
+        'http://'..connected_sonoff.ip_address..':'..connected_sonoff.port..'/zeroconf/switch',
+        'json', body
+      )
+
+      if err then
+        ctx.error('Cannot do request: '..err, 'error')
+      elseif response.code ~= 200 then
+        ctx.error('Request returned non-OK code: '..response.code, 'error')
+      else
+        return json.decode(response.body)
+      end
+    else
+      ctx.error("Can't connect to Sonoff device: "..sonoff_err)
+    end
+  else
+    ctx.error('No action argument')
+  end
+end
 
 main()
