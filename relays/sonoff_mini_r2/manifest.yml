@@ -11,9 +11,6 @@ properties:
   vendor:
     type: string
     display_name: Vendor
-  serial_number:
-    type: string
-    display_name: Serial Number
   model:
     type: string
     display_name: Model
