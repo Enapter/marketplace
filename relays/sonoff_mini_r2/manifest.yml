@@ -64,7 +64,6 @@ alerts:
       Can't read data from Sonoff MINI R2.
       Please check configuration parameters.
 
-
 command_groups:
   connection:
     display_name: Connection
