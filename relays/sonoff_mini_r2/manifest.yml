@@ -27,7 +27,6 @@ properties:
     type: string
     display_name: Sonoff Port
 
-
 telemetry:
   status:
     type: string
