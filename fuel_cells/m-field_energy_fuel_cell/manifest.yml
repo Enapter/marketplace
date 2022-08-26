@@ -1,6 +1,7 @@
 blueprint_spec: device/1.0
 
 display_name: M-Field Fuel Cell
+description: Hydrogen energy storage and fuel cell power generator
 icon: enapter-fuel-cell
 
 communication_module:
