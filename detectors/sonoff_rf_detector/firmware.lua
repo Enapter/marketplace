@@ -20,7 +20,8 @@ function get_data()
     enapter.log('cannot read config: '..tostring(err), 'error')
     return nil, 'cannot_read_config'
   else
-    local ip_address, ip_port, device_id, remote_number = values[IP_ADDRESS_CONFIG], values[IP_PORT_CONFIG], values[DEVICEID_CONFIG], values[REMOTE_NUMBER_CONFIG]
+    local ip_address, ip_port, device_id, remote_number = values[IP_ADDRESS_CONFIG],
+    values[IP_PORT_CONFIG], values[DEVICEID_CONFIG], values[REMOTE_NUMBER_CONFIG]
 
     if not ip_address or not ip_port or not device_id or not remote_number then
       return nil, 'not_configured'
