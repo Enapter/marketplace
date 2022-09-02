@@ -127,7 +127,7 @@ If everything is fine you are ready to connect your device to Enapter Cloud!
 
     - Device ID
 
-    - RF Remote Number 
+    - RF Remote Number
 
 9. Press `Run` button
 

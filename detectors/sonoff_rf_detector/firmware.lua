@@ -134,10 +134,10 @@ function send_telemetry()
         detector = "rfTrig" .. remote
 
         if rfTrig == nil then
-           rfTrig = jb["params"][detector]
+            rfTrig = jb["params"][detector]
         end
-        if rfTrig ~= jb["params"][detector] then
 
+        if rfTrig ~= jb["params"][detector] then
             for k,v in pairs(jb["tags"]["zyx_info"]) do
                 if k == tonumber(remote) + 1 then
                     detector_triggered = true
