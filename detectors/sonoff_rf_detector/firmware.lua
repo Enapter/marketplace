@@ -135,8 +135,7 @@ function send_telemetry()
         local detector = "rfTrig" .. remote
 
         local rfTrig
---        if rfTrig == nil then
-        if not rfTrig then
+        if rfTrig == nil then
             rfTrig = jb["params"][detector]
         end
 
