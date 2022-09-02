@@ -105,7 +105,7 @@ active_alerts = {}
 function send_telemetry()
     local telemetry = {}
 
-    remote = storage.read(REMOTE_NUMBER_CONFIG)
+    local remote = storage.read(REMOTE_NUMBER_CONFIG)
 
     local jb, err = get_data()
 
@@ -132,8 +132,9 @@ function send_telemetry()
             telemetry.detector = "Off"
         end
 
-        detector = "rfTrig" .. remote
+        local detector = "rfTrig" .. remote
 
+        local rfTrig
         if rfTrig == nil then
             rfTrig = jb["params"][detector]
         end
