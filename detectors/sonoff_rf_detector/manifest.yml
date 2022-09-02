@@ -6,7 +6,8 @@
 blueprint_spec: device/1.0
 
 display_name: Sonoff RF Detector
-description: This Enapter Blueprint enables support of RF detectors connected to Sonoff RF Bridge 433 in Enapter Cloud via eWelink REST API.
+description: This Enapter Blueprint enables support of RF detectors connected to Sonoff RF
+  Bridge 433 in Enapter Cloud via eWelink REST API.
 icon: enapter-light-switch
 author: enapter
 contributors:
@@ -52,7 +53,7 @@ telemetry:
 
 commands:
   disable_alert:
-    display_name: "Disable alert"
+    display_name: Disable Alert
     group: control
     ui:
       icon: power-plug-off
@@ -114,7 +115,8 @@ alerts:
   wrong_request:
     severity: error
     display_name: eWelink REST API returned invalid response.
-    description: eWelink REST API returned invalid response. Check that you are using valid cridentials and location.
+    description: eWelink REST API returned invalid response. Check that you are using
+      valid cridentials and location.
   deviceid_not_found:
     severity: error
     display_name: Device ID was not found.
