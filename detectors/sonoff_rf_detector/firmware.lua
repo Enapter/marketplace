@@ -13,6 +13,7 @@ REMOTE_NUMBER_CONFIG = 'remote_number'
 json = require("json")
 
 detector_triggered = false
+rfTrig = nil
 
 function get_data()
   local values, err = config.read_all()
@@ -134,7 +135,7 @@ function send_telemetry()
 
         local detector = "rfTrig" .. remote
 
-        local rfTrig
+--        local rfTrig
         if rfTrig == nil then
             rfTrig = jb["params"][detector]
         end
