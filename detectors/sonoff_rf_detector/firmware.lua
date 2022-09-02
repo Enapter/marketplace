@@ -147,10 +147,9 @@ function send_telemetry()
                     enapter.log(tostring(v["name"]) .. " triggered!")
                 end
             end
--- Next line was moved below
---            rfTrig = jb["params"][detector]
+            rfTrig = jb["params"][detector]
         end
--- Next line was moved from previous IF case here
+
         rfTrig = jb["params"][detector]
 
         telemetry.last_triggered = jb["params"][detector]
