@@ -1,6 +1,6 @@
 # Sonoff RF Detector eWelink
 
-This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **Sonoff Dual R3** one channel relay via [eWelink REST API Server](https://github.com/DoganM95/Ewelink-Rest-Api-Server). The Blueprint is running on [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm). This Blueprint allow to control both relays as well as monitor voltage, current and power.
+This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates **RF Detector (smoke, water leak, etc.)** connected to Sonoff RF Bridge 433 via [eWelink REST API Server](https://github.com/DoganM95/Ewelink-Rest-Api-Server). The Blueprint is running on [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm). This Blueprint sends alerts.
 
 ## Requirements
 
