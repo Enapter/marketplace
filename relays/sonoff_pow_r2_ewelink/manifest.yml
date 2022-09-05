@@ -5,8 +5,8 @@
 
 blueprint_spec: device/1.0
 
-display_name: Sonoff Basic2
-description: This Enapter Blueprint enables Sonoff Basic R2 support in Enapter Cloud via eWelink REST API.
+display_name: Sonoff POWR2
+description: This Enapter Blueprint enables Sonoff POWR2 Smart Switch support in Enapter Cloud via eWelink REST API.
 icon: enapter-light-switch
 author: enapter
 contributors:
@@ -39,25 +39,35 @@ telemetry:
       - Online
       - Offline
     display_name: Module Status
+  rssi:
+    type: float
+    display_name: RSSI
   switch:
     type: string
     enum:
       - 'On'
       - 'Off'
     display_name: Switch Status
-  rssi:
+  voltage:
     type: float
-    display_name: RSSI
-
-
+    display_name: Voltage
+    unit: V
+  current:
+    type: float
+    display_name: Current
+    unit: A
+  power:
+    type: float
+    display_name: Power
+    unit: W
 commands:
-  switch_on:
+  switch_on_0:
     display_name: "On"
     group: control
     ui:
       icon: power-plug
       quick_access: true
-  switch_off:
+  switch_off_0:
     display_name: "Off"
     group: control
     ui:
@@ -123,3 +133,7 @@ alerts:
 
 .cloud:
   category: switches
+  mobile_charts:
+    - voltage
+    - current
+    - power

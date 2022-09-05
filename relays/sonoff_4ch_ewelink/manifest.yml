@@ -5,8 +5,8 @@
 
 blueprint_spec: device/1.0
 
-display_name: Sonoff Basic2
-description: This Enapter Blueprint enables Sonoff Basic R2 support in Enapter Cloud via eWelink REST API.
+display_name: Sonoff 4CH
+description: This Enapter Blueprint enables Sonoff 4CH support in Enapter Cloud via eWelink REST API.
 icon: enapter-light-switch
 author: enapter
 contributors:
@@ -39,26 +39,78 @@ telemetry:
       - Online
       - Offline
     display_name: Module Status
-  switch:
+  rssi:
+    type: float
+    display_name: RSSI
+  switch0:
     type: string
     enum:
       - 'On'
       - 'Off'
-    display_name: Switch Status
-  rssi:
-    type: float
-    display_name: RSSI
-
-
+    display_name: Switch 1 Status
+  switch1:
+    type: string
+    enum:
+      - 'On'
+      - 'Off'
+    display_name: Switch 2 Status
+  switch2:
+    type: string
+    enum:
+      - 'On'
+      - 'Off'
+    display_name: Switch 3 Status
+  switch3:
+    type: string
+    enum:
+      - 'On'
+      - 'Off'
+    display_name: Switch 4 Status
 commands:
-  switch_on:
-    display_name: "On"
+  switch_on_0:
+    display_name: "#1 On"
     group: control
     ui:
       icon: power-plug
       quick_access: true
-  switch_off:
-    display_name: "Off"
+  switch_off_0:
+    display_name: "#1 Off"
+    group: control
+    ui:
+      icon: power-plug-off
+      quick_access: true
+  switch_on_1:
+    display_name: "#2 On"
+    group: control
+    ui:
+      icon: power-plug
+      quick_access: true
+  switch_off_1:
+    display_name: "#2 Off"
+    group: control
+    ui:
+      icon: power-plug-off
+      quick_access: true
+  switch_on_2:
+    display_name: "#3 On"
+    group: control
+    ui:
+      icon: power-plug
+      quick_access: true
+  switch_off_2:
+    display_name: "#3 Off"
+    group: control
+    ui:
+      icon: power-plug-off
+      quick_access: true
+  switch_on_3:
+    display_name: "#4 On"
+    group: control
+    ui:
+      icon: power-plug
+      quick_access: true
+  switch_off_3:
+    display_name: "#4 Off"
     group: control
     ui:
       icon: power-plug-off
