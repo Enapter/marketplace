@@ -224,7 +224,6 @@ function send_telemetry()
         end
         telemetry.status = status
 
-        local relays_num
         for k,v in pairs(jb["params"]["switches"]) do
           local switch
           if v["switch"] == "on" then
@@ -233,7 +232,6 @@ function send_telemetry()
               switch = "Off"
           end
           telemetry["switch"..tostring(v["outlet"])] = switch
-          relays_num = k
         end
 
         telemetry.rssi = jb["params"]["rssi"]
