@@ -224,7 +224,7 @@ function send_telemetry()
         end
         telemetry.status = status
 
-        for k,v in pairs(jb["params"]["switches"]) do
+        for _,v in pairs(jb["params"]["switches"]) do
           local switch
           if v["switch"] == "on" then
               switch = "On"
