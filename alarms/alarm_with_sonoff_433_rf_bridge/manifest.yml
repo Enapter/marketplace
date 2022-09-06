@@ -1,0 +1,137 @@
+blueprint_spec: device/1.0
+
+display_name: Alarm sensor connected to Sonoff 433 RF Bridge
+description: >
+  This Enapter Blueprint enables support of different alarm sensors connected to
+  Sonoff 433 RF Bridge in Enapter Cloud via eWelink REST API.
+icon: alarm-light-outline
+author: enapter
+contributors:
+  - alexandershalin
+  - nkrasko
+  - anataty
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: string
+    display_name: Chip ID
+
+telemetry:
+  status:
+    type: string
+    enum:
+      - ok
+      - triggered
+    display_name: Alarm Status
+  sonoff_status:
+    type: string
+    enum:
+      - Online
+      - Offline
+    display_name: Sonoff RF Bridge Status
+  rssi:
+    type: float
+    display_name: Sonoff RF Bridge RSSI
+    unit: dBm
+
+commands:
+  disable_alert:
+    display_name: Disable Alert
+    group: control
+    ui:
+      icon: power-plug-off
+      quick_access: true
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: settings
+    ui:
+      icon: wrench-outline
+    arguments:
+      ip_address:
+        display_name: IP Address
+        description: IP address of eWelink REST API server
+        type: string
+        required: true
+      ip_port:
+        display_name: Port
+        description: IP Port of eWelink REST API server
+        type: string
+        required: true
+      device_id:
+        display_name: Device ID
+        description: Sonoff Device ID. Can be found in eWelink App.
+        type: string
+        required: true
+      remote_number:
+        display_name: Remote Number (1-16)
+        description: A remote number. Can be found in eWelink App.
+        type: string
+        required: true
+  read_configuration:
+    display_name: Read Connection Config
+    group: settings
+    ui:
+      icon: wrench-outline
+
+command_groups:
+  control:
+    display_name: Control
+  settings:
+    display_name: Settings
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: Module Not Configured
+    description: Use "Main Configuration" command to setup connection.
+  no_connection:
+    severity: error
+    display_name: Cannot Connect to eWelink REST API
+    description: Cannot Connect to eWelink REST API. Check if server is running.
+  wrong_request:
+    severity: error
+    display_name: eWelink REST API returned invalid response.
+    description: >
+      eWelink REST API returned invalid response.
+      Check that you are using valid cridentials and location.
+  deviceid_not_found:
+    severity: error
+    display_name: Device ID was not found.
+    description: Check your Device ID.
+  sonoff_offline:
+    severity: error
+    display_name: Sonoff RF Bridge is offline
+    description: Check your Sonoff RF Bridge connection.
+  # The following alerts names are set in eWelink app
+  Smoke_Detector:
+    severity: error
+    display_name: Smoke alarm triggered
+    description: Smoke detected! Check for possible sources of fire.
+  Leak_Detector:
+    severity: error
+    display_name: Leak alarm triggered
+    description: Leak detected! Check for possible cause of water leak.
+
+.cloud:
+  category: sensors
+  mobile_charts:
+    - status
