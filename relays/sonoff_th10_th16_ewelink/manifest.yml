@@ -50,11 +50,11 @@ telemetry:
     display_name: Switch Status
   humidity:
     type: float
-    display_name: Voltage
+    display_name: Humidity
     unit: "%"
   temperature:
     type: float
-    display_name: Current
+    display_name: Temperature
     unit: C
 commands:
   switch_on_0:
