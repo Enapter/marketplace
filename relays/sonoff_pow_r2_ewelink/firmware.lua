@@ -66,9 +66,9 @@ function switch(state, outlet)
 
     local json_body
     if outlet == nil then
-      json_body = '{"deviceid":'..device_id..',"params":{"switch": "'..state..'"}}'
+      json_body = '{"deviceid":"'..device_id..'","params":{"switch": "'..state..'"}}'
     else
-      json_body = '{"deviceid":'..device_id..',"params":{"switch": "'..state..'", "outlet":'..tostring(outlet) ..'}}'
+      json_body = '{"deviceid":"'..device_id..'","params":{"switch": "'..state..'", "outlet":'..tostring(outlet) ..'}}'
     end
 
     local response, err = http.post('http://'..ip_address..':'..ip_port, 'application/json', json_body)
@@ -86,7 +86,7 @@ function switch(state, outlet)
 end
 
 function switch_on_0(ctx)
-  local outlet = 1
+  local outlet = nil
 
   local err = switch('on' , outlet)
   if err then
@@ -95,7 +95,7 @@ function switch_on_0(ctx)
 end
 
 function switch_off_0(ctx)
-  local outlet = 1
+  local outlet = nil
 
   local err = switch('off' , outlet)
   if err then
