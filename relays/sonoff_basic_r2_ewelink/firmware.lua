@@ -66,9 +66,9 @@ function switch(state, outlet)
 
     local json_body
     if outlet == nil then
-      json_body = '{"deviceid":'..device_id..',"params":{"switch": "'..state..'"}}'
+      json_body = '{"deviceid":"'..device_id..'","params":{"switch": "'..state..'"}}'
     else
-      json_body = '{"deviceid":'..device_id..',"params":{"switch": "'..state..'", "outlet":'..tostring(outlet) ..'}}'
+      json_body = '{"deviceid":"'..device_id..'","params":{"switch": "'..state..'", "outlet":'..tostring(outlet) ..'}}'
     end
 
     local response, err = http.post('http://'..ip_address..':'..ip_port, 'application/json', json_body)
@@ -77,6 +77,7 @@ function switch(state, outlet)
       return "Cannot do request: "..err
     elseif response.code ~= 200 then
       enapter.log('Request returned non-OK code: '..response.code, 'error')
+      enapter.log(response.body)
       return 'Request returned non-OK code: '..response.code
     else
       enapter.log('Request succeeded: '..response.body)
@@ -86,7 +87,7 @@ function switch(state, outlet)
 end
 
 function switch_on(ctx)
-  local outlet = 0
+  local outlet = nil
 
   local err = switch( 'on' , outlet)
   if err then
