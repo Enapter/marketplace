@@ -95,9 +95,9 @@ In this example we will bild own container.
 
         This option is helpful to minimize number of hardware used for running different custom services. Docker subsystem is running in stateless mode so every time container starts it is either requested from registry, built or taken from images cache. This example will explain how to put image to cache and write correct docker-compose file.
 
-        Before continue ensure you are running Gateway 2.1.
+        Before continue ensure you are running [Gateway 2.1](https://handbook.enapter.com/software/gateway/2.0.0/setup/).
 
-        **Export docker image from machine you've built it in paragraph 2.**
+        **Export docker image from machine you've built it with docker build command.**
 
         ```zsh
         docker save nkrasko/ewelink-rest-api-server > nkrasko_ewelink-rest-api-server.tar
@@ -141,17 +141,7 @@ In this example we will bild own container.
         root@gateway:~$ vim /user/etc/docker-compose/docker-compose.yml
         ```
 
-        Put the following content into the file, ensure you have right indentation and put right values for:
-
-        - **EMAIL** - your eWelink email, for example, test@test.com
-        - **PASSWORD** - your eWelink password
-        - **REGION** - your eWelink Region:
-            - Mainland China: CN
-            - Asia: AS
-            - Americas: US
-            - Europe: EU
-        - **LOCAL_TCP_PORT**: any free TCP port on which HTTP server will be listening. This port will be needed for Virtual UCM configurattion in next steps. For example, 9292.
-
+        Put the following content into the file:
 
         ```yaml
         version: "3"
@@ -166,6 +156,16 @@ In this example we will bild own container.
                     - 'EWELINK_REGION=EU'
                     - 'SERVER_MODE=dev'
         ```
+        Ensure you have right indentation and put right values for:
+
+        - **EMAIL** - your eWelink email, for example, test@test.com
+        - **PASSWORD** - your eWelink password
+        - **REGION** - your eWelink Region:
+            - Mainland China: CN
+            - Asia: AS
+            - Americas: US
+            - Europe: EU
+        - **LOCAL_TCP_PORT**: any free TCP port on which HTTP server will be listening. This port will be needed for Virtual UCM configurattion in next steps. For example, 9292.
 
         **Start your configuration**
 
@@ -236,3 +236,5 @@ The status data should be available on your **Sonoff Dual R3** dashboard as well
 - [https://github.com/DoganM95/Ewelink-rest-api-server](https://github.com/DoganM95/Ewelink-rest-api-server)
 
 - [https://developers.enapter.com](https://developers.enapter.com)
+
+- [Enapter's Discord Channel](https://discord.gg/TCaEZs3qpe)
