@@ -91,7 +91,7 @@ In this example we will bild own container.
 
     ​    In above example, the docker container is running on TCP port 8081.
 
-    **Option 2.** Run docker container with docker-compose on Enapter Gateway 2.1
+    - **Option 2.** Run docker container with docker-compose on Enapter Gateway 2.1
 
         This option is helpful to minimize number of hardware used for running different custom services. Docker subsystem is running in stateless mode so every time container starts it is either requested from registry, built or taken from images cache. This example will explain how to put image to cache and write correct docker-compose file.
 
@@ -102,6 +102,7 @@ In this example we will bild own container.
             ```zsh
             docker save nkrasko/ewelink-rest-api-server > nkrasko_ewelink-rest-api-server.tar
             ```
+
         **Copy docker image to temporary directory on your gateway with `scp`.**
 
             ```zsh
