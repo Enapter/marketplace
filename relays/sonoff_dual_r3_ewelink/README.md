@@ -156,6 +156,7 @@ In this example we will bild own container.
                     - 'EWELINK_REGION=EU'
                     - 'SERVER_MODE=dev'
         ```
+
         Ensure you have right indentation and put right values for:
 
         - **EMAIL** - your eWelink email, for example, test@test.com
