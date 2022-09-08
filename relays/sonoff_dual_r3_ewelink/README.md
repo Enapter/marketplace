@@ -172,7 +172,7 @@ In this example we will bild own container.
         root@gateway:~$ systemctl restart enapter-docker-compose
         ```
 
-        The start can take some time. Bee patient.
+        The start can take some time. Be patient.
 
         **Ensure your container is running**
 
