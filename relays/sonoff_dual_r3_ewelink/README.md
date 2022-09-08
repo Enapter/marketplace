@@ -95,7 +95,7 @@ In this example we will bild own container.
 
         This option is helpful to minimize number of hardware used for running different custom services. Docker subsystem is running in stateless mode so every time container starts it is either requested from registry, built or taken from images cache. This example will explain how to put image to cache and write correct docker-compose file.
 
-        Before continue ensure you are running [Gateway 2.1](https://handbook.enapter.com/software/gateway/2.0.0/setup/).
+        Before continue ensure you are running [Gateway 2.1](https://handbook.enapter.com/software/gateway_software/whatsnew/2.1.html).
 
         **Export docker image from machine you've built it with docker build command.**
 
