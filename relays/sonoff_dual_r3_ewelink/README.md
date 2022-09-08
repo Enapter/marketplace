@@ -152,6 +152,7 @@ In this example we will bild own container.
             - Europe: EU
         - **LOCAL_TCP_PORT**: any free TCP port on which HTTP server will be listening. This port will be needed for Virtual UCM configurattion in next steps. For example, 9292.
 
+
         ```yaml
         version: "3"
         services:
@@ -166,7 +167,7 @@ In this example we will bild own container.
                     - 'SERVER_MODE=dev'
         ```
 
-        **Start configuration**
+        **Start your configuration**
 
         ```zsh
         root@gateway:~$ systemctl restart enapter-docker-compose
