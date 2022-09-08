@@ -99,89 +99,90 @@ In this example we will bild own container.
 
         **Export docker image from machine you've built it in paragraph 2.**
 
-            ```zsh
-            docker save nkrasko/ewelink-rest-api-server > nkrasko_ewelink-rest-api-server.tar
-            ```
+        ```zsh
+        docker save nkrasko/ewelink-rest-api-server > nkrasko_ewelink-rest-api-server.tar
+        ```
 
         **Copy docker image to temporary directory on your gateway with `scp`.**
 
-            ```zsh
-            scp nkrasko_ewelink-rest-api-server.tar enapter@enapter-gateway.local:/tmp
-            ```
+        ```zsh
+        scp nkrasko_ewelink-rest-api-server.tar enapter@enapter-gateway.local:/tmp
+        ```
 
-            `enapter-gateway.local` should be resolvable with mDNS in your LAN. If not, use IP address of your gateway. As password use the password you set during initial Gateway configuration.
+        `enapter-gateway.local` should be resolvable with mDNS in your LAN. If not, use IP address of your gateway. As password use the password you set during initial Gateway configuration.
 
         **Move image to docker images cache.**
 
-            ssh to gateway with `ssh enapter@enapter-gateway.local` command. Run `bash` command to switch to the shell.
+        ssh to gateway with `ssh enapter@enapter-gateway.local` command. Run `bash` command to switch to the shell.
 
-            ```zsh
-            [enapter] $ bash
-            enapter@gateway:~$
-            ```
+        ```zsh
+        [enapter] $ bash
+        enapter@gateway:~$
+        ```
 
-            become `root` with `sudo su -` command. `whoami` command is helpful to ensure your are root.
+        become `root` with `sudo su -` command. `whoami` command is helpful to ensure your are root.
 
-            ```zsh
-            enapter@gateway:~$ sudo su -
-            root@gateway:~$
-            ```
+        ```zsh
+        enapter@gateway:~$ sudo su -
+        root@gateway:~$
+        ```
 
-            move image tto docker images cache
+        move image to docker images cache
 
-            ```zsh
-            root@gateway:~$ mv /tmp/nkrasko_ewelink-rest-api-server.tar /user/etc/docker-compose/images/
-            ```
+        ```zsh
+        root@gateway:~$ mv /tmp/nkrasko_ewelink-rest-api-server.tar /user/etc/docker-compose/images/
+        ```
 
         **Edit docker compose configuration**
 
-            you can use `vim` or `nano` text editors.
+        you can use `vim` or `nano` text editors.
 
-            ```zsh
-            root@gateway:~$ vim /user/etc/docker-compose/docker-compose.yml
-            ```
+        ```zsh
+        root@gateway:~$ vim /user/etc/docker-compose/docker-compose.yml
+        ```
 
-            Put the following content into the file, ensure you have right indentation and put right values for:
+        Put the following content into the file, ensure you have right indentation and put right values for:
 
-            - **EMAIL** - your eWelink email, for example, test@test.com
-            - **PASSWORD** - your eWelink password
-            - **REGION** - your eWelink Region:
-                - Mainland China: CN
-                - Asia: AS
-                - Americas: US
-                - Europe: EU
-            - **LOCAL_TCP_PORT**: any free TCP port on which HTTP server will be listening. This port will be needed for Virtual UCM configurattion in next steps. For example, 9292.
+        - **EMAIL** - your eWelink email, for example, test@test.com
+        - **PASSWORD** - your eWelink password
+        - **REGION** - your eWelink Region:
+            - Mainland China: CN
+            - Asia: AS
+            - Americas: US
+            - Europe: EU
+        - **LOCAL_TCP_PORT**: any free TCP port on which HTTP server will be listening. This port will be needed for Virtual UCM configurattion in next steps. For example, 9292.
 
-            ```yaml
-            version: "3"
-            services:
-                nkrasko-ewelink-api:
-                    image: localhost/nkrasko/ewelink-rest-api-server:latest
-                    ports:
-                        - '0.0.0.0:LOCAL_TCP_PORT:3000'
-                    environment:
-                        - 'EWELINK_USERNAME=EMAIL'
-                        - 'EWELINK_PASSWORD=PASSWORD'
-                        - 'EWELINK_REGION=EU'
-                        - 'SERVER_MODE=dev'
-            ```
+        ```yaml
+        version: "3"
+        services:
+            nkrasko-ewelink-api:
+                image: localhost/nkrasko/ewelink-rest-api-server:latest
+                ports:
+                    - '0.0.0.0:LOCAL_TCP_PORT:3000'
+                environment:
+                    - 'EWELINK_USERNAME=EMAIL'
+                    - 'EWELINK_PASSWORD=PASSWORD'
+                    - 'EWELINK_REGION=EU'
+                    - 'SERVER_MODE=dev'
+        ```
+
         **Start configuration**
 
-            ```zsh
-            root@gateway:~$ systemctl restart enapter-docker-compose
-            ```
+        ```zsh
+        root@gateway:~$ systemctl restart enapter-docker-compose
+        ```
 
-            the start can take some time.
+        The start can take some time. Bee patient.
 
         **Ensure your container is running**
 
-            ```zsh
-            root@gateway:~$ docker-compose -f /user/etc/docker-compose/docker-compose.yml ps
-                            Name                              Command               State           Ports
-            ------------------------------------------------------------------------------------------------------
-            docker-compose_nkrasko-ewelink-api_1   docker-entrypoint.sh node  ...   Up ()   0.0.0.0:9292->3000/tcp
-            root@gateway:~$
-            ```
+        ```zsh
+        root@gateway:~$ docker-compose -f /user/etc/docker-compose/docker-compose.yml ps
+                        Name                              Command               State           Ports
+        ------------------------------------------------------------------------------------------------------
+        docker-compose_nkrasko-ewelink-api_1   docker-entrypoint.sh node  ...   Up ()   0.0.0.0:9292->3000/tcp
+        root@gateway:~$
+        ```
 
 4. Check your API provides valid response with CURL from host where docker container runs:
 
