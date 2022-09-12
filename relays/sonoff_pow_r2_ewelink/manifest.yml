@@ -1,0 +1,139 @@
+# Manifest describes the core concepts of your device: properties,
+# telemetry, alerts, and commands.
+#
+# See https://developers.enapter.com/docs/reference
+
+blueprint_spec: device/1.0
+
+display_name: Sonoff POWR2
+description: This Enapter Blueprint enables Sonoff POWR2 Smart Switch support in Enapter Cloud via eWelink REST API.
+icon: enapter-light-switch
+author: enapter
+contributors:
+  - nkrasko
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: string
+    display_name: Chip ID
+
+
+telemetry:
+  status:
+    type: string
+    enum:
+      - Online
+      - Offline
+    display_name: Module Status
+  rssi:
+    type: float
+    display_name: RSSI
+  switch:
+    type: string
+    enum:
+      - 'On'
+      - 'Off'
+    display_name: Switch Status
+  voltage:
+    type: float
+    display_name: Voltage
+    unit: V
+  current:
+    type: float
+    display_name: Current
+    unit: A
+  power:
+    type: float
+    display_name: Power
+    unit: W
+commands:
+  switch_on_0:
+    display_name: "On"
+    group: control
+    ui:
+      icon: power-plug
+      quick_access: true
+  switch_off_0:
+    display_name: "Off"
+    group: control
+    ui:
+      icon: power-plug-off
+      quick_access: true
+  # Configuration
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: settings
+    ui:
+      icon: wrench-outline
+    arguments:
+      ip_address:
+        display_name: IP Address
+        description: IP address of eWelink REST API server
+        type: string
+        required: true
+      ip_port:
+        display_name: Port
+        description: IP Port of eWelink REST API server
+        type: string
+        required: true
+      device_id:
+        display_name: Device ID
+        description: Sonoff Device ID. Can be found in eWelink App.
+        type: string
+        required: true
+  read_configuration:
+    display_name: Read Connection Config
+    group: settings
+    ui:
+      icon: wrench-outline
+
+
+command_groups:
+  control:
+    display_name: Control
+  settings:
+    display_name: Settings
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: Module Not Configured
+    description: Use "Main Configuration" command to setup Powerwall connection.
+  no_connection:
+    severity: error
+    display_name: Cannot Connect to eWelink REST API
+    description: Cannot Connect to eWelink REST API. Check server is running.
+  wrong_request:
+    severity: error
+    display_name: eWelink REST API returned invalid response.
+    description: eWelink REST API returned invalid response. Check that you are using valid cridentials and location.
+  deviceid_not_found:
+    severity: error
+    display_name: Device ID was not found.
+    description: Check your Device ID.
+
+.cloud:
+  category: switches
+  mobile_charts:
+    - voltage
+    - current
+    - power

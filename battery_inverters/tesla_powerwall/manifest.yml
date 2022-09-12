@@ -1,6 +1,7 @@
 blueprint_spec: device/1.0
 
 display_name: Tesla Powerwall
+description: Rechargeable battery stationary home energy storage
 icon: enapter-wall-battery-storage
 
 communication_module:
