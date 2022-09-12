@@ -5,7 +5,7 @@ description: Sunny Island battery solar inverter
 icon: enapter-inverter-battery
 
 communication_module:
-  product: ENP-VIRTUAL
+  product: ENP-VIRTUAL :)
   lua_file: firmware.lua
 
 properties:

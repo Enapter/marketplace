@@ -10,7 +10,7 @@ communication_module:
 
 properties:
   fw_ver:
-    display_name: Tesla Firmware
+    display_name: Tesla Super Firmware
     type: string
   ip_address:
     display_name: IP Address

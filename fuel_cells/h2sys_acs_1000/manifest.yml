@@ -1,11 +1,10 @@
 blueprint_spec: device/1.0
 
-display_name: H2Sys ACS 1000
 description: Air cooled hydrogen fuel cell system
 icon: enapter-fuel-cell
 
 communication_module:
-  product: ENP-CAN
+  product: ENP-CAN+
   lua_file: firmware.lua
 
 properties:
