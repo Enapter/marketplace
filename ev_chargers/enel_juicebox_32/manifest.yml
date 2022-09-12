@@ -1,0 +1,131 @@
+blueprint_spec: device/1.0
+display_name: Enel JuiceBox 32
+description: Smart EV charging station
+icon: enapter-car-charger
+license: MIT
+author: enapter
+contributors:
+  - nkrasko
+  - anataty
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: string
+    display_name: Serial Number
+
+telemetry:
+  status:
+    type: string
+    display_name: State
+    enum:
+      - standby
+      - plugged
+      - charging
+      - error
+      - disconnect
+      - no_data
+  charging_time_left:
+    type: float
+    display_name: Charging Time Left
+    unit: min
+  voltage:
+    type: float
+    unit: V
+    display_name: Grid Voltage
+  current:
+    type: float
+    unit: A
+    display_name: Charging Current
+  chargetime:
+    type: integer
+    unit: seconds
+    display_name: Charging Time
+  chargeenergy:
+    type: integer
+    unit: Wh
+    display_name: Current Amount of Energy Poured to The Vehicle
+  frequency:
+    type: float
+    unit: Hz
+    display_name: Grid Frequency
+  power:
+    type: float
+    unit: kW
+    display_name: Current power value which a car charge at
+  temperature:
+    type: integer
+    unit: C
+    display_name: Temperature
+  totalenergy:
+    type: float
+    unit: kWh
+    display_name: Total Energy Poured to Vehicles During Lifetime
+
+alerts:
+  charging_started:
+    severity: info
+    display_name: Vehicle charging started
+  charging_stopped:
+    severity: info
+    display_name: Vehicle charging finished
+  no_data:
+    severity: error
+    display_name: No data from device
+    description: >
+      Can't read data from Enel JuiceBox.
+      Please check configuration parameters.
+  connection_err:
+    severity: warning
+    display_name: Connection Error
+    description: >
+      Please use "Set Up Connection" command to set up your
+      JuiceNet account configuration.
+
+command_groups:
+  connection:
+    display_name: Connection
+
+commands:
+  # TODO: mark commands containing secrets
+  write_configuration:
+    display_name: Set Up Connection
+    description: Set your JuiceNet account parameters
+    group: connection
+    populate_values_command: read_configuration
+    ui:
+      icon: file-document-edit-outline
+    arguments:
+      account_token:
+        display_name: JuiceNet Account Token
+        type: string
+        required: true
+      unit_id:
+        display_name: JuiceNet Unit ID
+        type: string
+        required: true
+  read_configuration:
+    display_name: Read Connection Parameters
+    description: Read your JuiceNet account token and unit ID
+    group: connection
+    ui:
+      icon: file-check-outline
+
+.cloud:
+  mobile_main_chart: power
+  mobile_charts:
+    - power
+    - current
+    - totalenergy
