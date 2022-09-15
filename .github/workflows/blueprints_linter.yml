@@ -1,7 +1,7 @@
 name: Blueprints Linter
 
 on:
-  pull_request:
+  pull_request_target:
     branches: [main]
 
 jobs:
@@ -12,11 +12,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
       - name: Get Changed Files
         id: changes
         run: |
-          echo "::set-output name=changed-files::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
+          echo "::set-output name=changed-files::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.head.sha }} ${{ github.sha }} | xargs)"
       - name: Run Linter
         run: |
           docker run --rm \
