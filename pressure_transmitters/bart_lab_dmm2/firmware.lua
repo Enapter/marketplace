@@ -16,7 +16,7 @@ function main()
 end
 
 function properties()
-    enapter.send_properties({ vendor = "Bart", model = "LAB-DMM2" })
+    enapter.send_properties({ vendor = "Bart", model = "LAB-DM2" })
 end
 
 function send_telemetry()

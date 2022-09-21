@@ -1,6 +1,6 @@
 blueprint_spec: device/1.0
 
-display_name: Bart LAB-DMM2
+display_name: Bart LAB-DM2
 icon: enapter-gauge
 
 communication_module:
@@ -34,7 +34,7 @@ alerts:
       Failed to send request. Please check communication wiring and parameters.
     severity: error
   no_response:
-    display_name: No response from Bart LAB-DMM2
+    display_name: No response from Bart LAB-DM2
     description: |
       Get no response from Bart LAB-DMM2.
       Please check communication wiring and parameters.
@@ -42,7 +42,7 @@ alerts:
   no_data:
     display_name: Invalid readings
     description: |
-      Can't read data from Bart LAB-DMM2.
+      Can't read data from Bart LAB-DM2.
       Please check if serial request corresponds to the manual instructions.
     severity: error
 
