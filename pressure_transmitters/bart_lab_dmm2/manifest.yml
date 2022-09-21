@@ -1,0 +1,50 @@
+blueprint_spec: device/1.0
+
+display_name: Bart LAB-DMM2
+icon: enapter-gauge
+
+communication_module:
+  product: ENP-RS232
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    type: string
+    enum:
+      - ok
+      - error
+    display_name: Status
+  pressure:
+    type: float
+    unit: bar
+    display_name: Pressure
+
+alerts:
+  send_failed:
+    display_name: Serial communication request failed
+    description: |
+      Failed to send request. Please check communication wiring and parameters.
+    severity: error
+  no_response:
+    display_name: No response from Bart LAB-DMM2
+    description: |
+      Get no response from Bart LAB-DMM2.
+      Please check communication wiring and parameters.
+    severity: error
+  no_data:
+    display_name: Invalid readings
+    description: |
+      Can't read data from Bart LAB-DMM2.
+      Please check if serial request corresponds to the manual instructions.
+    severity: error
+
+.cloud:
+  category: sensors
