@@ -463,6 +463,7 @@ alerts:
       on the battery(s) or if the converters get too hot.
       Please ensure that the ventilation is not blocked or reduce
       the configured stop voltage of the battery(s).
+  # Warnings
   warn_manual_error:
     display_name: Manual error
     severity: warning

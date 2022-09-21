@@ -117,7 +117,9 @@ end
 
 function parse_stop_alarms(code)
   local alarms = {}
-  if code & 0x1 ~= 0 then
+  if code == 0 then
+    return alarms
+  elseif code & 0x1 ~= 0 then
     table.insert(alarms, 'stop_manual_error')
   elseif code & 0x2 ~= 0 then
     table.insert(alarms, 'stop_init_error')
@@ -161,7 +163,9 @@ end
 
 function parse_shutdown_alarms(code)
   local alarms = {}
-  if code & 0x1 ~= 0 then
+  if code == 0 then
+    return alarms
+  elseif code & 0x1 ~= 0 then
     table.insert(alarms, 'shutdown_manual_error')
   elseif code & 0x2 ~= 0 then
     table.insert(alarms, 'shutdown_component_error')
@@ -205,7 +209,9 @@ end
 
 function parse_warnings(code)
   local alarms = {}
-  if code & 0x1 ~= 0 then
+  if code == 0 then
+    return alarms
+  elseif code & 0x1 ~= 0 then
     table.insert(alarms, 'manual_error')
   elseif code & 0x2 ~= 0 then
     table.insert(alarms, 'warn_high_cathode_pressure')
