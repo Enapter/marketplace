@@ -23,10 +23,10 @@ telemetry:
     display_name: Status
     type: string
     enum:
-      - 'No data'
+      - No data
       - 'Off'
       - Idle
-      - 'Fail Safe'
+      - Fail Safe
       - Enabled
       - Dryout
       - Shutdown
