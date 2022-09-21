@@ -1,0 +1,523 @@
+blueprint_spec: device/1.0
+display_name: Powercell PS-5
+description: >
+  The Power Generation System 5 with an automatic control system which
+  can monitor batteries and keep them charged at a specified voltage or
+  deliver a requested power output.
+icon: enapter-fuel-cell
+
+communication_module:
+  product: ENP-CAN
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - 'No data'
+      - 'Off'
+      - Idle
+      - 'Fail Safe'
+      - Enabled
+      - Dryout
+      - Shutdown
+      - Run
+  autostart:
+    display_name: Autostart Enabled
+    type: boolean
+  total_power:
+    type: float
+    unit: kwatth
+    display_name: Total Power
+  total_runtime:
+    type: float
+    unit: h
+    display_name: Total Runtime
+  target_voltage1:
+    type: float
+    unit: V
+    display_name: Battery 1 Target Voltage
+  stop_voltage1:
+    type: float
+    unit: V
+    display_name: Battery 1 Stop Voltage
+  start_voltage1:
+    type: float
+    unit: V
+    display_name: Battery 1 Start Voltage
+  current1:
+    type: float
+    unit: amp
+    display_name: Battery 1 Current
+  voltage1:
+    type: float
+    unit: volt
+    display_name: Battery 1 Voltage
+  power1:
+    type: float
+    unit: watt
+    display_name: Battery 1 Power
+  current2:
+    type: float
+    unit: amp
+    display_name: Battery 2 Current
+  voltage2:
+    type: float
+    unit: volt
+    display_name: Battery 2 Voltage
+  power2:
+    type: float
+    unit: watt
+    display_name: Battery 2 Power
+  coolant_temp:
+    type: float
+    unit: celsius
+    display_name: Coolant temperature
+  coolant_duty:
+    type: float
+    unit: percent
+    display_name: Coolant duty
+
+command_groups:
+  battery1:
+    display_name: Battery 1
+  battery2:
+    display_name: Battery 2
+  settings:
+    display_name: Settings
+
+commands:
+  set_start_voltage1:
+    display_name: Set Start Voltage
+    group: battery1
+    arguments:
+      voltage:
+        display_name: Start Voltage
+        type: float
+        min: 0
+        max: 60
+    ui:
+      icon: power-on
+  set_start_voltage2:
+    display_name: Set Start Voltage
+    group: battery2
+    arguments:
+      voltage:
+        display_name: Start Voltage
+        type: float
+        min: 0
+        max: 60
+    ui:
+      icon: power-on
+  set_stop_voltage1:
+    display_name: Set Stop Voltage
+    group: battery1
+    arguments:
+      voltage:
+        display_name: Stop Voltage
+        type: float
+        min: 0
+        max: 60
+    ui:
+      icon: power-off
+  set_stop_voltage2:
+    display_name: Set Stop Voltage
+    group: battery2
+    arguments:
+      voltage:
+        display_name: Stop Voltage
+        type: float
+        min: 0
+        max: 60
+    ui:
+      icon: power-off
+  set_target_voltage1:
+    display_name: Set Target Voltage
+    group: battery1
+    arguments:
+      voltage:
+        display_name: Target Voltage
+        type: float
+        min: 0
+        max: 60
+    ui:
+      icon: podium-gold
+  set_target_voltage2:
+    display_name: Set Target Voltage
+    group: battery2
+    arguments:
+      voltage:
+        display_name: Target Voltage
+        type: float
+        min: 0
+        max: 60
+    ui:
+      icon: podium-gold
+  enable_autostart:
+    display_name: Enable Autostart
+    group: settings
+    ui:
+      icon: car-side
+  disable_autostart:
+    display_name: Disable Autostart
+    group: settings
+    ui:
+      icon: walk
+
+alerts:
+  no_data:
+    display_name: No data from PS-5
+    severity: error
+  stop_manual_error:
+    display_name: Manual error
+    severity: error
+    code: stop1
+    description: |
+      Manually triggered error for testing purposes.
+      Please power cycle system.
+  stop_init_error:
+    display_name: Initialization error
+    severity: error
+    code: stop2
+    description: |
+      An error occurred during the system start-up.
+      Please contact PowerCell.
+      One of the components is reading a faulty value.
+      See submenu for which component and contact PowerCell.
+  stop_can_error:
+    display_name: CAN error
+    severity: error
+    code: stop4
+    description: |
+      Lost of internal CAN communication to a component.
+      Please contact PowerCell.
+  stop_platform_exception_err:
+    display_name: Platform exception error
+    severity: error
+    code: stop8
+    description: |
+      The PLC has a cycle timing exception error.
+      Please contact PowerCell.
+  stop_platform_over_temp:
+    display_name: Platform over temperature
+    severity: error
+    code: stop10
+    description: |
+      The PLC is too hot. Please contact PowerCell.
+  stop_platform_misc_err:
+    display_name: Platform internal error
+    severity: error
+    code: stop20
+    description: |
+      An internal status of the PLC is displaying an error.
+      Please contact PowerCell.
+  stop_hmi_error:
+    display_name: HMI error
+    severity: error
+    code: stop40
+    description: |
+      The PLC has lost communication with the HMI.
+      Please contact PowerCell.
+  stop_calibration_err:
+    display_name: Calibration error
+    severity: error
+    code: stop80
+    description: |
+      The PLC cannot write to the calibration file.
+      Please contact PowerCell.
+  stop_pcb_watchdog_err:
+    display_name: PCB watchdog error
+    severity: error
+    code: stop100
+    description: |
+      The watchdog signal from the PCB to the PLC has been lost.
+      Please contact PowerCell.
+  stop_plc_watchdog_err:
+    display_name: PCB watchdog error
+    severity: error
+    code: stop200
+    description: |
+      The watchdog signal from the PLC to the PCB has been lost.
+      Please contact PowerCell.
+  stop_hydrogen_detection:
+    display_name: Hydrogen detection
+    severity: error
+    code: stop400
+    description: |
+      The internal hydrogen sensor has detected a high hydrogen concentration.
+      Immediately vacate area, contact emergency services about
+      a suspected gas leak
+  stop_high_anode_pressure:
+    display_name: High anode pressure
+    severity: error
+    code: stop1000
+    description: |
+      The pressure inside the fuel cell stack (hydrogen side) is too high.
+      This is likely caused by a failure of the internal pressure regulator.
+      Please contact PowerCell.
+  stop_high_cathode_pressure:
+    display_name: High cathode pressure
+    severity: error
+    code: stop2000
+    description: |
+      The pressure inside the fuel cell stack (air side) is too high.
+      This is likely caused by a blockage in the exhaust air stream.
+      Make sure the external exhaust system is not blocked.
+      Contact PowerCell if it occurs again.
+  stop_over_temperature:
+    display_name: Over temperature
+    severity: error
+    code: stop4000
+    description: |
+      A high temperature has been detected inside the PS-5.
+      A likely cause is from an internal fire.
+      Please contact PowerCell.
+  stop_h2_sensor_error:
+    display_name: Hydrogen sensor error
+    severity: error
+    code: stop8000
+    description: |
+      The internal hydrogen sensor is in an error state.
+      This can be caused by a loss of power, poisoning from
+      refrigerant gasses, or an over exposure of hydrogen.
+      Please contact PowerCell.
+  stop_stack_over_current:
+    display_name: Stack over current
+    severity: error
+    code: stop20000
+    description: |
+      A high stack current has been detected. This can be caused from
+      a short circuit in the internal electronics.
+      Please contact PowerCell.
+  stop_stack_high_diff_current:
+    display_name: Stach high differential current.
+    severity: error
+    code: stop40000
+    description: |
+      The current sensor is reading a very different value to the power
+      electronics module. This can be caused by a current sensor failure
+      or if the fuel cell stack has a short circuit.
+      Please contact PowerCell.
+  stop_cvm_pin_disconnect:
+    display_name: Cell voltage monitor pin disconnection
+    severity: error
+    code: stop80000
+    description: |
+      The cell voltage monitor (CVM) has detected that it is not measuring
+      all cell voltages in the fuel cell stack. This can be caused by a
+      loose connection between the fuel cell stack and the CVM.
+      Please contact PowerCell.
+  stop_undefined:
+    display_name: Undefined
+    severity: error
+    code: stop_undefined
+    description: |
+      Mismatch of software versions.
+      Please contact PowerCell.
+  # Shutdown alarms
+  shutdown_manual_error:
+    display_name: Manual error
+    severity: error
+    code: sh1
+    description: |
+      Manually triggered error for testing purposes.
+      Please power cycle the system.
+  shutdown_component_error:
+    display_name: Component error
+    severity: error
+    code: sh2
+    description: |
+      One of the components is reading a faulty value.
+      This is most likely caused by a failure.
+      See submenu for which component and contact PowerCell.
+      Please contact PowerCell.
+  shutdown_anode_pump_error:
+    display_name: Anode pump error
+    severity: error
+    code: sh4
+    description: |
+      An error has occurred with hydrogen pump.
+      Please contact PowerCell.
+  shutdown_cathode_comp_error:
+    display_name: Cathode compressor error
+    severity: error
+    code: sh8
+    description: |
+      An error has occurred with an air compressor.
+      Please contact PowerCell.
+  shutdown_dcdc_error:
+    display_name: DC/DC error
+    severity: error
+    code: sh10
+    description: |
+      An error has occurred with a stack DC/DC.
+      Please contact PowerCell.
+  shutdown_high_anode_pressure:
+    display_name: High anode pressure
+    severity: error
+    code: sh100
+    description: |
+      The pressure inside the fuel cell stack (hydrogen side) is too high.
+      This is likely caused by a failure of the internal pressure regulator.
+      Please contact PowerCell.
+  shutdown_low_anode_pressure:
+    display_name: Low anode pressure
+    severity: error
+    code: sh200
+    description: |
+      The pressure inside the fuel cell stack (hydrogen side) is too low.
+      This is likely caused by the hydrogen supply running out.
+      Check that the hydrogen supply pressure is inside specifications.
+  shutdown_high_cathode_pressure:
+    display_name: High cathode pressure
+    severity: error
+    code: sh400
+    description: |
+      The pressure inside the fuel cell stack (air side) is too high.
+      This is likely caused by a blockage in the exhaust air stream.
+      Make sure that the external exhaust system is not blocked.
+  shutdown_hydrogen_detection:
+    display_name: Hydrogen Detection
+    severity: error
+    code: sh800
+    description: |
+      The internal hydrogen sensor has detected a low hydrogen concentration.
+      Please contact PowerCell.
+  shutdown_start_up_error:
+    display_name: Start-up error
+    severity: error
+    code: sh1000
+    description: |
+      The PS-5 start up failed. This can be caused by a component error
+      or by having no/low hydrogen supply.
+      Please contact PowerCell.
+  shutdown_low_stack_temperature:
+    display_name: Low stack temperature
+    severity: error
+    code: sh4000
+    description: |
+      The fuel cell stack temperature is too low and there may be frozen
+      water in the system. Please warm up the system before starting.
+  shutdown_high_stack_temperature:
+    display_name: High stack temperature
+    severity: error
+    code: sh8000
+    description: |
+      The fuel cell stack temperature is too high. This is likely caused by
+      having no/little external cooling flow.
+      Ensure that the external cooling is setup according to the instructions.
+  shutdown_stack_high_diff_temp:
+    display_name: High stack differential temperature
+    severity: error
+    code: sh10000
+    description: |
+      The temperature difference across the fuel cell stack is too high.
+      This can be caused by a sudden increase/decrease in the cooling capacity.
+      Please contact PowerCell.
+  shutdown_low_fcm_fan_flowrate:
+    display_name: Low FCM fan flow rate
+    severity: error
+    code: sh100000
+    description: |
+      The internal fan speed is too low to ensure hydrogen ventilation.
+      This can be caused by a blockage in the fan.
+      Please ensure that the ventilation fan is not blocked.
+  shutdown_low_coolant_flowrate:
+    display_name: Low coolant flow rate
+    severity: error
+    code: sh800000
+    description: |
+      The internal cooling flow rate is too low. This can be caused by a faulty
+      coolant pump. Please contact PowerCell.
+  shutdown_external_can_signal_lost:
+    display_name: External CAN signal lost
+    severity: error
+    code: sh2000000
+    description: |
+      The external control CAN signal has timed out while the PS-5 is on.
+      Ensure that the external communication is set up properly.
+  shutdown_low_cell_voltage:
+    display_name: Low cell voltage
+    severity: error
+    code: sh10000000
+    description: |
+      One or more cell voltages in the fuel cell stack are too low.
+      This can be caused by high degradation of the fuel cell stack.
+      Please contact PowerCell.
+  shutdown_dcdc_max_current_flow:
+    display_name: DC/DC max current flow
+    severity: error
+    code: sh40000000
+    description: |
+      The DC/DC converters are limiting the current to below the minimum
+      fuel cell stack current. This is most likely caused by a too high voltage
+      on the battery(s) or if the converters get too hot.
+      Please ensure that the ventilation is not blocked or reduce
+      the configured stop voltage of the battery(s).
+  warn_manual_error:
+    display_name: Manual error
+    severity: warning
+    code: w1
+    description: |
+      Manually triggered error for testing purposes.
+      Please power cycle system.
+  warn_high_cathode_pressure:
+    display_name: High cathode pressure
+    severity: warning
+    code: w2
+    description: |
+      The pressure inside the fuel cell stack (air side) is too high.
+      This is likely caused by a blockage in the exhaust air stream.
+      Please make sure that the external exhaust system is not blocked.
+  warn_internal_clock_error:
+    display_name: Internal clock error
+    severity: warning
+    code: w4
+    description: |
+      The internal clock is outputting a faulty time/date stamp.
+      This is most likely caused by setting the time to a wrong date. This will
+      stop the ability of the PS-5 to log data.
+      Please contact PowerCell.
+  warn_low_cell_voltage:
+    display_name: Low cell voltage
+    severity: warning
+    code: w8
+    description: |
+      One or more cells in the fuel cell stack are too low. This can be
+      caused by degradation of the fuel cell stack.
+      Please contact PowerCell.
+  warn_low_coolant_level:
+    display_name: Low coolant level
+    severity: warning
+    code: w10
+    description: |
+      The internal coolant level is low.
+      Please follow the service procedure to fill up the coolant level.
+  warn_cabinet_temp_sensor_err:
+    display_name: Cabinet temperature sensor error
+    severity: warning
+    code: w20
+    description: |
+      The external temperature sensor is measuring a faulty value
+      (if configured). This is likely caused by a broken or disconnected sensor.
+      Please ensure the sensor is connected correctly or exchange the sensor.
+  warn_external_can_signal_lost:
+    display_name: External CAN signal lost
+    severity: warning
+    code: w40
+    description: |
+      The external control CAN signal has timed out while
+      the PS-5 is in the OFF state. Please ensure that the external
+      communication is set up properly.
+
+.cloud:
+  category: fuel_cells
