@@ -180,11 +180,13 @@ telemetry:
     display_name: Phase C power factor
     type: float
   date:
-    display_name: Date
+    display_name: Today (day of month)
     type: integer
+    unit: d
   time:
-    display_name: Time
+    display_name: Current time (hour)
     type: integer
+    unit: h
 
 alerts:
   communication_failed:

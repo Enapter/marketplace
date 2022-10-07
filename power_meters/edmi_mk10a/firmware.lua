@@ -29,7 +29,7 @@ function send_telemetry()
   local telemetry = {}
   local alerts = {}
   local status = "ok"
-  local modbus_error = false
+  local modbus_errors = 0
 
   local data, result = modbus.read_holdings(ADDRESS, 9001, 6, 1000)
   if data then
@@ -38,7 +38,7 @@ function send_telemetry()
     telemetry["voltage_c"] = tofloat(slice(data, 5, 6))
   else
     enapter.log("Phase voltages reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9007, 6, 1000)
@@ -48,7 +48,7 @@ function send_telemetry()
     telemetry["current_c"] = tofloat(slice(data, 5, 6))
   else
     enapter.log("Phase currents reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9013, 6, 1000)
@@ -58,7 +58,7 @@ function send_telemetry()
     telemetry["phase_angle_c"] = tofloat(slice(data, 5, 6))
   else
     enapter.log("Phase angles reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9019, 6, 1000)
@@ -68,7 +68,7 @@ function send_telemetry()
     telemetry["power_c"] = tofloat(slice(data, 5, 6))
   else
     enapter.log("Phase powers reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9025, 6, 1000)
@@ -78,7 +78,7 @@ function send_telemetry()
     telemetry["react_power_c"] = tofloat(slice(data, 5, 6))
   else
     enapter.log("Reactive powers reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9031, 6, 1000)
@@ -88,7 +88,7 @@ function send_telemetry()
     telemetry["app_power_c"] = tofloat(slice(data, 5, 6))
   else
     enapter.log("Apparent powers reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9037, 2, 1000)
@@ -96,7 +96,7 @@ function send_telemetry()
     telemetry["frequency"] = tofloat(data)
   else
     enapter.log("Frequency reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9039, 4, 1000)
@@ -105,7 +105,7 @@ function send_telemetry()
     telemetry["angle_between_ac"] = tofloat(slice(data, 3, 4))
   else
     enapter.log("Angles between phases reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9043, 2, 1000)
@@ -113,7 +113,7 @@ function send_telemetry()
     telemetry["power_factor"] = tofloat(data)
   else
     enapter.log("Power factor reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9045, 4, 1000)
@@ -122,7 +122,7 @@ function send_telemetry()
     telemetry["time"] = toint32(slice(data, 3, 4))
   else
     enapter.log("Date and time reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9049, 8, 1000)
@@ -133,7 +133,7 @@ function send_telemetry()
     telemetry["tou_received_varh"] = tofloat(slice(data, 7, 8))
   else
     enapter.log("TOU reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9057, 8, 1000)
@@ -144,7 +144,7 @@ function send_telemetry()
     telemetry["total_current"] = tofloat(slice(data, 7, 8))
   else
     enapter.log("Total metrics reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9065, 6, 1000)
@@ -154,7 +154,7 @@ function send_telemetry()
     telemetry["voltage_ca"] = tofloat(slice(data, 5, 6))
   else
     enapter.log("Line-to-line voltages reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9071, 6, 1000)
@@ -164,7 +164,7 @@ function send_telemetry()
     telemetry["thd_c"] = tofloat(slice(data, 5, 6))
   else
     enapter.log("THDs reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9077, 6, 1000)
@@ -174,7 +174,7 @@ function send_telemetry()
     telemetry["current_thd_c"] = tofloat(slice(data, 5, 6))
   else
     enapter.log("Current THDs reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
   local data, result = modbus.read_holdings(ADDRESS, 9083, 6, 1000)
@@ -184,10 +184,10 @@ function send_telemetry()
     telemetry["power_factor_c"] = tofloat(slice(data, 5, 6))
   else
     enapter.log("Power factors reading failed: "..modbus.err_to_str(result), "error")
-    modbus_error = true
+    modbus_errors = modbus_errors + 1
   end
 
-  if modbus_error then
+  if modbus_errors == 16 then
     alerts = {"communication_failed"}
     status = "read_error"
   end
