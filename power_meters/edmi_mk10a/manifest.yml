@@ -182,7 +182,7 @@ telemetry:
   date:
     display_name: Today (day of month)
     type: integer
-    unit: d
+    unit: day
   time:
     display_name: Current time (hour)
     type: integer
