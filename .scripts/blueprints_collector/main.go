@@ -26,7 +26,7 @@ func main() {
 		paths = append(paths, path)
 	}
 
-	fmt.Printf("::set-output name=blueprints-paths::%s", strings.Join(paths, " "))
+	fmt.Printf("blueprints-paths=%s", strings.Join(paths, " "))
 }
 
 func changedBlueprints(marketplacePath string, changedFiles []string) (map[string]struct{}, error) {

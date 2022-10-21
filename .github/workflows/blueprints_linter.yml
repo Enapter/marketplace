@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
       - name: Get Changed Files
         id: changes
         run: |
-          echo "::set-output name=changed-files::$(git diff --name-only ${{ github.event.pull_request.head.sha }} ${{ github.sha }} | xargs)"
+          echo "changed-files=$(git diff --name-only ${{ github.event.pull_request.head.sha }} ${{ github.sha }} | xargs)" >> "$GITHUB_OUTPUT"
       - name: Security Check
         run: |
           if [ ${{ github.event.pull_request.head.repo.full_name }} != ${{ github.repository }} ]; then
@@ -37,7 +37,7 @@ jobs:
           docker run --rm \
           -v "$(pwd)":/marketplace \
           -w /marketplace/ \
-          golang:1.18 go run .scripts/blueprints_collector/main.go -p /marketplace ${{ steps.changes.outputs.changed-files }}
+          golang:1.18 go run .scripts/blueprints_collector/main.go -p /marketplace ${{ steps.changes.outputs.changed-files }} >> "$GITHUB_OUTPUT"
       - name: Run Linter
         run: |
           docker run --rm \
