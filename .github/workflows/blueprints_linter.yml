@@ -17,7 +17,7 @@ jobs:
       - name: Get Changed Files
         id: changes
         run: |
-          echo "::set-output name=changed-files::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.head.sha }} ${{ github.sha }} | xargs)"
+          echo "::set-output name=changed-files::$(git diff --name-only ${{ github.event.pull_request.head.sha }} ${{ github.sha }} | xargs)"
       - name: Security Check
         run: |
           if [ ${{ github.event.pull_request.head.repo.full_name }} != ${{ github.repository }} ]; then

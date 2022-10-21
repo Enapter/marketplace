@@ -1,10 +1,13 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"os"
 	"strings"
+	"syscall"
 )
 
 var marketplacePath = flag.String("p", "./", "path to marketplace directory")
@@ -36,7 +39,15 @@ func changedBlueprints(marketplacePath string, changedFiles []string) (map[strin
 	for _, path := range changedFiles {
 		for _, cat := range bpCats {
 			if strings.HasPrefix(path, cat) {
-				changedBps[strings.Join(strings.Split(path, "/")[:2], "/")] = struct{}{}
+				bpPath := strings.Join(strings.Split(path, "/")[:2], "/")
+				empty, err := isDirEmptyOrNotExist(bpPath)
+				if err != nil {
+					return nil, fmt.Errorf("check blueprint dir: %w", err)
+				}
+
+				if !empty {
+					changedBps[bpPath] = struct{}{}
+				}
 			}
 		}
 	}
@@ -64,4 +75,25 @@ func blueprintCategories(marketplacePath string) ([]string, error) {
 	}
 
 	return cats, nil
+}
+
+func isDirEmptyOrNotExist(name string) (bool, error) {
+	f, err := os.Open(name)
+	if err != nil {
+		if errors.Is(err, syscall.ENOENT) {
+			return true, nil
+		}
+		return false, err
+	}
+	defer f.Close()
+
+	_, err = f.Readdirnames(1)
+	if err != nil {
+		if errors.Is(err, io.EOF) {
+			return true, nil
+		}
+		return false, err
+	}
+
+	return false, nil
 }
