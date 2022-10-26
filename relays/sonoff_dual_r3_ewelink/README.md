@@ -51,6 +51,14 @@ In this example we will bild own container.
     docker build -t nkrasko/ewelink-rest-api-server -f ./docker/Dockerfile .
     ```
 
+    In case if you plan to run the docker container on Gateway (Option 2 below) you need to keep in mind that Enapter Gateway software is x86 based. This is important to know when you are building your docker container on other architecture, for example, Appe M1 (ARM) CPU.
+
+    If that is the case, build docker container the following way
+
+    ```zsh
+    docker build --platform=linux/amd64 -t nkrasko/ewelink-rest-api-server -f ./docker/Dockerfile .
+    ```
+
 3. Run docker container
 
     - **Option 1.** Run docker container on general server.
