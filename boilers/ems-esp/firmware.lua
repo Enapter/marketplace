@@ -325,7 +325,7 @@ end
 
 function boiler_set_param(address, token, param, data)
   local request = http.request('POST',
-                       'http://'..tostring(address)..'/api/boiler/'..tostring(param), tostring(data))
+                  'http://'..tostring(address)..'/api/boiler/'..tostring(param), tostring(data))
   local client = http.client({ timeout = 5 })
   request:set_header('Authorization', 'Bearer '..tostring(token))
   request:set_header('Content-Type', 'application/json')
