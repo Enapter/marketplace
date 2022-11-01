@@ -142,8 +142,8 @@ alerts:
   2733F:
     severity: error
     display_name: Burner and Fan were working without interuption for 24 hours
-    description: Burner and Fan were working without interuption for 24 hours. 
-    They are stopped now for short time for safety test.
+    description: Burner and Fan were working without interuption for 24 hours.
+                 They are stopped now for short time for safety test.
   2143L:
     severity: error
     display_name: Fan is switching off
@@ -306,8 +306,8 @@ commands:
         required: true
       token:
         display_name: Bearer Authentication Token
-        description: Must be taken from EMS-ESP web interface on 'Security' page for Admin user. 
-        Without token commands will not be functional, only monitoring.
+        description: Must be taken from EMS-ESP web interface on 'Security' page for Admin user.
+                     Without token commands will not be functional, only monitoring.
         type: string
         required: false
       vendor:
