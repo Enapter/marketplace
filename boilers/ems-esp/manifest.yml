@@ -159,8 +159,8 @@ alerts:
   2244C:
     severity: error
     display_name: Temperature limiter triggered or pressure issue.
-    description: Burner or exhaust gases temperature limiter was triggered or 
-    differential pressure switch of heating system was activated.
+    description: Burner or exhaust gases temperature limiter was triggered or
+                 differential pressure switch of heating system was activated.
   3504U:
     severity: error
     display_name: Short circuit of temperature sensor on upstream heating loop
