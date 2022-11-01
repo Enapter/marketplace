@@ -2,6 +2,8 @@
 
 This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates domestic gas boiler equipment from manufacturers like Bosch, Buderus, Nefit, Junkers, Worcester and Sieger using open-source solution [EMS-ESP](https://github.com/emsesp/EMS-ESP32). The Blueprint is running on [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm). This Blueprint allow to monitor and control your gas boiler over Internet in secure way using Enapter Mobile App ans Enapter Cloud.
 
+<img src="./.assets/enapter-ems-esp-blueprint.gif" alt="Enapter App" width="25%" />  
+
 Main functionality:
 
   - Fast and easy setup using configuration command (EMS-ESP IP, Bearer Token, Device Model) in Enapter Mobile App
@@ -12,20 +14,18 @@ Main functionality:
   - Blocking, Critical and Warning push notifications in human readable form
   - Android and iOS application
 
-  <img src="./.assets/enapter-ems-esp-blueprint.gif" alt="Enapter App" width="25%" />  
-
 ## Requirements
 
 1. **EMS-ESP / EMS bus Wi-Fi Gateway setup**
 
-    You require to have setup EMS-ESP according to the [manual](https://bbqkees-electronics.nl/wiki/index.html).
-    The EMS bus Wi-Fi Gateway must be connected tot the same IP network where your Enapter Gateway is connected.
+    You require setup **EMS-ESP** according to the [manual](https://bbqkees-electronics.nl/wiki/index.html).
+    The EMS bus Wi-Fi Gateway must be connected to the same IP network where your Enapter Gateway is connected.
 
 3. **Latest version of Enapter Gateway Software**
 
-    Enapter Gateway Software must support Virtual UCM.
+    Enapter Gateway Software must support Virtual UCM. Download latest version at [https://fw.enapter.com](https://fw.enapter.com).
 
-## Running eWelink REST API Server
+## Running EMS-ESP
 
 1. Save important parameters needed for further setup:
 
@@ -59,13 +59,15 @@ If everything is fine you are ready to connect your device to Enapter Cloud!
 
 5. As soon as Blueprint will start the `EMS-ESP IP Address Not Configured` event will be triggered.
 
-6. Navigate to `Settings` (<img src="./.assets/settings.jpg" alt="settings" width="5%" />).
+6. Navigate to `Settings`.
+
+    <img src="./.assets/settings.jpg" alt="settings" width="25%" />
 
 7. Click `Commands`.
 
 8. In the  `Settings` section of the `Commands` screen click on `Main Configuration` command in the Enapter mobile or Web app to set main settings for your Virtual UCM:
 
-    <img src="./.assets/main_settiings.jpg" alt="main_settiings" width="25%" />
+    <img src="./.assets/main_settings.jpg" alt="EMS-ESP main settings" width="25%" />
 
     You need to set the following parameters you got during previous steps:
 
