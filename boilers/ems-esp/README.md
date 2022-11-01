@@ -6,17 +6,17 @@ Originaly this Blueprint was developed especially for Buders GB 172i condensate 
 
 Please note that software is provided as is an neither Enapter or authors are responsible for any damage or risks caused by using of this software.
 
-<img src="./.assets/enapter-ems-esp-blueprint.gif" alt="Enapter App" width="25%" />  
+<img src="./.assets/enapter-ems-esp-blueprint.gif" alt="Enapter App" width="25%" />
 
 Main functionality:
 
-  - Fast and easy setup using configuration command (EMS-ESP IP, Bearer Token, Device Model) in Enapter Mobile App
-  - Domestic Hot Water mode and temperature configuration
-  - Heating mode and temperature configuration
-  - Monitoring of boiler operation in real-time
-  - Historical operaion overview using charts
-  - Blocking, Critical and Warning push notifications in human readable form
-  - Android and iOS application
+- Fast and easy setup using configuration command (EMS-ESP IP, Bearer Token, Device Model) in Enapter Mobile App
+- Domestic Hot Water mode and temperature configuration
+- Heating mode and temperature configuration
+- Monitoring of boiler operation in real-time
+- Historical operaion overview using charts
+- Blocking, Critical and Warning push notifications in human readable form
+- Android and iOS application
 
 ## Requirements
 
@@ -33,13 +33,13 @@ Main functionality:
 
 1. Save important parameters needed for further setup:
 
-  - EMS Bus Gateway **IP address**. You can find this at EMS-ESP Web interface **Network Connection** -> **Network Status**.
-    
-    <img src="./.assets/ems-esp-network.png" alt="main_settiings" width="25%" /> 
+- EMS Bus Gateway **IP address**. You can find this at EMS-ESP Web interface **Network Connection** -> **Network Status**.
 
-  - Token for Admin user at **Security** page. This is needed for control using Mobile Application or Enapter Cloud. Ignore this if you don't need control.
+  <img src="./.assets/ems-esp-network.png" alt="main_settiings" width="25%" />
 
-    <img src="./.assets/ems-esp-token.png" alt="main_settiings" width="25%" /> 
+- Token for Admin user at **Security** page. This is needed for control using Mobile Application or Enapter Cloud. Ignore this if you don't need control.
+
+  <img src="./.assets/ems-esp-token.png" alt="main_settiings" width="25%" />
 
 4. Check your EMS-ESP API provides valid response with CURL from Enapter Gateway:
 
@@ -55,7 +55,7 @@ If everything is fine you are ready to connect your device to Enapter Cloud!
 
 1. Sign up to the Enapter Cloud using the [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
 
-2. Use the [Enapter Gateway](https://handbook.enapter.com/software/gateway/2.0.0/setup/) to run the Virtual UCM. 
+2. Use the [Enapter Gateway](https://handbook.enapter.com/software/gateway/2.0.0/setup/) to run the Virtual UCM.
 
 3. Create the [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm).
 
