@@ -85,8 +85,8 @@ alerts:
     description: Cannot read configuration from flash storage. Check the logs.
   not_configured:
     severity: info
-    display_name: EMS-ESP IP Address Not Configured 
-    description: EMS-ESP IP address not configured. Please set the correct address using "Configure" command. 
+    display_name: EMS-ESP IP Address Not Configured
+    description: EMS-ESP IP address not configured. Please set the correct address using "Configure" command.
   no_token:
     severity: info
     display_name: EMS-ESP IP Bearer Authentication Token Not Configured
@@ -103,183 +103,183 @@ alerts:
     severity: warning
     display_name: DHW temperature sensor is broken
     description: DHW temperature sensor is broken
-  H12: 
+  H12:
     severity: warning
     display_name: DHW cylinder temperature sensor is broken
     description: DHW cylinder temperature sensor is broken
-  H13: 
+  H13:
     severity: warning
     display_name: Maintenance and service inspection interval has expired
     description: Maintenance and service inspection interval has expired
-  H31: 
+  H31:
     severity: warning
     display_name: Heating loop pump is not recognized
     description: Heating loop pump is not recognized
-  2760Y: 
+  2760Y:
     severity: error
     display_name: Temperature on flow line > 95 degC
     description: Temperature on flow line > 95 degC
-  3590Y: 
+  3590Y:
     severity: error
     display_name: Very high temperature on hot water temperature sensor
     description: Very high temperature on hot water temperature sensor
-  3412P: 
+  3412P:
     severity: error
     display_name: Very fast temperature increase in heating mode
     description: Very fast temperature increase in heating mode
-  2812Y: 
+  2812Y:
     severity: error
     display_name: Heating loop pump doesn't build pressure
     description: Heating loop pump doesn't build pressure
-  2643A: 
+  2643A:
     severity: error
     display_name: Fan broken
     description: Fan doesn't work
-  2173C: 
+  2173C:
     severity: error
     display_name: Fan broken
     description: Fan doesn't work
-  2733F: 
+  2733F:
     severity: error
     display_name: Burner and Fan were working without interuption for 24 hours
     description: Burner and Fan were working without interuption for 24 hours. They are stopped now for short time for safety test.
-  2143L: 
+  2143L:
     severity: error
     display_name: Fan is switching off
     description: Fan is switching off
-  2163P: 
+  2163P:
     severity: error
     display_name: Fan is rotating too slow
     description: Fan is rotating too slow
-  2153Y: 
+  2153Y:
     severity: error
     display_name: Fan is rotating too fast
     description: Fan is rotating too fast
-  2244C: 
+  2244C:
     severity: error
     display_name: Temperature limiter triggered or pressure issue.
     description: Burner or exhaust gases temperature limiter was triggered or differential pressure switch of heating system was activated.
-  3504U: 
+  3504U:
     severity: error
     display_name: Short circuit of temperature sensor on upstream heating loop
     description: Short circuit of temperature sensor on upstream heating loop
-  2224U: 
+  2224U:
     severity: error
     display_name: Short circuit of temperature sensor on upstream heating loop
     description: Short circuit of temperature sensor on upstream heating loop
-  3514Y: 
+  3514Y:
     severity: error
     display_name: Temperature sensor on upstream heating loop was disconnected
     description: Temperature sensor on upstream heating loop was disconnected
-  2234Y: 
+  2234Y:
     severity: error
     display_name: Temperature sensor on upstream heating loop was disconnected
     description: Temperature sensor on upstream heating loop was disconnected
-  2276A: 
+  2276A:
     severity: error
     display_name: Flame can not be recognized
     description: Flame can not be recognized
-  2286C: 
+  2286C:
     severity: error
     display_name: Burner is off but flame is recognized
     description: Burner is off but flame is recognized
-  3066C: 
+  3066C:
     severity: error
     display_name: After gas shortage flame can not be recognized
     description: After gas shortage glame can not be recognized
-  2296L: 
+  2296L:
     severity: error
     display_name: Burner is on but ionization signal is absent
     description: Burner is on but ionization signal is absent
-  227EA: 
+  227EA:
     severity: error
     display_name: Burner is on but ionization signal is absent
     description: Burner is on but ionization signal is absent
-  3567C: 
+  3567C:
     severity: error
     display_name: Power supply shortage
     description: Power supply shortage
-  3287C: 
+  3287C:
     severity: error
     display_name: Power supply shortage
     description: Power supply shortage
-  2317C: 
+  2317C:
     severity: error
     display_name: Power supply shortage
     description: Power supply shortage
-  3567H: 
+  3567H:
     severity: error
     display_name: Power supply voltage is very low
     description: Power supply voltage is very low
-  2617L: 
+  2617L:
     severity: error
     display_name: Clock error
     description: Clock error
-  2807L: 
+  2807L:
     severity: error
     display_name: Clock error
     description: Clock error
-  2328Y: 
+  2328Y:
     severity: error
     display_name: TB 1 Dry Contact was opened
     description: TB 1 Dry Contact was opened. Check temperature relay, condensate drain pump or jumper on TB 1 contact.
-  2359A: 
+  2359A:
     severity: error
     display_name: Wrong coding plug
     description: Wrong coding plug (KIM)
-  3609A: 
+  3609A:
     severity: error
     display_name: Wrong coding plug
     description: Wrong coding plug (KIM)
-  3619A: 
+  3619A:
     severity: error
     display_name: Wrong coding plug
     description: Wrong coding plug (KIM)
-  3629A: 
+  3629A:
     severity: error
     display_name: Wrong coding plug
     description: Wrong coding plug (KIM)
-  2339U: 
+  2339U:
     severity: error
     display_name: Coding plug is not recognized
     description: Coding plug is not recognized
-  2309L: 
+  2309L:
     severity: error
     display_name: Gas valve is broken
     description: Gas valve is broken
-  2349L: 
+  2349L:
     severity: error
     display_name: Gas valve cable is broken
     description: Gas valve cable is broken
-  2389L: 
+  2389L:
     severity: error
     display_name: Gas valve cable is broken
     description: Gas valve cable is broken
-  815A01: 
+  815A01:
     severity: error
     display_name: Low loss header temperature sensor is broken
     description: Low loss header temperature sensor is broken
-  815A12: 
+  815A12:
     severity: error
     display_name: Low loss header temperature sensor is broken
     description: Low loss header temperature sensor is broken
-  323A8: 
+  323A8:
     severity: error
     display_name: Bus connection was interrupted
     description: Bus connection was interrupted
-  258EH: 
+  258EH:
     severity: error
     display_name: System error
     description: Control module or coding plug system error
-  239EL: 
+  239EL:
     severity: error
     display_name: Internal error
     description: Internal error
-  259EL: 
+  259EL:
     severity: error
     display_name: Internal error
     description: Internal error
-  290EL: 
+  290EL:
     severity: error
     display_name: Internal error
     description: Internal error
@@ -303,8 +303,8 @@ commands:
         type: string
         required: true
       token:
-        display_name: Bearer Authentication Token 
-        description: Must be taken from EMS-ESP web interface on 'Security' page for Admin user. Without token commands will not be functional, only monitoring. 
+        display_name: Bearer Authentication Token
+        description: Must be taken from EMS-ESP web interface on 'Security' page for Admin user. Without token commands will not be functional, only monitoring.
         type: string
         required: false
       vendor:
@@ -355,13 +355,13 @@ commands:
         min: 30
         max: 75
 
-      
+
   read_boiler_configuration:
     display_name: Read Boiler Configuration
     group: info
     ui:
       icon: wrench-outline
-      
+
 .cloud:
   mobile_main_chart: heating_temp_cur
   mobile_charts:
