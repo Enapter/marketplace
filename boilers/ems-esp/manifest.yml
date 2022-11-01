@@ -142,7 +142,8 @@ alerts:
   2733F:
     severity: error
     display_name: Burner and Fan were working without interuption for 24 hours
-    description: Burner and Fan were working without interuption for 24 hours. They are stopped now for short time for safety test.
+    description: Burner and Fan were working without interuption for 24 hours. 
+    They are stopped now for short time for safety test.
   2143L:
     severity: error
     display_name: Fan is switching off
@@ -158,7 +159,8 @@ alerts:
   2244C:
     severity: error
     display_name: Temperature limiter triggered or pressure issue.
-    description: Burner or exhaust gases temperature limiter was triggered or differential pressure switch of heating system was activated.
+    description: Burner or exhaust gases temperature limiter was triggered or 
+    differential pressure switch of heating system was activated.
   3504U:
     severity: error
     display_name: Short circuit of temperature sensor on upstream heating loop
@@ -304,7 +306,8 @@ commands:
         required: true
       token:
         display_name: Bearer Authentication Token
-        description: Must be taken from EMS-ESP web interface on 'Security' page for Admin user. Without token commands will not be functional, only monitoring.
+        description: Must be taken from EMS-ESP web interface on 'Security' page for Admin user. 
+        Without token commands will not be functional, only monitoring.
         type: string
         required: false
       vendor:
