@@ -6,7 +6,10 @@ icon: enapter-module-din-2
 
 communication_module:
   product: ENP-RL6
-  lua_file: firmware.lua
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.1.8
 
 properties:
   vendor:
@@ -31,6 +34,11 @@ telemetry:
     display_name: Started
     type: boolean
 
+command_groups:
+  fuel_cell:
+    display_name: Fuel Cell
+  config:
+    display_name: Configuration
 commands:
   start:
     display_name: Start
@@ -56,10 +64,28 @@ commands:
     ui:
       icon: power-off
       quick_access: true
-
-command_groups:
-  fuel_cell:
-    display_name: Fuel Cell
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      power_relay:
+        display_name: Power Contact Channel
+        description: A number of a relay channel where FC power contact is connected to.
+        type: integer
+        required: true
+      start_relay:
+        display_name: Start Contact Channel
+        description: A number of a relay channel where FC start contact is connected to.
+        type: integer
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
 
 .cloud:
   category: fuel_cells
