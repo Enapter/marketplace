@@ -7,6 +7,8 @@ total_can_packets = 0
 is_serial_number_completed = false
 serial_number = ""
 temp_serial_number = ""
+alerts_ab_received = false
+alerts_d_received = false
 
 function main()
   local result = can.init(500, can_handler)
@@ -16,9 +18,6 @@ function main()
 
   scheduler.add(30000, send_properties)
   scheduler.add(1000, send_telemetry)
-  -- Alerts are sent by FC once per second,
-  -- so we use the bigger interval on our side.
-  scheduler.add(2000, send_alerts)
 end
 
 function send_properties()
@@ -34,6 +33,16 @@ end
 
 function send_telemetry()
   telemetry["total_can_packets"] = total_can_packets
+
+  -- Make sure to add alerts only if it was really reported by the FC
+  -- to avoid accidental cleaning of alerts in the Cloud
+  if alerts_ab_received and alerts_d_received then
+    telemetry.alerts = alerts
+    alerts = {}
+    alerts_ab_received = false
+    alerts_d_received = false
+  end
+
   enapter.send_telemetry(telemetry)
   telemetry = {}
 end
@@ -77,6 +86,7 @@ function can_handler(msg_id, data)
     local flag_b = flag_b_error(touint32(string.sub(data, 5, 8)))
     telemetry["fault_flags_b"] = touint32(string.sub(data, 5, 8))
     alerts = table.move(flag_b, 1, #flag_b, #alerts + 1, alerts)
+    alerts_ab_received = true
   elseif msg_id == 0x338 then
     telemetry["watt"] = toint16(string.sub(data, 1, 2))
     telemetry["volt"] = toint16(string.sub(data, 3, 4)) / rx_scale_factor100
@@ -91,7 +101,7 @@ function can_handler(msg_id, data)
     telemetry["louver_pos"] = toint16(string.sub(data, 1, 2)) / rx_scale_factor100
     telemetry["fan_sp_duty"] = toint16(string.sub(data, 3, 4)) / rx_scale_factor100
   elseif msg_id == 0x368 then
-    telemetry["state"] = parse_state(string.byte(data, 1))
+    telemetry["status"] = parse_state(string.byte(data, 1))
     telemetry["load_logic"] = string.byte(data, 2)
     telemetry["out_bits"] = string.byte(data, 3)
   elseif msg_id == 0x378 then
@@ -102,6 +112,7 @@ function can_handler(msg_id, data)
     local flag_d = flag_d_error(touint32(string.sub(data, 5, 8)))
     telemetry["fault_flags_d"] = touint32(string.sub(data, 5, 8))
     alerts = table.move(flag_d, 1, #flag_d, #alerts + 1, alerts)
+    alerts_d_received = true
   end
 end
 
