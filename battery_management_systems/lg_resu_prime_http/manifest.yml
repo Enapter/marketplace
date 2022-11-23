@@ -1,6 +1,12 @@
 blueprint_spec: device/1.0
 display_name: LG RESU Prime
+description: A high-voltage battery which supports RS485 and CAN.
 icon: enapter-battery-storage
+author: muenchris
+support:
+  email: cmuench@enapter.com
+license: MIT
+verification_level: verified
 
 communication_modules:
   eth:
