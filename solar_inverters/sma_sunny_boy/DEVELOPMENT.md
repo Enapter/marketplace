@@ -10,6 +10,8 @@ SMA provides HTML files with Modbus registers specifications. Files can be manua
 
 The following script will collect enum values from all downloaded Modbus HTML documents.
 
+Note: [ripgrep](https://github.com/BurntSushi/ripgrep) must be installed.
+
 ```bash
 rg --no-ignore -g '*_en.html' 40009 | grep -o '[0-9]*: [^<]*' | sort -u
 ```

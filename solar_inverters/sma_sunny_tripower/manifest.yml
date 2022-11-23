@@ -3,6 +3,12 @@ blueprint_spec: device/1.0
 display_name: SMA Sunny Boy
 description: SMA Sunny Boy solar inverter.
 icon: enapter-inverter-solar
+license: MIT
+author: enapter
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+verification_level: verified
 
 communication_module:
   product: ENP-VIRTUAL
