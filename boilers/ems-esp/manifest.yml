@@ -1,0 +1,374 @@
+# Manifest describes the core concepts of your device: properties,
+# telemetry, alerts, and commands.
+#
+# See https://developers.enapter.com/docs/reference
+
+blueprint_spec: device/1.0
+
+display_name: Buderus GB172i (EMS-ESP)
+icon: enapter-gas-boiler
+author: enapter
+contributors:
+  - nkrasko
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  serial_number:
+    type: string
+    display_name: Serial Number
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      - Idle
+      - Heating
+      - Loading DHW Cylinder
+  heating_temp_cur:
+    type: float
+    display_name: Flow Temperature
+    unit: C
+  wwater_temp_cur:
+    type: float
+    display_name: DHW Cylinder Temperature
+    unit: C
+  heating_temp_set:
+    type: float
+    display_name: Requested Flow Temperature
+    unit: C
+  wwater_temp_set:
+    type: float
+    display_name: Requested DHW Temperature
+    unit: C
+  gas:
+    type: string
+    display_name: Gas Supply
+    enum:
+      - "On"
+      - "Off"
+  flame:
+    type: float
+    display_name: Flame Current
+    unit: uA
+  pump_speed:
+    type: float
+    display_name: Pump Speed
+    unit: "%"
+  fan_state:
+    type: string
+    display_name: Fan State
+    enum:
+      - "On"
+      - "Off"
+  scnum:
+    type: integer
+    display_name: Service Code Number
+  sc:
+    type: string
+    display_name: Service Code
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: EMS-ESP IP Address Not Configured
+    description: EMS-ESP IP address not configured. Please set the correct address using "Configure" command.
+  no_token:
+    severity: info
+    display_name: EMS-ESP IP Bearer Authentication Token Not Configured
+    description: EMS-ESP IP bearer authentication token not configured and system runs in read-only mode.
+  no_connection:
+    severity: error
+    display_name: Cannot Connect to EMS-ESP API
+    description: Cannot Connect to EMS-ESP REST API. Check device is running.
+  wrong_request:
+    severity: error
+    display_name: EMS-ESP REST API returned invalid response.
+    description: EMS-ESP REST API returned invalid response.
+  H11:
+    severity: warning
+    display_name: DHW temperature sensor is broken
+    description: DHW temperature sensor is broken
+  H12:
+    severity: warning
+    display_name: DHW cylinder temperature sensor is broken
+    description: DHW cylinder temperature sensor is broken
+  H13:
+    severity: warning
+    display_name: Maintenance and service inspection interval has expired
+    description: Maintenance and service inspection interval has expired
+  H31:
+    severity: warning
+    display_name: Heating loop pump is not recognized
+    description: Heating loop pump is not recognized
+  2760Y:
+    severity: error
+    display_name: Temperature on flow line > 95 degC
+    description: Temperature on flow line > 95 degC
+  3590Y:
+    severity: error
+    display_name: Very high temperature on hot water temperature sensor
+    description: Very high temperature on hot water temperature sensor
+  3412P:
+    severity: error
+    display_name: Very fast temperature increase in heating mode
+    description: Very fast temperature increase in heating mode
+  2812Y:
+    severity: error
+    display_name: Heating loop pump doesn't build pressure
+    description: Heating loop pump doesn't build pressure
+  2643A:
+    severity: error
+    display_name: Fan broken
+    description: Fan doesn't work
+  2173C:
+    severity: error
+    display_name: Fan broken
+    description: Fan doesn't work
+  2733F:
+    severity: error
+    display_name: Burner and Fan were working without interuption for 24 hours
+    description: Burner and Fan were working without interuption for 24 hours.
+                They are stopped now for short time for safety test.
+  2143L:
+    severity: error
+    display_name: Fan is switching off
+    description: Fan is switching off
+  2163P:
+    severity: error
+    display_name: Fan is rotating too slow
+    description: Fan is rotating too slow
+  2153Y:
+    severity: error
+    display_name: Fan is rotating too fast
+    description: Fan is rotating too fast
+  2244C:
+    severity: error
+    display_name: Temperature limiter triggered or pressure issue.
+    description: Burner or exhaust gases temperature limiter was triggered or
+                differential pressure switch of heating system was activated.
+  3504U:
+    severity: error
+    display_name: Short circuit of temperature sensor on upstream heating loop
+    description: Short circuit of temperature sensor on upstream heating loop
+  2224U:
+    severity: error
+    display_name: Short circuit of temperature sensor on upstream heating loop
+    description: Short circuit of temperature sensor on upstream heating loop
+  3514Y:
+    severity: error
+    display_name: Temperature sensor on upstream heating loop was disconnected
+    description: Temperature sensor on upstream heating loop was disconnected
+  2234Y:
+    severity: error
+    display_name: Temperature sensor on upstream heating loop was disconnected
+    description: Temperature sensor on upstream heating loop was disconnected
+  2276A:
+    severity: error
+    display_name: Flame can not be recognized
+    description: Flame can not be recognized
+  2286C:
+    severity: error
+    display_name: Burner is off but flame is recognized
+    description: Burner is off but flame is recognized
+  3066C:
+    severity: error
+    display_name: After gas shortage flame can not be recognized
+    description: After gas shortage glame can not be recognized
+  2296L:
+    severity: error
+    display_name: Burner is on but ionization signal is absent
+    description: Burner is on but ionization signal is absent
+  227EA:
+    severity: error
+    display_name: Burner is on but ionization signal is absent
+    description: Burner is on but ionization signal is absent
+  3567C:
+    severity: error
+    display_name: Power supply shortage
+    description: Power supply shortage
+  3287C:
+    severity: error
+    display_name: Power supply shortage
+    description: Power supply shortage
+  2317C:
+    severity: error
+    display_name: Power supply shortage
+    description: Power supply shortage
+  3567H:
+    severity: error
+    display_name: Power supply voltage is very low
+    description: Power supply voltage is very low
+  2617L:
+    severity: error
+    display_name: Clock error
+    description: Clock error
+  2807L:
+    severity: error
+    display_name: Clock error
+    description: Clock error
+  2328Y:
+    severity: error
+    display_name: TB 1 Dry Contact was opened
+    description: TB 1 Dry Contact was opened. Check temperature relay, condensate drain pump or jumper on TB 1 contact.
+  2359A:
+    severity: error
+    display_name: Wrong coding plug
+    description: Wrong coding plug (KIM)
+  3609A:
+    severity: error
+    display_name: Wrong coding plug
+    description: Wrong coding plug (KIM)
+  3619A:
+    severity: error
+    display_name: Wrong coding plug
+    description: Wrong coding plug (KIM)
+  3629A:
+    severity: error
+    display_name: Wrong coding plug
+    description: Wrong coding plug (KIM)
+  2339U:
+    severity: error
+    display_name: Coding plug is not recognized
+    description: Coding plug is not recognized
+  2309L:
+    severity: error
+    display_name: Gas valve is broken
+    description: Gas valve is broken
+  2349L:
+    severity: error
+    display_name: Gas valve cable is broken
+    description: Gas valve cable is broken
+  2389L:
+    severity: error
+    display_name: Gas valve cable is broken
+    description: Gas valve cable is broken
+  815A01:
+    severity: error
+    display_name: Low loss header temperature sensor is broken
+    description: Low loss header temperature sensor is broken
+  815A12:
+    severity: error
+    display_name: Low loss header temperature sensor is broken
+    description: Low loss header temperature sensor is broken
+  323A8:
+    severity: error
+    display_name: Bus connection was interrupted
+    description: Bus connection was interrupted
+  258EH:
+    severity: error
+    display_name: System error
+    description: Control module or coding plug system error
+  239EL:
+    severity: error
+    display_name: Internal error
+    description: Internal error
+  259EL:
+    severity: error
+    display_name: Internal error
+    description: Internal error
+  290EL:
+    severity: error
+    display_name: Internal error
+    description: Internal error
+
+command_groups:
+  config:
+    display_name: Configuration
+  info:
+    display_name: Information
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      address:
+        display_name: EMS-ESP IP Address
+        description: Hostname, e.g. 192.168.14.45.
+        type: string
+        required: true
+      token:
+        display_name: Bearer Authentication Token
+        description: Must be taken from EMS-ESP web interface on 'Security' page for Admin user.
+                    Without token commands will not be functional, only monitoring.
+        type: string
+        required: false
+      vendor:
+        display_name: Gas Boiler Vendor
+        description: Shows the Vendor name, e.g. Bosch, Buderus in the interfaces.
+        type: string
+        required: false
+      model:
+        display_name: Gas Boiler Model
+        description: Shows the Model name, e.g. GB 172i in the interfaces.
+        type: string
+        required: false
+  read_configuration:
+    display_name: Read Configuration
+    group: info
+    ui:
+      icon: wrench-outline
+  boiler_configuration:
+    populate_values_command: read_boiler_configuration
+    display_name: Boiler Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      heating:
+        display_name: Heating
+        description: Enable or Disable Heating
+        type: boolean
+        required: true
+      heating_temp:
+        display_name: Heating Temperature
+        description: Heating temperature
+        type: integer
+        required: true
+        unit: degC
+        min: 30
+        max: 82
+      dhw:
+        display_name: Domestic Hot Water
+        description: Enable or Disable DHW
+        type: boolean
+      dhw_temp:
+        display_name: Hot Water Temperature
+        dscription: DHW Temperature
+        type: integer
+        required: true
+        unit: degC
+        min: 30
+        max: 75
+
+
+  read_boiler_configuration:
+    display_name: Read Boiler Configuration
+    group: info
+    ui:
+      icon: wrench-outline
+
+.cloud:
+  mobile_main_chart: heating_temp_cur
+  mobile_charts:
+    - heating_temp_cur
+    - wwater_temp_cur
+    - flame
+    - pump_speed
