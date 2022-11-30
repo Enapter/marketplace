@@ -1,7 +1,16 @@
 blueprint_spec: device/1.0
 
 display_name: Alicat scientific Mass Flow Meter M-10SLPM-D-485
+description: Versatile mass flow meter.
 icon: enapter-module-din-1
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
 
 communication_module:
   product: ENP-RS485
