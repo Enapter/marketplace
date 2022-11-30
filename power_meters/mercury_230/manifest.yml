@@ -3,6 +3,14 @@ blueprint_spec: device/1.0
 display_name: Mercury 230 Power Meter
 description: DIN rail mounted meter
 icon: enapter-power-meter
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
 
 communication_module:
   product: ENP-RS485
@@ -91,6 +99,36 @@ telemetry:
 
 .cloud:
   category: power_meters
+  mobile_main_chart: total_power
   mobile_telemetry:
-    - total_power
     - total_energy_since_reset
+    - total_power
+    - total_energy_l1
+    - total_energy_l2
+    - total_energy_l3
+    - power_l1
+    - power_l2
+    - power_l3
+    - l1n_volt
+    - l2n_volt
+    - l3n_volt
+    - current_l1
+    - current_l2
+    - current_l3
+    - frequency
+  mobile_charts:
+    - total_energy_since_reset
+    - total_power
+    - total_energy_l1
+    - total_energy_l2
+    - total_energy_l3
+    - power_l1
+    - power_l2
+    - power_l3
+    - l1n_volt
+    - l2n_volt
+    - l3n_volt
+    - current_l1
+    - current_l2
+    - current_l3
+    - frequency

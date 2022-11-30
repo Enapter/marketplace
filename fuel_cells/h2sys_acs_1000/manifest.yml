@@ -3,6 +3,15 @@ blueprint_spec: device/1.0
 display_name: H2Sys ACS 1000
 description: Air cooled hydrogen fuel cell system
 icon: enapter-fuel-cell
+author: enapter
+contributors:
+  - anataty
+  - Rina-an
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
 
 communication_module:
   product: ENP-CAN
