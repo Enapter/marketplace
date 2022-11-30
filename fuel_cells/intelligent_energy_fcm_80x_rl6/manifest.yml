@@ -79,7 +79,7 @@ commands:
     arguments:
       power_relay:
         display_name: Power Contact Channel
-        description: A number of a relay channel where FC power contact is connected to.
+        description: The number of a relay channel to which an FC power contact is connected.
         type: integer
         required: true
       start_relay:
