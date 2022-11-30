@@ -29,11 +29,5 @@ commands:
       icon: gesture-tap
       quick_access: true
 
-alerts:
-  cannot_read_relay:
-    severity: error
-    display_name: Cannot Read Relay Status
-    description: This may happen due to relay malfunctioning. Please contact Enapter support.
-
 .cloud:
   category: switches
