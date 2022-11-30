@@ -7,6 +7,14 @@ description: >
   any combination of DC or AC sources, including 100% renewable
   generation and storage.
 icon: enapter-power-supply-unit
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
 
 communication_module:
   product: ENP-RS485

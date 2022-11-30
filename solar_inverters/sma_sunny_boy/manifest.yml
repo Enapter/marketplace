@@ -1,0 +1,1601 @@
+blueprint_spec: device/1.0
+
+display_name: SMA Sunny Boy
+description: SMA Sunny Boy solar inverter.
+icon: enapter-inverter-solar
+license: MIT
+author: enapter
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+verification_level: verified
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
+      - enapter-sma
+
+properties:
+  model:
+    display_name: Model
+    type: string
+  serial_num:
+    display_name: Serial Number
+    type: integer
+  fw_ver:
+    display_name: Firmware Version
+    type: string
+  rated_power_va:
+    display_name: Rated Power
+    type: integer
+  country_code:
+    display_name: Country Code
+    type: string
+  address:
+    display_name: Modbus Address
+    type: string
+  unit_id:
+    display_name: Modbus Unit ID
+    type: integer
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - warning
+      - fault
+      - "off"
+  operation_status:
+    display_name: Operation Status
+    type: string
+    enum:
+      - standby
+      - fault
+      - waiting_pv_voltage
+      - start
+      - shutdown
+      - waiting_utilities
+      - bolted
+      - standalone
+      - derating
+      - mpp
+      - "off"
+      - stop
+      - const_voltage
+      - run
+  recom_action:
+    display_name: Recommended Action
+    type: string
+    enum:
+      - ok
+      - contact_manufacturer
+      - contact_installer
+  derating_reason:
+    display_name: Derating Reason
+    type: string
+    enum:
+      - ok
+      - frequency_deviation
+      - voltage_deviation
+      - reactive_power_priority
+      - high_dc_voltage
+      - external_setting
+      - external_setting_2
+      - overtemperature
+  grid_relay_closed:
+    display_name: Grid Relay Closed
+    type: boolean
+
+  dc_amperage:
+    display_name: DC Amperage
+    type: float
+    unit: A
+  dc_voltage:
+    display_name: DC Voltage
+    type: float
+    unit: V
+  dc_power:
+    display_name: DC Power
+    type: float
+    unit: W
+
+  ac_power:
+    display_name: AC Power
+    type: float
+    unit: W
+  ac_frequency:
+    display_name: AC Frequency
+    type: float
+    unit: Hz
+  ac_voltage:
+    display_name: AC Voltage
+    type: float
+    unit: V
+  ac_power_var:
+    display_name: AC Reavtive Power
+    type: float
+    unit: VAr
+  ac_power_va:
+    display_name: AC Apparent Power
+    type: float
+    unit: VA
+  ac_cos_phi:
+    display_name: AC Power Factor
+    type: float
+
+  residual_amperage:
+    display_name: Residual Amperage
+    type: float
+    unit: A
+  heatsink_temperature:
+    display_name: Heatsink Temperature
+    type: float
+    unit: C
+  internal_temperature:
+    display_name: Internal Temperature
+    type: float
+    unit: C
+
+  total_yield:
+    display_name: Total Yield
+    type: float
+    unit: Wh
+  daily_yield:
+    display_name: Daily Yield
+    type: float
+    unit: Wh
+
+command_groups:
+  config:
+    display_name: Configuration
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      address:
+        display_name: Modbus Address
+        description: Hostname and port, e.g. 192.168.14.45:512
+        type: string
+        required: true
+      unit_id:
+        display_name: Modbus Unit ID
+        description: Can be obtained from SMA web interface
+        type: integer
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+alerts:
+  cannot_read_config:
+    display_name: Cannot read configuration
+    severity: error
+  not_configured:
+    display_name: Not configured
+    severity: info
+  unknown_event:
+    display_name: Unknown event
+    severity: error
+    description: >
+      Inverter should have returned message code, but it did not.
+      Operation.Evt.Msg (30213) does not equal to NoneMsg (886).
+
+  # yamllint disable rule:line-length
+  #
+  # Auto-generated list of alerts
+  #
+  e102:
+    display_name: Grid fault
+    severity: error
+    description: |
+      The grid voltage or grid impedance at the connection point of the inverter is too high. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Ensure that the correct country data set has been configured ( > Configuring the Country Data Set).
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service ( > Contact).
+  e202:
+    display_name: Grid fault / Grid undervoltage fast
+    severity: error
+    description: |
+      The utility grid has been disconnected, the AC cable is damaged or the grid voltage at the connection point of the inverter is too low. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Make sure that the circuit breaker is switched on.
+      - Make sure that the AC cable is not damaged.
+      - Make sure that the AC cable is correctly connected.
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must approve changes to the operating parameters of the inverter.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the SMA Service Line.
+  e301:
+    display_name: Grid incident
+    severity: error
+    description: |
+      The ten-minute average value of the grid voltage is no longer within the permissible range. The grid voltage or grid impedance at the connection point is too high. The inverter disconnects from the utility grid to maintain power quality.
+      Corrective measures:
+      - During the feed-in operation, check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e401:
+    display_name: Grid fault
+    severity: error
+    description: |-
+      The inverter has disconnected from the utility grid. A stand-alone grid or a very large change in the power frequency was detected.
+      Check the grid connection for significant short-term frequency fluctuations.
+  e501:
+    display_name: Grid fault / Grid frequency disturbance
+    severity: error
+    description: |
+      The power frequency is not within the permissible range. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - If possible, check the power frequency and observe how often major fluctuations occur.
+      - If fluctuations occur frequently and this message is displayed often, contact the grid operator. The grid operator must approve changes to the operating parameters of the inverter.
+      - If the grid operator gives his approval, discuss any changes to the operating parameters with the SMA Service Line.
+  e3401:
+    display_name: DC overvoltage / Overvoltage input A (SW)
+    severity: error
+    description: |
+      The DC input voltage connected to the inverter is too high. This can destroy the inverter.
+      Corrective measures:
+      - Immediately disconnect the PV module from the inverter.
+      - Check whether the DC voltage is below the maximum input voltage of the inverter.
+      - If the DC voltage is below the maximum input voltage of the inverter, reconnect the DC connectors to the inverter.
+      - If the DC voltage is above the maximum input voltage of the inverter, ensure that the PV module has been correctly rated or contact the installer of the PV module.
+      - If this message is repeated frequently, contact the SMA Service Line.
+  e3501:
+    display_name: Insulation resistance / Insulation failure
+    severity: error
+    description: |-
+      The inverter has detected a ground fault in the PV array. As long as the fault exists, the inverter will not feed in.
+      Check the PV system for ground faults ( > Checking the PV System for Ground Faults).
+  e3902:
+    display_name: Waiting for DC start conditions > Start conditions not met
+    severity: error
+    description: |
+      The feed-in conditions for the utility grid are not yet fulfilled.
+      Corrective measures:
+      - Ensure that the PV array is not covered by snow or otherwise shaded.
+      - Wait for higher irradiation.
+      - If this message is displayed frequently in the morning, increase the voltage limit for starting grid feed-in. Change the parameter Critical voltage to start feed-in.
+      - If this message is displayed frequently with medium irradiation, ensure that the PV array is correctly rated.
+  e3903:
+    display_name: Waiting for DC start conditions / Generator voltage too high / Start
+      conditions not met
+    severity: error
+    description: |-
+      The PV array voltage is too high.
+      Wait until the DC start conditions are met.
+  e6002:
+    display_name: Self diagnosis > Interference of device
+    severity: error
+    description: |
+      The system data is defective.
+      Corrective measures:
+      - Download firmware update from www.SMA-Solar.com and install with Sunny Explorer.
+      - If this message is still displayed, contact the SMA Service Line.
+  e6003:
+    display_name: Self diagnosis > Interference of device (6002, 6005, 6006)
+    severity: error
+    description: |-
+      The cause must be determined by the SMA Service Line.
+      Contact the SMA Service Line.
+  e6004:
+    display_name: Self diagnosis > Interference of device (6002, 6005, 6006)
+    severity: error
+    description: |-
+      The cause must be determined by the SMA Service Line.
+      Contact the SMA Service Line.
+  e6005:
+    display_name: Self diagnosis > Interference of device (6002, 6005, 6006)
+    severity: error
+    description: |-
+      The cause must be determined by the SMA Service Line.
+      Contact the SMA Service Line.
+  e6006:
+    display_name: Self diagnosis > Interference of device (6002, 6005, 6006)
+    severity: error
+    description: |-
+      The cause must be determined by the SMA Service Line.
+      Contact the SMA Service Line.
+  e6305:
+    display_name: Self diagnosis > Interference of device
+    severity: error
+    description: |-
+      The cause must be determined by the SMA Service Line.
+      Contact the SMA Service Line.
+  e6402:
+    display_name: Self diagnosis / Overtemperature
+    severity: error
+    description: |-
+      The cause must be determined by the SMA Service Line.
+      Contact the SMA Service Line.
+  e6406:
+    display_name: DC overcurrent / Overcurrent input A (HW)
+    severity: error
+    description: |
+      The current at the module input of the inverter is too high. The inverter has interrupted the feed-in operation.
+      Corrective measures:
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range and/or whether voltage jumps occur (e.g. by switching on and off large loads).
+      - If voltage jumps occur or the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must approve changes to the operating parameters of the inverter.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the SMA Service Line.
+  e6415:
+    display_name: Self diagnosis > Interference of device
+    severity: error
+    description: |
+      The reference voltage test failed.
+      Corrective measures:
+      - Disconnect the Sunny Multigate from voltage sources ( > Disconnecting the Sunny Multigate from Voltage Sources) and re-commission it ( > Commissioning the PV System).
+      - If this message is still displayed, contact the SMA Service Line.
+  e6450:
+    display_name: Self diagnosis / Energy transfer not possible / Interference device
+    severity: error
+    description: |
+      The inverter cannot feed into the utility grid. Possible causes: grid voltage is too high; a PV module is defective, soiled or shaded; a cloudy or foggy day.
+      Corrective measures:
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must approve changes to the operating parameters of the inverter.
+      - Check whether the DC voltage is stable in a realistic range in accordance with the datasheet of the PV module and the assessment of the weather situation. Therefore, determine the voltage during inverter operation using a communication product.
+      - Check whether the respective PV module is heavily soiled or shaded.
+      - Clean the PV module if soiled.
+      - During a very cloudy or foggy day, wait for higher irradiation.
+      - If none of the described causes is applicable and the message is still displayed, contact the SMA Service Line.
+  e10265:
+    display_name: The device with serial number X has not been available for X day(s)
+    severity: error
+    description: |
+      Communication with one or several inverters is no longer possible.
+      Corrective measures:
+      - Check cables and inverters for loose connectors or damage.
+      - Check PV modules for soiling or damage.
+      - If the problem persists, contact the SMA Service Line.
+  e6702:
+    display_name: Communication disturbed
+    severity: error
+    description: |-
+      Error in the communication processor, the inverter continues feeding in, however. The cause must be determined by the Service.
+      If this message is displayed frequently, contact the Service ( > Contact).
+  e7001:
+    display_name: Sensor fault
+    severity: error
+    description: |-
+      A temperature sensor in the inverter is defective and the inverter interrupts the feed-in operation. The cause must be determined by the Service.
+      Contact the Service.
+  e8101:
+    display_name: Communication disturbed (8101, 8102)
+    severity: error
+    description: |
+      An error has occurred in the internal communication. This can be caused by one of the following: Feed-in operation continues.
+      Corrective measures:
+      - If several Sunny Multigate devices are installed in a system, check whether the AC cables from the inverters to the Sunny Multigate devices have been laid in separate channels. If the AC cables are not laid separately from each other, lay the AC cables from the inverter to the Sunny Multigate in separate locations.
+      - If the problem persists, contact the SMA Service Line.
+  e8102:
+    display_name: Communication disturbed (8101, 8102)
+    severity: error
+    description: |
+      An error has occurred in the internal communication. This can be caused by one of the following: Feed-in operation continues.
+      Corrective measures:
+      - If several Sunny Multigate devices are installed in a system, check whether the AC cables from the inverters to the Sunny Multigate devices have been laid in separate channels. If the AC cables are not laid separately from each other, lay the AC cables from the inverter to the Sunny Multigate in separate locations.
+      - If the problem persists, contact the SMA Service Line.
+  e8104:
+    display_name: Interference device
+    severity: error
+    description: |-
+      The cause must be determined by the SMA Service Line.
+      Contact the SMA Service Line.
+  e9014:
+    display_name: Invalid device combination
+    severity: error
+    description: |-
+      The Sunny Multigate and the inverters cannot be operated in this combination.
+      Contact the SMA Service Line and request the latest firmware update, if necessary.
+  e9015:
+    display_name: Max. permitted number of inverters exceeded
+    severity: error
+    description: |-
+      The number of inverters connected exceeds the maximum number specified in the currently set standard.
+      Reduce the number of inverters in the PV system until the maximum permissible number is reached (see the user manual of the communication product).
+  e10221:
+    display_name: New device cannot be administered
+    severity: error
+    description: |-
+      The cause must be determined by the SMA Service Line.
+      Contact the SMA Service Line.
+  e10259:
+    display_name: Inconsistent communication version
+    severity: error
+    description: |-
+      The communication version of an inverter is not supported or the device combination is invalid.
+      Contact the SMA Service Line and request the latest firmware update, if necessary.
+  e10267:
+    display_name: Loss of communication to one or several devices
+    severity: error
+    description: |
+      Communication with one or several inverters is no longer possible.
+      Corrective measures:
+      - Check cables and inverters for loose connectors or damage.
+      - Check PV modules for soiling or damage.
+      - If the problem persists, contact the SMA Service Line.
+  e101:
+    display_name: Grid fault
+    severity: error
+    description: |
+      The grid voltage or grid impedance at the connection point of the inverter is too high. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Ensure that the correct country data set has been configured ( > Configuring the Country Data Set).
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service ( > Contact).
+  e1001:
+    display_name: Installation failure grid connection / L/N swapped
+    severity: error
+    description: "The conductors L and N are swapped or PE is not connected.\nCorrective
+      measures:\n- Check whether the connecting terminal plates Grid and Inverter of
+      the Sunny Multigate are correctly assigned.\n- If the connecting terminal plates
+      Grid and Inverter are not correctly assigned, disconnect the Sunny Multigate from
+      all voltage sources ( > Disconnecting the Sunny Multigate from Voltage Sources)
+      and connect the conductors L, N and PE correctly.\n- Once the connecting terminal
+      plates are correctly assigned, check whether the AC field plugs or junction boxes
+      between the inverters and the Sunny Multigate are correctly assembled.\n- \n-
+      Disconnect the inverter from all voltage sources ( > Disconnecting the Inverter
+      from Voltage Sources).\n- Check the assembling. If present, remove the AC field
+      plug ( > Disconnecting the AC Field Plug) and assemble it correctly ( > Assembling
+      the AC Field Plug).\n- If the connecting terminal plates Grid and Inverter of
+      the Sunny Multigate are correctly assigned, the inverter is correctly connected,
+      the AC field plugs or junction boxes used are correctly assembled and this message
+      is still displayed, contact the SMA Service Line.\n"
+  e7702:
+    display_name: Self diagnosis > Interference of device
+    severity: error
+    description: |
+      A relay error has occurred.
+      Corrective measures:
+      - Disconnect the Sunny Multigate from voltage sources ( > Disconnecting the Sunny Multigate from Voltage Sources) and re-commission it ( > Commissioning the PV System).
+      - If this message is still displayed, contact the SMA Service Line.
+  e103:
+    display_name: Grid fault
+    severity: error
+    description: |
+      The grid voltage or grid impedance at the connection point of the inverter is too high. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Ensure that the correct country data set has been configured ( > Configuring the Country Data Set).
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service ( > Contact).
+  e105:
+    display_name: Grid fault
+    severity: error
+    description: |
+      The grid voltage or grid impedance at the connection point of the inverter is too high. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Ensure that the correct country data set has been configured ( > Configuring the Country Data Set).
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service ( > Contact).
+  e203:
+    display_name: Grid undervoltage slow
+    severity: error
+    description: |
+      The utility grid has been disconnected, the AC cable is damaged or the grid voltage at the connection point of the inverter is too low. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Ensure that the miniature circuit breaker is switched on.
+      - Ensure that the AC cable is not damaged and that it is connected correctly.
+      - Ensure that the country data set has been configured correctly.
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e205:
+    display_name: PLL not within limits
+    severity: error
+    description: |
+      The utility grid has been disconnected, the AC cable is damaged or the grid voltage at the connection point of the inverter is too low. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Ensure that the miniature circuit breaker is switched on.
+      - Ensure that the AC cable is not damaged and that it is connected correctly.
+      - Ensure that the country data set has been configured correctly.
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e206:
+    display_name: Grid undervoltage very fast
+    severity: error
+    description: |
+      The utility grid has been disconnected, the AC cable is damaged or the grid voltage at the connection point of the inverter is too low. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Ensure that the miniature circuit breaker is switched on.
+      - Ensure that the AC cable is not damaged and that it is connected correctly.
+      - Ensure that the country data set has been configured correctly.
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e302:
+    display_name: Active power limit AC voltage
+    severity: error
+    description: |-
+      The inverter has reduced its power due to a too-high grid voltage to ensure grid stability.
+      If possible, check the grid voltage and observe how often fluctuations occur. If fluctuations occur frequently and this message is displayed often, contact the grid operator and request approval to change the operating parameters of the inverter. If the grid operator gives his approval, discuss any changes to the operating parameters with the Service.
+  e404:
+    display_name: Grid fault
+    severity: error
+    description: |-
+      The inverter has disconnected from the utility grid. A stand-alone grid or a very large change in the power frequency was detected.
+      Check the grid connection for significant short-term frequency fluctuations.
+  e507:
+    display_name: Active power limit AC frequency
+    severity: error
+    description: |-
+      The inverter has reduced its power due to a too-high power frequency to ensure grid stability.
+      If possible, check the grid frequency and observe how often fluctuations occur. If fluctuations occur frequently and this message is displayed often, contact the grid operator and request approval to change the operating parameters of the inverter. If the grid operator gives his approval, discuss any changes to the operating parameters with the Service.
+  e601:
+    display_name: Grid incident
+    severity: error
+    description: |
+      The inverter has detected an excessively high proportion of direct current in the grid current.
+      Corrective measures:
+      - Check the grid connection for direct current.
+      - If this message is displayed frequently, contact the grid operator and check whether the monitoring threshold on the inverter can be raised.
+  e701:
+    display_name: Frequency not permitted > Check parameter
+    severity: error
+    description: |
+      The power frequency is not within the permissible range. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - If possible, check the power frequency and observe how often fluctuations occur.
+      - If fluctuations occur frequently and this message is displayed often, contact the grid operator and request approval to change the operating parameters of the inverter.
+      - If the grid operator gives his approval, discuss any changes to the operating parameters with the Service.
+  e801:
+    display_name: Waiting for grid voltage > Grid failure > Check AC circuit breaker
+    severity: error
+    description: |
+      The AC cable is not correctly connected or the country data set is not correctly configured.
+      Corrective measures:
+      - Ensure that the miniature circuit breaker is switched on.
+      - Ensure that the AC cable is not damaged and that it is connected correctly.
+      - Ensure that the country data set has been configured correctly.
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e901:
+    display_name: Grounding connection missing > Check connection
+    severity: error
+    description: |-
+      The grounding conductor is not correctly connected.
+      Ensure that the grounding conductor is correctly connected.
+  e1101:
+    display_name: Installation fault > Check connection
+    severity: error
+    description: |-
+      A second line conductor is connected to N.
+      Connect the neutral conductor to N.
+  e1302:
+    display_name: Waiting for grid voltage > Installation failure grid connection >
+      Check grid and fuses
+    severity: error
+    description: |
+      U/W or O not connected.
+      Corrective measures:
+      - Ensure that U/W and O are connected.
+      - Ensure that the miniature circuit breaker is switched on.
+      - Ensure that the AC cable is not damaged and that it is connected correctly.
+  e1501:
+    display_name: Reconnection fault grid
+    severity: error
+    description: |-
+      The changed country data set or the value of a parameter you have set does not correspond to the local requirements. The inverter cannot connect to the utility grid.
+      Ensure that the country data set has been configured correctly. To do this, select the parameter Set country standard and check the value.
+  e3302:
+    display_name: Unstable operation
+    severity: error
+    description: |
+      There is not enough power at the DC input of the inverter for stable operation. The inverter cannot connect to the utility grid.
+      Corrective measures:
+      - Ensure that the PV array is dimensioned correctly.
+      - Ensure that the PV array is not covered by snow or otherwise shaded.
+      - Ensure that the PV array is free of defects.
+  e3303:
+    display_name: Unstable operation
+    severity: error
+    description: |
+      There is not enough power at the DC input of the inverter for stable operation. The inverter cannot connect to the utility grid.
+      Corrective measures:
+      - Ensure that the PV array is dimensioned correctly.
+      - Ensure that the PV array is not covered by snow or otherwise shaded.
+      - Ensure that the PV array is free of defects.
+  e3601:
+    display_name: High discharge curr. > Check generator
+    severity: error
+    description: |-
+      The leakage current of the inverter and the PV array is too high. There is a ground fault, a residual current or a malfunction.
+      Check the PV system for ground faults ( > Checking the PV System for Ground Faults).
+  e3701:
+    display_name: Residual current too high > Check PV array
+    severity: error
+    description: |-
+      The inverter has detected a residual current due to temporary grounding of the PV array.
+      Check the PV system for ground faults.
+  e3801:
+    display_name: DC overcurrent > Check generator
+    severity: error
+    description: |-
+      Overcurrent at the DC input. The inverter briefly interrupts feed-in operation.
+      If this message is displayed frequently, ensure that the PV array has been correctly rated and wired.
+  e3901:
+    display_name: Waiting for DC start conditions > Start conditions not met
+    severity: error
+    description: |
+      The feed-in conditions for the utility grid are not yet fulfilled.
+      Corrective measures:
+      - Ensure that the PV array is not covered by snow or otherwise shaded.
+      - Wait for higher irradiation.
+      - If this message is displayed frequently in the morning, increase the voltage limit for starting grid feed-in. Change the parameter Critical voltage to start feed-in.
+      - If this message is displayed frequently with medium irradiation, ensure that the PV array is correctly rated.
+  e6501:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the cooling fins on the rear of the enclosure and the air ducts on the top using a soft brush.
+      - Ensure that the inverter has sufficient ventilation.
+      - Ensure that the ambient temperature +40°C has not been exceeded.
+      - Ensure that the inverter is not exposed to direct solar irradiation.
+  e6502:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the cooling fins on the rear of the enclosure and the air ducts on the top using a soft brush.
+      - Ensure that the inverter has sufficient ventilation.
+      - Ensure that the ambient temperature +40°C has not been exceeded.
+      - Ensure that the inverter is not exposed to direct solar irradiation.
+  e6509:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the cooling fins on the rear of the enclosure and the air ducts on the top using a soft brush.
+      - Ensure that the inverter has sufficient ventilation.
+      - Ensure that the ambient temperature +40°C has not been exceeded.
+      - Ensure that the inverter is not exposed to direct solar irradiation.
+  e6512:
+    display_name: Minimum operating temperature not reached
+    severity: error
+    description: The inverter will only recommence feeding into the utility grid once
+      the temperature has reached at least -25°C.
+  e6603:
+    display_name: Self-diagnosis > Overload
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the Service.
+  e6604:
+    display_name: Self-diagnosis > Overload
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the Service.
+  e7002:
+    display_name: Sensor fault
+    severity: error
+    description: |-
+      A temperature sensor in the inverter is defective and the inverter interrupts the feed-in operation. The cause must be determined by the Service.
+      Contact the Service.
+  e7201:
+    display_name: Data stor. not poss.
+    severity: error
+    description: |-
+      Internal error. The inverter continues to feed into the utility grid.
+      Contact Service.
+  e7202:
+    display_name: Data stor. not poss.
+    severity: error
+    description: |-
+      Internal error. The inverter continues to feed into the utility grid.
+      Contact Service.
+  e7303:
+    display_name: Host computer update failed
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the Service.
+  e7320:
+    display_name: The device with serial number [x] was successfully updated to firmware
+      version [x].
+    severity: error
+    description: The firmware update was completed successfully.
+  e7329:
+    display_name: Condition test successful
+    severity: error
+    description: The testing of the update conditions was successful. The firmware update
+      package is suitable for this inverter.
+  e7330:
+    display_name: Condition test failed
+    severity: error
+    description: |
+      The testing of the update conditions was not successful. The firmware update package is not suitable for this inverter.
+      Corrective measures:
+      - Retry update.
+      - Ensure that the selected update file is suitable for this inverter.
+      - If this message is displayed again, contact the Service.
+  e7331:
+    display_name: Update transport started
+    severity: error
+    description: Update file is being copied.
+  e7332:
+    display_name: Update transport successful
+    severity: error
+    description: Update file was copied successfully to the inverter's internal memory.
+  e7333:
+    display_name: Update transport failed
+    severity: error
+    description: |
+      Update file could not be copied to the inverter's internal memory. In the event of connection with the inverter via Wi-Fi network, a poor connection quality can be the cause.
+      Corrective measures:
+      - Retry update.
+      - For Wi-Fi connection: Improve the Wi-Fi connection quality (e.g. via Wi-Fi repeater) or establish connection with the inverter via Ethernet.
+      - If this message is displayed again, contact the Service.
+  e7341:
+    display_name: Update Bootloader
+    severity: error
+    description: The inverter is performing a bootloader update.
+  e7342:
+    display_name: Update Bootloader failed
+    severity: error
+    description: |
+      The bootloader update failed.
+      Corrective measures:
+      - Retry update.
+      - If this message is displayed again, contact the Service.
+  e7347:
+    display_name: Incompatible file
+    severity: error
+    description: |
+      The configuration file is not suitable for this inverter.
+      Corrective measures:
+      - Ensure that the selected configuration file is suitable for this inverter.
+      - Retry import.
+  e7348:
+    display_name: Incorrect file format
+    severity: error
+    description: |
+      The configuration file is not of the required format or is damaged.
+      Corrective measures:
+      - Ensure that the selected configuration file is of the required format and is not damaged.
+      - Retry import.
+  e7349:
+    display_name: Incorrect login rights for configuration file
+    severity: error
+    description: |
+      The user group logged in does not have the user rights necessary to be able to import a configuration.
+      Corrective measures:
+      - Log in as Installer.
+      - Import configuration file again.
+  e7350:
+    display_name: Transfer of a configuration file has started
+    severity: error
+    description: The configuration file is being transferred.
+  e7351:
+    display_name: Update Wi-Fi
+    severity: error
+    description: The inverter is updating the Wi-Fi module.
+  e7352:
+    display_name: Update of Wi-Fi not successful
+    severity: error
+    description: |
+      The update of the Wi-Fi module failed.
+      Corrective measures:
+      - Retry update.
+      - If this message is displayed again, contact the Service.
+  e7353:
+    display_name: Update time zone database
+    severity: error
+    description: The inverter is updating the time zone database.
+  e7354:
+    display_name: Update of time zone database not successful
+    severity: error
+    description: |
+      The update of the time zone database failed.
+      Corrective measures:
+      - Retry update.
+      - If this message is displayed again, contact the Service.
+  e7355:
+    display_name: Update WebUI
+    severity: error
+    description: The inverter is updating the inverter user interface.
+  e7356:
+    display_name: Update of the WebUI not successful
+    severity: error
+    description: |
+      The update of the inverter user interface failed.
+      Corrective measures:
+      - Retry update.
+      - If this message is displayed again, contact the Service.
+  e7619:
+    display_name: Communication fault with meter unit > Check communication to meter
+    severity: error
+    description: |
+      The inverter is not receiving any data from the energy meter.
+      Corrective measures:
+      - Ensure that the energy meter is correctly integrated into the same network as the inverter (see energy meter manual).
+      - For Wi-Fi connection: Improve the Wi-Fi connection quality (e.g., via Wi-Fi repeater) or connect the inverter with the DHCP server (router) via Ethernet.
+  e7701:
+    display_name: Self-diagnosis > Device disturbance
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact Service.
+  e7703:
+    display_name: Self-diagnosis > Device disturbance
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact Service.
+  e8003:
+    display_name: Active power limited derating
+    severity: error
+    description: |
+      The inverter has reduced its power output for more than ten minutes due to excessive temperature.
+      Corrective measures:
+      - Clean the cooling fins on the rear of the enclosure and the air ducts on the top using a soft brush.
+      - Ensure that the inverter has sufficient ventilation.
+      - Ensure that the ambient temperature +45°C (113°F) has not been exceeded.
+      - Ensure that the inverter is not exposed to direct solar irradiation.
+  e8708:
+    display_name: Timeout in communication for active power limitation
+    severity: error
+    description: |-
+      Communication to the system control absent. Depending on the fall-back setting, either the last received values will be retained or the active power will be limited to the set percentage value of the inverter nominal power.
+      Ensure that the connection to the system manager (e.g. Sunny Home Manager) is intact and that no cables are damaged or that no plugs have been pulled.
+  e8709:
+    display_name: Timeout in communication for reactive power setpoint
+    severity: error
+    description: |-
+      Communication to the system control absent. Depending on the fall-back setting, either the last received values will be retained or the reactive power will be set to the set value.
+      Ensure that the connection to the system manager (e.g. Sunny Home Manager) is intact and that no cables are damaged or that no plugs have been pulled.
+  e8710:
+    display_name: Timeout in communication for cos phi setpoint
+    severity: error
+    description: |-
+      Communication to the system control absent. Depending on the fall-back setting, either the last received values will be retained or the displacement power factor will be set to the set value.
+      Ensure that the connection to the system manager (e.g. Sunny Home Manager) is intact and that no cables are damaged or that no plugs have been pulled.
+  e9002:
+    display_name: SMA Grid Guard code invalid
+    severity: error
+    description: |-
+      The SMA Grid Guard code entered is incorrect. The operating parameters are still protected and cannot be changed.
+      Enter the correct SMA Grid Guard code.
+  e9003:
+    display_name: Grid parameters locked
+    severity: error
+    description: Changes to the grid parameters are now blocked. In order to be able
+      to make changes to the grid parameters, from now on you must log in using the
+      SMA Grid Guard code.
+  e9005:
+    display_name: Changing of grid parameters not possible > Ensure DC supply
+    severity: error
+    description: |
+      This error can have the following causes:
+      Corrective measures:
+      - Enter the SMA Grid Guard code.
+      - Ensure that at least the DC start voltage is available (green LED is flashing, pulsing or glowing).
+  e9007:
+    display_name: Abort self-test
+    severity: error
+    description: |
+      The self-test (Italy only) was terminated.
+      Corrective measures:
+      - Ensure that the AC connection is correct.
+      - Restart the self-test.
+  e10110:
+    display_name: 'Time synchronization failed: |tn0|'
+    severity: error
+    description: |
+      No time information could be called up from the set NTP server.
+      Corrective measures:
+      - Ensure that the NTP server was configured correctly.
+      - Ensure that the inverter is integrated into a local network with Internet connection.
+  e10248:
+    display_name: Load reduced through device reduction or increase of query interval
+    severity: error
+    description: |
+      The network is busy. Data exchange between the devices is not at an optimum and is greatly delayed.
+      Corrective measures:
+      - Reduce the number of devices in the network.
+      - If necessary, increase the data query intervals.
+      - If necessary, reduce the number of devices in the network.
+  e10249:
+    display_name: Load reduced through device reduction or increase of query interval
+    severity: error
+    description: |
+      The network is busy. Data exchange between the devices is not at an optimum and is greatly delayed.
+      Corrective measures:
+      - Reduce the number of devices in the network.
+      - If necessary, increase the data query intervals.
+      - If necessary, reduce the number of devices in the network.
+  e10250:
+    display_name: "[Interface]: package error rate [ok / high]"
+    severity: error
+    description: The package error rate has changed. If the package error rate is high,
+      the network is overloaded or the connection to the network switch or DHCP server
+      (router) is disturbed.
+  e10251:
+    display_name: "[Interface]: communication status goes to [OK / Warning / Error /
+      Not connected]"
+    severity: error
+    description: The communication status to the network switch or DHCP server (router)
+      has changed. An additional error message may be displayed.
+  e10252:
+    display_name: "[Interface]: communication disrupted"
+    severity: error
+    description: |
+      There is no valid signal on the network line.
+      Corrective measures:
+      - Ensure that with an Ethernet connection, the network cable and the network connector are not damaged and that the network connectors are correctly plugged.
+      - Ensure that the DHCP server (router) and any network switches are signalizing correct operation.
+  e10253:
+    display_name: "[Interface]: connection speed goes to [100 Mbit / 10 Mbit]"
+    severity: error
+    description: The data transfer rate has changed. The cause for the status [10 Mbit]
+      can be a defective plug, a defective cable or the pulling or plugging of the network
+      connector.
+  e10254:
+    display_name: "[Interface]: duplex mode goes to [Full / Half]"
+    severity: error
+    description: The duplex mode (data transfer mode) has changed. The cause for the
+      status [Half] can be a defective plug, a defective cable or the pulling or plugging
+      of the network connector.
+  e10255:
+    display_name: "[Interface]: Network load OK"
+    severity: error
+    description: The network load has returned to a normal range after being busy.
+  e10282:
+    display_name: "[User group]-Login via [protocol] locked"
+    severity: error
+    description: |-
+      After several incorrect login attempts, login has been blocked for a limited time. In this case, the User login will be blocked for 15 minutes, the Grid Guard login for 12 hours.
+      Wait until the given time has expired and then retry login.
+  e10283:
+    display_name: Wi-Fi module faulty
+    severity: error
+    description: |-
+      The Wi-Fi module integrated in the inverter is defective.
+      Contact the Service.
+  e10284:
+    display_name: No Wi-Fi connection possible
+    severity: error
+    description: |
+      The inverter does not currently have a Wi-Fi connection to the selected network.
+      Corrective measures:
+      - Ensure that the SSID, the Wi-Fi password and the encryption method have been entered correctly. The encryption method is specified by your Wi-Fi router or Wi-Fi access point and can be changed there.
+      - Ensure that the Wi-Fi router or Wi-Fi access point is in range and is signalizing correct operation.
+      - If this message is displayed often, improve the Wi-Fi connection by using a Wi-Fi repeater.
+  e10285:
+    display_name: Wi-Fi connection established
+    severity: error
+    description: Connection to the selected Wi-Fi network has been established.
+  e10286:
+    display_name: Wi-Fi connection lost
+    severity: error
+    description: |
+      The inverter has lost Wi-Fi connection to the selected network.
+      Corrective measures:
+      - Ensure that the Wi-Fi router or Wi-Fi access point is still active.
+      - Ensure that the Wi-Fi router or Wi-Fi access point is in range and is signalizing correct operation.
+      - If this message is displayed often, improve the Wi-Fi connection by using a Wi-Fi repeater.
+  e27301:
+    display_name: Update communication
+    severity: error
+    description: The inverter is updating the communication component.
+  e27302:
+    display_name: Update main CPU
+    severity: error
+    description: The inverter is updating the inverter component.
+  e27312:
+    display_name: Update completed
+    severity: error
+    description: The inverter has successfully completed the update.
+  e29004:
+    display_name: Grid parameters unchanged
+    severity: error
+    description: Changing the grid parameters is not possible.
+  e20901:
+    display_name: Inst. code valid
+    severity: error
+    description: The entered Grid Guard code is valid. Protected parameters have now
+      been unlocked and you can adjust the parameters. The parameters will be automatically
+      locked again after 10 feed-in hours.
+  e20906:
+    display_name: Self-test
+    severity: error
+    description: The self-test is in progress.
+  e29001:
+    display_name: Inst. code valid
+    severity: error
+    description: The entered Grid Guard code is valid. Protected parameters have now
+      been unlocked and you can adjust the parameters. The parameters will be automatically
+      locked again after ten feed-in hours.
+  e29006:
+    display_name: Self-test
+    severity: error
+  e104:
+    display_name: Grid fault
+    severity: error
+    description: |
+      The grid voltage or grid impedance at the connection point of the inverter is too high. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Ensure that the correct country data set has been configured ( > Configuring the Country Data Set).
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service ( > Contact).
+  e204:
+    display_name: Grid fault
+    severity: error
+    description: |
+      The utility grid has been disconnected, the AC cable is damaged or the grid voltage at the connection point of the inverter is too low. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Make sure that the circuit breaker is switched on.
+      - Ensure that the AC cable is not damaged and that it is connected correctly.
+      - Ensure that the country data set has been configured correctly.
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service ( > Contact).
+  e402:
+    display_name: Grid fault
+    severity: error
+    description: |-
+      The inverter has disconnected from the utility grid. A stand-alone grid or a very large change in the power frequency was detected.
+      Check the grid connection for significant short-term frequency fluctuations.
+  e403:
+    display_name: Grid fault
+    severity: error
+    description: |-
+      The inverter has disconnected from the utility grid. A stand-alone grid or a very large change in the power frequency was detected.
+      Check the grid connection for significant short-term frequency fluctuations.
+  e3301:
+    display_name: Unstable operation
+    severity: error
+    description: |
+      There is not enough power at the DC input of the inverter for stable operation. The inverter cannot connect to the utility grid.
+      Corrective measures:
+      - Ensure that the PV array is designed correctly.
+      - Ensure that the PV array is not covered by snow or otherwise shaded.
+      - Ensure that the PV array is free of errors.
+  e3402:
+    display_name: DC overvoltage > Disconnect generator
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Disconnect the inverter from voltage sources immediately (see installation manual).
+      - Check whether the DC voltage is below the maximum input voltage of the inverter. If the DC voltage is below the maximum input voltage of the inverter, reconnect the terminal block with the connected DC conductors to the inverter.
+      - If the DC voltage exceeds the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact the Service ( > Contact).
+  e3403:
+    display_name: DC overvoltage > Disconnect generator
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Disconnect the inverter from voltage sources immediately (see installation manual).
+      - Check whether the DC voltage is below the maximum input voltage of the inverter. If the DC voltage is below the maximum input voltage of the inverter, reconnect the terminal block with the connected DC conductors to the inverter.
+      - If the DC voltage exceeds the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact the Service ( > Contact).
+  e3404:
+    display_name: DC overvoltage > Disconnect generator
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Disconnect the inverter from voltage sources immediately (see installation manual).
+      - Check whether the DC voltage is below the maximum input voltage of the inverter. If the DC voltage is below the maximum input voltage of the inverter, reconnect the terminal block with the connected DC conductors to the inverter.
+      - If the DC voltage exceeds the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact the Service ( > Contact).
+  e3405:
+    display_name: DC overvoltage > Disconnect generator
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Disconnect the inverter from voltage sources immediately (see installation manual).
+      - Check whether the DC voltage is below the maximum input voltage of the inverter. If the DC voltage is below the maximum input voltage of the inverter, reconnect the terminal block with the connected DC conductors to the inverter.
+      - If the DC voltage exceeds the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact the Service ( > Contact).
+  e3406:
+    display_name: DC overvoltage > Disconnect generator
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Disconnect the inverter from voltage sources immediately (see installation manual).
+      - Check whether the DC voltage is below the maximum input voltage of the inverter. If the DC voltage is below the maximum input voltage of the inverter, reconnect the terminal block with the connected DC conductors to the inverter.
+      - If the DC voltage exceeds the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact the Service ( > Contact).
+  e3407:
+    display_name: DC overvoltage > Disconnect generator
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Disconnect the inverter from voltage sources immediately (see installation manual).
+      - Check whether the DC voltage is below the maximum input voltage of the inverter. If the DC voltage is below the maximum input voltage of the inverter, reconnect the terminal block with the connected DC conductors to the inverter.
+      - If the DC voltage exceeds the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact the Service ( > Contact).
+  e4301:
+    display_name: Serial electric arc in string |s0| detected by AFCI module
+    severity: error
+    description: |-
+      The inverter has interrupted the grid feed-in because an electric arc has been detected. After 5 minutes the inverter will attempt to start operation again.
+      Check the PV modules as well as the cabling in the affected string for damage.
+  e6701:
+    display_name: Communication disturbed
+    severity: error
+    description: |-
+      Error in the communication processor, the inverter continues feeding in, however. The cause must be determined by the Service.
+      If this message is displayed frequently, contact the Service ( > Contact).
+  e6803:
+    display_name: Self-diagnosis > Input A defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether a string is connected to input A. If a string that once was connected is not used anymore, the string-failure detection must be reset.
+      - Contact the Service ( > Contact).
+  e6903:
+    display_name: Self-diagnosis > Input B defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether a string is connected to input B. If a string that once was connected is not used anymore, the string-failure detection must be reset.
+      - Contact the Service ( > Contact).
+  e7106:
+    display_name: Update file defective
+    severity: error
+    description: The update file is defective. The update failed. The inverter continues
+      to feed in.
+  e7110:
+    display_name: No update file found
+    severity: error
+    description: No new update file was found on the SD memory card. The update failed.
+      The inverter continues to feed in.
+  e7112:
+    display_name: Update file successfully copied
+    severity: error
+  e7113:
+    display_name: The memory card is full or write-protected
+    severity: error
+  e7324:
+    display_name: Wait for update conditions
+    severity: error
+    description: |
+      The testing of the update conditions was not successful. The firmware update package is not suitable for this inverter.
+      Corrective measures:
+      - Retry update.
+      - Ensure that the selected update file is suitable for this inverter.
+      - If this message is displayed again, contact the Service ( > Contact).
+  e7340:
+    display_name: Update communication failed
+    severity: error
+  e8206:
+    display_name: Electr. arc detected > Please confirm by tapping
+    severity: error
+    description: |-
+      The inverter has detected an electric arc and was recommissioned after a disconnection. By tapping, you are confirming that you have repaired any possible damage to PV modules, DC conductors or plugs in the PV system.
+      Tap on the enclosure lid of the Connection Unit within ten seconds of the message appearing in order to recommission the inverter.
+  e8503:
+    display_name: Self-diagnosis > Input C defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether a string is connected to input C. If a string that once was connected is not used anymore, the string-failure detection must be reset.
+      - Contact the Service ( > Contact).
+  e8801:
+    display_name: No display
+    severity: error
+    description: No information can be shown on the display.
+  e8802:
+    display_name: No display
+    severity: error
+    description: No information can be shown on the display.
+  e8803:
+    display_name: No display
+    severity: error
+    description: No information can be shown on the display.
+  e9202:
+    display_name: SPS AC overvoltage
+    severity: error
+    description: |-
+      An AC source has been connected to the socket connection for secure power supply operation.
+      Check the connection at the SPS slots, and make any necessary corrections.
+  e9203:
+    display_name: Short circuit in the SPS power outlet
+    severity: error
+    description: |
+      The maximum initial load has been overshot or the appliance's initial current is above the maximum permissible load current of the connection for secure power supply operation for more than 5 s.
+      Corrective measures:
+      - Reduce the load at the connection for secure power supply operation.
+      - If necessary, select an appliance with a lower initial current.
+  e10339:
+    display_name: Webconnect enabled
+    severity: error
+    description: The inverter can communicate with Sunny Portal without an additional
+      SMA communications product (e.g. Cluster Controller).
+  e10340:
+    display_name: Webconnect disabled
+    severity: error
+    description: The Webconnect function has been switched off. This means that the
+      inverter can not communicate with Sunny Portal without an additional SMA communications
+      product (e.g. Cluster Controller).
+  e10341:
+    display_name: 'Webconnect error: no connection'
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings.
+      Corrective measures:
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e10343:
+    display_name: 'Webconnect error: Default gateway not configured'
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings.
+      Corrective measures:
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e10344:
+    display_name: 'Webconnect error: DNS server not configured'
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings.
+      Corrective measures:
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e10345:
+    display_name: No reply to DNS request
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings.
+      Corrective measures:
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e10346:
+    display_name: SIP proxy DNS resolution failed
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings.
+      Corrective measures:
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e10347:
+    display_name: Stun server DNS resolution failed
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings.
+      Corrective measures:
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e10348:
+    display_name: 'Webconnect error: No reply to request to STUN server'
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings.
+      Corrective measures:
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e10349:
+    display_name: 'Webconnect error: No reply to SIP option packs'
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings or a Sunny Portal maintenance message is present.
+      Corrective measures:
+      - If a Sunny Portal maintenance message is present, wait until the maintenance has been completed.
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e10350:
+    display_name: 'Webconnect error: Registration rejected by SIP registrar'
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings.
+      Corrective measures:
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e10351:
+    display_name: Unknown SIP registry
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings.
+      Corrective measures:
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e10352:
+    display_name: 'Webconnect error: Faulty communication'
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings or a Sunny Portal maintenance message is present.
+      Corrective measures:
+      - If a Sunny Portal maintenance message is present, wait until the maintenance has been completed.
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e10353:
+    display_name: 'Webconnect error: registration of the SIP registry has not responded'
+    severity: error
+    description: |
+      It is likely that there is an error in the network settings or a Sunny Portal maintenance message is present.
+      Corrective measures:
+      - If a Sunny Portal maintenance message is present, wait until the maintenance has been completed.
+      - Check the network components (DLAN, WLAN Access Point etc.).
+      - Ensure that the following ports are not blocked:
+      - Registrar: ied.sma.de:9523
+      - Proxy: ied.sma.de:9523
+      - Stun: stun.sma.de:3478
+      - Domain: ied.sma.de (for SIP URI)
+  e27107:
+    display_name: Update file OK
+    severity: error
+    description: The update file is suitable for this inverter and its components and
+      is fully available for the next update step.
+  e27108:
+    display_name: Memory card is being read
+    severity: error
+    description: The storage medium is being read.
+  e27109:
+    display_name: No new update on the memory card
+    severity: error
+    description: A new update file was not found on the storage medium.
+  e27331:
+    display_name: Update transport started
+    severity: error
+    description: The inverter has successfully started the update.
+  e27332:
+    display_name: Update transport successful
+    severity: error
+    description: The update file has been successfully transferred to the communication
+      component.
+  e3802:
+    display_name: DC overcurrent > Check PV array
+    severity: error
+    description: |-
+      Overcurrent at the DC input. The inverter briefly interrupts feed-in operation.
+      If this message is displayed frequently, ensure that the PV array has been correctly rated and wired.
+  e8103:
+    display_name: Communication failure
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the Service.
+  e10108:
+    display_name: Time adjusted / old time
+    severity: error
+  e10109:
+    display_name: Time adjusted / new time
+    severity: error
+  e10118:
+    display_name: Parameter upload complete
+    severity: error
+    description: The configuration file was loaded successfully.
+  e10287:
+    display_name: Wi-Fi module detected
+    severity: error
+  e10501:
+    display_name: Active power is currently being limited due to an upper limit specification
+    severity: error
+    description: The inverter limits the active power of the PV inverters to the limit
+      set by an external device.
+  e10517:
+    display_name: Dynamic active power limitation started.
+    severity: error
+    description: The inverter limits the active power of the PV inverters to the set
+      limit.
+  e10518:
+    display_name: Dynamic active power limitation terminated.
+    severity: error
+    description: The inverter terminated the active power limitation of the PV inverters.
+  e27103:
+    display_name: Set parameter
+    severity: error
+    description: The parameter changes are being adopted.
+  e27104:
+    display_name: Parameters set successfully
+    severity: error
+    description: The parameter changes were successfully adopted.
+  e4011:
+    display_name: Bridged strings detected
+    severity: error
+    description: The DC inputs A and B are connected in parallel.
+  e4012:
+    display_name: No bridged strings detected
+    severity: error
+    description: The DC inputs A and B are not connected in parallel.
+  e6801:
+    display_name: Self-diagnosis > Input A defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether a string is connected to input A.
+      - Contact the Service.
+  e6802:
+    display_name: Self-diagnosis > Input A defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether a string is connected to input A.
+      - Contact the Service.
+  e6901:
+    display_name: Self-diagnosis > Input B defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether a string is connected to input B.
+      - Contact the Service.
+  e6902:
+    display_name: Self-diagnosis > Input B defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether a string is connected to input B.
+      - Contact the Service.
+  e7102:
+    display_name: Parameter file not found or defective
+    severity: error
+    description: |-
+      The parameter file was not found or is defective. The update failed. The inverter continues to feed in.
+      Copy the parameter file to the correct folder again.
+  e7105:
+    display_name: Parameter setting failed
+    severity: error
+    description: |
+      Parameters could not be set using the memory card. The inverter continues to feed in.
+      Corrective measures:
+      - Ensure that the parameters are set correctly.
+      - Ensure that you have an SMA Grid Guard code.
+  e7500:
+    display_name: Fan fault > Check inverter electronic and fan
+    severity: error
+    description: Contact the Service.
+  e7501:
+    display_name: Fan fault > Check inverter electronic and fan
+    severity: error
+    description: Contact the Service.
+  e8204:
+    display_name: Arc fault detection self-test failed
+    severity: error
+    description: |-
+      An error occurred during the self-test of SMA ArcFix. It is not guaranteed that SMA ArcFix will function correctly. The device does not feed in.
+      Contact the Service.
+  e8205:
+    display_name: Arc fault detection self-test successful
+    severity: error
+    description: The self-test of SMA ArcFix has been completed successfully.
+  e10431:
+    display_name: I-V curve measurement successfully carried out
+    severity: error
+  e10502:
+    display_name: Active power limit AC frequency
+    severity: error
+    description: |-
+      The inverter has reduced its power due to a too-high power frequency to ensure grid stability.
+      If possible, check the grid frequency and observe how often fluctuations occur. If fluctuations occur frequently and this message is displayed often, contact the grid operator and request approval to change the operating parameters of the inverter. If the grid operator gives his approval, discuss any changes to the operating parameters with the Service.
+  e10901:
+    display_name: Start self-test |xx|
+    severity: error
+    description: The self-test is running.
+  e10902:
+    display_name: Current disconnection limit for voltage increase protection |xxx|
+      V
+    severity: error
+    description: Preliminary result of the self-test
+  e10903:
+    display_name: Current disconnection limit for voltage monitoring lower maximum threshold
+      |xxx| V
+    severity: error
+    description: Preliminary result of the self-test
+  e10904:
+    display_name: Current disconnection limit for voltage monitoring upper minimum threshold
+      |xxx| V
+    severity: error
+    description: Preliminary result of the self-test
+  e10905:
+    display_name: Current disconnection limit for voltage monitoring middle minimum
+      threshold |xxx| V
+    severity: error
+    description: Preliminary result of the self-test
+  e10906:
+    display_name: Current disconnection limit for frequency monitoring switchable maximum
+      threshold |xxx| Hz
+    severity: error
+    description: Preliminary result of the self-test
+  e10907:
+    display_name: Current disconnection limit for frequency monitoring switchable minimum
+      threshold |xxx| Hz
+    severity: error
+    description: Preliminary result of the self-test
+  e10908:
+    display_name: Current disconnection limit for frequency monitoring lower maximum
+      threshold |xxx| Hz
+    severity: error
+    description: Preliminary result of the self-test
+  e10909:
+    display_name: Current disconnection limit for frequency monitoring upper minimum
+      threshold |xxx| Hz
+    severity: error
+    description: Preliminary result of the self-test
+  e10910:
+    display_name: Measured disconnection threshold for the running test point |xxx|
+      |xx|
+    severity: error
+    description: Preliminary result of the self-test
+  e10911:
+    display_name: Standard value for the running test point |xxx| |xx|
+    severity: error
+    description: Preliminary result of the self-test
+  e10912:
+    display_name: Measured disconnection time for the running test point |xx| s
+    severity: error
+    description: Preliminary result of the self-test
+# yamllint enable rule:line-length
+
+.cloud:
+  category: renewable_energy_sources
+  mobile_main_chart: ac_power
+  mobile_telemetry:
+    - ac_power
+    - daily_yield
+  mobile_charts:
+    - ac_power
+    - ac_frequency
+    - dc_power
+    - dc_voltage
+    - internal_temperature
