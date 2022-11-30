@@ -1,0 +1,39 @@
+blueprint_spec: device/1.0
+
+display_name: Impulse Push Button for Enapter UCM Kit
+description: Manages single push button using ENP-KIT-RL1.
+icon: enapter-load
+
+communication_module:
+  product: ENP-KIT-RL1
+  lua_file: firmware.lua
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - "on"
+      - "off"
+      - error
+
+command_groups:
+  controls:
+    display_name: Controls
+commands:
+  impulse:
+    display_name: Impulse
+    description: Makes impulse with relay (close-wait-open).
+    group: controls
+    ui:
+      icon: gesture-tap
+      quick_access: true
+
+alerts:
+  cannot_read_relay:
+    severity: error
+    display_name: Cannot Read Relay Status
+    description: This may happen due to relay malfunctioning. Please contact Enapter support.
+
+.cloud:
+  category: switches
