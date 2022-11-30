@@ -13,7 +13,6 @@ This Blueprint is specially designed for makers, students and researchers to tes
 - [Add ENP-KIT-RL1 to your site](https://go.enapter.com/handbook-mobile-app) using the mobile app.
 - [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to ENP-KIT-RL1.
 
-
 ## References
 
 - [Enapter ENP-KIT-RL1 Lua API](https://go.enapter.com/ucm-kit-rl1)
