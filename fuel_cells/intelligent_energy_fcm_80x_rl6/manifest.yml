@@ -84,7 +84,7 @@ commands:
         required: true
       start_relay:
         display_name: Start Contact Channel
-        description: A number of a relay channel where FC start contact is connected to.
+        description: The number of a relay channel to which an FC start contact is connected.
         type: integer
         required: true
   read_configuration:
