@@ -11,11 +11,11 @@ This Blueprint is specially designed for makers, students and researchers to tes
 - Sign up to the Enapter Cloud using the [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
 - Use the [Enapter UCM Kit RL1](https://go.enapter.com/ucm-kit-rl1) module for physical connection.
 - [Add ENP-KIT-RL1 to your site](https://go.enapter.com/handbook-mobile-app) using the mobile app.
-- [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to ENP-RL6.
+- [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to ENP-KIT-RL1.
 
 
 ## References
 
-- [Enapter ENP-KIT-RL1 Lua API](https://go.enapter.com/ucm-kit-rl1))
+- [Enapter ENP-KIT-RL1 Lua API](https://go.enapter.com/ucm-kit-rl1)
 - [About UCM Kit](https://go.enapter.com/ucmkit-enpkit)
 - [ENP-KIT-RL1 PCB Schematics](https://github.com/Enapter/ucm-kit-open-hardware/tree/master/enp-kit-rl1)
