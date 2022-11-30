@@ -50,7 +50,12 @@ stds.ucm = {
         'is_closed', 'is_opened', 'read_counter',
         'set_counter', 'set_debounce', 'err_to_str'
       }
-    }
+    },
+    rl = {
+      fields = {
+        'is_closed', 'open', 'close', 'impulse'
+      }
+    },
   }
 }
 
