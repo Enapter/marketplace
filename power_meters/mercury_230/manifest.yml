@@ -91,6 +91,36 @@ telemetry:
 
 .cloud:
   category: power_meters
+  mobile_main_chart: total_power
   mobile_telemetry:
-    - total_power
     - total_energy_since_reset
+    - total_power
+    - total_energy_l1
+    - total_energy_l2
+    - total_energy_l3
+    - power_l1
+    - power_l2
+    - power_l3
+    - l1n_volt
+    - l2n_volt
+    - l3n_volt
+    - current_l1
+    - current_l2
+    - current_l3
+    - frequency
+  mobile_charts:
+    - total_energy_since_reset
+    - total_power
+    - total_energy_l1
+    - total_energy_l2
+    - total_energy_l3
+    - power_l1
+    - power_l2
+    - power_l3
+    - l1n_volt
+    - l2n_volt
+    - l3n_volt
+    - current_l1
+    - current_l2
+    - current_l3
+    - frequency
