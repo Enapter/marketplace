@@ -1,0 +1,109 @@
+blueprint_spec: device/1.0
+
+display_name: Schneider Electric PM2100 series
+description: Power & Energy Meter with RS485 interface.
+icon: enapter-power-meter
+author: enapter
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Modbus status
+    type: string
+    enum:
+      - ok
+      - read_error
+  active_energy_delivered_and_received:
+    type: float
+    unit: kwatth
+    display_name: Accumulated Active Energy Delivered + Received
+  total_active_power:
+    type: float
+    unit: kwatt
+    display_name: Total Active Power
+  active_power_a:
+    type: float
+    unit: kwatt
+    display_name: Active Power A
+  active_power_b:
+    type: float
+    unit: watt
+    display_name: Active Power B
+  active_power_c:
+    type: float
+    unit: kwatt
+    display_name: Active Power C
+  voltage_a:
+    type: float
+    unit: volt
+    display_name: Phase A Voltage
+  voltage_b:
+    type: float
+    unit: volt
+    display_name: Phase B Voltage
+  voltage_c:
+    type: float
+    unit: volt
+    display_name: Phase C Voltage
+  current_a:
+    type: float
+    unit: amp
+    display_name: Phase A Current
+  current_b:
+    type: float
+    unit: amp
+    display_name: Phase B Current
+  current_c:
+    type: float
+    unit: amp
+    display_name: Phase C Current
+  frequency:
+    type: float
+    unit: hertz
+    display_name: Frequency
+
+.cloud:
+  category: power_meters
+  mobile_main_chart: total_active_power
+  mobile_telemetry:
+    - active_energy_delivered_and_received
+    - total_active_power
+    - active_power_a
+    - active_power_b
+    - active_power_c
+    - voltage_a
+    - voltage_b
+    - voltage_c
+    - current_a
+    - current_b
+    - current_c
+    - frequency
+  mobile_charts:
+    - active_energy_delivered_and_received
+    - total_active_power
+    - active_power_a
+    - active_power_b
+    - active_power_c
+    - voltage_a
+    - voltage_b
+    - voltage_c
+    - current_a
+    - current_b
+    - current_c
+    - frequency

@@ -3,6 +3,15 @@ blueprint_spec: device/1.0
 display_name: Tesla Powerwall
 description: Rechargeable battery stationary home energy storage
 icon: enapter-wall-battery-storage
+author: enapter
+contributors:
+  - anataty
+  - Rina-an
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
 
 communication_module:
   product: ENP-VIRTUAL

@@ -3,6 +3,15 @@ blueprint_spec: device/1.0
 display_name: IMT Solar Irradiance Sensor Si-RS485TC-2T
 description: Irradiance sensor with ModBus RTU
 icon: enapter-solar-panel
+author: enapter
+contributors:
+  - anataty
+  - Rina-an
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
 
 communication_module:
   product: ENP-RS485

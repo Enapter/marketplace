@@ -3,6 +3,14 @@ blueprint_spec: device/1.0
 display_name: Intelligent Energy FCM 804
 description: Fuel Cell Module use hydrogen gas to provide electrical DC power
 icon: enapter-fuel-cell
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
 
 communication_module:
   product: ENP-CAN

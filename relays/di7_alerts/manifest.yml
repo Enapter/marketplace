@@ -3,6 +3,15 @@ blueprint_spec: device/1.0
 display_name: ENP-DI7 with alerts
 description: Enapter ENP-DI7 with input alerts
 icon: enapter-module-din-2
+author: enapter
+contributors:
+  - Rina-an
+  - anataty
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
 
 communication_module:
   product: ENP-DI7
