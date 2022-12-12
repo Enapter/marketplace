@@ -1,7 +1,16 @@
 blueprint_spec: device/1.0
 
 display_name: Bart LAB-DM2
+description: A digital pressure gauge.
 icon: enapter-gauge
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
 
 communication_module:
   product: ENP-RS232
