@@ -10,7 +10,7 @@ license: MIT
 support:
   url: https://enapter.com/support
   email: support@enapter.com
-verification_level: verified
+verification_level: ready_for_testing
 
 communication_module:
   product: ENP-VIRTUAL
@@ -529,3 +529,20 @@ alerts:
 
 .cloud:
   category: fuel_cells
+  mobile_main_chart: total_power
+  mobile_telemetry:
+    - total_power
+    - total_runtime
+    - power1
+    - power2
+  mobile_charts:
+    - total_power
+    - total_runtime
+    - power1
+    - power2
+    - voltage1
+    - voltage2
+    - current1
+    - current2
+    - coolant_temp
+    - coolant_duty
