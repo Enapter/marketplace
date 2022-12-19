@@ -3,18 +3,19 @@ blueprint_spec: device/1.0
 display_name: Intelligent Energy FCM 801
 description: Fuel Cell Module use hydrogen gas to provide electrical DC power
 icon: enapter-fuel-cell
+license: MIT
 author: enapter
-contributors:
-  - anataty
 support:
   url: https://enapter.com/support
   email: support@enapter.com
-license: MIT
 verification_level: verified
 
 communication_module:
   product: ENP-CAN
-  lua_file: firmware.lua
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.1.8
 
 properties:
   vendor:
@@ -26,6 +27,9 @@ properties:
   serial_number:
     type: string
     display_name: Serial Number
+  fw_ver:
+    type: string
+    display_name: Firmware Version
 
 telemetry:
   status:
@@ -86,6 +90,52 @@ telemetry:
     type: float
     unit: joule
     display_name: Total Run Energy
+
+  fault_flags_a:
+    type: integer
+    display_name: Fault Flags A
+  fault_flags_b:
+    type: integer
+    display_name: Fault Flags B
+  fault_flags_c:
+    type: integer
+    display_name: Fault Flags C
+  fault_flags_d:
+    type: integer
+    display_name: Fault Flags D
+  total_can_packets:
+    type: integer
+    display_name: Total CAN Packets Received
+  messages_0x400:
+    type: string
+    display_name: CAN Messages 0x400
+    description: Troubleshooting logs for analysis by Intelligent Energy service team
+
+command_groups:
+  config:
+    display_name: Configuration
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      index:
+        display_name: CAN Index
+        description: CAN Index is pre-configured on a factory, you can obtain it from your device vendor.
+        type: integer
+        required: true
+      save_0x400:
+        display_name: Troubleshooting Mode
+        description: Save troubleshooting CAN messages (0x400) for further analysis by Intelligent Energy service team.
+        type: boolean
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
 
 alerts:
   AnodeOverPressure:
