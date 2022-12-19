@@ -70,7 +70,7 @@ function get_ahu_data()
     response, err = modbus_conn:read_holdings(0, 1001-1, 1, 1000)
     if not response then
       enapter.log('Cannot make request: '..tostring(err)..' '..modbustcp.err_to_str(err), 'error')
-      if not err == 13 then
+      if err ~= 13 then
         return nil, { 'no_connection' }
       else
         return nil, nil
@@ -86,7 +86,7 @@ function get_ahu_data()
     response, err = modbus_conn:read_holdings(0, 1101-1, 1, 1000)
     if not response then
       enapter.log('Cannot make request: '..tostring(err)..' '..modbustcp.err_to_str(err), 'error')
-      if not err == 13 then
+      if err ~= 13 then
         return nil, { 'no_connection' }
       else
         return nil, nil
@@ -108,7 +108,7 @@ function get_ahu_data()
     response, err = modbus_conn:read_holdings(0, 1200-1, 2, 1000)
     if not response then
       enapter.log('Cannot make request: '..tostring(err)..' '..modbustcp.err_to_str(err), 'error')
-      if not err == 13 then
+      if err ~= 13 then
         return nil, { 'no_connection' }
       else
         return nil, nil
@@ -121,7 +121,7 @@ function get_ahu_data()
     response, err = modbus_conn:read_holdings(0, 1010-1, 2, 1000)
     if not response then
       enapter.log('Cannot make request: '..tostring(err)..' '..modbustcp.err_to_str(err), 'error')
-      if not err == 13 then
+      if err ~= 13 then
         return nil, { 'no_connection' }
       else
         return nil, nil
@@ -135,7 +135,7 @@ function get_ahu_data()
     response, err = modbus_conn:read_holdings(0, 1115-1, 2, 1000)
     if not response then
       enapter.log('Cannot make request: '..tostring(err)..' '..modbustcp.err_to_str(err), 'error')
-      if not err == 13 then
+      if err ~= 13 then
         return nil, { 'no_connection' }
       else
         return nil, nil
@@ -148,7 +148,7 @@ function get_ahu_data()
     response, err = modbus_conn:read_holdings(0, 1007-1, 3, 1000)
     if not response then
       enapter.log('Cannot make request: '..tostring(err)..' '..modbustcp.err_to_str(err), 'error')
-      if not err == 13 then
+      if err ~= 13 then
         return nil, { 'no_connection' }
       else
         return nil, nil

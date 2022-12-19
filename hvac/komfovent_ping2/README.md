@@ -2,11 +2,11 @@
 
 This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates [Komfovent](https://www.komfovent.com/en/) Air Handling Unit with rotary recuperator using PING 2 communication module with Modbus TCP. The Blueprint is running on [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm). This Blueprint allow to monitor and control your AHU over Internet in secure way using Enapter Mobile App ans Enapter Cloud.
 
-Originaly this Blueprint was developed especially for Komfovent REGO 600 with 1kW electric heater and C4 automation but should support any other compatible device and most likely direct connection with C4.1 and C5 automations..
+Originaly this Blueprint was developed especially for Komfovent REGO 600 with 1kW electric heater and C4 automation but should support any other compatible device and most likely direct connection with C4.1 and C5 automations.
 
 Please note that software is provided as is an neither Enapter or authors are responsible for any damage or risks caused by using of this software.
 
-<img src="./.assets/enapter-kmfovent-blueprint.gif" alt="Enapter App" width="25%" />
+<img src="./.assets/enapter-kmfovent-blueprint.gif" alt="Enapter App" width="75%" />
 
 Main functionality:
 

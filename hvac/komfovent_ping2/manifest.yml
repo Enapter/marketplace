@@ -159,7 +159,9 @@ commands:
         required: false
       heater_power:
         display_name: Built-in Electric Heater Max Power
-        description: Set the correct max electric heater power for your AHU, check the label on enclosure, default value is 1000 W.
+        description: |
+          Set the correct max electric heater power for your AHU, check the
+          label on enclosure, default value is 1000 W.
         type: integer
         unit: Watt
         default: 1000
@@ -185,8 +187,8 @@ commands:
         description: Switch between Summer and Winter modes
         type: string
         enum:
-          - "Winter"
-          - "Summer"
+          - Winter
+          - Summer
         required: true
       temperature:
         display_name: Air Temperature Setpoint
