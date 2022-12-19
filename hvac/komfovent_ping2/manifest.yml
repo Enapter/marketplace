@@ -1,0 +1,235 @@
+# Manifest describes the core concepts of your device: properties,
+# telemetry, alerts, and commands.
+#
+# See https://developers.enapter.com/docs/reference
+
+blueprint_spec: device/1.0
+
+display_name: Komfovent AHU Ping2
+description: |
+  This blueprint supports Komfovent Air Handling Units (AHU) with C3 Automation and Ping2 Communication Module.
+  It was tested and approved on Komfovent REGO 600 AHU with rotary recuperation system.
+icon: enapter-vent-recuperator
+author: enapter
+contributors:
+  - nkrasko
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  model:
+    type: string
+    display_name: Model
+  vendor:
+    type: string
+    display_name: Vendor
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      - Idle
+      - Home
+      - Away
+      - Forced Ventilation
+      - Smoke Remove
+  temperature:
+    type: float
+    display_name: Air Temperature
+    unit: °C
+  season:
+    type: string
+    enum:
+      - Winter
+      - Summer
+    display_name: Season
+  temperature_setpoint:
+    type: float
+    display_name: Target Air Temperature
+    unit: °C
+  recuperator:
+    type: integer
+    display_name: Recuperator Intensity
+    unit: '%'
+  heater:
+    type: integer
+    display_name: Heater Intensity
+    unit: '%'
+  heater_power:
+    type: float
+    display_name: Heater Power
+    unit: W
+  intake_fan:
+    type: integer
+    display_name: Intake Fan Rotation Speed
+    unit: '%'
+  exhaust_fan:
+    type: integer
+    display_name: Exhaust Fan Rotation Speed
+    unit: '%'
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: Ping2 IP Address Not Configured
+    description: Ping2 IP address not configured. Please set the correct address using "Main Configuration" command.
+  no_connection:
+    severity: error
+    display_name: Cannot Connect to Ping2 Modbus TCP
+    description: Cannot Connect to Ping2 Modbus TCP. Check device is running.
+  wrong_request:
+    severity: error
+    display_name: Ping2 returned invalid response.
+    description: Ping2 returned invalid response.
+  W14:
+    severity: warning
+    display_name: Service required
+    description: AHU service is required. Make visual inspection and change intake and exhaust filters.
+  W13:
+    severity: warning
+    display_name: Heater off
+    description: AHU heater is off
+  W11:
+    severity: warning
+    display_name: Rotor stopped
+    description: Rotor is stopped
+  F3:
+    severity: error
+    display_name: Rotor stopped
+    description: Rotor is stopped
+  F4:
+    severity: error
+    display_name: Heater overheating
+    description: Heater overheating. This can be caused with low airflow. Check filters and enable STB again.
+  F9:
+    severity: error
+    display_name: Supply sensor B1
+    description: Problem with supply sensor B1.
+  F19:
+    severity: error
+    display_name: Air temperature low
+    description: Air temperature is low.
+  F20:
+    severity: error
+    display_name: Air temperature high
+    description: Air temperature is high.
+  F27:
+    severity: error
+    display_name: Water temperature low
+    description: Water temperature is low.
+  F28:
+    severity: error
+    display_name: Frost possibility
+    description: Risk of ice for AHU. Chek that winter season is enabled.
+command_groups:
+  operation:
+    display_name: Operation
+  config:
+    display_name: Configuration
+  info:
+    display_name: Information
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      address:
+        display_name: Komfovent Ping2 IP Address
+        description: Hostname, e.g. 192.168.14.45.
+        type: string
+        required: true
+      model:
+        display_name: AHU Model
+        description: Shows the Model name, e.g. REGO 600 in the interfaces.
+        type: string
+        required: false
+      heater_power:
+        display_name: Built-in Electric Heater Max Power
+        description: |
+          Set the correct max electric heater power for your AHU, check the
+          label on enclosure, default value is 1000 W.
+        type: integer
+        unit: Watt
+        default: 1000
+
+  read_configuration:
+    display_name: Read Configuration
+    group: info
+    ui:
+      icon: wrench-outline
+  ahu_configuration:
+    populate_values_command: read_ahu_configuration
+    display_name: AHU Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      operation:
+        display_name: Operation
+        description: Enable or Disable AHU
+        type: boolean
+      season:
+        display_name: Season
+        description: Switch between Summer and Winter modes
+        type: string
+        enum:
+          - Winter
+          - Summer
+        required: true
+      temperature:
+        display_name: Air Temperature Setpoint
+        description: Target Air Temperature Setpoint
+        type: float
+        required: true
+        min: 0
+        max: 30
+        unit: °C
+
+  read_ahu_configuration:
+    display_name: Read AHU Configuration
+    group: info
+    ui:
+      icon: wrench-outline
+
+  away:
+    display_name: Away
+    group: operation
+    ui:
+      icon: exit-run
+      quick_access: true
+  home:
+    display_name: Home
+    group: operation
+    ui:
+      icon: home-account
+      quick_access: true
+  forced_ventilation:
+    display_name: Forced
+    group: operation
+    ui:
+      icon: fan-speed-3
+      quick_access: true
+
+.cloud:
+  mobile_charts:
+    - temperature
+    - temperature_setpoint
+    - recuperator
+    - heater
+    - heater_power
+    - intake_fan
+    - exhaust_fan
