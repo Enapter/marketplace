@@ -6,7 +6,7 @@ Originaly this Blueprint was developed especially for Komfovent REGO 600 with 1k
 
 Please note that software is provided as is an neither Enapter or authors are responsible for any damage or risks caused by using of this software.
 
-<img src="./.assets/enapter-kmfovent-blueprint.gif" alt="Enapter App" width="65%" />
+<img src="./.assets/enapter-kmfovent-blueprint.gif" alt="Enapter App" width="55%" />
 
 Main functionality:
 
