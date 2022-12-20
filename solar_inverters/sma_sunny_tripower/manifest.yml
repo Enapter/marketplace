@@ -1,7 +1,7 @@
 blueprint_spec: device/1.0
 
-display_name: SMA Sunny Boy
-description: SMA Sunny Boy solar inverter.
+display_name: SMA Sunny Tripower
+description: SMA Sunny Tripower solar inverter.
 icon: enapter-inverter-solar
 license: MIT
 author: enapter
