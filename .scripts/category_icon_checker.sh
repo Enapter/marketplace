@@ -9,7 +9,7 @@ for dir in $dirs; do
     echo "ok"
   else
     echo "failed"
-    echo "::error::icon for category ${dir} not found"
+    echo "::error::icon for category ${dir} not found, please create issue about it https://github.com/Enapter/marketplace/issues/new"
     exit 1
   fi
 done
