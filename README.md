@@ -96,3 +96,8 @@ markdownlint .
 - Typecheck in critical places (`assert(type(myvar) == 'string')`).
 
 Some more coding conventions are available in the [LuaRocks style guide](https://github.com/luarocks/lua-style-guide).
+
+## Community and Support
+
+- [Discord Channel](https://go.enapter.com/discord_handbook)
+- [Upvote & Review on Product Hunt](https://www.producthunt.com/products/enapter-energy-management-system-toolkit)
