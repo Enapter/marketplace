@@ -1,0 +1,173 @@
+blueprint_spec: device/1.0
+
+display_name: Viessman Vitobloc 200
+description: Combined heat and power unit for natural gas and LPG operation
+icon: enapter-power-supply-unit
+author: enapter
+contributors:
+  - anataty
+  - Rina-an
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: ready_for_testing
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  model:
+    display_name: Model
+    type: string
+  serial_num:
+    display_name: Serial Number
+    type: integer
+
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - Engine stopped
+      - Engine "ON"
+      - Fan "ON"
+      - Cooling pump 'ON'
+  ext_power_setpoint:
+    display_name: External power setpoint
+    type: float
+    unit: kW
+  int_power_setpoint:
+    display_name: Internal power setpoint
+    type: float
+    unit: kW
+  uptime:
+    display_name: Uptime
+    type: float
+    unit: h
+  naumber_of_launches:
+    display_name: Number of launches
+    type: int
+    unit: No. #maybe there's a better way to name this one
+  time_till_next_maintenance:
+    display_name: Time before next maintenance
+    type: float
+    unit: h
+  time_till_next_repair:
+    display_name: Time before next repair
+    type: float
+    unit: h
+  kwh_counter:
+    display_name: kwh counter
+    type: float
+    unit: kW
+  t_cooling_water_inlet:
+    display_name: Inlet cooling water temperature
+    type: float
+    unit: °C
+  t_cooling_water_outlet:
+    display_name: Outlet cooling water temperature
+    type: float
+    unit: °C
+  t_engine_oil_tank_A:
+    display_name: Engine oil temperature in tank A
+    type: float
+    unit: °C
+  t_engine_oil_tank_B:
+    display_name: Engine oil temperature in tank B
+    type: float
+    unit: °C
+  generator_temp:
+    display_name: Engine temperature
+    type: float
+    unit: °C
+  battery_voltage:
+    display_name: Battery voltage
+    type: float
+    unit: v
+  oil_pressure:
+    display_name: Oil pressure
+    type: float
+    unit: bar
+  grid_voltage_L1:
+    display_name: L1 grid voltage
+    type: float
+    unit: v
+  grid_voltage_L2:
+    display_name: L2 grid voltage
+    type: float
+    unit: v
+  grid_voltage_L3:
+    display_name: L3 grid voltage
+    type: float
+    unit: v
+  generator_voltage_L1:
+    display_name: L1 generator voltage
+    type: float
+    unit: v
+  generator_voltage_L2:
+    display_name: L2 generator voltage
+    type: float
+    unit: v
+  generator_voltage_L3:
+    display_name: L3 generator voltage
+    type: float
+    unit: v
+
+command_groups:
+  config:
+    display_name: Configuration
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      user_name:
+        display_name: User name
+        description: Your Viessmann user name
+        type: string
+        required: true
+      password:
+        display_name: Password
+        description: Password to your Viessmann account
+        type: integer
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+# yamllint disable rule:line-length
+
+# need help with figuring out how to incorporate all errors into alerts.
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read Modbus configuration from flash storage. Check logs.
+  not_configured:
+    severity: info
+    display_name: Modbus Not Configured
+    description: Use "Configure" command to set up Modbus connection.
+
+
+# yamllint enable rule:line-length
+
+.cloud:
+  category: batteries # I have no idea at all, it doesn't fit anywhere
+  mobile_main_chart: kwh_counter
+  mobile_telemetry:
+    - uptime
+    - kwh_counter
+    - battery_voltage
+    - oil_pressure
+  mobile_charts:
+    - grid_voltage_L1
+    - generator_voltage_L1
+    - generator_temp
