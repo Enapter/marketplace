@@ -15,7 +15,7 @@ This Enapter Device Blueprint integrates Viessmann Vitobloc 200 - combined heat 
 
 
 ## References
--[Viessmann Vitobloc 200 product page](https://www.viessmann.de/de/produkte.html)
+- [Viessmann Vitobloc 200 product page](https://www.viessmann.de/de/produkte.html)
 - [Viessmann Vitobloc 200 Modbus documentation, DE](https://static.viessmann.com/resources/technical_documents/DE/de/VBA/6175467VBA00001_1.pdf?#pagemode=bookmarks&zoom=page-fit&view=Fit)
 - [Viessmann Vitobloc 200 operating instructions, EN](https://cdn0.scrvt.com/2828ebc457efab95be01dd36047e3b52/2e924c09f656052b/64dffbbf7d67/Vitobloc-200-EM-9-to-20-Operating-Instructions.PDF)
 - [Viessmann API](https://documentation.viessmann.com/static/getting-started?sessionid=1)
