@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: NO Contactor Management
 description: Manages single NO contactor using ENP-RL6.
 icon: enapter-load
+vendor: enapter
 author: enapter
 contributors:
   - anataty

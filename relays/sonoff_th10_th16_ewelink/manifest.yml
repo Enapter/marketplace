@@ -8,6 +8,7 @@ blueprint_spec: device/1.0
 display_name: Sonoff TH10/TH16
 description: This Enapter Blueprint enables Sonoff TH10/TH16 Smart Switch support in Enapter Cloud via eWelink REST API.
 icon: enapter-light-switch
+vendor: sonoff
 author: enapter
 contributors:
   - nkrasko

@@ -7,6 +7,7 @@ description: >
   any combination of DC or AC sources, including 100% renewable
   generation and storage.
 icon: enapter-power-supply-unit
+vendor: kilowattlabs
 author: enapter
 contributors:
   - anataty
