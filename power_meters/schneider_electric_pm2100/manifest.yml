@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Schneider Electric PM2100 series
 description: Power & Energy Meter with RS485 interface.
 icon: enapter-power-meter
+vendor: schneider-electric
 author: enapter
 support:
   url: https://enapter.com/support

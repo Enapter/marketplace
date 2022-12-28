@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: BWT Thero 120 H2 MB
 description: Reverse osmosis cartridge system
 icon: enapter-water-filter
+vendor: bwt
 author: enapter
 contributors:
   - anataty

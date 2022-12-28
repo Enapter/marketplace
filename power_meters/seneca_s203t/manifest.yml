@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Seneca S203T
 description: 3-phase network analyzer for electric-line voltage
 icon: enapter-power-meter
+vendor: seneca
 author: enapter
 contributors:
   - anataty
