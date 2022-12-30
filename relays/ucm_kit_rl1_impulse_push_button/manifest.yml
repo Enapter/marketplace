@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Impulse Push Button for Enapter UCM Kit
 description: Manage single push button using ENP-KIT-RL1.
 icon: enapter-load
+vendor: enapter
 author: enapter
 contributors:
   - nkrasko

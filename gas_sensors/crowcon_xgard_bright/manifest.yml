@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Crowcon Xgard Bright
 description: Fixed-point gas detector with ModBus RTU over RS485
 icon: enapter-gas-sensor
+vendor: crowcon
 author: enapter
 contributors:
   - anataty

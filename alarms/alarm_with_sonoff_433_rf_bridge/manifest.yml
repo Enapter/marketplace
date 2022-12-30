@@ -5,6 +5,7 @@ description: >
   This Enapter Blueprint enables support of different alarm sensors connected to
   Sonoff 433 RF Bridge in Enapter Cloud via eWelink REST API.
 icon: alarm-light-outline
+vendor: sonoff
 author: enapter
 contributors:
   - alexandershalin

@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Hydrogenics HyPM HD 8
 description: 8 kW Fuel Cell Power Module
 icon: enapter-fuel-cell
+vendor: hydrogenics
 author: enapter
 contributors:
   - anataty

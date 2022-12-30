@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Pylontech Battery US2000 (RS485)
 description: Lithium battery
 icon: enapter-battery-storage
+vendor: pylontech
 author: enapter
 contributors:
   - anataty

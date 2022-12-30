@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Bart LAB-DM2
 description: A digital pressure gauge.
 icon: enapter-gauge
+vendor: bart
 author: enapter
 contributors:
   - anataty
