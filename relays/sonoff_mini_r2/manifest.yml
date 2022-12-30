@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Sonoff MINI R2
 description: Wi-Fi DIY Smart Switch
 icon: enapter-light-switch
+vendor: sonoff
 author: enapter
 contributors:
   - Rina-an

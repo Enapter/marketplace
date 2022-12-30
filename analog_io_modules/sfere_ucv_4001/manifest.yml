@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Sfere uCv 4001
 description: Programmable signal conditioner.
 icon: enapter-module-din-1
+vendor: ardetem-sfere
 author: enapter
 contributors:
   - anataty

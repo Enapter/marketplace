@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Control Relay for Intelligent Energy FCM 800 Series
 description: Enapter ENP-RL6 controlling Intelligent Energy FCM 800 Series fuel cell
 icon: enapter-module-din-2
+vendor: intelligent-energy
 license: MIT
 author: enapter
 support:

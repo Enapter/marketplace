@@ -8,6 +8,7 @@ blueprint_spec: device/1.0
 display_name: Sonoff 4CH
 description: This Enapter Blueprint enables Sonoff 4CH support in Enapter Cloud via eWelink REST API.
 icon: enapter-light-switch
+vendor: sonoff
 author: enapter
 contributors:
   - nkrasko

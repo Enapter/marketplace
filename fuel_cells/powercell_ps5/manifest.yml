@@ -5,6 +5,7 @@ description: >
   can monitor batteries and keep them charged at a specified voltage or
   deliver a requested power output.
 icon: enapter-fuel-cell
+vendor: powercell-group
 author: enapter
 license: MIT
 support:

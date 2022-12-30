@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Impulse Push Button
 description: Manages single push button using ENP-RL6.
 icon: enapter-load
+vendor: enapter
 author: enapter
 contributors:
   - nkrasko

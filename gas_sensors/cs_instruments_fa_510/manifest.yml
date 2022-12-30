@@ -6,6 +6,7 @@ description: >
   RS485 Modbus output enables reliable and long-term stable monitoring
   of the dew point in industrial applications.
 icon: enapter-module-din-1
+vendor: cs-instruments
 author: enapter
 contributors:
   - anataty
