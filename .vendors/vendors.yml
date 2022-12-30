@@ -132,3 +132,13 @@
   display_name: PowerCell Group
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/powercell-group.png
   website: https://powercellgroup.com
+
+- id: komfovent
+  display_name: Komfovent
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/komfovent.png
+  website: https://www.komfovent.com/en/
+
+- id: ems-esp
+  display_name: EMS-ESP
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/ems-esp.png
+  website: https://emsesp.github.io/docs/#/
