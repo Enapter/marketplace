@@ -8,6 +8,7 @@ blueprint_spec: device/1.0
 display_name: Buderus GB172i (EMS-ESP)
 description: A domestic gas boiler equipement.
 icon: enapter-gas-boiler
+vendor: ems-esp
 author: enapter
 contributors:
   - nkrasko
