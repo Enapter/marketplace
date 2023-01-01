@@ -2,6 +2,15 @@
 
 This is a collection of device blueprints for the integration of your energy devices into the [Enapter platform](https://developers.enapter.com). Once integrated, you can monitor and control your devices using the mobile app or Web dashboards. You can also automate your devices' interoperation with Lua scripting.
 
+Integrating and moniotring of energy devices is first step for building your [Energy Management System (EMS)](https://en.wikipedia.org/wiki/Energy_management_system) or creating Energy Management Plan.
+
+Energy management is the process of monitoring, controlling, and saving energy in a home or business. It is important for a number of reasons:
+
+- Cost savings: Energy management can help reduce energy consumption, which can lower energy bills.
+- Environmental impact: Reducing energy consumption can also help to reduce greenhouse gas emissions and other environmental impacts associated with energy production.
+- Reliability: Proper energy management can help ensure that a home or business has a stable and reliable energy supply.
+- Safety: Energy management can help identify and address any potential safety hazards related to energy use.
+
 Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
 
 <p align="center"><img height="300" width="auto" src=".assets/intro-light.png#gh-light-mode-only"></p>
