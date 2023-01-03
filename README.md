@@ -38,6 +38,13 @@ Regardless of the underlying hardware, UCMs provide a runtime for Lua execution 
 2. Provision your UCM to the Enapter Cloud using the mobile app or run a new virtual UCM on the Enapter Gateway.
 3. Follow one of the options below to upload a blueprint to the UCM.
 
+### Using Enapter [Mobile App](https://handbook.enapter.com/software/mobile/) and [Blueprint Marketplace](https://marketplace.enapter.com)
+
+1. Click `More` on main navigation pannel
+2. Click `Blueprint Marketplace`
+3. Find the required Blueprint and click `Install Blueprint`
+4. Select the UCM from the list and confirm
+
 ### Using [Web IDE](https://developers.enapter.com/docs/tutorial/what-you-need/#web-ide)
 
 1. Drag and drop the blueprint files into the IDE or copy and paste its contents.
