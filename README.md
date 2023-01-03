@@ -1,6 +1,6 @@
 # :blue_book: Enapter Device Blueprints
 
-This is a collection of device blueprints for the integration of your energy devices into the [Enapter platform](https://developers.enapter.com). Once integrated, you can monitor and control your devices using the mobile app or Web dashboards. You can also automate your devices' interoperation with Lua scripting.
+This is a collection of device blueprints for the integration of your energy devices into the [Enapter Cloud](https://cloud.enapter.com) platform. Once integrated, you can monitor and control your devices using the mobile app or Web dashboards. You can also automate your devices interoperation with Lua scripting.
 
 Integrating and moniotring of energy devices is first step for building your [Energy Management System (EMS)](https://en.wikipedia.org/wiki/Energy_management_system) or creating Energy Management Plan.
 
@@ -110,3 +110,4 @@ Some more coding conventions are available in the [LuaRocks style guide](https:/
 
 - [Discord Channel](https://go.enapter.com/discord_handbook)
 - [Upvote & Review on Product Hunt](https://www.producthunt.com/products/enapter-energy-management-system-toolkit)
+- [Developers Documentation](https://developers.enapter.com)
