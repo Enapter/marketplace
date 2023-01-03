@@ -1,0 +1,3 @@
+# Flow Meters
+
+Flow meters are devices that are used to measure the flow rate or volume of a liquid or gas in a pipe or other container. They are used in a wide range of applications, including industrial processes, hydrogen energy storage systems, water treatment plants, and fuel dispensing systems. Flow meters are available in a variety of sizes and configurations to meet the specific measurement needs of different applications. Some of the key factors to consider when choosing a flow meter include flow range, accuracy, durability, and compatibility with the fluid being measured. Flow meters are an essential component of many industrial and commercial systems and are used to monitor and control the flow of fluids for a variety of purposes.
