@@ -124,6 +124,6 @@ Some more coding conventions are available in the [LuaRocks style guide](https:/
 
 ## Community and Support
 
-- <a href="https://go.enapter.com/discord_handbook"><img src="https://img.shields.io/badge/Discord-Channel-%235865F2?logo=discord&style=for-the-badge&logocolor=white"></a>
-- <a href="https://developers.enapter.com"><img src="https://img.shields.io/badge/Developers%20Documentation-Documentation-%2330cccc&style=for-the-badge&logocolor=white"></a>
-- <a href="https://github.com/Enapter/marketplace/discussions"><img src="https://img.shields.io/badge/GitHub-Discussions-black?logo=github&style=for-the-badge&logocolor=white"></a>
+- <a href="https://go.enapter.com/discord_handbook"><img src="https://img.shields.io/badge/Discord-Channel-%235865F2?logo=discord&style=for-the-badge&logoColor=white"></a>
+- <a href="https://developers.enapter.com"><img src="https://img.shields.io/badge/Developers%20Documentation-Documentation-%2330cccc?logo=readthedocs&style=for-the-badge&logoColor=white"></a>
+- <a href="https://github.com/Enapter/marketplace/discussions"><img src="https://img.shields.io/badge/GitHub-Discussions-black?logo=github&style=for-the-badge&logoColor=white"></a>
