@@ -27,7 +27,7 @@ The blueprint is an entity containing all aspects pertaining to device integrati
 
 There are two types of hardware that can run your blueprint:
 
-- a physical [Enapter UCM](https://handbook.enapter.com/modules/modules.html) that implements communication through [RS-485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html), [CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html), and other standards,
+- a physical [Enapter UCM](https://handbook.enapter.com/modules/modules.html) that implements communication through [RS-485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html), [CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html), your own hardware based on [UCM Kit](https://go.enapter.com/ucmkit-enpkit) and other standards,
 - a [virtual UCM](https://handbook.enapter.com/software/software.html#💎-virtual-ucm) – a software element of the [Enapter Gateway 2.X](https://handbook.enapter.com/software/software.html#📡-enapter-gateway) (runs on an Intel-based server) that implements communication either over a local network (Ethernet) or by using a direct USB connection (serial communication).
 
 Regardless of the underlying hardware, UCMs provide a runtime for Lua execution and expose APIs for [Enapter Cloud connection](https://developers.enapter.com/docs/reference/ucm/enapter), physical connections and protocols (e.g. [6-channel relay](https://developers.enapter.com/docs/reference/ucm/rl6), [RS-485](https://developers.enapter.com/docs/reference/ucm/rs485) serial communication, [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus), [Modbus TCP](https://developers.enapter.com/docs/reference/vucm/modbustcp), etc).
