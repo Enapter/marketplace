@@ -27,7 +27,7 @@ The blueprint is an entity containing all aspects pertaining to device integrati
 
 There are two types of hardware that can run your blueprint:
 
-- a physical [Enapter UCM](https://handbook.enapter.com/modules/modules.html) that implements communication through [RS-485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html), [CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html), and other standards,
+- a physical [Enapter UCM](https://handbook.enapter.com/modules/modules.html) that implements communication through [RS-485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html), [CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html), your own hardware based on [UCM Kit](https://go.enapter.com/ucmkit-enpkit) and other standards,
 - a [virtual UCM](https://handbook.enapter.com/software/software.html#💎-virtual-ucm) – a software element of the [Enapter Gateway 2.X](https://handbook.enapter.com/software/software.html#📡-enapter-gateway) (runs on an Intel-based server) that implements communication either over a local network (Ethernet) or by using a direct USB connection (serial communication).
 
 Regardless of the underlying hardware, UCMs provide a runtime for Lua execution and expose APIs for [Enapter Cloud connection](https://developers.enapter.com/docs/reference/ucm/enapter), physical connections and protocols (e.g. [6-channel relay](https://developers.enapter.com/docs/reference/ucm/rl6), [RS-485](https://developers.enapter.com/docs/reference/ucm/rs485) serial communication, [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus), [Modbus TCP](https://developers.enapter.com/docs/reference/vucm/modbustcp), etc).
@@ -38,20 +38,20 @@ Regardless of the underlying hardware, UCMs provide a runtime for Lua execution 
 2. Provision your UCM to the Enapter Cloud using the mobile app or run a new virtual UCM on the Enapter Gateway.
 3. Follow one of the options below to upload a blueprint to the UCM.
 
-### Using Enapter [Mobile App](https://handbook.enapter.com/software/mobile/) and [Blueprint Marketplace](https://marketplace.enapter.com)
+### → Use Enapter [Mobile App](https://handbook.enapter.com/software/mobile/) and [Blueprint Marketplace](https://marketplace.enapter.com)
 
 1. Click `More` on main navigation pannel
 2. Click `Blueprint Marketplace`
 3. Find the required Blueprint and click `Install Blueprint`
 4. Select the UCM from the list and confirm
 
-### Using [Web IDE](https://developers.enapter.com/docs/tutorial/what-you-need/#web-ide)
+### → Use [Web IDE](https://developers.enapter.com/docs/tutorial/what-you-need/#web-ide)
 
 1. Drag and drop the blueprint files into the IDE or copy and paste its contents.
 2. Press "Select Device" and choose your UCM
 3. Press "Upload to" to upload the blueprint.
 
-### Using [Enapter CLI](https://developers.enapter.com/docs/tutorial/what-you-need/#command-line-interface)
+### → Use [Enapter CLI](https://developers.enapter.com/docs/tutorial/what-you-need/#command-line-interface)
 
 1. Follow the steps described in [the tutorial](https://developers.enapter.com/docs/tutorial/what-you-need/#command-line-interface) to get the CLI tool and your API access token.
 2. Switch the current directory to the desired blueprint.
@@ -62,6 +62,15 @@ After uploading the blueprint, your device data will appear on the device page i
 ## Blueprints Development
 
 We welcome any contributions when it comes to integrating new devices into the system, whether it's development efforts or testing the blueprints on your hardware.
+
+Feel free to:
+
+- 🐛 Report an issue
+- 📖 Improve documentation
+- 👨‍💻 Contribute to the code
+- 🔌 Provide remote access to your hardware
+
+Feel free to open discussion in [Discord](https://go.enapter.com/discord_handbook) or [GitHub](https://github.com/Enapter/marketplace/discussions)
 
 ### License and Authorship
 
@@ -115,6 +124,7 @@ Some more coding conventions are available in the [LuaRocks style guide](https:/
 
 ## Community and Support
 
-- [Discord Channel](https://go.enapter.com/discord_handbook)
-- [Upvote & Review on Product Hunt](https://www.producthunt.com/products/enapter-energy-management-system-toolkit)
-- [Developers Documentation](https://developers.enapter.com)
+- <a href="https://go.enapter.com/discord_handbook"><img align="center" src="https://img.shields.io/badge/Discord-Channel-%235865F2?logo=discord&style=for-the-badge&logoColor=white"></a>&nbsp; Join our Discord community!
+- <a href="https://developers.enapter.com"><img align="center" src="https://img.shields.io/badge/Developers%20Documentation-Documentation-%2330cccc?logo=readthedocs&style=for-the-badge&logoColor=white"></a>&nbsp; Take a look on our documentation.
+- <a href="https://github.com/Enapter/marketplace/discussions"><img align="center" src="https://img.shields.io/badge/GitHub-Discussions-black?logo=github&style=for-the-badge&logoColor=white"></a>&nbsp; Open thread on GitHub!
+- <a href="https://www.producthunt.com/products/enapter-energy-management-system-toolkit"><img align="center" src="https://img.shields.io/badge/Producthunt-Upvote%20↑-%23DA552F?logo=producthunt&style=for-the-badge"></a>&nbsp; Support us on ProducHunt with review and upvote!
