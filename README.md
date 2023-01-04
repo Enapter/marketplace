@@ -65,10 +65,10 @@ We welcome any contributions when it comes to integrating new devices into the s
 
 Feel free to:
 
-* 🐛 Report an issue
-* 📖 Improve documentation
-* 👨‍💻 Contribute to the code
-* 🔌 Provide remote access to your hardware
+- 🐛 Report an issue
+- 📖 Improve documentation
+- 👨‍💻 Contribute to the code
+- 🔌 Provide remote access to your hardware
 
 Feel free to open discussion in [Discord](https://go.enapter.com/discord_handbook) or [GitHub](https://github.com/Enapter/marketplace/discussions)
 
