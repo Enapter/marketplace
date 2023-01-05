@@ -4,6 +4,13 @@ Enapter [Blueprint Marketplace](htts://marketplace.enapter.com) is a collection 
 
 Integrating and monitoring of energy devices is first step for building your [Energy Management System (EMS)](https://en.wikipedia.org/wiki/Energy_management_system) or creating Energy Management Plan.
 
+
+<p align="center">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/Q4aWQHG--_c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <br>
+    <a href="https://www.youtube.com/watch?v=Oso6dYXw5lc"><strong>📺 Watch Intro Video → </strong></a>
+</p>
+
 Energy management is the process of monitoring, controlling, and saving energy in a home or business. It is important for a number of reasons:
 
 - Cost savings: Energy management can help reduce energy consumption, which can lower energy bills.
