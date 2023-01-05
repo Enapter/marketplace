@@ -6,9 +6,10 @@ Integrating and monitoring of energy devices is first step for building your [En
 
 
 <p align="center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/Q4aWQHG--_c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <br>
-    <a href="https://www.youtube.com/watch?v=Q4aWQHG--_c"><strong>📺 Watch Intro Video → </strong></a>
+   <img height="300" width="auto" src=".assets/intro-light.png#gh-light-mode-only">
+   <img height="300" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only">
+   <br>
+   <a href="https://www.youtube.com/watch?v=Q4aWQHG--_c"><strong>📺 Watch Intro Video → </strong></a>
 </p>
 
 Energy management is the process of monitoring, controlling, and saving energy in a home or business. It is important for a number of reasons:
@@ -19,9 +20,6 @@ Energy management is the process of monitoring, controlling, and saving energy i
 - Safety: Energy management can help identify and address any potential safety hazards related to energy use.
 
 Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
-
-<p align="center"><img height="300" width="auto" src=".assets/intro-light.png#gh-light-mode-only"></p>
-<p align="center"><img height="300" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only"></p>
 
 ## Quick Overview
 
