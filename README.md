@@ -4,7 +4,6 @@ Enapter [Blueprint Marketplace](htts://marketplace.enapter.com) is a collection 
 
 Integrating and monitoring of energy devices is first step for building your [Energy Management System (EMS)](https://en.wikipedia.org/wiki/Energy_management_system) or creating Energy Management Plan.
 
-
 <p align="center">
    <img height="300" width="auto" src=".assets/intro-light.png#gh-light-mode-only">
    <img height="300" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only">
