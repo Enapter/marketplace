@@ -1,8 +1,8 @@
 # :blue_book: Enapter Device Blueprints
 
-This is a collection of device blueprints for the integration of your energy devices into the [Enapter Cloud](https://cloud.enapter.com) platform. Once integrated, you can monitor and control your devices using the mobile app or Web dashboards. You can also automate your devices interoperation with Lua scripting.
+Enapter [Blueprint Marketplace](htts://marketplace.enapter.com) is a collection of device blueprints for the integration of your energy devices into the [Enapter Cloud](https://cloud.enapter.com) platform. Once integrated, you can monitor and control your devices using the mobile app or Web dashboards. You can also automate your devices interoperation with Lua scripting.
 
-Integrating and moniotring of energy devices is first step for building your [Energy Management System (EMS)](https://en.wikipedia.org/wiki/Energy_management_system) or creating Energy Management Plan.
+Integrating and monitoring of energy devices is first step for building your [Energy Management System (EMS)](https://en.wikipedia.org/wiki/Energy_management_system) or creating Energy Management Plan.
 
 Energy management is the process of monitoring, controlling, and saving energy in a home or business. It is important for a number of reasons:
 
