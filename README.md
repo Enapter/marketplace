@@ -1,3 +1,10 @@
+<div align="center">
+  <img src=".assets/blueprint-marketplace-logo-256.webp" alt="Enapter Blueprint Marketplace">
+  <h1>Welcome to the Enapter Blueprint Marketplace repository</h1>
+  <strong>Integrate your energy device with Enapter Cloud using ready-to-upload blueprints.</strong>
+</div>
+<br>
+
 # :blue_book: Enapter Device Blueprints
 
 Enapter [Blueprint Marketplace](htts://marketplace.enapter.com) is a collection of device blueprints for the integration of your energy devices into the [Enapter Cloud](https://cloud.enapter.com) platform. Once integrated, you can monitor and control your devices using the mobile app or Web dashboards. You can also automate your devices interoperation with Lua scripting.
