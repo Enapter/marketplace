@@ -1,7 +1,7 @@
 <div align="center">
   <a href="https://marketplace.enapter.com"><img src=".assets/blueprint-marketplace-logo-256.webp" alt="Enapter Blueprint Marketplace"></a>
   <h1>Welcome to the Enapter Blueprint Marketplace repository</h1>
-  <strong>Integrate your energy device with Enapter Cloud using ready-to-upload blueprints.</strong>
+  <strong>Integrate your energy device with Enapter Cloud using ready-to-upload open-source blueprints.</strong>
 </div>
 <br>
 
