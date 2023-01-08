@@ -15,3 +15,6 @@ MD033: false
 
 # Sometimes emphasis can be used instead of a heading
 MD036: false
+
+# We can have HTML-based headers
+MD041: false
