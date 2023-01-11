@@ -71,6 +71,8 @@ After uploading the blueprint, your device data will appear on the device page i
 
 ## Blueprints Development
 
+[Contributing](./CONTRIBUTING.md)
+
 We welcome any contributions when it comes to integrating new devices into the system, whether it's development efforts or testing the blueprints on your hardware.
 
 Feel free to:

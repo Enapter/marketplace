@@ -1,5 +1,17 @@
 # :construction: Contributing to Enapter Device Blueprints
 
+We welcome any contributions when it comes to integrating new devices into the system, whether it's development efforts or testing the blueprints on your hardware.
+
+Feel free to:
+
+- 🐛 Report an issue
+- 📖 Improve documentation
+- 👨‍💻 Contribute to the code
+- 🔌 Provide remote access to your hardware
+- 🎥 Create review or tutorial video on Youtube
+
+Feel free to open discussion in [Discord](https://go.enapter.com/discord_handbook) or [GitHub](https://github.com/Enapter/marketplace/discussions)
+
 Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
 
 ## Quick Overview
@@ -44,19 +56,6 @@ Regardless of the underlying hardware, UCMs provide a runtime for Lua execution 
 3. Execute the command `enapter-cli devices upload --hardware-id UCMID --blueprint-dir .`. Substitute `UCMID` with your UCM ID.
 
 After uploading the blueprint, your device data will appear on the device page in the Enapter Cloud and the mobile application.
-
-## Blueprints Development
-
-We welcome any contributions when it comes to integrating new devices into the system, whether it's development efforts or testing the blueprints on your hardware.
-
-Feel free to:
-
-- 🐛 Report an issue
-- 📖 Improve documentation
-- 👨‍💻 Contribute to the code
-- 🔌 Provide remote access to your hardware
-
-Feel free to open discussion in [Discord](https://go.enapter.com/discord_handbook) or [GitHub](https://github.com/Enapter/marketplace/discussions)
 
 ### License and Authorship
 
