@@ -1,28 +1,4 @@
-<div align="center">
-  <a href="https://marketplace.enapter.com"><img src=".assets/blueprint-marketplace-logo-256.webp" alt="Enapter Blueprint Marketplace"></a>
-  <h1>Welcome to the Enapter Blueprint Marketplace repository</h1>
-  <strong>Integrate your energy device with Enapter Cloud using ready-to-upload open-source blueprints.</strong>
-</div>
-<br>
-
-# :blue_book: Enapter Device Blueprints
-
-Enapter [Blueprint Marketplace](htts://marketplace.enapter.com) is a collection of device blueprints for the integration of your energy devices into the [Enapter Cloud](https://cloud.enapter.com) platform. Once integrated, you can monitor and control your devices using the mobile app or Web dashboards. You can also automate your devices interoperation with Lua scripting.
-
-Integrating and monitoring of energy devices is first step for building your [Energy Management System (EMS)](https://en.wikipedia.org/wiki/Energy_management_system) or creating Energy Management Plan.
-
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=1ErvFE6UHTY"><img height="300" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only"></a>
-  <br>
-  <a href="https://www.youtube.com/watch?v=1ErvFE6UHTY"><strong>📺 Watch Intro Video → </strong></a>
-</p>
-
-Energy management is the process of monitoring, controlling, and saving energy in a home or business. It is important for a number of reasons:
-
-- Cost savings: Energy management can help reduce energy consumption, which can lower energy bills.
-- Environmental impact: Reducing energy consumption can also help to reduce greenhouse gas emissions and other environmental impacts associated with energy production.
-- Reliability: Proper energy management can help ensure that a home or business has a stable and reliable energy supply.
-- Safety: Energy management can help identify and address any potential safety hazards related to energy use.
+# :construction: Contributing to Enapter Device Blueprints
 
 Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
 
