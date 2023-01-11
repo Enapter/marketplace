@@ -69,20 +69,9 @@ Regardless of the underlying hardware, UCMs provide a runtime for Lua execution 
 
 After uploading the blueprint, your device data will appear on the device page in the Enapter Cloud and the mobile application.
 
-## Blueprints Development
+## Blueprints Development & Contributing
 
-[Contributing](./CONTRIBUTING.md)
-
-We welcome any contributions when it comes to integrating new devices into the system, whether it's development efforts or testing the blueprints on your hardware.
-
-Feel free to:
-
-- 🐛 Report an issue
-- 📖 Improve documentation
-- 👨‍💻 Contribute to the code
-- 🔌 Provide remote access to your hardware
-
-Feel free to open discussion in [Discord](https://go.enapter.com/discord_handbook) or [GitHub](https://github.com/Enapter/marketplace/discussions)
+Take a look at our [Contributing](./CONTRIBUTING.md) guideline.
 
 ### License and Authorship
 
