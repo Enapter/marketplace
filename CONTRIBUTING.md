@@ -1,28 +1,16 @@
-<div align="center">
-  <a href="https://marketplace.enapter.com"><img src=".assets/blueprint-marketplace-logo-256.webp" alt="Enapter Blueprint Marketplace"></a>
-  <h1>Welcome to the Enapter Blueprint Marketplace repository</h1>
-  <strong>Integrate your energy device with Enapter Cloud using ready-to-upload open-source blueprints.</strong>
-</div>
-<br>
+# :construction: Contributing to Enapter Device Blueprints
 
-# :blue_book: Enapter Device Blueprints
+We welcome any contributions when it comes to integrating new devices into the system, whether it's development efforts or testing the blueprints on your hardware.
 
-Enapter [Blueprint Marketplace](htts://marketplace.enapter.com) is a collection of device blueprints for the integration of your energy devices into the [Enapter Cloud](https://cloud.enapter.com) platform. Once integrated, you can monitor and control your devices using the mobile app or Web dashboards. You can also automate your devices interoperation with Lua scripting.
+Feel free to:
 
-Integrating and monitoring of energy devices is first step for building your [Energy Management System (EMS)](https://en.wikipedia.org/wiki/Energy_management_system) or creating Energy Management Plan.
+- 🐛 Report an issue
+- 📖 Improve documentation
+- 👨‍💻 Contribute to the code
+- 🔌 Provide remote access to your hardware
+- 🎥 Create review or tutorial video on Youtube
 
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=1ErvFE6UHTY"><img height="300" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only"></a>
-  <br>
-  <a href="https://www.youtube.com/watch?v=1ErvFE6UHTY"><strong>📺 Watch Intro Video → </strong></a>
-</p>
-
-Energy management is the process of monitoring, controlling, and saving energy in a home or business. It is important for a number of reasons:
-
-- Cost savings: Energy management can help reduce energy consumption, which can lower energy bills.
-- Environmental impact: Reducing energy consumption can also help to reduce greenhouse gas emissions and other environmental impacts associated with energy production.
-- Reliability: Proper energy management can help ensure that a home or business has a stable and reliable energy supply.
-- Safety: Energy management can help identify and address any potential safety hazards related to energy use.
+Feel free to open discussion in [Discord](https://go.enapter.com/discord_handbook) or [GitHub](https://github.com/Enapter/marketplace/discussions)
 
 Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
 
@@ -68,10 +56,6 @@ Regardless of the underlying hardware, UCMs provide a runtime for Lua execution 
 3. Execute the command `enapter-cli devices upload --hardware-id UCMID --blueprint-dir .`. Substitute `UCMID` with your UCM ID.
 
 After uploading the blueprint, your device data will appear on the device page in the Enapter Cloud and the mobile application.
-
-## Blueprints Development & Contributing
-
-Take a look at our [Contributing](./CONTRIBUTING.md) guideline.
 
 ### License and Authorship
 
