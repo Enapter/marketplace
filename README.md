@@ -1,3 +1,10 @@
+<div align="center">
+  <a href="https://marketplace.enapter.com"><img src=".assets/blueprint-marketplace-logo-256.webp" alt="Enapter Blueprint Marketplace"></a>
+  <h1>Welcome to the Enapter Blueprint Marketplace repository</h1>
+  <strong>Integrate your energy device with Enapter Cloud using ready-to-upload open-source blueprints.</strong>
+</div>
+<br>
+
 # :blue_book: Enapter Device Blueprints
 
 Enapter [Blueprint Marketplace](htts://marketplace.enapter.com) is a collection of device blueprints for the integration of your energy devices into the [Enapter Cloud](https://cloud.enapter.com) platform. Once integrated, you can monitor and control your devices using the mobile app or Web dashboards. You can also automate your devices interoperation with Lua scripting.
@@ -5,8 +12,7 @@ Enapter [Blueprint Marketplace](htts://marketplace.enapter.com) is a collection 
 Integrating and monitoring of energy devices is first step for building your [Energy Management System (EMS)](https://en.wikipedia.org/wiki/Energy_management_system) or creating Energy Management Plan.
 
 <p align="center">
-  <img height="300" width="auto" src=".assets/intro-light.png#gh-light-mode-only">
-  <img height="300" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only">
+  <a href="https://www.youtube.com/watch?v=Q4aWQHG--_c"><img height="300" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only"></a>
   <br>
   <a href="https://www.youtube.com/watch?v=D_Ge3SkdIZw"><strong>📺 Watch Intro Video → </strong></a>
 </p>
