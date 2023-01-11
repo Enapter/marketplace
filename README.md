@@ -8,7 +8,7 @@ Integrating and monitoring of energy devices is first step for building your [En
   <img height="300" width="auto" src=".assets/intro-light.png#gh-light-mode-only">
   <img height="300" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only">
   <br>
-  <a href="https://www.youtube.com/watch?v=Q4aWQHG--_c"><strong>📺 Watch Intro Video → </strong></a>
+  <a href="https://www.youtube.com/watch?v=D_Ge3SkdIZw"><strong>📺 Watch Intro Video → </strong></a>
 </p>
 
 Energy management is the process of monitoring, controlling, and saving energy in a home or business. It is important for a number of reasons:
