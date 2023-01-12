@@ -14,11 +14,11 @@ Feel free to open discussion in [Discord](https://go.enapter.com/discord_handboo
 
 Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
 
-### Note About Dot-Fields
+## Note About Dot-Fields
 
 `manifest.yml` is validated against [the specification](https://cloud.enapter.com/schemas/json-schemas/blueprints/device/v1/schema.json), although not every aspect of the manifest is ready to be fixed in the specification. Some in-progress features are backed by YAML fields that start with a dot (e.g. `.cloud`). These fields are not documented and ignored in the manifest validation. When the feature is ready, the field will be moved into the main manifest body, and the blueprints will be updated.
 
-### Writing Blueprint README
+## Writing Blueprint README
 
 Please follow this simple checklist for every blueprint README file:
 
@@ -30,7 +30,7 @@ Please follow this simple checklist for every blueprint README file:
 - Device pictures and vendor logos are always welcome, but we ask you to respect the author of said pictures and to follow copyright and licencing guidelines.
 - References should be given to the device vendor page, manual, API documentation, etc.
 
-### Linters
+## Linters
 
 Blueprint files are validated using [`yamllint`](https://yamllint.readthedocs.io/en/stable/) and [`luacheck`](https://luacheck.readthedocs.io/en/stable/) linters. The configuration can be found in `.yamllint.yml` and `.luacheckrc` files respectively.
 
@@ -42,7 +42,7 @@ yamllint .
 markdownlint .
 ```
 
-### Lua Codestyle
+## Lua Codestyle
 
 - Document with [LDoc](https://stevedonovan.github.io/ldoc/).
 - Use 2 spaces for indentation.
@@ -65,8 +65,7 @@ Some more coding conventions are available in the [LuaRocks style guide](https:/
 - <a href="https://github.com/Enapter/marketplace/discussions"><img align="center" src="https://img.shields.io/badge/GitHub-Discussions-black?logo=github&style=for-the-badge&logoColor=white"></a>&nbsp; Open thread on GitHub!
 - <a href="https://www.producthunt.com/products/enapter-energy-management-system-toolkit"><img align="center" src="https://img.shields.io/badge/Producthunt-Upvote%20↑-%23DA552F?logo=producthunt&style=for-the-badge"></a>&nbsp; Support us on ProducHunt with review and upvote!
 
-
-### License and Authorship
+## License and Authorship
 
 Blueprints in the marketplace should be licensed under the MIT license. Please add [`license: MIT`](https://developers.enapter.com/docs/reference/#license) in your `manifest.yml`.
 
