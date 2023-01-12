@@ -14,60 +14,11 @@ Feel free to open discussion in [Discord](https://go.enapter.com/discord_handboo
 
 Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
 
-## Quick Overview
-
-Top-level directories represent energy and industrial device types. Each directory contains a number of blueprints for specific device models.
-
-The blueprint is an entity containing all aspects pertaining to device integration. It consists of two files:
-
-- [`manifest.yml`](https://developers.enapter.com/docs/reference) describes your device interfaces (telemetry it sends, commands it executes, alerts it raises);
-- `firmware.lua` implements these interfaces for the specific piece of hardware using the [Lua](https://www.lua.org) programming language and high-level platform APIs.
-
-There are two types of hardware that can run your blueprint:
-
-- a physical [Enapter UCM](https://handbook.enapter.com/modules/modules.html) that implements communication through [RS-485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html), [CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html), your own hardware based on [UCM Kit](https://go.enapter.com/ucmkit-enpkit) and other standards,
-- a [virtual UCM](https://handbook.enapter.com/software/software.html#💎-virtual-ucm) – a software element of the [Enapter Gateway 2.X](https://handbook.enapter.com/software/gateway_software/) (runs on an Intel-based server) that implements communication either over a local network (Ethernet) or by using a direct USB connection (serial communication).
-
-Regardless of the underlying hardware, UCMs provide a runtime for Lua execution and expose APIs for [Enapter Cloud connection](https://developers.enapter.com/docs/reference/ucm/enapter), physical connections and protocols (e.g. [6-channel relay](https://developers.enapter.com/docs/reference/ucm/rl6), [RS-485](https://developers.enapter.com/docs/reference/ucm/rs485) serial communication, [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus), [Modbus TCP](https://developers.enapter.com/docs/reference/vucm/modbustcp), etc).
-
-## How To Use These Blueprints
-
-1. Select a UCM suitable for communicating with your target device.
-2. Provision your UCM to the Enapter Cloud using the mobile app or run a new virtual UCM on the Enapter Gateway.
-3. Follow one of the options below to upload a blueprint to the UCM.
-
-### → Use Enapter [Mobile App](https://handbook.enapter.com/software/mobile/) and [Blueprint Marketplace](https://marketplace.enapter.com)
-
-1. Click `More` on main navigation pannel
-2. Click `Blueprint Marketplace`
-3. Find the required Blueprint and click `Install Blueprint`
-4. Select the UCM from the list and confirm
-
-### → Use [Web IDE](https://developers.enapter.com/docs/tutorial/what-you-need/#web-ide)
-
-1. Drag and drop the blueprint files into the IDE or copy and paste its contents.
-2. Press "Select Device" and choose your UCM
-3. Press "Upload to" to upload the blueprint.
-
-### → Use [Enapter CLI](https://developers.enapter.com/docs/tutorial/what-you-need/#command-line-interface)
-
-1. Follow the steps described in [the tutorial](https://developers.enapter.com/docs/tutorial/what-you-need/#command-line-interface) to get the CLI tool and your API access token.
-2. Switch the current directory to the desired blueprint.
-3. Execute the command `enapter-cli devices upload --hardware-id UCMID --blueprint-dir .`. Substitute `UCMID` with your UCM ID.
-
-After uploading the blueprint, your device data will appear on the device page in the Enapter Cloud and the mobile application.
-
-### License and Authorship
-
-Blueprints in the marketplace should be licensed under the MIT license. Please add [`license: MIT`](https://developers.enapter.com/docs/reference/#license) in your `manifest.yml`.
-
-Also you can specify authorship and support information via [`author`](https://developers.enapter.com/docs/reference/#author), [`contributors`](https://developers.enapter.com/docs/reference/#contributors) and [`support`](https://developers.enapter.com/docs/reference/#support) fields.
-
-### Note About Dot-Fields
+## Note About Dot-Fields
 
 `manifest.yml` is validated against [the specification](https://cloud.enapter.com/schemas/json-schemas/blueprints/device/v1/schema.json), although not every aspect of the manifest is ready to be fixed in the specification. Some in-progress features are backed by YAML fields that start with a dot (e.g. `.cloud`). These fields are not documented and ignored in the manifest validation. When the feature is ready, the field will be moved into the main manifest body, and the blueprints will be updated.
 
-### Writing Blueprint README
+## Writing Blueprint README
 
 Please follow this simple checklist for every blueprint README file:
 
@@ -79,7 +30,7 @@ Please follow this simple checklist for every blueprint README file:
 - Device pictures and vendor logos are always welcome, but we ask you to respect the author of said pictures and to follow copyright and licencing guidelines.
 - References should be given to the device vendor page, manual, API documentation, etc.
 
-### Linters
+## Linters
 
 Blueprint files are validated using [`yamllint`](https://yamllint.readthedocs.io/en/stable/) and [`luacheck`](https://luacheck.readthedocs.io/en/stable/) linters. The configuration can be found in `.yamllint.yml` and `.luacheckrc` files respectively.
 
@@ -91,7 +42,7 @@ yamllint .
 markdownlint .
 ```
 
-### Lua Codestyle
+## Lua Codestyle
 
 - Document with [LDoc](https://stevedonovan.github.io/ldoc/).
 - Use 2 spaces for indentation.
@@ -113,3 +64,9 @@ Some more coding conventions are available in the [LuaRocks style guide](https:/
 - <a href="https://developers.enapter.com"><img align="center" src="https://img.shields.io/badge/Developers%20Documentation-Documentation-%2330cccc?logo=readthedocs&style=for-the-badge&logoColor=white"></a>&nbsp; Take a look on our documentation.
 - <a href="https://github.com/Enapter/marketplace/discussions"><img align="center" src="https://img.shields.io/badge/GitHub-Discussions-black?logo=github&style=for-the-badge&logoColor=white"></a>&nbsp; Open thread on GitHub!
 - <a href="https://www.producthunt.com/products/enapter-energy-management-system-toolkit"><img align="center" src="https://img.shields.io/badge/Producthunt-Upvote%20↑-%23DA552F?logo=producthunt&style=for-the-badge"></a>&nbsp; Support us on ProducHunt with review and upvote!
+
+## License and Authorship
+
+Blueprints in the marketplace should be licensed under the MIT license. Please add [`license: MIT`](https://developers.enapter.com/docs/reference/#license) in your `manifest.yml`.
+
+Also you can specify authorship and support information via [`author`](https://developers.enapter.com/docs/reference/#author), [`contributors`](https://developers.enapter.com/docs/reference/#contributors) and [`support`](https://developers.enapter.com/docs/reference/#support) fields.
