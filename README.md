@@ -1,6 +1,5 @@
 <img height="auto" width="auto" src=".assets/blueprint-marketplace-dark.png#gh-dark-mode-only" style="max-width: 100%;" alt="enapter blueprint marketplace">
 <img height="auto" width="auto" src=".assets/blueprint-marketplace-light.png#gh-light-mode-only" style="max-width: 100%;" alt="enapter blueprint marketplace">
-<br>
 
 # :blue_book: What is Enapter Blueprint?
 
@@ -8,14 +7,16 @@ Enapter Blueprints is a technology that allows to integrate any device into the 
 
 In [Blueprint Marketplace](htts://marketplace.enapter.com) repository we collect already developed Blueprints for most common energy devices as solar inverters, batteries, relays and [others](https://marketplace.enapter.com/blueprints/all.) You can develop Blueprint for your own device and add it into Marketplace easily.
 
+<img height="auto" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only" style="max-width: 100%;" alt="blueprinted devices in the mobile app">
+<img height="auto" width="auto" src=".assets/intro-light.png#gh-light-mode-only" style="max-width: 100%;" alt="blueprinted devices in the mobile app">
+<p align="center">
+<a href="https://www.youtube.com/watch?v=1ErvFE6UHTY"><strong>📺 Watch Intro Video → </strong></a>
+</p>
+<br>
+
 ## Benefits of Integration
 
 Integrating and monitoring of energy devices is first step for building your [Energy Management System (EMS)](https://en.wikipedia.org/wiki/Energy_management_system) or creating Energy Management Plan.
-
-<img height="auto" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only" style="max-width: 100%;" alt="blueprinted devices in the mobile app">
-<img height="auto" width="auto" src=".assets/intro-light.png#gh-light-mode-only" style="max-width: 100%;" alt="blueprinted devices in the mobile app">
-<br>
-<a href="https://www.youtube.com/watch?v=1ErvFE6UHTY"><strong>📺 Watch Intro Video → </strong></a>
 
 Energy management is the process of monitoring, controlling, and saving energy in a home or business. It is important for a number of reasons:
 
