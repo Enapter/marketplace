@@ -8,9 +8,8 @@ Enapter Blueprints is a technology that allows to integrate any device into the 
 In [Blueprint Marketplace](htts://marketplace.enapter.com) repository we collect already developed Blueprints for most common energy devices as solar inverters, batteries, relays and [others](https://marketplace.enapter.com/blueprints/all). You can develop Blueprint for your own device and add it into Marketplace easily.
 
 <p align="center">
-<a target="_blank" href="https://www.youtube.com/watch?v=1ErvFE6UHTY">
-  <img height="auto" width="auto" src=".assets/blueprint-video-light.png#gh-light-mode-only" style="max-width: 100%;" alt="video about blueprints">
-  <br>
+<a href="https://www.youtube.com/watch?v=1ErvFE6UHTY">
+  <img height="auto" width="auto" src=".assets/blueprint-video.png" style="max-width: 100%;" alt="video about blueprints">
   <strong>📺 Watch Intro Video → </strong></a>
 </p>
 <br>
