@@ -5,12 +5,13 @@
 
 Enapter Blueprints is a technology that allows to integrate any device into the Enapter platform. Once integrated, you can monitor and control your devices as a system using the Enapter Mobile App or web dashboards. You can also automate your devices interoperation with Lua scripting.
 
-In [Blueprint Marketplace](htts://marketplace.enapter.com) repository we collect already developed Blueprints for most common energy devices as solar inverters, batteries, relays and [others](https://marketplace.enapter.com/blueprints/all.) You can develop Blueprint for your own device and add it into Marketplace easily.
+In [Blueprint Marketplace](htts://marketplace.enapter.com) repository we collect already developed Blueprints for most common energy devices as solar inverters, batteries, relays and [others](https://marketplace.enapter.com/blueprints/all). You can develop Blueprint for your own device and add it into Marketplace easily.
 
-<img height="auto" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only" style="max-width: 100%;" alt="blueprinted devices in the mobile app">
-<img height="auto" width="auto" src=".assets/intro-light.png#gh-light-mode-only" style="max-width: 100%;" alt="blueprinted devices in the mobile app">
 <p align="center">
-<a href="https://www.youtube.com/watch?v=1ErvFE6UHTY"><strong>📺 Watch Intro Video → </strong></a>
+<a target="_blank" href="https://www.youtube.com/watch?v=1ErvFE6UHTY">
+  <img height="auto" width="auto" src=".assets/blueprint-video-light.png#gh-light-mode-only" style="max-width: 100%;" alt="video about blueprints">
+  <br>
+  <strong>📺 Watch Intro Video → </strong></a>
 </p>
 <br>
 
@@ -55,6 +56,9 @@ Regardless of the underlying hardware, UCMs provide a runtime for Lua execution 
 2. Click `Blueprint Marketplace`
 3. Find the required Blueprint and click `Install Blueprint`
 4. Select the UCM from the list and confirm
+
+<img height="auto" width="auto" src=".assets/intro-light.png#gh-light-mode-only" style="max-width: 100%;" alt="blueprinted devices in the enapter app">
+<img height="auto" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only" style="max-width: 100%;" alt="blueprinted devices in the enapter app">
 
 ## → Use [Web IDE](https://developers.enapter.com/docs/tutorial/what-you-need/#web-ide)
 
