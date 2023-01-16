@@ -15,6 +15,8 @@ It describes which charts will be shown on a dashboard on mobile app or web, whi
 
 [Blueprint Marketplace](htts://marketplace.enapter.com) is a collection of already developed Blueprints for most common energy devices as solar inverters, batteries, relays and [others](https://marketplace.enapter.com/blueprints/all). You are welcome to contribute into Enapter Blueprint Marketplace with your devices integrations.
 
+Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
+<br>
 <p align="center">
 <a href="https://www.youtube.com/watch?v=1ErvFE6UHTY">
   <img height="auto" width="auto" src=".assets/blueprint-video.png" style="max-width: 100%;" alt="video about blueprints">
@@ -32,8 +34,6 @@ Energy management is the process of monitoring, controlling, and saving energy i
 - Environmental impact: Reducing energy consumption can also help to reduce greenhouse gas emissions and other environmental impacts associated with energy production.
 - Reliability: Proper energy management can help ensure that a home or business has a stable and reliable energy supply.
 - Safety: Energy management can help identify and address any potential safety hazards related to energy use.
-
-Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
 
 # Blueprint Marketplace Repository Overview
 
