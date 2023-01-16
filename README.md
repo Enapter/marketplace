@@ -6,6 +6,7 @@
 Enapter Blueprints is a technology that allows integration of various devices (electrolysers, power meters, inverters, batteries, sensors, etc.) into the Enapter Cloud platform with Lua scripts.
 
 Blueprint technology uses a simple and unified device model that consists of:
+
 - properties,
 - telemetry,
 - commands,
