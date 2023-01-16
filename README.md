@@ -3,9 +3,17 @@
 
 # :blue_book: What is Enapter Blueprint?
 
-Enapter Blueprints is a technology that allows to integrate any device into the Enapter platform. Once integrated, you can monitor and control your devices as a system using the Enapter Mobile App or web dashboards. You can also automate your devices interoperation with Lua scripting.
+Enapter Blueprints is a technology that allows integration of various devices (electrolysers, power meters, inverters, batteries, sensors, etc.) into the Enapter Cloud platform with Lua scripts.
 
-In [Blueprint Marketplace](htts://marketplace.enapter.com) repository we collect already developed Blueprints for most common energy devices as solar inverters, batteries, relays and [others](https://marketplace.enapter.com/blueprints/all). You can develop Blueprint for your own device and add it into Marketplace easily.
+Blueprint technology uses a simple and unified device model that consists of:
+- properties,
+- telemetry,
+- commands,
+- alerts.
+
+It describes which charts will be shown on a dashboard on mobile app or web, which commands can be executed, when to notify you about device alerts, etc. Using this model Enapter platform understands the capabilities of the device and how it can interact with other parts of an energy system.
+
+[Blueprint Marketplace](htts://marketplace.enapter.com) is a collection of already developed Blueprints for most common energy devices as solar inverters, batteries, relays and [others](https://marketplace.enapter.com/blueprints/all). You are welcome to contribute into Enapter Blueprint Marketplace with your devices integrations.
 
 <p align="center">
 <a href="https://www.youtube.com/watch?v=1ErvFE6UHTY">
@@ -39,31 +47,32 @@ The blueprint is an entity containing all aspects pertaining to device integrati
 There are two types of hardware that can run your blueprint:
 
 - a physical [Enapter UCM](https://handbook.enapter.com/modules/modules.html) that implements communication through [RS-485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html), [CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html), your own hardware based on [UCM Kit](https://go.enapter.com/ucmkit-enpkit) and other standards,
-- a [virtual UCM](https://handbook.enapter.com/software/software.html#💎-virtual-ucm) – a software element of the [Enapter Gateway 2.X](https://handbook.enapter.com/software/gateway_software/) (runs on an Intel-based server) that implements communication either over a local network (Ethernet) or by using a direct USB connection (serial communication).
+- a [virtual UCM](https://handbook.enapter.com/software/software.html#💎-virtual-ucm) – a software element of the [Enapter f 2.X](https://handbook.enapter.com/software/gateway_software/) (runs on an Intel-based server) that implements communication either over a local network (Ethernet) or by using a direct USB connection (serial communication).
 
 Regardless of the underlying hardware, UCMs provide a runtime for Lua execution and expose APIs for [Enapter Cloud connection](https://developers.enapter.com/docs/reference/ucm/enapter), physical connections and protocols (e.g. [6-channel relay](https://developers.enapter.com/docs/reference/ucm/rl6), [RS-485](https://developers.enapter.com/docs/reference/ucm/rs485) serial communication, [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus), [Modbus TCP](https://developers.enapter.com/docs/reference/vucm/modbustcp), etc).
 
 # How To Use These Blueprints
 
-1. Select a UCM suitable for communicating with your target device.
+1. Select a hardware (UCM or gateway) suitable for communicating with your target device.
 2. Provision your UCM to the Enapter Cloud using the mobile app or run a new virtual UCM on the Enapter Gateway.
 3. Follow one of the options below to upload a blueprint to the UCM.
 
 ## → Use Enapter [Mobile App](https://handbook.enapter.com/software/mobile/) and [Blueprint Marketplace](https://marketplace.enapter.com)
 
-1. Click `More` on main navigation pannel
-2. Click `Blueprint Marketplace`
-3. Find the required Blueprint and click `Install Blueprint`
-4. Select the UCM from the list and confirm
+1. Click `More` on main navigation pannel.
+2. Click `Blueprint Marketplace`.
+3. Find the required Blueprint and click `Install Blueprint`.
+4. Select the UCM from the list and confirm.
 
 <img height="auto" width="auto" src=".assets/intro-light.png#gh-light-mode-only" style="max-width: 100%;" alt="blueprinted devices in the enapter app">
 <img height="auto" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only" style="max-width: 100%;" alt="blueprinted devices in the enapter app">
 
 ## → Use [Web IDE](https://developers.enapter.com/docs/tutorial/what-you-need/#web-ide)
 
-1. Drag and drop the blueprint files into the IDE or copy and paste its contents.
-2. Press "Select Device" and choose your UCM
-3. Press "Upload to" to upload the blueprint.
+1. Open Blueprint tab in the Enapter Cloud.
+2. Drag and drop the blueprint files into the IDE or copy and paste its contents.
+3. Press "Select Device" and choose your UCM.
+4. Press "Upload to" to upload the blueprint.
 
 ## → Use [Enapter CLI](https://developers.enapter.com/docs/tutorial/what-you-need/#command-line-interface)
 
@@ -83,9 +92,3 @@ Take a look at our [Contributing](./CONTRIBUTING.md) guideline.
 - <a href="https://developers.enapter.com"><img align="center" src="https://img.shields.io/badge/Developers%20Documentation-Documentation-%2330cccc?logo=readthedocs&style=for-the-badge&logoColor=white"></a>&nbsp; Take a look on our documentation.
 - <a href="https://github.com/Enapter/marketplace/discussions"><img align="center" src="https://img.shields.io/badge/GitHub-Discussions-black?logo=github&style=for-the-badge&logoColor=white"></a>&nbsp; Open thread on GitHub!
 - <a href="https://www.producthunt.com/products/enapter-energy-management-system-toolkit/reviews/new"><img align="center" src="https://img.shields.io/badge/Producthunt-Review%20↑-%23DA552F?logo=producthunt&style=for-the-badge"></a>&nbsp; Support us on ProducHunt with review.
-
-# License and Authorship
-
-Blueprints in the marketplace should be licensed under the MIT license. Please add [`license: MIT`](https://developers.enapter.com/docs/reference/#license) in your `manifest.yml`.
-
-Also you can specify authorship and support information via [`author`](https://developers.enapter.com/docs/reference/#author), [`contributors`](https://developers.enapter.com/docs/reference/#contributors) and [`support`](https://developers.enapter.com/docs/reference/#support) fields.
