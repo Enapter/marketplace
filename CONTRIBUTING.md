@@ -32,7 +32,13 @@ Please follow this simple checklist for every blueprint README file:
 
 ## Linters
 
-Blueprint files are validated using [`yamllint`](https://yamllint.readthedocs.io/en/stable/) and [`luacheck`](https://luacheck.readthedocs.io/en/stable/) linters. The configuration can be found in `.yamllint.yml` and `.luacheckrc` files respectively.
+Blueprint files are validated using several linters:
+
+- [`yamllint`](https://yamllint.readthedocs.io/en/stable/)
+- [`luacheck`](https://luacheck.readthedocs.io/en/stable/)
+- [`markdownlint`](https://github.com/igorshubovych/markdownlint-cli#readme)
+
+The configuration can be found in `.yamllint.yml`, `.luacheckrc` and `..markdownlint.yml` files respectively.
 
 Run the linters locally before creating a pull request:
 
