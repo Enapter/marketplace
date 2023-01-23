@@ -31,10 +31,11 @@ telemetry:
     display_name: Status
     type: string
     enum:
-      - Engine stopped
-      - Engine "ON"
-      - Fan "ON"
-      - Cooling pump 'ON'
+      - 'Off'
+      - Ready
+      - Start
+      - Operation
+      - Error
   ext_power_setpoint:
     display_name: External power setpoint
     type: float
@@ -50,7 +51,7 @@ telemetry:
   naumber_of_launches:
     display_name: Number of launches
     type: int
-    unit: No. #maybe there's a better way to name this one
+    unit: Number
   time_till_next_maintenance:
     display_name: Time before next maintenance
     type: float
@@ -127,14 +128,14 @@ commands:
     ui:
       icon: wrench-outline
     arguments:
-      user_name:
-        display_name: User name
-        description: Your Viessmann user name
+      address:
+        display_name: Modbus Address
+        description: Hostname and port, e.g. 192.168.14.45:512
         type: string
         required: true
-      password:
-        display_name: Password
-        description: Password to your Viessmann account
+      unit_id:
+        display_name: Modbus Unit ID
+        description: Can be obtained from SMA web interface
         type: integer
         required: true
   read_configuration:

@@ -1,7 +1,7 @@
   -- Configuration variables must be also defined
 -- in `write_configuration` command arguments in manifest.yml
-USER_NAME = 'user_name'
-PASSWORD = 'password'
+ADDRESS_CONFIG = 'address'
+UNIT_ID_CONFIG = 'unit_id'
 
 -- Initiate device firmware. Called at the end of the file.
 function main()
@@ -9,15 +9,13 @@ function main()
   scheduler.add(2000, send_telemetry)
 
   config.init({
-    [USER_NAME] = { type = 'string', required = true },
-    [PASSWORD] = { type = 'number', required = true }
+    [ADDRESS_CONFIG] = { type = 'string', required = true },
+    [UNIT_ID_CONFIG] = { type = 'number', required = true }
   })
 end
 
 function send_properties()
   local properties = {}
-
-  local vitobloc, _ = connect_vitobloc()
 
   local values, err = config.read_all()
   if err then
@@ -43,7 +41,7 @@ function send_telemetry()
     return
   end
 
-
+  --status = uint16(5)
   -- External_power_setpoint = int16(7) kW
     --Internal_power_setpoint = int16(8) kW
     --uptime = uint32(9-10) h
@@ -72,16 +70,18 @@ function send_telemetry()
     --operating_states = uint8[4](190-191)
 
   enapter.send_telemetry({
-    status = parse_status(vitobloc:read_u8(190)),
-    alerts = parse_start_stop_error(vitobloc:read_u8(100)), --need help with figuring out how to incorporate all errors into alerts
+
+    status= parse_status(vitobloc:read_u16(5)),
+    alerts = parse_start_stop_error(vitobloc:read_u8(100)),
     start_stop_errors = parse_start_stop_error(vitobloc:read_u8(100)),
+    operating_states = parse_operating_states(vitobloc:read_u8(190)),
     digital_errors = parse_digital_error(vitobloc:read_u8(132)),
     external_errors = parse_external_error(vitobloc:read_u8(140)),
     other_errors = parse_other_error(vitobloc:read_u8(144)),
     ext_power_setpoint = vitobloc:read_i16(7),
     int_power_setpoint = vitobloc:read_i16(8),
     uptime = vitobloc:read_u32(9),
-    number_of_launches = vitobloc:read_i16(12), -- don't like the name of this one
+    number_of_launches = vitobloc:read_i16(12),
     time_till_next_maintenance = vitobloc:read_i16(18),
     time_till_next_repair = vitobloc:read_u32(22),
     kwh_counter = vitobloc:read_u32(26),
@@ -112,12 +112,12 @@ function connect_vitobloc()
     enapter.log('cannot read config: '..tostring(err), 'error')
     return nil, 'cannot_read_config'
   else
-    local user_name, password = values[USER_NAME], values[PASSWORD]
-    if not user_name or not password then
+    local address, unit_id = values[ADDRESS_CONFIG], values[UNIT_ID_CONFIG]
+    if not address or not unit_id then
       return nil, 'not_configured'
     else
       -- Declare global variable to reuse connection between function calls
-        vitobloc = VitoblocModbusTcp.new(user_name, password)
+        vitobloc = VitoblocModbusTcp.new(address, unit_id)
         vitobloc:connect()
       return vitobloc, nil
     end
@@ -125,42 +125,67 @@ function connect_vitobloc()
 end
 
 
+
+
+
 function parse_status(value)
+  -- 0: Aus
+  -- 1: Bereit
+  -- 2: Start
+  -- 3: Betrieb
+  -- 4: Störung -- I'd say this is error
 
   if not value then return {} end
   local status = {}
 
-  --Need help here with making the opposite true (e.g. Fan OFF)
+  if value & 1 then table.insert(status, 'Off') end
+  if value & 2 then table.insert(status,'Ready') end
+  if value & 4 then table.insert(status, 'Start') end
+  if value & 8 then table.insert(status, 'Operation') end
+  if value & 16 then table.insert(status, 'Error')
+  else
+    enapter.log('Cannot decode status: '..tostring(value), 'error')
+    return tostring(value)
+    end
+  end
 
-    if value & 64 then table.insert(status,'Engine stopped') -- how do I make Engine started? Something like if not value & 64 then?
-      if value & 128  then table.insert(status, 'Engine switch ON')
-        if value & 256 then table.insert(status,'Fan ON')
-          if value & 512 then table.insert(status,'Cooling Water Pump ON')
-            if value & 1024 then table.insert(status, 'Heating water pump ON')
-              if value & 4096 then table.insert(status,'Ignition ON')
-                if value & 8192 then table.insert(status, 'Gas valves OPEN')
-                else
-                  enapter.log('Cannot decode status: '..tostring(value), 'error')
-                  return tostring(value)
-                end
-              end
-            end
-          end
+
+
+function parse_operating_states(value)
+
+  if not value then return {} end
+  local operating_states = {}
+
+    if value & 64 then table.insert(operating_states,'Engine stopped')
+    if value & 128  then table.insert(operating_states, 'Engine switch ON')
+    if value & 256 then table.insert(operating_states,'Fan ON')
+    if value & 512 then table.insert(operating_states,'Cooling Water Pump ON')
+    if value & 1024 then table.insert(operating_states, 'Heating water pump ON')
+    if value & 4096 then table.insert(operating_states,'Ignition ON')
+    if value & 8192 then table.insert(operating_states, 'Gas valves OPEN')
+      else
+        enapter.log('Cannot decode status: '..tostring(value), 'error')
+        return tostring(value)
         end
       end
     end
+  end
 end
+end
+end
+end
+
 
 function parse_start_stop_error(value)
   if not value then return {} end
 
   local stop_start_errors = {}
     if value & 1 then table.insert(stop_start_errors,'No Interference')
-      if value & 2 then table.insert(stop_start_errors,'Underspeed')
-        if value & 32 then table.insert(stop_start_errors,'Speed < 50 rpm')
-          if value & 1024 then table.insert(stop_start_errors, "Engine Doesn't Stop")
-          else
-          enapter.log('Cannot decode error: '..tostring(value), 'error')
+    if value & 2 then table.insert(stop_start_errors,'Underspeed')
+    if value & 32 then table.insert(stop_start_errors,'Speed < 50 rpm')
+    if value & 1024 then table.insert(stop_start_errors, "Engine Doesn't Stop")
+      else
+        enapter.log('Cannot decode error: '..tostring(value), 'error')
           return tostring(value)
         end
       end
@@ -174,7 +199,7 @@ function parse_digital_error(value)
 
   local digital_errors = {}
     if value & 8 then table.insert(digital_errors, "Gas pressure max")
-      if value & 16 then table.insert(digital_errors, 'Gas pressure min')
+    if value & 16 then table.insert(digital_errors, 'Gas pressure min')
       else
         enapter.log('Cannot decode digital error: '..tostring(value), 'error')
         return tostring(value)
@@ -188,7 +213,7 @@ function parse_external_error(value)
 
   local external_errors = {}
     if value & 1 then table.insert(external_errors, "Power module generator contactor stuck")
-      if value & 2 then table.insert(external_errors, 'Power module reverse power')
+    if value & 2 then table.insert(external_errors, 'Power module reverse power')
       else
         enapter.log('Cannot decode external error: '..tostring(value), 'error')
         return tostring(value)
@@ -203,10 +228,10 @@ function parse_other_error(value)
 
   local other_errors = {}
     if value & 1 then table.insert(other_errors, "Pump dry running protection 1")
-      if value & 2 then table.insert(other_errors, 'Pump dry running protection 2')
-        if value & 4 then table.insert(other_errors,'Pump dry run protection')
-        else
-          enapter.log('Cannot decode other error: '..tostring(value), 'error')
+    if value & 2 then table.insert(other_errors, 'Pump dry running protection 2')
+    if value & 4 then table.insert(other_errors,'Pump dry run protection')
+      else
+        enapter.log('Cannot decode other error: '..tostring(value), 'error')
           return tostring(value)
         end
       end
@@ -358,13 +383,13 @@ end
 
 VitoblocModbusTcp = {}
 
-function VitoblocModbusTcp.new(user_name, password)
-  assert(type(user_name) == 'string', 'user name (arg #1) must be string, given: '..inspect(user_name))
-  assert(type(password) == 'string', 'password (arg #2) must be string, given: '..inspect(password))
+function VitoblocModbusTcp.new(addr, unit_id)
+  assert(type(addr) == 'string', 'addr (arg #1) must be string, given: '..inspect(addr))
+  assert(type(unit_id) == 'number', 'unit_id (arg #2) must be number, given: '..inspect(unit_id))
 
-  local self = setmetatable({}, { __index = VitoblocModbusTcp })
-  self.user_name = user_name
-  self.password = password
+  local self = setmetatable({}, { __index = SmaModbusTcp })
+  self.addr = addr
+  self.unit_id = unit_id
   return self
 end
 
