@@ -125,120 +125,101 @@ function connect_vitobloc()
 end
 
 
-
-
-
 function parse_status(value)
-  -- 0: Aus
-  -- 1: Bereit
-  -- 2: Start
-  -- 3: Betrieb
-  -- 4: Störung -- I'd say this is error
 
   if not value then return {} end
   local status = {}
 
-  if value & 1 then table.insert(status, 'Off') end
-  if value & 2 then table.insert(status,'Ready') end
-  if value & 4 then table.insert(status, 'Start') end
-  if value & 8 then table.insert(status, 'Operation') end
-  if value & 16 then table.insert(status, 'Error')
-  else
-    enapter.log('Cannot decode status: '..tostring(value), 'error')
+  if value == 0 then table.insert(status, 'Off')
+  elseif value == 1 then table.insert(status,'Ready')
+  elseif value == 2 then table.insert(status, 'Start')
+  elseif value == 3 then table.insert(status, 'Operation')
+  elseif value == 4 then table.insert(status, 'Error')
+  elseif enapter.log('Cannot decode status: '..tostring(value), 'error') then
     return tostring(value)
     end
-  end
-
-
+  return status
+end
 
 function parse_operating_states(value)
 
   if not value then return {} end
   local operating_states = {}
 
-    if value & 64 then table.insert(operating_states,'Engine stopped')
-    if value & 128  then table.insert(operating_states, 'Engine switch ON')
-    if value & 256 then table.insert(operating_states,'Fan ON')
-    if value & 512 then table.insert(operating_states,'Cooling Water Pump ON')
-    if value & 1024 then table.insert(operating_states, 'Heating water pump ON')
-    if value & 4096 then table.insert(operating_states,'Ignition ON')
-    if value & 8192 then table.insert(operating_states, 'Gas valves OPEN')
-      else
-        enapter.log('Cannot decode status: '..tostring(value), 'error')
-        return tostring(value)
-        end
-      end
-    end
+  if value == 0 then
+    return {'unknown value'}
   end
-end
-end
-end
-end
 
+
+  if value & 64 then table.insert(operating_states,'Engine stopped') end
+  if value & 128  then table.insert(operating_states, 'Engine switch ON') end
+  if value & 256 then table.insert(operating_states,'Fan ON') end
+  if value & 512 then table.insert(operating_states,'Cooling Water Pump ON') end
+  if value & 1024 then table.insert(operating_states, 'Heating water pump ON') end
+  if value & 4096 then table.insert(operating_states,'Ignition ON') end
+  if value & 8192 then table.insert(operating_states, 'Gas valves OPEN') end
+
+  return operating_states()
+end
 
 function parse_start_stop_error(value)
   if not value then return {} end
 
-  local stop_start_errors = {}
-    if value & 1 then table.insert(stop_start_errors,'No Interference')
-    if value & 2 then table.insert(stop_start_errors,'Underspeed')
-    if value & 32 then table.insert(stop_start_errors,'Speed < 50 rpm')
-    if value & 1024 then table.insert(stop_start_errors, "Engine Doesn't Stop")
-      else
-        enapter.log('Cannot decode error: '..tostring(value), 'error')
-          return tostring(value)
-        end
-      end
-    end
+  if value == 0 then
+    return {'unknown value'}
   end
+
+  local stop_start_errors = {}
+    if value & 1 then table.insert(stop_start_errors,'No Interference') end
+    if value & 2 then table.insert(stop_start_errors,'Underspeed') end
+    if value & 32 then table.insert(stop_start_errors,'Speed < 50 rpm') end
+    if value & 1024 then table.insert(stop_start_errors, "Engine Doesn't Stop") end
+
   return stop_start_errors
 end
 
 function parse_digital_error(value)
   if not value then return {} end
 
+  if value == 0 then
+    return {'unknown value'}
+  end
+
   local digital_errors = {}
-    if value & 8 then table.insert(digital_errors, "Gas pressure max")
-    if value & 16 then table.insert(digital_errors, 'Gas pressure min')
-      else
-        enapter.log('Cannot decode digital error: '..tostring(value), 'error')
-        return tostring(value)
-      end
-    end
+    if value & 8 then table.insert(digital_errors, "Gas pressure max") end
+    if value & 16 then table.insert(digital_errors, 'Gas pressure min') end
+
   return digital_errors
 end
 
 function parse_external_error(value)
   if not value then return {} end
 
+  if value == 0 then
+    return {'unknown value'}
+  end
+
   local external_errors = {}
-    if value & 1 then table.insert(external_errors, "Power module generator contactor stuck")
-    if value & 2 then table.insert(external_errors, 'Power module reverse power')
-      else
-        enapter.log('Cannot decode external error: '..tostring(value), 'error')
-        return tostring(value)
-      end
-    end
+    if value & 1 then table.insert(external_errors, "Power module generator contactor stuck") end
+    if value & 2 then table.insert(external_errors, 'Power module reverse power') end
+
   return external_errors
 end
-
 
 function parse_other_error(value)
   if not value then return {} end
 
+  if value == 0 then
+    return {'unknown value'}
+  end
+
   local other_errors = {}
-    if value & 1 then table.insert(other_errors, "Pump dry running protection 1")
-    if value & 2 then table.insert(other_errors, 'Pump dry running protection 2')
-    if value & 4 then table.insert(other_errors,'Pump dry run protection')
-      else
-        enapter.log('Cannot decode other error: '..tostring(value), 'error')
-          return tostring(value)
-        end
-      end
-    end
+    if value & 1 then table.insert(other_errors, "Pump dry running protection 1") end
+    if value & 2 then table.insert(other_errors, 'Pump dry running protection 2') end
+    if value & 4 then table.insert(other_errors,'Pump dry run protection') end
+
   return other_errors
 end
-
 
 ---------------------------------
 -- Stored Configuration API
