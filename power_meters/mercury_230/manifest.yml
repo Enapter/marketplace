@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: Mercury 230 Power Meter
 description: DIN rail mounted meter
 icon: enapter-power-meter
+vendor: incotex
 author: enapter
 contributors:
   - anataty

@@ -1,13 +1,42 @@
-# :blue_book: Enapter Device Blueprints
+<img height="auto" width="auto" src=".assets/blueprint-marketplace-dark.png#gh-dark-mode-only" style="max-width: 100%;" alt="enapter blueprint marketplace">
+<img height="auto" width="auto" src=".assets/blueprint-marketplace-light.png#gh-light-mode-only" style="max-width: 100%;" alt="enapter blueprint marketplace">
 
-This is a collection of device blueprints for the integration of your energy devices into the [Enapter platform](https://developers.enapter.com). Once integrated, you can monitor and control your devices using the mobile app or Web dashboards. You can also automate your devices' interoperation with Lua scripting.
+# :blue_book: What is Enapter Blueprint?
+
+Enapter Blueprints is a technology that allows integration of various devices (electrolysers, power meters, inverters, batteries, sensors, etc.) into the Enapter Cloud platform with Lua scripts.
+
+Blueprint technology uses a simple and unified device model that consists of:
+
+- properties,
+- telemetry,
+- commands,
+- alerts.
+
+It describes which charts will be shown on a dashboard on mobile app or web, which commands can be executed, when to notify you about device alerts, etc. Using this model Enapter platform understands the capabilities of the device and how it can interact with other parts of an energy system.
+
+[Blueprint Marketplace](htts://marketplace.enapter.com) is a collection of already developed Blueprints for most common energy devices as solar inverters, batteries, relays and [others](https://marketplace.enapter.com/blueprints/all). You are welcome to contribute into Enapter Blueprint Marketplace with your devices integrations.
 
 Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
+<br>
+<p align="center">
+<a href="https://www.youtube.com/watch?v=1ErvFE6UHTY">
+  <img height="auto" width="auto" src=".assets/blueprint-video.png" style="max-width: 100%;" alt="video about blueprints">
+  <strong>📺 Watch Intro Video → </strong></a>
+</p>
+<br>
 
-<p align="center"><img height="300" width="auto" src=".assets/intro-light.png#gh-light-mode-only"></p>
-<p align="center"><img height="300" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only"></p>
+## Benefits of Integration
 
-## Quick Overview
+Integrating and monitoring of energy devices is first step for building your [Energy Management System (EMS)](https://en.wikipedia.org/wiki/Energy_management_system) or creating Energy Management Plan.
+
+Energy management is the process of monitoring, controlling, and saving energy in a home or business. It is important for a number of reasons:
+
+- Cost savings: Energy management can help reduce energy consumption, which can lower energy bills.
+- Environmental impact: Reducing energy consumption can also help to reduce greenhouse gas emissions and other environmental impacts associated with energy production.
+- Reliability: Proper energy management can help ensure that a home or business has a stable and reliable energy supply.
+- Safety: Energy management can help identify and address any potential safety hazards related to energy use.
+
+# Blueprint Marketplace Repository Overview
 
 Top-level directories represent energy and industrial device types. Each directory contains a number of blueprints for specific device models.
 
@@ -18,24 +47,35 @@ The blueprint is an entity containing all aspects pertaining to device integrati
 
 There are two types of hardware that can run your blueprint:
 
-- a physical [Enapter UCM](https://handbook.enapter.com/modules/modules.html) that implements communication through [RS-485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html), [CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html), and other standards,
-- a [virtual UCM](https://handbook.enapter.com/software/software.html#💎-virtual-ucm) – a software element of the [Enapter Gateway 2.X](https://handbook.enapter.com/software/software.html#📡-enapter-gateway) (runs on an Intel-based server) that implements communication either over a local network (Ethernet) or by using a direct USB connection (serial communication).
+- a physical [Enapter UCM](https://handbook.enapter.com/modules/modules.html) that implements communication through [RS-485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html), [CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html), your own hardware based on [UCM Kit](https://go.enapter.com/ucmkit-enpkit) and other standards,
+- a [virtual UCM](https://handbook.enapter.com/software/software.html#💎-virtual-ucm) – a software element of the [Enapter f 2.X](https://handbook.enapter.com/software/gateway_software/) (runs on an Intel-based server) that implements communication either over a local network (Ethernet) or by using a direct USB connection (serial communication).
 
 Regardless of the underlying hardware, UCMs provide a runtime for Lua execution and expose APIs for [Enapter Cloud connection](https://developers.enapter.com/docs/reference/ucm/enapter), physical connections and protocols (e.g. [6-channel relay](https://developers.enapter.com/docs/reference/ucm/rl6), [RS-485](https://developers.enapter.com/docs/reference/ucm/rs485) serial communication, [Modbus RTU](https://developers.enapter.com/docs/reference/ucm/modbus), [Modbus TCP](https://developers.enapter.com/docs/reference/vucm/modbustcp), etc).
 
-## How To Use These Blueprints
+# How To Use These Blueprints
 
-1. Select a UCM suitable for communicating with your target device.
+1. Select a hardware (UCM or gateway) suitable for communicating with your target device.
 2. Provision your UCM to the Enapter Cloud using the mobile app or run a new virtual UCM on the Enapter Gateway.
 3. Follow one of the options below to upload a blueprint to the UCM.
 
-### Using [Web IDE](https://developers.enapter.com/docs/tutorial/what-you-need/#web-ide)
+## → Use Enapter [Mobile App](https://handbook.enapter.com/software/mobile/) and [Blueprint Marketplace](https://marketplace.enapter.com)
 
-1. Drag and drop the blueprint files into the IDE or copy and paste its contents.
-2. Press "Select Device" and choose your UCM
-3. Press "Upload to" to upload the blueprint.
+1. Click `More` on main navigation pannel.
+2. Click `Blueprint Marketplace`.
+3. Find the required Blueprint and click `Install Blueprint`.
+4. Select the UCM from the list and confirm.
 
-### Using [Enapter CLI](https://developers.enapter.com/docs/tutorial/what-you-need/#command-line-interface)
+<img height="auto" width="auto" src=".assets/intro-light.png#gh-light-mode-only" style="max-width: 100%;" alt="blueprinted devices in the enapter app">
+<img height="auto" width="auto" src=".assets/intro-dark.png#gh-dark-mode-only" style="max-width: 100%;" alt="blueprinted devices in the enapter app">
+
+## → Use [Web IDE](https://developers.enapter.com/docs/tutorial/what-you-need/#web-ide)
+
+1. Open Blueprint tab in the Enapter Cloud.
+2. Drag and drop the blueprint files into the IDE or copy and paste its contents.
+3. Press "Select Device" and choose your UCM.
+4. Press "Upload to" to upload the blueprint.
+
+## → Use [Enapter CLI](https://developers.enapter.com/docs/tutorial/what-you-need/#command-line-interface)
 
 1. Follow the steps described in [the tutorial](https://developers.enapter.com/docs/tutorial/what-you-need/#command-line-interface) to get the CLI tool and your API access token.
 2. Switch the current directory to the desired blueprint.
@@ -43,61 +83,13 @@ Regardless of the underlying hardware, UCMs provide a runtime for Lua execution 
 
 After uploading the blueprint, your device data will appear on the device page in the Enapter Cloud and the mobile application.
 
-## Blueprints Development
+# Blueprints Development & Contributing
 
-We welcome any contributions when it comes to integrating new devices into the system, whether it's development efforts or testing the blueprints on your hardware.
+Take a look at our [Contributing](./CONTRIBUTING.md) guideline.
 
-### License and Authorship
+# Community and Support
 
-Blueprints in the marketplace should be licensed under the MIT license. Please add [`license: MIT`](https://developers.enapter.com/docs/reference/#license) in your `manifest.yml`.
-
-Also you can specify authorship and support information via [`author`](https://developers.enapter.com/docs/reference/#author), [`contributors`](https://developers.enapter.com/docs/reference/#contributors) and [`support`](https://developers.enapter.com/docs/reference/#support) fields.
-
-### Note About Dot-Fields
-
-`manifest.yml` is validated against [the specification](https://cloud.enapter.com/schemas/json-schemas/blueprints/device/v1/schema.json), although not every aspect of the manifest is ready to be fixed in the specification. Some in-progress features are backed by YAML fields that start with a dot (e.g. `.cloud`). These fields are not documented and ignored in the manifest validation. When the feature is ready, the field will be moved into the main manifest body, and the blueprints will be updated.
-
-### Writing Blueprint README
-
-Please follow this simple checklist for every blueprint README file:
-
-- Level 1 header should contain vendor and full model or product family.
-- Intro paragraph should briefly describe the device.
-- Make sure that blueprint's use case is clear.
-- Some blueprints may require physical connection schematics. You can add it as a picture to the README file or as a link to a PDF file. Place the file into the blueprint directory.
-- List the hardware needed for the physical connection. This may be an Enapter UCM model, communication interface converter, etc.
-- Device pictures and vendor logos are always welcome, but we ask you to respect the author of said pictures and to follow copyright and licencing guidelines.
-- References should be given to the device vendor page, manual, API documentation, etc.
-
-### Linters
-
-Blueprint files are validated using [`yamllint`](https://yamllint.readthedocs.io/en/stable/) and [`luacheck`](https://luacheck.readthedocs.io/en/stable/) linters. The configuration can be found in `.yamllint.yml` and `.luacheckrc` files respectively.
-
-Run the linters locally before creating a pull request:
-
-```bash
-luacheck .
-yamllint .
-markdownlint .
-```
-
-### Lua Codestyle
-
-- Document with [LDoc](https://stevedonovan.github.io/ldoc/).
-- Use 2 spaces for indentation.
-- Use `snake_case` for variables and functions.
-- Use `CamelCase` for OOP class names.
-- Use `UPPER_CASE` for constants. Put top-level constants at the beginning of the file.
-- Use `is_` when naming boolean functions, e.g. `is_between()`.
-- Use single quotes `'` over double `"` quotes. Use double quotes when string contains single quotes already.
-- Use parenthesis in function calls (`local a = myfun('any')`). Though it's ok to omit it for `require` (`local a = require 'rules'`).
-- No spaces in concatenation operator (`'some'..var..' ok'`).
-- No spaces around function args declaration (`function hello(a, b)`).
-- Typecheck in critical places (`assert(type(myvar) == 'string')`).
-
-Some more coding conventions are available in the [LuaRocks style guide](https://github.com/luarocks/lua-style-guide).
-
-## Community and Support
-
-- [Discord Channel](https://go.enapter.com/discord_handbook)
-- [Upvote & Review on Product Hunt](https://www.producthunt.com/products/enapter-energy-management-system-toolkit)
+- <a href="https://go.enapter.com/discord_handbook"><img align="center" src="https://img.shields.io/badge/Discord-Channel-%235865F2?logo=discord&style=for-the-badge&logoColor=white"></a>&nbsp; Join our Discord community!
+- <a href="https://developers.enapter.com"><img align="center" src="https://img.shields.io/badge/Developers%20Documentation-Documentation-%2330cccc?logo=readthedocs&style=for-the-badge&logoColor=white"></a>&nbsp; Take a look on our documentation.
+- <a href="https://github.com/Enapter/marketplace/discussions"><img align="center" src="https://img.shields.io/badge/GitHub-Discussions-black?logo=github&style=for-the-badge&logoColor=white"></a>&nbsp; Open thread on GitHub!
+- <a href="https://www.producthunt.com/products/enapter-energy-management-system-toolkit/reviews/new"><img align="center" src="https://img.shields.io/badge/Producthunt-Review%20↑-%23DA552F?logo=producthunt&style=for-the-badge"></a>&nbsp; Support us on ProducHunt with review.

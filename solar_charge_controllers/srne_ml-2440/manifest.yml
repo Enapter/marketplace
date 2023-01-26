@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: SRNE ML-2440
 description: Solar Charge Controller
 icon: enapter-inverter-solar
+vendor: srne
 author: enapter
 contributors:
   - anataty

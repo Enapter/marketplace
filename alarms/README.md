@@ -1,0 +1,3 @@
+# Alarm Systems
+
+An alarm system is a system that is designed to detect and deter burglaries, fires, and other emergencies in a home or business. Alarm systems typically include sensors that are placed on doors, windows, and other entry points, as well as motion detectors that can detect movement within a certain area. When an alarm is triggered, it may sound a siren or horn to alert the occupants of the building and deter the intruder, and it may also send a signal to a central monitoring station or to the police to request assistance. Alarm systems can be wired or wireless, and they can be customized with a variety of different features and options to suit the needs of the user.

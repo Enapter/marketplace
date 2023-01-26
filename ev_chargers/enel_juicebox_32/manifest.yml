@@ -2,6 +2,7 @@ blueprint_spec: device/1.0
 display_name: Enel JuiceBox 32
 description: Smart EV charging station
 icon: enapter-car-charger
+vendor: enel-x
 license: MIT
 author: enapter
 contributors:

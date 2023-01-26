@@ -1,13 +1,10 @@
 package main
 
 import (
-	"errors"
 	"flag"
 	"fmt"
-	"io"
 	"os"
 	"strings"
-	"syscall"
 )
 
 var marketplacePath = flag.String("p", "./", "path to marketplace directory")
@@ -29,71 +26,68 @@ func main() {
 	fmt.Printf("blueprints-paths=%s", strings.Join(paths, " "))
 }
 
-func changedBlueprints(marketplacePath string, changedFiles []string) (map[string]struct{}, error) {
-	bpCats, err := blueprintCategories(marketplacePath)
+func changedBlueprints(marketplacePath string, changedFiles []string) (map[string]bool, error) {
+	all, err := listBlueprintsWithCategories(marketplacePath)
 	if err != nil {
-		return nil, fmt.Errorf("get current blueprints categories: %w", err)
+		return nil, err
 	}
 
-	changedBps := make(map[string]struct{})
-	for _, path := range changedFiles {
-		for _, cat := range bpCats {
-			if strings.HasPrefix(path, cat) {
-				bpPath := strings.Join(strings.Split(path, "/")[:2], "/")
-				empty, err := isDirEmptyOrNotExist(bpPath)
-				if err != nil {
-					return nil, fmt.Errorf("check blueprint dir: %w", err)
-				}
+	changed := make(map[string]bool, len(all))
 
-				if !empty {
-					changedBps[bpPath] = struct{}{}
-				}
+	for _, file := range changedFiles {
+		for _, blueprint := range all {
+			if !changed[blueprint] && strings.HasPrefix(file, blueprint) {
+				changed[blueprint] = true
+				break
 			}
 		}
 	}
 
-	return changedBps, nil
+	return changed, nil
 }
 
-func blueprintCategories(marketplacePath string) ([]string, error) {
-	entries, err := os.ReadDir(marketplacePath)
+func listBlueprintsWithCategories(marketplacePath string) ([]string, error) {
+	categories, err := listNonHiddenDirectories(marketplacePath)
 	if err != nil {
-		return nil, fmt.Errorf("open marketplace directory: %w", err)
+		return nil, err
 	}
 
-	cats := make([]string, 0, len(entries))
+	result := make([]string, 0, len(categories))
+	for _, c := range categories {
+		blueprints, err := listNonHiddenDirectories(marketplacePath + "/" + c)
+		if err != nil {
+			return nil, fmt.Errorf("%s: %w", c, err)
+		}
+		for _, b := range blueprints {
+			result = append(result, c+"/"+b)
+		}
+	}
+
+	return result, nil
+}
+
+// listNonHiddenDirectories returns names of non-nidden `path` subdirectories.
+//
+// Only final components of directory paths are returned, e.g. `bar`, not
+// `foo/bar`.
+func listNonHiddenDirectories(path string) ([]string, error) {
+	entries, err := os.ReadDir(path)
+	if err != nil {
+		return nil, err
+	}
+
+	dirs := make([]string, 0, len(entries))
 	for _, entry := range entries {
 		if !entry.IsDir() {
 			continue
 		}
 
-		if strings.HasPrefix(entry.Name(), ".") {
+		if hidden := strings.HasPrefix(entry.Name(), "."); hidden {
 			continue
 		}
 
-		cats = append(cats, entry.Name())
+		dirs = append(dirs, entry.Name())
 	}
 
-	return cats, nil
-}
-
-func isDirEmptyOrNotExist(name string) (bool, error) {
-	f, err := os.Open(name)
-	if err != nil {
-		if errors.Is(err, syscall.ENOENT) {
-			return true, nil
-		}
-		return false, err
-	}
-	defer f.Close()
-
-	_, err = f.Readdirnames(1)
-	if err != nil {
-		if errors.Is(err, io.EOF) {
-			return true, nil
-		}
-		return false, err
-	}
-
-	return false, nil
+	return dirs, nil
 }

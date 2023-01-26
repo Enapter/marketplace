@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: SMA Sunny Tripower
 description: SMA Sunny Tripower solar inverter.
 icon: enapter-inverter-solar
+vendor: sma
 license: MIT
 author: enapter
 support:

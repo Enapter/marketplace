@@ -3,6 +3,7 @@ blueprint_spec: device/1.0
 display_name: EDMI Mk10A
 description: Three Phase CT/WC Smart Meter
 icon: enapter-power-meter
+vendor: edmi
 author: enapter
 contributors:
   - anataty

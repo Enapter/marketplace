@@ -10,6 +10,7 @@ description: |
   This blueprint supports Komfovent Air Handling Units (AHU) with C3 Automation and Ping2 Communication Module.
   It was tested and approved on Komfovent REGO 600 AHU with rotary recuperation system.
 icon: enapter-vent-recuperator
+vendor: komfovent
 author: enapter
 contributors:
   - nkrasko
