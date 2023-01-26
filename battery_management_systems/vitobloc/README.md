@@ -5,7 +5,7 @@ This Enapter Device Blueprint integrates Viessmann Vitobloc 200 - combined heat 
 ## Connect to Enapter
 
 - Sign up to the Enapter Cloud using the Web or mobile app (iOS, Android).
-- Create account to access Viessmann API [here](https://documentation.viessmann.com)
+- You will need to set up this device via Vitogate, more info can be found here [here](https://www.viessmann-us.com/content/dam/vi-brands/CA/pdfs/doc/nr2b_acc/vitogate_300_oh.pdf/_jcr_content/renditions/original.media_file.inline.file/file.pdf).
 - Use [Enapter Gateway](https://go.enapter.com/handbook-gateway-setup) to run Virtual UCM.
 - Create [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm).
 - [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to Enapter Virtual UCM.
