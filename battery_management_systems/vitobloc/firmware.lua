@@ -505,7 +505,4 @@ function VitoblocModbusTcp:read_i32_enum(address)
   return self:read_u32(address)
 end
 
-
-
-
 main()
