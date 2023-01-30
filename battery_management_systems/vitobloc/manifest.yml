@@ -50,7 +50,7 @@ telemetry:
     unit: h
   naumber_of_launches:
     display_name: Number of launches
-    type: int
+    type: integer
     unit: Number
   time_till_next_maintenance:
     display_name: Time before next maintenance
