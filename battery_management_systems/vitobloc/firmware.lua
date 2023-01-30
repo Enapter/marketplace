@@ -362,7 +362,7 @@ function VitoblocModbusTcp.new(addr, unit_id)
   assert(type(addr) == 'string', 'addr (arg #1) must be string, given: '..inspect(addr))
   assert(type(unit_id) == 'number', 'unit_id (arg #2) must be number, given: '..inspect(unit_id))
 
-  local self = setmetatable({}, { __index = SmaModbusTcp })
+  local self = setmetatable({}, { __index = VitoblocModbusTcp })
   self.addr = addr
   self.unit_id = unit_id
   return self
