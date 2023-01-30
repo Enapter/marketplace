@@ -128,6 +128,8 @@ end
 function parse_status(value)
 
   if not value then return {} end
+  if value == 0 then return {'unknown value'} end
+  if type(value) == 'number' then
   local status = {}
 
   if value == 0 then table.insert(status, 'Off')
@@ -139,17 +141,15 @@ function parse_status(value)
     return tostring(value)
     end
   return status
+  end
 end
 
 function parse_operating_states(value)
 
   if not value then return {} end
+  if value == 0 then return {'unknown value'} end
+  if type(value) == 'number' then
   local operating_states = {}
-
-  if value == 0 then
-    return {'unknown value'}
-  end
-
 
   if value & 64 then table.insert(operating_states,'Engine stopped') end
   if value & 128  then table.insert(operating_states, 'Engine switch ON') end
@@ -160,65 +160,59 @@ function parse_operating_states(value)
   if value & 8192 then table.insert(operating_states, 'Gas valves OPEN') end
 
   return operating_states()
+  end
 end
 
 function parse_start_stop_error(value)
   if not value then return {} end
-
-  if value == 0 then
-    return {'unknown value'}
-  end
-
+  if value == 0 then return {'unknown value'} end
+  if type(value) == 'number' then
   local stop_start_errors = {}
+
     if value & 1 then table.insert(stop_start_errors,'No Interference') end
     if value & 2 then table.insert(stop_start_errors,'Underspeed') end
     if value & 32 then table.insert(stop_start_errors,'Speed < 50 rpm') end
     if value & 1024 then table.insert(stop_start_errors, "Engine Doesn't Stop") end
 
   return stop_start_errors
+  end
 end
 
 function parse_digital_error(value)
   if not value then return {} end
-
-  if value == 0 then
-    return {'unknown value'}
-  end
-
+  if value == 0 then return {'unknown value'} end
+  if type(value) == 'number' then
   local digital_errors = {}
+
     if value & 8 then table.insert(digital_errors, "Gas pressure max") end
     if value & 16 then table.insert(digital_errors, 'Gas pressure min') end
-
-  return digital_errors
+    return digital_errors
+  end
 end
 
 function parse_external_error(value)
   if not value then return {} end
-
-  if value == 0 then
-    return {'unknown value'}
-  end
-
+  if value == 0 then return {'unknown value'} end
+  if type(value) == 'number' then
   local external_errors = {}
+
     if value & 1 then table.insert(external_errors, "Power module generator contactor stuck") end
     if value & 2 then table.insert(external_errors, 'Power module reverse power') end
-
   return external_errors
+  end
 end
 
 function parse_other_error(value)
   if not value then return {} end
-
-  if value == 0 then
-    return {'unknown value'}
-  end
-
+  if value == 0 then return {'unknown value'} end
+  if type(value) == 'number' then
   local other_errors = {}
+
     if value & 1 then table.insert(other_errors, "Pump dry running protection 1") end
     if value & 2 then table.insert(other_errors, 'Pump dry running protection 2') end
     if value & 4 then table.insert(other_errors,'Pump dry run protection') end
-
   return other_errors
+  end
 end
 
 ---------------------------------
