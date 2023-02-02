@@ -86,7 +86,7 @@ function send_telemetry()
     time_till_next_repair = vitobloc:read_u32(22),
     kwh_counter = vitobloc:read_u32(26),
     t_cooling_water_inlet = vitobloc:read_i16(40),
-    t_cooling_water_outlet = vitobloc:read_i16(48),
+    t_cooling_water_outlet = vitobloc:read_i16(44),
     t_engine_oil_tank_A = vitobloc:read_i16(47),
     t_engine_oil_tank_B = vitobloc:read_i16(48),
     generator_temp = vitobloc:read_i16(49),
@@ -126,7 +126,6 @@ end
 
 
 function parse_status(value)
-
   if not value then return {} end
   if value == 0 then return {'unknown value'} end
   if type(value) == 'number' then
@@ -145,7 +144,6 @@ function parse_status(value)
 end
 
 function parse_operating_states(value)
-
   if not value then return {} end
   if value == 0 then return {'unknown value'} end
   if type(value) == 'number' then
@@ -423,19 +421,9 @@ function VitoblocModbusTcp:read_u8(address)
     return nil
   end
 
-  -- NaN for ENUM values
-  if reg[1] == 0x00FF then
-    return nil
-  end
-
   local raw = string.pack('>I2I2', reg[1], reg[2])
   return string.unpack('>I4', raw)
 end
-
-function VitoblocModbusTcp:read_u8_enum(address)
-  return self:read_u32(address)
-end
-
 
 function VitoblocModbusTcp:read_u16(address)
   local reg = self:read_holdings(address, 1)
@@ -472,31 +460,6 @@ function VitoblocModbusTcp:read_i16(address)
 
   local raw = string.pack('>I2I2', reg[1], reg[2])
   return string.unpack('>I4', raw)
-end
-
-
-function VitoblocModbusTcp:read_i16_enum(address)
-  return self:read_u32(address)
-end
-
-
-
-function VitoblocModbusTcp:read_i32(address)
-  local reg = self:read_holdings(address, 1)
-  if not reg then return end
-
-  -- NaN for ENUM values
-  if reg[1] == 0x00FF and reg[2] == 0xFFFD then
-    return nil
-  end
-
-  local raw = string.pack('>I2I2', reg[1], reg[2])
-  return string.unpack('>I4', raw)
-end
-
-
-function VitoblocModbusTcp:read_i32_enum(address)
-  return self:read_u32(address)
 end
 
 main()
