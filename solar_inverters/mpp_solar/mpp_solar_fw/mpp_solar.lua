@@ -5,6 +5,22 @@ mpp_solar_module.data_bits = 8
 mpp_solar_module.parity = 'N'
 mpp_solar_module.stop_bits = 1
 
+function mpp_solar_module:run_with_cache(name)
+    if mpp_solar_module:is_in_cache(name) then
+        local data = mpp_solar_module:run_command(name)
+        if data then
+            mpp_solar_module:add_to_cache(name, data, os.time())
+            return true, data
+        end
+    else
+        local result, data = mpp_solar_module:read_cache(name)
+        if result then
+            return true, data
+        end
+    end
+    return false
+end
+
 function mpp_solar_module:run_command(name)
     if name ~= nil then
         local crc = mpp_solar_module:crc16(name)
@@ -49,22 +65,6 @@ function mpp_solar_module:is_in_cache(command_name)
     end
     if com_data.updated + 60 < os.time() then
         return true
-    end
-    return false
-end
-
-function mpp_solar_module:run_with_cache(name)
-    if mpp_solar_module:is_in_cache(name) then
-        local data = mpp_solar_module:run_command(name)
-        if data then
-            mpp_solar_module:add_to_cache(name, data, os.time())
-            return true, data
-        end
-    else
-        local result, data = mpp_solar_module:read_cache(name)
-        if result then
-            return true, data
-        end
     end
     return false
 end
