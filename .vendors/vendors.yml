@@ -142,3 +142,8 @@
   display_name: EMS-ESP
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/ems-esp.png
   website: https://emsesp.github.io/docs/#/
+
+- id: mpp-solar
+  display_name: MPP Solar
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/mpp-solar.png
+  website: https://www.mppsolar.com/v3/
