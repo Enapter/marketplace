@@ -1,6 +1,13 @@
 blueprint_spec: device/1.0
 display_name: MPP Solar Inverter
 icon: enapter-inverter-battery
+vendor: mpp-solar
+license: MIT
+author: enapter
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+verification_level: verified
 
 communication_module:
   product: ENP-RS232
@@ -12,11 +19,11 @@ properties:
   model:
     display_name: Model
     type: string
-  serial_num:
-    display_name: Serial Number
-    type: string
   output_mode:
     display_name: Output Mode
+    type: string
+  serial_num:
+    display_name: Serial Number
     type: string
   fw_ver:
     display_name: Firmware version
@@ -36,349 +43,74 @@ telemetry:
       - battery
       - error
       - power_saving
+      - unknown
   output_source_priority:
     display_name: Output Source Priority
     type: string
     enum:
-      - Utility First
-      - Solar First
+      - Utility first
+      - Solar first
       - SBU
   charger_source_priority:
     display_name: Charger Source Priority
     type: string
     enum:
-      - Utility First
-      - Solar First
-      - Solar and Utility
-      - Only Solar
-  # fault_code_1:
-  #   display_name: Inverter 1 Fault
-  #   type: string
-  #   enum:
-  #     - no fault
-  #     - fan_locked
-  #     - over_temperature
-  #     - battery_voltage_is_too_high
-  #     - battery_voltage_is_too_low
-  #     - output_short_circuited_or_over_temperature
-  #     - output_voltage_is_too_high
-  #     - over_load_time_out
-  #     - bus_voltage_is_too_high
-  #     - bus_soft_start_failed
-  #     - main_relay_failed
-  #     - over_current_inverter
-  #     - bus_soft_start_failed
-  #     - inverter_soft_start_failed
-  #     - self_test_failed
-  #     - over_dc_voltage_on_output_of_inverter
-  #     - battery_connection_is_open
-  #     - current_sensor_failed
-  #     - output_voltage_is_too_low
-  #     - inverter_negative_power
-  #     - parallel_version_different
-  #     - output_circuit_failed
-  #     - can_communication_failed
-  #     - parallel_host_line_lost
-  #     - parallel_synchronized_signal_lost
-  #     - parallel_battery_voltage_detect_different
-      # - parallel_line_voltage_or_frequency_detect_different
-      # - parallel_line_input_current_unbalanced
-      # - parallel_output_setting_different
-  # fault_code_2:
-    # display_name: Inverter 2 Fault
-    # type: string
-    # enum:
-      # - no fault
-      # - fan_locked
-      # - over_temperature
-      # - battery_voltage_is_too_high
-      # - battery_voltage_is_too_low
-      # - output_short_circuited_or_over_temperature
-      # - output_voltage_is_too_high
-      # - over_load_time_out
-      # - bus_voltage_is_too_high
-      # - bus_soft_start_failed
-      # - main_relay_failed
-      # - over_current_inverter
-      # - bus_soft_start_failed
-      # - inverter_soft_start_failed
-      # - self_test_failed
-      # - over_dc_voltage_on_output_of_inverter
-      # - battery_connection_is_open
-      # - current_sensor_failed
-      # - output_voltage_is_too_low
-      # - inverter_negative_power
-      # - parallel_version_different
-      # - output_circuit_failed
-      # - can_communication_failed
-      # - parallel_host_line_lost
-      # - parallel_synchronized_signal_lost
-      # - parallel_battery_voltage_detect_different
-      # - parallel_line_voltage_or_frequency_detect_different
-      # - parallel_line_input_current_unbalanced
-      # - parallel_output_setting_different
-  # fault_code_3:
-    # display_name: Inverter 3 Fault
-    # type: string
-    # enum:
-      # - no fault
-      # - fan_locked
-      # - over_temperature
-      # - battery_voltage_is_too_high
-      # - battery_voltage_is_too_low
-      # - output_short_circuited_or_over_temperature
-      # - output_voltage_is_too_high
-      # - over_load_time_out
-      # - bus_voltage_is_too_high
-      # - bus_soft_start_failed
-      # - main_relay_failed
-      # - over_current_inverter
-      # - bus_soft_start_failed
-      # - inverter_soft_start_failed
-      # - self_test_failed
-      # - over_dc_voltage_on_output_of_inverter
-      # - battery_connection_is_open
-      # - current_sensor_failed
-      # - output_voltage_is_too_low
-      # - inverter_negative_power
-      # - parallel_version_different
-      # - output_circuit_failed
-      # - can_communication_failed
-      # - parallel_host_line_lost
-      # - parallel_synchronized_signal_lost
-      # - parallel_battery_voltage_detect_different
-      # - parallel_line_voltage_or_frequency_detect_different
-      # - parallel_line_input_current_unbalanced
-      # - parallel_output_setting_different
-  # ac_out_active_power_total:
-  #   display_name: Total AC Output Active Power
-  #   type: float
-  #   unit: watt
-  # pv_input_power_total:
-  #   display_name: Total PV Input Power
-  #   type: float
-  #   unit: watt
-
+      - Utility first
+      - Solar first
+      - Solar and utility
+      - Only solar
   pv_input_power:
     display_name: PV Input Power
     type: float
     unit: watt
-  # pv_input_power_1:
-  #   display_name: PV Input Power 1
-  #   type: float
-  #   unit: watt
-  # pv_input_power_2:
-  #   display_name: PV Input Power 2
-  #   type: float
-  #   unit: watt
-  # pv_input_power_3:
-  #   display_name: PV Input Power 3
-  #   type: float
-  #   unit: watt
-
   ac_out_active_power:
     display_name: AC Output Active Power
     type: float
     unit: watt
-  # ac_out_active_power_1:
-  #   display_name: AC Output Active Power 1
-  #   type: float
-  #   unit: watt
-  # ac_out_active_power_2:
-  #   display_name: AC Output Active Power 2
-  #   type: float
-  #   unit: watt
-  # ac_out_active_power_3:
-  #   display_name: AC Output Active Power 3
-  #   type: float
-  #   unit: watt
-
   battery_volt:
     display_name: Battery Voltage
     type: float
     unit: volt
-  # battery_volt_1:
-  #   display_name: Battery Voltage 1
-  #   type: float
-  #   unit: volt
-  # battery_volt_2:
-  #   display_name: Battery Voltage 2
-  #   type: float
-  #   unit: volt
-  # battery_volt_3:
-  #   display_name: Battery Voltage 3
-  #   type: float
-  #   unit: volt
-
   pv_input_amp:
     display_name: PV Input Current
     type: float
     unit: amp
-  # pv_input_amp_1:
-  #   display_name: PV Input Current 1
-  #   type: float
-  #   unit: amp
-  # pv_input_amp_2:
-  #   display_name: PV Input Current 2
-  #   type: float
-  #   unit: amp
-  # pv_input_amp_3:
-  #   display_name: PV Input Current 3
-  #   type: float
-  #   unit: amp
-
   pv_input_volt:
     display_name: PV Input Voltage
     type: float
     unit: volt
-  # pv_input_volt_1:
-  #   display_name: PV Input Voltage 1
-  #   type: float
-  #   unit: volt
-  # pv_input_volt_2:
-  #   display_name: PV Input Voltage 2
-  #   type: float
-  #   unit: volt
-  # pv_input_volt_3:
-  #   display_name: PV Input Voltage 3
-  #   type: float
-  #   unit: volt
-
   ac_out_volt:
     display_name: AC Output Voltage
     type: float
     unit: volt
-  # ac_out_volt_1:
-  #   display_name: AC Output Voltage 1
-  #   type: float
-  #   unit: volt
-  # ac_out_volt_2:
-  #   display_name: AC Output Voltage 2
-  #   type: float
-  #   unit: volt
-  # ac_out_volt_3:
-  #   display_name: AC Output Voltage 3
-  #   type: float
-  #   unit: volt
-
   ac_out_freq:
     display_name: AC Output Frequency
     type: float
     unit: hertz
-  # ac_out_freq_1:
-  #   display_name: AC Output Frequency 1
-  #   type: float
-  #   unit: hertz
-  # ac_out_freq_2:
-  #   display_name: AC Output Frequency 2
-  #   type: float
-  #   unit: hertz
-  # ac_out_freq_3:
-  #   display_name: AC Output Frequency 3
-  #   type: float
-  #   unit: hertz
-
   ac_out_load_percent:
     display_name: AC Output Load Percent
     type: float
     unit: percent
-  # ac_out_load_percent_1:
-  #   display_name: AC Output Load Percent 1
-  #   type: float
-  #   unit: percent
-  # ac_out_load_percent_2:
-  #   display_name: AC Output Load Percent 2
-  #   type: float
-  #   unit: percent
-  # ac_out_load_percent_3:
-  #   display_name: AC Output Load Percent 3
-  #   type: float
-  #   unit: percent
-
   battery_charge_amp:
     display_name: Battery Charge Current
     type: float
     unit: amp
-  # battery_charge_amp_1:
-  #   display_name: Battery Charge Current 1
-  #   type: float
-  #   unit: amp
-  # battery_charge_amp_2:
-  #   display_name: Battery Charge Current 2
-  #   type: float
-  #   unit: amp
-  # battery_charge_amp_3:
-  #   display_name: Battery Charge Current 3
-  #   type: float
-  #   unit: amp
-
   battery_discharge_amp:
     display_name: Battery Discharge Current
     type: float
     unit: amp
-  # battery_discharge_amp_1:
-  #   display_name: Battery Discharge Current 1
-  #   type: float
-  #   unit: amp
-  # battery_discharge_amp_2:
-  #   display_name: Battery Discharge Current 2
-  #   type: float
-  #   unit: amp
-  # battery_discharge_amp_3:
-  #   display_name: Battery Discharge Current 3
-  #   type: float
-  #   unit: amp
-
   battery_capacity:
     display_name: Battery Capacity
     type: float
     unit: percent
-  # battery_capacity_1:
-  #   display_name: Battery Capacity 1
-  #   type: float
-  #   unit: percent
-  # battery_capacity_2:
-  #   display_name: Battery Capacity 2
-  #   type: float
-  #   unit: percent
-  # battery_capacity_3:
-  #   display_name: Battery Capacity 3
-  #   type: float
-  #   unit: percent
-
   grid_volt:
     display_name: Grid Voltage
     type: float
     unit: volt
-  # grid_volt_1:
-  #   display_name: Grid Voltage 1
-  #   type: float
-  #   unit: volt
-  # grid_volt_2:
-  #   display_name: Grid Voltage 2
-  #   type: float
-  #   unit: volt
-  # grid_volt_3:
-  #   display_name: Grid Voltage 3
-  #   type: float
-  #   unit: volt
-
   grid_freq:
     display_name: Grid Frequency
     type: float
     unit: hertz
-  # grid_freq_1:
-  #   display_name: Grid Frequency 1
-  #   type: float
-  #   unit: hertz
-  # grid_freq_2:
-  #   display_name: Grid Frequency 2
-  #   type: float
-  #   unit: hertz
-  # grid_freq_3:
-  #   display_name: Grid Frequency 3
-  #   type: float
-  #   unit: hertz
 
 command_groups:
   inverter:
@@ -388,7 +120,7 @@ commands:
     display_name: Set Charger Priority
     group: inverter
     ui:
-      icon: wrench-outline
+      icon: lightning-bolt
       quick_access: true
     arguments:
       priority:
@@ -404,7 +136,7 @@ commands:
     display_name: Set Output Priority
     group: inverter
     ui:
-      icon: wrench-outline
+      icon: home-heart
       quick_access: true
     arguments:
       priority:
@@ -412,11 +144,15 @@ commands:
         type: string
         required: true
         enum:
-          - "Utility First"
-          - "Solar Dirst"
+          - "Utility first"
+          - "Solar first"
           - "SBU"
 
 alerts:
+  parallel_mode:
+    severity: info
+    display_name: Parallel mode detected
+    description: Please upload blueprint 'MPP Solar Inverter (Parallel mode)'.
   rules_unavailable:
     severity: error
     display_name: Rules Unavailable
@@ -433,10 +169,10 @@ alerts:
   bus_soft_fail:
     severity: error
     display_name: Bus Soft Failure
-  inverter_voltage_too_low:
+  inverter_voltage_low:
     severity: error
     display_name: Inverter Voltage Too Low
-  inverter_voltage_too_high:
+  inverter_voltage_high:
     severity: error
     display_name: Inverter Voltage Too High
   inverter_over_current:
@@ -451,9 +187,9 @@ alerts:
   op_dc_voltage_over:
     severity: error
     display_name: OP DC Voltage Over
-  bat_open:
+  battery_open:
     severity: error
-    display_name: Bat Open
+    display_name: Battery Open
   current_sensor_fail:
     severity: error
     display_name: Current Sensor Fail
@@ -469,7 +205,7 @@ alerts:
   battery_voltage_high:
     severity: error
     display_name: Battery Voltage High
-  over_load:
+  overload:
     severity: error
     display_name: Overload
   line_fail:
@@ -481,12 +217,9 @@ alerts:
   battery_low_alarm:
     severity: warning
     display_name: Battery Low Alarm
-  battery_under_shutdown:
+  battery_shutdown:
     severity: warning
     display_name: Battery Under Shutdown
-  reserved:
-    severity: warning
-    display_name: Reserved
   eeprom_fault:
     severity: warning
     display_name: EEPROM Fault
@@ -511,7 +244,7 @@ alerts:
   battery_voltage_high_w:
     severity: warning
     display_name: Battery Voltage High
-  over_load_w:
+  overload_w:
     severity: warning
     display_name: Overload
 
@@ -522,31 +255,19 @@ alerts:
     - charger_source_priority
     - output_source_priority
     - ac_out_active_power
-    # - ac_out_active_power_1
-    # - ac_out_active_power_2
-    # - ac_out_active_power_3 
     - pv_input_power
-    # - pv_input_power_1
-    # - pv_input_power_2
-    # - pv_input_power_3
     - battery_volt
-    # - battery_volt_1
-    # - battery_volt_2
-    # - battery_volt_3
 
-  # mobile_charts:
-  #   - ac_out_volt
-  #   - ac_out_freq
-  #   - ac_out_active_power
-  #   - ac_out_load_percent
-  #   - battery_volt
-  #   - battery_volt_scc
-  #   - battery_charge_amp
-  #   - battery_discharge_amp
-  #   - battery_capacity
-  #   - dc_bus_volt
-  #   - pv_input_amp
-  #   - pv_input_volt
-  #   - grid_volt
-  #   - grid_freq
-
+  mobile_charts:
+    - ac_out_volt
+    - ac_out_freq
+    - ac_out_active_power
+    - ac_out_load_percent
+    - battery_volt
+    - battery_charge_amp
+    - battery_discharge_amp
+    - battery_capacity
+    - pv_input_amp
+    - pv_input_volt
+    - grid_volt
+    - grid_freq

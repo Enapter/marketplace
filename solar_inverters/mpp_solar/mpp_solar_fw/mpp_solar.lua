@@ -1,19 +1,19 @@
-local mpp_solar_module = {}
+local mpp_solar = {}
 
-mpp_solar_module.baudrate = 2400
-mpp_solar_module.data_bits = 8
-mpp_solar_module.parity = 'N'
-mpp_solar_module.stop_bits = 1
+mpp_solar.baudrate = 2400
+mpp_solar.data_bits = 8
+mpp_solar.parity = 'N'
+mpp_solar.stop_bits = 1
 
-function mpp_solar_module:run_with_cache(name)
-    if mpp_solar_module:is_in_cache(name) then
-        local data = mpp_solar_module:run_command(name)
+function mpp_solar:run_with_cache(name)
+    if mpp_solar:is_in_cache(name) then
+        local data = mpp_solar:run_command(name)
         if data then
-            mpp_solar_module:add_to_cache(name, data, os.time())
+            mpp_solar:add_to_cache(name, data, os.time())
             return true, data
         end
     else
-        local result, data = mpp_solar_module:read_cache(name)
+        local result, data = mpp_solar:read_cache(name)
         if result then
             return true, data
         end
@@ -21,9 +21,24 @@ function mpp_solar_module:run_with_cache(name)
     return false
 end
 
-function mpp_solar_module:run_command(name)
+function mpp_solar:set_value(name)
+    local res = mpp_solar:run_command(name)
+    if res then
+        if res == "ACK" then
+            return true, nil
+        elseif res == "NAK" then
+            return false, "Response: NAK"
+        else
+            return false, "Response neither ACK or NAK"
+        end
+    else
+        return false, "No response from device"
+    end
+end
+
+function mpp_solar:run_command(name)
     if name ~= nil then
-        local crc = mpp_solar_module:crc16(name)
+        local crc = mpp_solar:crc16(name)
         name = name .. string.char((crc & 0xFF00) >> 8)
         name = name .. string.char(crc & 0x00FF)
         name = name .. string.char(0x0D)
@@ -32,10 +47,10 @@ function mpp_solar_module:run_command(name)
         local raw_data, result = rs232.receive(2000)
         if raw_data and string.byte(raw_data, #raw_data) == 0x0d then
             local data = string.sub(raw_data, 1, -4)
-            local r_crc = mpp_solar_module:crc16(data)
+            local r_crc = mpp_solar:crc16(data)
             if (r_crc & 0xFF00) >> 8 == string.byte(raw_data, -3) and r_crc & 0x00FF == string.byte(raw_data, -2) then
                 local com_response = string.sub(data, 2)
-                mpp_solar_module:add_to_cache(name, com_response, os.time())
+                mpp_solar:add_to_cache(name, com_response, os.time())
                 return com_response
             end
         else
@@ -47,18 +62,18 @@ end
 
 COMMAND_CACHE = {}
 
-function mpp_solar_module:add_to_cache(command_name, data, updated)
+function mpp_solar:add_to_cache(command_name, data, updated)
     COMMAND_CACHE[command_name] = {data=data, updated=updated}
 end
 
-function mpp_solar_module:read_cache(command_name)
+function mpp_solar:read_cache(command_name)
     if COMMAND_CACHE[command_name] then
         return true, COMMAND_CACHE[command_name].data
     end
     return false
 end
 
-function mpp_solar_module:is_in_cache(command_name)
+function mpp_solar:is_in_cache(command_name)
     local com_data = COMMAND_CACHE[command_name]
     if com_data == nil then
         return true
@@ -69,7 +84,7 @@ function mpp_solar_module:is_in_cache(command_name)
     return false
 end
 
-function mpp_solar_module:crc16(pck)
+function mpp_solar:crc16(pck)
     local index
     local crc = 0
     local da
@@ -108,4 +123,4 @@ function mpp_solar_module:crc16(pck)
     return crc
 end
 
-return mpp_solar_module
+return mpp_solar

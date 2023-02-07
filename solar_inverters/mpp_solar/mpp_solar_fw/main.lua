@@ -1,7 +1,6 @@
 local mpp_solar = require("mpp_solar")
 local parser = require("parser")
 local commands  = require("commands")
-local priorities  = commands.set_priorities
 
 function main()
     local err = rs232.init(mpp_solar.baudrate, mpp_solar.data_bits, mpp_solar.parity, mpp_solar.stop_bits)
@@ -76,21 +75,21 @@ function send_telemetry()
 
     local data, err = parser:get_device_rating_info()
     if data then
-      merge_tables(telemetry, data)
+        merge_tables(telemetry, data)
     else
-      enapter.log('Failed to get device rating info: '..err, 'error')
-      rules_available = false
+        enapter.log('Failed to get device rating info: '..err, 'error')
+        rules_available = false
     end
 
     local status = parser:get_device_mode()
     telemetry["status"] = status
     if status == 'unknown' then
-      rules_available = false
+        rules_available = false
     end
 
     local data = parser:get_device_alerts()
     if data then
-      alerts = table.move(data, 1, #data, #alerts +1, alerts)
+        alerts = table.move(data, 1, #data, #alerts +1, alerts)
     end
 
     if not rules_available then
@@ -102,12 +101,10 @@ function send_telemetry()
     collectgarbage()
 end
 
+local priorities  = commands.set_priorities
+
 function command_set_charger_priority(ctx, args)
-    local values = {}
-    values["Utility first"] = 0
-    values["Solar first"] = 1
-    values["Solar and utility"] = 2
-    values["Only solar"] = 3
+    local values = priorities.charger.values
 
     if args["priority"] then
         local result, err = set_charger_priority(values[args["priority"]])
@@ -120,10 +117,7 @@ function command_set_charger_priority(ctx, args)
 end
 
 function command_set_output_priority(ctx, args)
-    local values = {}
-    values["Utility First"] = 0
-    values["Solar First"] = 1
-    values["SBU"] = 2
+    local values = priorities.output.values
 
     if args["priority"] then
         local result, err = set_output_priority(values[args["priority"]])
@@ -136,44 +130,17 @@ function command_set_output_priority(ctx, args)
 end
 
 function set_charger_priority(priority)
-  return set_priority(priorities.charger, priority)
+    return mpp_solar:set_value(priorities.charger.cmd..priority)
 end
 
 function set_output_priority(priority)
-  return set_priority(priorities.output, priority)
+    return mpp_solar:set_value(priorities.output.cmd..priority)
 end
-
-function set_priority(data, priority)
-    if not (data.min <= priority and priority < data.max) then
-        return false, "Invalid priority value"
-    end
-
-    local res = mpp_solar:run_command(data.cmd.. priority)
-    if res then
-        if res == "ACK" then
-            return true
-        elseif res == "NAK" then
-            return false, "Response: NAK"
-        else
-            return false, "Response neither ACK or NAK"
-        end
-    else
-        return false, "No response from device"
-    end
-end
-
--- function tablelength(T)
---     local count = 0
---     for _, _ in ipairs(T) do
---         count = count + 1
---     end
---     return count
--- end
 
 function merge_tables(t1, t2)
-  for key, value in pairs(t2) do
-    t1[key] = value
-  end
+    for key, value in pairs(t2) do
+        t1[key] = value
+    end
 end
 
 main()

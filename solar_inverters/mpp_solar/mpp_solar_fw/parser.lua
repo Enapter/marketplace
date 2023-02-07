@@ -1,32 +1,29 @@
 local mpp_solar = require("mpp_solar")
 local moving_average = require("moving_average")
 local commands = require("commands")
+
 local device_rating_info = commands.device_rating_info
 local firmware_version = commands.firmware_version
 local device_protocol = commands.device_protocol
-local general_status_parameters = commands.general_status_parameters
+local general_parameters = commands.general_parameters
 local device_mode = commands.device_mode
+local output_mode = commands.output_mode
 local device_warning_status = commands.device_warning_status
 local serial_number = commands.serial_number
+local priorities = commands.set_priorities
 
-local parser_module = {}
+local parser = {}
 
--- mpp_solar.device_rating_info = 'QPIRI'
--- mpp_solar.device_general_status_params = 'QPIGS'
--- mpp_solar.parallel_info = 'QPGS'
--- mpp_solar.output_mode = 'QOPM'
--- mpp_solar.device_serial_number = 'QID'
-
-function parser_module:get_device_model()
+function parser:get_device_model()
     local result, data = mpp_solar:run_with_cache(device_rating_info.command)
     if result then
-        return split(data)[device_rating_info.data.ac_out_apparent_power] .. "VA", nil
+        return split(data)[device_rating_info.data.ac_out_apparent_power].."VA", nil
     else
         return nil, 'no_data'
     end
 end
 
-function parser_module:get_firmware_version()
+function parser:get_firmware_version()
     local result, data = mpp_solar:run_with_cache(firmware_version.command)
     if result then
       return data, nil
@@ -35,7 +32,7 @@ function parser_module:get_firmware_version()
     end
 end
 
-function parser_module:get_protocol_version()
+function parser:get_protocol_version()
     local result, data = mpp_solar:run_with_cache(device_protocol.command)
     if result then
       return data, nil
@@ -44,85 +41,67 @@ function parser_module:get_protocol_version()
     end
 end
 
--- function parser_module:get_data_list(command)
---     local data = mpp_solar:run_command(command)
---     if data then
---       return split(data)
---     end
---     return nil, 'no_data'
--- end
-
-function parser_module:get_device_general_status_params()
-    local data = mpp_solar:run_command(general_status_parameters.command)
+function parser:get_device_general_status_params()
+    local data = mpp_solar:run_command(general_parameters.command)
     if data then
       local telemetry = {}
       data = split(data)
 
-      for name, index in pairs(general_status_parameters.data) do
+      for name, index in pairs(general_parameters.data) do
         telemetry[name] = tonumber(data[index])
       end
 
-      telemetry["pv_input_power"] = tonumber(data[general_status_parameters.data.pv_input_amp])
-      * tonumber(data[general_status_parameters.data.pv_input_amp])
+      telemetry["battery_volt"] = parser:get_battery_voltage(telemetry["battery_volt"])
+      telemetry["pv_input_power"] = tonumber(data[general_parameters.data.pv_input_amp])
+      * tonumber(data[general_parameters.data.pv_input_volt])
       return telemetry, nil
     else
       return nil, 'no_data'
     end
 end
 
-function parser_module:get_device_rating_info()
+function parser:get_device_rating_info()
     local data = mpp_solar:run_command(device_rating_info.command)
     local telemetry = {}
     if data then
-      for name, index in pairs(general_status_parameters.data) do
-        telemetry[name] = tonumber(data[index])
+      for name, index in pairs(device_rating_info.data) do
+        telemetry[name] = tonumber(split(data)[index])
       end
+
+      telemetry = parser:get_priorities(telemetry)
+
       return telemetry, nil
     else
       return nil, 'no_data'
     end
 end
 
-function parser_module:get_priorities(telemetry)
-    local output_priorities = {}
-    output_priorities[0] = "Utility First"
-    output_priorities[1] = "Solar First"
-    output_priorities[2] = "SBU"
+function parser:get_priorities(telemetry)
+    for name, value in pairs(priorities.charger.values) do
+      if value == telemetry["charger_source_priority"] then
+        telemetry["charger_source_priority"] = name
+      end
+    end
 
-    local charger_priorities = {}
-    charger_priorities[0] = "Utility first"
-    charger_priorities[1] = "Solar first"
-    charger_priorities[2] = "Solar and utility"
-    charger_priorities[3] = "Only solar"
+    for name, value in pairs(priorities.output.values) do
+      if value == telemetry["output_source_priority"] then
+        telemetry["output_source_priority"] = name
+      end
+    end
 
-    telemetry["output_source_priority"] = output_priorities[telemetry["output_source_priority"]]
-    telemetry["charger_source_priority"] = charger_priorities[telemetry["charger_source_priority"]]
+    return telemetry
 end
 
-function parser_module:get_device_mode()
+function parser:get_device_mode()
     local data = mpp_solar:run_command(device_mode.command)
-    if data then
-      if data == "P" then
-        return "power_on"
-      elseif data == "S" then
-        return "standby"
-      elseif data == "L" then
-        return "line"
-      elseif data == "B" then
-        return "battery"
-      elseif data == "F" then
-        return "error"
-      elseif data == "H" then
-        return "power_saving"
-      else
-        return data
-      end
-    else
+    if not data then
       return 'unknown'
+    else
+      return device_mode.values[data]
     end
 end
 
-function parser_module:get_device_alerts()
+function parser:get_device_alerts()
     local data = mpp_solar:run_command(device_warning_status.command)
     if data then
       local alerts = {}
@@ -148,9 +127,9 @@ function parser_module:get_device_alerts()
     end
 end
 
-function parser_module:get_battery_voltage(voltage)
+function parser:get_battery_voltage(voltage)
     if voltage then
-        moving_average:add_to_table(tonumber(voltage))
+        moving_average:add_to_table(voltage)
         return moving_average:get_value()
     else
         moving_average.table = {}
@@ -159,24 +138,11 @@ function parser_module:get_battery_voltage(voltage)
     end
 end
 
--- For 4K/5K
-function parser_module:get_output_mode(data)
-    if data == '0' then
-      return 'Single'
-    elseif data == '1' then
-      return 'Parallel'
-    elseif data == '2' then
-      return 'Phase 1'
-    elseif data == '3' then
-      return 'Phase 2'
-    elseif data == '4' then
-      return 'Phase 3'
-    else
-      return data
-    end
+function parser:get_output_mode(data)
+    return output_mode.values[data]
 end
 
-function parser_module:get_connection_scheme(max_parallel_number)
+function parser:get_connection_scheme(max_parallel_number)
     local scheme_table = {}
     if max_parallel_number == 0 then
         local result, data = mpp_solar:run_with_cache(serial_number.command)
@@ -185,17 +151,17 @@ function parser_module:get_connection_scheme(max_parallel_number)
         local device_table = {sn=serial_num, out_mode="0"}
         scheme_table["0"] = device_table
     else
+        local parallel_info = commands.parallel_info
         for i = 0, max_parallel_number do
-            local command = mpp_solar.parallel_info..i
-
+            local command = parallel_info.command..i
             local result, data = mpp_solar:run_with_cache(command)
 
             if result then
-                -- if The parallel num whether exist
-                if tonumber(string.sub(data, 1, 1)) == 1 then
+                data = split(data)
+                if tonumber(data[parallel_info.data.parallel_num_exists]) == 1 then
                     scheme_table[i] = {
-                      sn=string.sub(data, 3, 16),
-                      out_mode=string.sub(data, 109, 109)
+                      sn = data[parallel_info.data.serial_number],
+                      out_mode = data[parallel_info.data.work_mode]
                     }
                 end
             end
@@ -204,11 +170,10 @@ function parser_module:get_connection_scheme(max_parallel_number)
     return scheme_table
 end
 
-function parser_module:get_max_parallel_number()
+function parser:get_max_parallel_number()
     local result, data = mpp_solar:run_with_cache(device_rating_info.command)
     if result then
-      local data_list = split(data)
-      local max_parallel_number = data_list[19]
+      local max_parallel_number = split(data)[device_rating_info.data.parallel_max_num]
       if max_parallel_number == '-' then
         return 0
       else
@@ -216,32 +181,6 @@ function parser_module:get_max_parallel_number()
       end
    end
 end
-
--- function tprint(tbl, indent)
---   if not indent then indent = 0 end
-
---   local toprint = string.rep(" ", indent) .."{\r\n"
---   indent = indent + 2
---   for k, v in pairs(tbl) do
---     toprint = toprint .. string.rep(" ", indent)
---     if (type(k) == "number") then
---       toprint = toprint .. "[" .. k .. "] = "
---     elseif (type(k) == "string") then
---       toprint = toprint  .. k ..  "= "
---     end
---     if (type(v) == "number") then
---       toprint = toprint .. v .. ",\r\n"
---     elseif (type(v) == "string") then
---       toprint = toprint .. "\"" .. v .. "\",\r\n"
---     elseif (type(v) == "table") then
---       toprint = toprint .. tprint(v, indent + 2) .. ",\r\n"
---     else
---       toprint = toprint .. "\"" .. tostring(v) .. "\",\r\n"
---     end
---   end
---   toprint = toprint .. string.rep(" ", indent-2) .. "}"
---   return toprint
--- end
 
 function split(str, sep)
     if sep == nil then
@@ -256,4 +195,4 @@ function split(str, sep)
     return t
 end
 
-return parser_module
+return parser
