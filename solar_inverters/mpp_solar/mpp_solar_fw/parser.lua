@@ -179,7 +179,7 @@ function parser:get_max_parallel_number()
       else
         return tonumber(max_parallel_number)
       end
-   end
+    end
 end
 
 function split(str, sep)

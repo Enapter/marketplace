@@ -128,10 +128,10 @@ commands:
         type: string
         required: true
         enum:
-          - "Utility first"
-          - "Solar first"
-          - "Solar and utility"
-          - "Only solar"
+          - Utility first
+          - Solar first
+          - Solar and utility
+          - Only solar
   set_output_priority:
     display_name: Set Output Priority
     group: inverter
@@ -144,9 +144,9 @@ commands:
         type: string
         required: true
         enum:
-          - "Utility first"
-          - "Solar first"
-          - "SBU"
+          - Utility first
+          - Solar first
+          - SBU
 
 alerts:
   parallel_mode:
@@ -249,14 +249,18 @@ alerts:
     display_name: Overload
 
 .cloud:
-  category: batteries
+  category: renewable_energy_sources
   mobile_main_chart: ac_out_active_power
   mobile_telemetry:
     - charger_source_priority
     - output_source_priority
     - ac_out_active_power
     - pv_input_power
+    - pv_input_volt
+    - pv_input_amp
     - battery_volt
+    - battery_charge_amp
+    - battery_discharge_amp
 
   mobile_charts:
     - ac_out_volt
