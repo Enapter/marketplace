@@ -109,8 +109,8 @@ function command_set_charger_priority(ctx, args)
     if args["priority"] then
         local result, err = set_charger_priority(values[args["priority"]])
         if not result then
-	          ctx.error(err)
-	      end
+            ctx.error(err)
+        end
     else
         ctx.error("No arguments")
     end
@@ -122,7 +122,7 @@ function command_set_output_priority(ctx, args)
     if args["priority"] then
         local result, err = set_output_priority(values[args["priority"]])
         if not result then
-	          ctx.error(err)
+            ctx.error(err)
         end
     else
         ctx.error("No arguments")
