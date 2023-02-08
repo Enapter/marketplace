@@ -17,43 +17,50 @@ function main()
     enapter.register_command_handler("set_charger_priority", command_set_charger_priority)
 end
 
-local max_parallel_number = 0
+local max_parallel_number = nil
 
 function send_properties()
     local properties = {}
 
-    local data, err = parser:get_device_model()
-    if data then
-        properties["model"] = data
-    else
-        enapter.log("Can not get device model: "..err, 'error')
-    end
-
-    local data, err = parser:get_firmware_version()
-    if data then
-        properties["fw_ver"] = data
-    else
-        enapter.log("Can not get device firmware version: "..err, 'error')
-    end
-
-    local data, err = parser:get_protocol_version()
-    if data then
-        properties["protocol_ver"] = data
-    else
-        enapter.log("Can not get device protocol version: "..err, 'error')
-    end
-
     max_parallel_number = parser:get_max_parallel_number()
 
-    local scheme = parser:get_connection_scheme(max_parallel_number)
-    if max_parallel_number == 0 then
-        properties["serial_num"] = scheme["0"]["sn"]
-        properties["output_mode"] = parser:get_output_mode(scheme["0"]["out_mode"])
+    if not max_parallel_number then
+        enapter.send_properties(properties)
+        return
     else
-        properties["output_mode"] = parser:get_output_mode(scheme["0"]["out_mode"])
-    end
+      local scheme = parser:get_connection_scheme(max_parallel_number)
+      if max_parallel_number == 0 then
+          properties["serial_num"] = scheme["0"]["sn"]
+          properties["output_mode"] = parser:get_output_mode(scheme["0"]["out_mode"])
+      else
+          properties["output_mode"] = parser:get_output_mode(scheme["0"]["out_mode"])
+          enapter.send_properties(properties)
+          return
+      end
 
-    enapter.send_properties(properties)
+      local data, err = parser:get_device_model()
+      if data then
+          properties["model"] = data
+      else
+          enapter.log("Can not get device model: "..err, 'error')
+      end
+
+      local data, err = parser:get_firmware_version()
+      if data then
+          properties["fw_ver"] = data
+      else
+          enapter.log("Can not get device firmware version: "..err, 'error')
+      end
+
+      local data, err = parser:get_protocol_version()
+      if data then
+          properties["protocol_ver"] = data
+      else
+          enapter.log("Can not get device protocol version: "..err, 'error')
+      end
+
+      enapter.send_properties(properties)
+    end
 end
 
 function send_telemetry()
@@ -61,16 +68,19 @@ function send_telemetry()
     local telemetry = {}
     local alerts = {}
 
-    if max_parallel_number == 0 then
+    if not max_parallel_number then
+        enapter.send_telemetry({status = 'no_data', alerts = {'no_data'}})
+        return
+    elseif max_parallel_number ~= 0 then
+        enapter.send_telemetry({status = 'no_data', alerts = {'parallel_mode'}})
+        return
+    else
         local data, err = parser:get_device_general_status_params()
         if data then
             merge_tables(telemetry, data)
         else
             enapter.log("Failed to get general status params: "..err, 'error')
         end
-    else
-        enapter.send_telemetry({status = 'no_data', alerts = {'parallel_mode'}})
-        return
     end
 
     local data, err = parser:get_device_rating_info()
