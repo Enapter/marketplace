@@ -147,3 +147,8 @@
   display_name: MPP Solar
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/mpp-solar.png
   website: https://www.mppsolar.com/v3/
+
+- id: bronkhorst
+  display_name: Bronkhorst
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/bronkhorst.png
+  website: https://www.bronkhorst.com/int/
