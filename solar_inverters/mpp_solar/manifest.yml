@@ -44,6 +44,7 @@ telemetry:
       - battery
       - error
       - power_saving
+      - no_data
       - unknown
   output_source_priority:
     display_name: Output Source Priority
@@ -150,6 +151,12 @@ commands:
           - SBU
 
 alerts:
+  no_data:
+    severity: error
+    display_name: No data from device
+    description: >
+      Can not get data from device, please check connection between Enapter
+      communication module and the inverter.
   parallel_mode:
     severity: info
     display_name: Parallel mode detected
