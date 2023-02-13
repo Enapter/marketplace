@@ -1,4 +1,5 @@
-  -- Configuration variables must be also defined
+local config = require('enapter.ucm.config')
+-- Configuration variables must be also defined
 -- in `write_configuration` command arguments in manifest.yml
 ADDRESS_CONFIG = 'address'
 UNIT_ID_CONFIG = 'unit_id'
@@ -41,38 +42,10 @@ function send_telemetry()
     return
   end
 
-  --status = uint16(5)
-  -- External_power_setpoint = int16(7) kW
-    --Internal_power_setpoint = int16(8) kW
-    --uptime = uint32(9-10) h
-    -- number_of_launches = uint16 (12)
-    -- h_until_next_maintenance = int16 (18) h
-    -- next_repair = unit32(22-23) h
-    --time_until_next_repair = int32(24) h
-    --kwh_counter = unit32(26)
-    -- cooling_water_t_inlet = int16(40) °C
-    -- cooling_water_t_outlet = int16(41) °C
-    --engine_oil_t_bank_A = int16(47) °C
-    --engine_oil_t_bank_B = int16(48) °C
-    -- generator_t = int16(49)
-    --battery_voltage = int16(64) V
-    -- oil_pressure = int16(65)
-    -- grid_voltage_L1 = int16(73)
-    -- grid_voltage_L2 = int16(74)
-    -- grid_voltage_L3 = int16(75)
-    -- generator_voltage_L1 = int16(77)
-    -- generator_voltage_L2 = int16(78)
-    -- generator_voltage_L3 = int16(79)
-    -- start_stop_error = uint8[4](100-101)
-    -- digital_errors = uint8[16](132-139)
-    --external_errors = uint8[8](140-143)
-    --other_errors = unit8[4](144-145)
-    --operating_states = uint8[4](190-191)
-
   enapter.send_telemetry({
 
     status= parse_status(vitobloc:read_u16(5)),
-    alerts = parse_start_stop_error(vitobloc:read_u8(100)),
+    alerts = parse_start_stop_error(table.unpack(stop_start_errors), table.unpack(digital_errors), table.unpack(external_errors), table.unpack(other_errors)),
     start_stop_errors = parse_start_stop_error(vitobloc:read_u8(100)),
     operating_states = parse_operating_states(vitobloc:read_u8(190)),
     digital_errors = parse_digital_error(vitobloc:read_u8(132)),
@@ -136,7 +109,7 @@ function parse_status(value)
   elseif value == 2 then table.insert(status, 'Start')
   elseif value == 3 then table.insert(status, 'Operation')
   elseif value == 4 then table.insert(status, 'Error')
-  elseif enapter.log('Cannot decode status: '..tostring(value), 'error') then
+  else enapter.log('Cannot decode status: '..tostring(value), 'error')
     return tostring(value)
     end
   return status
@@ -157,7 +130,7 @@ function parse_operating_states(value)
   if value & 4096 then table.insert(operating_states,'Ignition ON') end
   if value & 8192 then table.insert(operating_states, 'Gas valves OPEN') end
 
-  return operating_states()
+  return operating_states
   end
 end
 
@@ -210,143 +183,6 @@ function parse_other_error(value)
     if value & 2 then table.insert(other_errors, 'Pump dry running protection 2') end
     if value & 4 then table.insert(other_errors,'Pump dry run protection') end
   return other_errors
-  end
-end
-
----------------------------------
--- Stored Configuration API
----------------------------------
-
-config = {}
-
--- Initializes config options. Registers required UCM commands.
--- @param options: key-value pairs with option name and option params
--- @example
---   config.init({
---     address = { type = 'string', required = true },
---     unit_id = { type = 'number', default = 1 },
---     reconnect = { type = 'boolean', required = true }
---   })
-function config.init(options)
-  assert(next(options) ~= nil, 'at least one config option should be provided')
-  assert(not config.initialized, 'config can be initialized only once')
-  for name, params in pairs(options) do
-    local type_ok = params.type == 'string' or params.type == 'number' or params.type == 'boolean'
-    assert(type_ok, 'type of `'..name..'` option should be either string or number or boolean')
-  end
-
-  enapter.register_command_handler('write_configuration', config.build_write_configuration_command(options))
-  enapter.register_command_handler('read_configuration', config.build_read_configuration_command(options))
-
-  config.options = options
-  config.initialized = true
-end
-
--- Reads all initialized config options
--- @return table: key-value pairs
--- @return nil|error
-function config.read_all()
-  local result = {}
-
-  for name, _ in pairs(config.options) do
-    local value, err = config.read(name)
-    if err then
-      return nil, 'cannot read `'..name..'`: '..err
-    else
-      result[name] = value
-    end
-  end
-
-  return result, nil
-end
-
--- @param name string: option name to read
--- @return string
--- @return nil|error
-function config.read(name)
-  local params = config.options[name]
-  assert(params, 'undeclared config option: `'..name..'`, declare with config.init')
-
-  local ok, value, ret = pcall(function()
-    return storage.read(name)
-  end)
-
-  if not ok then
-    return nil, 'error reading from storage: '..tostring(value)
-  elseif ret and ret ~= 0 then
-    return nil, 'error reading from storage: '..storage.err_to_str(ret)
-  elseif value then
-    return config.deserialize(name, value), nil
-  else
-    return params.default, nil
-  end
-end
-
--- @param name string: option name to write
--- @param val string: value to write
--- @return nil|error
-function config.write(name, val)
-  local ok, ret = pcall(function()
-    return storage.write(name, config.serialize(name, val))
-  end)
-
-  if not ok then
-    return 'error writing to storage: '..tostring(ret)
-  elseif ret and ret ~= 0 then
-    return 'error writing to storage: '..storage.err_to_str(ret)
-  end
-end
-
--- Serializes value into string for storage
-function config.serialize(_, value)
-  if value then
-    return tostring(value)
-  else
-    return nil
-  end
-end
-
--- Deserializes value from stored string
-function config.deserialize(name, value)
-  local params = config.options[name]
-  assert(params, 'undeclared config option: `'..name..'`, declare with config.init')
-
-  if params.type == 'number' then
-    return tonumber(value)
-  elseif params.type == 'string' then
-    return value
-  elseif params.type == 'boolean' then
-    if value == 'true' then
-      return true
-  elseif value == 'false' then
-      return false
-    else
-      return nil
-    end
-  end
-end
-
-function config.build_write_configuration_command(options)
-  return function(ctx, args)
-    for name, params in pairs(options) do
-      if params.required then
-        assert(args[name], '`'..name..'` argument required')
-      end
-
-      local err = config.write(name, args[name])
-      if err then ctx.error('cannot write `'..name..'`: '..err) end
-    end
-  end
-end
-
-function config.build_read_configuration_command(_config_options)
-  return function(ctx)
-    local result, err = config.read_all()
-    if err then
-      ctx.error(err)
-    else
-      return result
-    end
   end
 end
 

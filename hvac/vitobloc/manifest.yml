@@ -21,10 +21,6 @@ properties:
   model:
     display_name: Model
     type: string
-  serial_num:
-    display_name: Serial Number
-    type: integer
-
 
 telemetry:
   status:
@@ -36,6 +32,8 @@ telemetry:
       - Start
       - Operation
       - Error
+      - ok
+      - Unknown value
   ext_power_setpoint:
     display_name: External power setpoint
     type: float
@@ -46,24 +44,23 @@ telemetry:
     unit: kW
   uptime:
     display_name: Uptime
-    type: float
+    type: integer
     unit: h
-  naumber_of_launches:
+  number_of_launches:
     display_name: Number of launches
     type: integer
-    unit: Number
   time_till_next_maintenance:
     display_name: Time before next maintenance
-    type: float
+    type: integer
     unit: h
   time_till_next_repair:
     display_name: Time before next repair
-    type: float
+    type: integer
     unit: h
   kwh_counter:
     display_name: kwh counter
     type: float
-    unit: kW
+    unit: kwh
   t_cooling_water_inlet:
     display_name: Inlet cooling water temperature
     type: float
@@ -123,7 +120,7 @@ command_groups:
 commands:
   write_configuration:
     populate_values_command: read_configuration
-    display_name: Configure
+    display_name: Set Up Connection
     group: config
     ui:
       icon: wrench-outline
@@ -135,7 +132,7 @@ commands:
         required: true
       unit_id:
         display_name: Modbus Unit ID
-        description: Can be obtained from SMA web interface
+        description: Can be obtained from ___
         type: integer
         required: true
   read_configuration:
@@ -146,7 +143,6 @@ commands:
 
 # yamllint disable rule:line-length
 
-# need help with figuring out how to incorporate all errors into alerts.
 alerts:
   cannot_read_config:
     severity: error
@@ -161,7 +157,7 @@ alerts:
 # yamllint enable rule:line-length
 
 .cloud:
-  category: batteries # I have no idea at all, it doesn't fit anywhere
+  category: hvac
   mobile_main_chart: kwh_counter
   mobile_telemetry:
     - uptime
@@ -172,3 +168,7 @@ alerts:
     - grid_voltage_L1
     - generator_voltage_L1
     - generator_temp
+    - t_cooling_water_inlet
+    - t_cooling_water_outlet
+    - t_engine_oil_tank_A
+    - t_engine_oil_tank_B
