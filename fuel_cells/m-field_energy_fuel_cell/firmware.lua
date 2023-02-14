@@ -1,3 +1,7 @@
+local config = require("enapter.ucm.config")
+
+DEVICE_ID_CONFIG = "device_id"
+
 -- RS485 communication interface parameters
 BAUD_RATE = 9600
 DATA_BITS = 8
@@ -12,17 +16,38 @@ function main()
 
   scheduler.add(30000, send_properties)
   scheduler.add(1000, send_telemetry)
-end
 
-function send_properties()
-  enapter.send_properties({
-    vendor = "M-Field",
-    model = "MF-UEH"
+  config.init({
+    [DEVICE_ID_CONFIG] = { type = 'string', required = true, default = '24' }
   })
 end
 
+function send_properties()
+  local properties = {
+    vendor = "M-Field",
+    model = "MF-UEH"
+  }
+
+  local values, err = config.read_all()
+  if err then
+    enapter.log('cannot read config: '..tostring(err), 'error')
+  else
+    properties[DEVICE_ID_CONFIG] = values[DEVICE_ID_CONFIG]
+  end
+
+  enapter.send_properties(properties)
+end
+
 function send_telemetry()
-  local DEVICE_ID = "\x25"
+  local DEVICE_ID = '\x24' -- default
+
+  local values, err = config.read_all()
+  if err then
+    enapter.log('cannot read config: '..tostring(err), 'error')
+  else
+    DEVICE_ID = string.char(tonumber(values[DEVICE_ID_CONFIG], 16))
+  end
+
   local FUNCTION = "\x03"
   local STARTING_ADDR_MSB = "\x00"
   local STARTING_ADDR_LSB = "\x00"
@@ -30,21 +55,21 @@ function send_telemetry()
 
   local telemetry = {}
   local status = "ok"
-  -- commant to read all registers from p. 6.1 (QW-RD-09)
+
   local read_command = DEVICE_ID .. FUNCTION .. STARTING_ADDR_MSB .. STARTING_ADDR_LSB .. DATA_SIZE
-  local read_request = read_command .. string.char(check_crc(read_command)) -- add checksum
-  local result = rs485.send(read_request) -- send the data to RS-485 network
+  local read_request = read_command .. string.char(check_crc(read_command))
+  local result = rs485.send(read_request)
   if result ~= 0 then
     enapter.log("RS-485 sending data failed: " .. result .. " " .. rs485.err_to_str(result), "error", true)
   end
 
-  local raw_data, result = read_data() --[[ receive with 1 second timeout.
-  The answer is in format described in p. 6.5.3 (QW-RD-09) --]]
+  local raw_data, result = read_data()
 
   if not raw_data then
-    enapter.log("RS485 receiving data failed: " .. result .. " " .. rs485.err_to_str(result), "error", true)
+    enapter.log("RS485 receiving data failed: " .. rs485.err_to_str(result), "error", true)
+    enapter.send_telemetry({status = 'no_data'})
+    return
   else
-    -- How to convert received values - p. 6.1.2 (QW-RD-08)
     local volt = string.unpack("<I2", raw_data:sub(9, 10)) / 100
     local current = string.unpack("<I2", raw_data:sub(11, 12)) / 100
     telemetry["output_volt"] = volt
