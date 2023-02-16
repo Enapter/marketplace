@@ -45,7 +45,7 @@ function send_telemetry()
   enapter.send_telemetry({
 
     status= parse_status(vitobloc:read_u16(5)),
-    alerts = parse_start_stop_error(table.unpack(stop_start_errors), table.unpack(digital_errors), table.unpack(external_errors), table.unpack(other_errors)),
+    alerts = parse_start_stop_error(table.unpack(stop_start_errors), parse_digital_error(table.unpack(digital_errors)), parse_external_error(table.unpack(external_errors)),parse_other_error(table.unpack(other_errors))),
     start_stop_errors = parse_start_stop_error(vitobloc:read_u8(100)),
     operating_states = parse_operating_states(vitobloc:read_u8(190)),
     digital_errors = parse_digital_error(vitobloc:read_u8(132)),
@@ -100,7 +100,7 @@ end
 
 function parse_status(value)
   if not value then return {} end
-  if value == 0 then return {'unknown value'} end
+  if value == 0 then return {'unknown_value'} end
   if type(value) == 'number' then
   local status = {}
 
@@ -118,17 +118,17 @@ end
 
 function parse_operating_states(value)
   if not value then return {} end
-  if value == 0 then return {'unknown value'} end
+  if value == 0 then return {'unknown_value'} end
   if type(value) == 'number' then
   local operating_states = {}
 
-  if value & 64 then table.insert(operating_states,'Engine stopped') end
-  if value & 128  then table.insert(operating_states, 'Engine switch ON') end
-  if value & 256 then table.insert(operating_states,'Fan ON') end
-  if value & 512 then table.insert(operating_states,'Cooling Water Pump ON') end
-  if value & 1024 then table.insert(operating_states, 'Heating water pump ON') end
-  if value & 4096 then table.insert(operating_states,'Ignition ON') end
-  if value & 8192 then table.insert(operating_states, 'Gas valves OPEN') end
+  if value & 64 then table.insert(operating_states,'engine_stopped') end
+  if value & 128  then table.insert(operating_states, 'engine_on') end
+  if value & 256 then table.insert(operating_states,'fan_on') end
+  if value & 512 then table.insert(operating_states,'cooling_water_pump_on') end
+  if value & 1024 then table.insert(operating_states, 'heating_water_pump_on') end
+  if value & 4096 then table.insert(operating_states,'ignition_on') end
+  if value & 8192 then table.insert(operating_states, 'gas_valves_open') end
 
   return operating_states
   end
@@ -136,14 +136,14 @@ end
 
 function parse_start_stop_error(value)
   if not value then return {} end
-  if value == 0 then return {'unknown value'} end
+  if value == 0 then return {'unknow_value'} end
   if type(value) == 'number' then
   local stop_start_errors = {}
 
-    if value & 1 then table.insert(stop_start_errors,'No Interference') end
-    if value & 2 then table.insert(stop_start_errors,'Underspeed') end
-    if value & 32 then table.insert(stop_start_errors,'Speed < 50 rpm') end
-    if value & 1024 then table.insert(stop_start_errors, "Engine Doesn't Stop") end
+    if value & 1 then table.insert(stop_start_errors,'no_interference') end
+    if value & 2 then table.insert(stop_start_errors,'underspeed') end
+    if value & 32 then table.insert(stop_start_errors,'slow_speed') end
+    if value & 1024 then table.insert(stop_start_errors, "engine_doesnt_stop") end
 
   return stop_start_errors
   end
@@ -151,37 +151,37 @@ end
 
 function parse_digital_error(value)
   if not value then return {} end
-  if value == 0 then return {'unknown value'} end
+  if value == 0 then return {'unknown_value'} end
   if type(value) == 'number' then
   local digital_errors = {}
 
-    if value & 8 then table.insert(digital_errors, "Gas pressure max") end
-    if value & 16 then table.insert(digital_errors, 'Gas pressure min') end
+    if value & 8 then table.insert(digital_errors, "gas_pressure_max") end
+    if value & 16 then table.insert(digital_errors, 'gas_pressure_min') end
     return digital_errors
   end
 end
 
 function parse_external_error(value)
   if not value then return {} end
-  if value == 0 then return {'unknown value'} end
+  if value == 0 then return {'unknown_value'} end
   if type(value) == 'number' then
   local external_errors = {}
 
-    if value & 1 then table.insert(external_errors, "Power module generator contactor stuck") end
-    if value & 2 then table.insert(external_errors, 'Power module reverse power') end
+    if value & 1 then table.insert(external_errors, "power_module_generator") end
+    if value & 2 then table.insert(external_errors, 'power_module_reverse') end
   return external_errors
   end
 end
 
 function parse_other_error(value)
   if not value then return {} end
-  if value == 0 then return {'unknown value'} end
+  if value == 0 then return {'unknown_value'} end
   if type(value) == 'number' then
   local other_errors = {}
 
-    if value & 1 then table.insert(other_errors, "Pump dry running protection 1") end
-    if value & 2 then table.insert(other_errors, 'Pump dry running protection 2') end
-    if value & 4 then table.insert(other_errors,'Pump dry run protection') end
+    if value & 1 then table.insert(other_errors, "pump_dry_1") end
+    if value & 2 then table.insert(other_errors, 'pump_dry_2') end
+    if value & 4 then table.insert(other_errors,'pump_dry') end
   return other_errors
   end
 end
@@ -220,7 +220,6 @@ function VitoblocModbusTcp:read_holdings(address, number)
     end
     return nil
   end
-
   return registers
 end
 

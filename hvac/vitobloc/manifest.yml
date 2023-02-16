@@ -132,7 +132,7 @@ commands:
         required: true
       unit_id:
         display_name: Modbus Unit ID
-        description: Can be obtained from ___
+        description: Can be obtained from the built-in LAN interface or via customer support
         type: integer
         required: true
   read_configuration:
@@ -152,7 +152,82 @@ alerts:
     severity: info
     display_name: Modbus Not Configured
     description: Use "Configure" command to set up Modbus connection.
-
+  unknown_value:
+    severity: info
+    display_name: Unknown Value
+    description: Cannot read or decipher the value.
+  no_interference:
+    severity: error
+    display_name: No Interference
+    description: There's no interference.
+  underspeed:
+    severity: warning
+    display_name: Underspeed
+    description: Speed is slower than desirable.
+  slow_speed:
+    severity: error
+    display_name: Slow speed
+    description: Speed < 50 rpm.
+  engine_doesnt_stop:
+    severity: error
+    display_name: Engine Doesn't Stop
+    description: Vitobloc engine is not stopping.
+  gas_pressure_max:
+    severity: error
+    display_name: Gas pressure max
+    description: Gas pressure is at the max value.
+  gas_ressure_min:
+    severity: error
+    display_name: Gas pressure min
+    description: Gas pressure is at the min value.
+  power_module_generator:
+    severity: error
+    display_name: Power module generator error
+    description: Power module generator contactor is stuck.
+  power_module_reverse:
+    severity: warning
+    display_name: Power module power
+    description: Power module is running in reverse power.
+  pump_dry_1:
+    severity: error
+    display_name: Pump dry protection 1
+    description: Pump is running dry-running protection 1.
+  pump_dry_2:
+    severity: error
+    display_name: Pump dry protection 2
+    description: Pump is running dry-running protection 2.
+  pump_dry:
+    severity: error
+    display_name: Pump dry protection
+    description: Pump is running dry-running protection.
+  engine_stopped:
+    severity: info
+    display_name: Engine Stopped
+    description: Engine was stoped.
+  engine_on:
+    severity: info
+    display_name: Engine ON
+    description: Engine is turned ON.
+  fan_on:
+    severity: info
+    display_name: Fan ON
+    description: Fan is switched ON.
+  cooling_water_pump_on:
+    severity: info
+    display_name: Cooling water pump ON
+    description: Cooling water pump is switched on.
+  heating_water_pump_on:
+    severity: info
+    display_name: Heating water pump is switched on
+    description: Engine is ON.
+  ignition_on:
+    severity: info
+    display_name: Ignition ON
+    description: Ignition is ON.
+  gas_valves_open:
+    severity: info
+    display_name: Gas Valves Open
+    description: Gas Valves are open.
 
 # yamllint enable rule:line-length
 
