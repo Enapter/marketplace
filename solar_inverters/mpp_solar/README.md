@@ -11,7 +11,7 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integ
 
 ## Troubleshooting
 
-_Parallel mode detected_ alert means that this blueprint **doesn't support inverters working in parallel**. An appropriate blueprint will be published soon by Enapter.
+_Parallel mode detected_ alert means that this blueprint **doesn't support inverters working in parallel**. Please upload [this blueprint](../mpp_solar_parallel).
 
 ## References
 
