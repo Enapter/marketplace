@@ -44,4 +44,4 @@ jobs:
           -v "$(pwd)":/marketplace \
           -w /marketplace/ \
           --env ENAPTER_API_TOKEN=${{ secrets.ENAPTER_API_TOKEN }} \
-          docker.enapter.com/tools/blueprints-linter:v0.3.1 run -g -m ${{ steps.paths.outputs.blueprints-paths }}
+          docker.enapter.com/tools/blueprints-linter:v0.3.2 run -g -m ${{ steps.paths.outputs.blueprints-paths }}
