@@ -43,7 +43,6 @@ function send_telemetry()
   end
 
   enapter.send_telemetry({
-
     status= parse_status(vitobloc:read_u16(5)),
     alerts = parse_start_stop_error(table.unpack(stop_start_errors), parse_digital_error(table.unpack(digital_errors)), parse_external_error(table.unpack(external_errors)),parse_other_error(table.unpack(other_errors))),
     start_stop_errors = parse_start_stop_error(vitobloc:read_u8(100)),
@@ -102,17 +101,16 @@ function parse_status(value)
   if not value then return {} end
   if value == 0 then return {'unknown_value'} end
   if type(value) == 'number' then
-  local status = {}
 
-  if value == 0 then table.insert(status, 'Off')
-  elseif value == 1 then table.insert(status,'Ready')
-  elseif value == 2 then table.insert(status, 'Start')
-  elseif value == 3 then table.insert(status, 'Operation')
-  elseif value == 4 then table.insert(status, 'Error')
-  else enapter.log('Cannot decode status: '..tostring(value), 'error')
+  if value == 0 then return 'Off'
+  elseif value == 1 then return 'Ready'
+  elseif value == 2 then return 'Start'
+  elseif value == 3 then return 'Operation'
+  elseif value == 4 then return 'Error'
+  else
+    enapter.log('Cannot decode status: '..tostring(value), 'error')
     return tostring(value)
     end
-  return status
   end
 end
 
@@ -129,7 +127,6 @@ function parse_operating_states(value)
   if value & 1024 then table.insert(operating_states, 'heating_water_pump_on') end
   if value & 4096 then table.insert(operating_states,'ignition_on') end
   if value & 8192 then table.insert(operating_states, 'gas_valves_open') end
-
   return operating_states
   end
 end
@@ -140,11 +137,10 @@ function parse_start_stop_error(value)
   if type(value) == 'number' then
   local stop_start_errors = {}
 
-    if value & 1 then table.insert(stop_start_errors,'no_interference') end
-    if value & 2 then table.insert(stop_start_errors,'underspeed') end
-    if value & 32 then table.insert(stop_start_errors,'slow_speed') end
-    if value & 1024 then table.insert(stop_start_errors, "engine_doesnt_stop") end
-
+  if value & 1 then table.insert(stop_start_errors,'no_interference') end
+  if value & 2 then table.insert(stop_start_errors,'underspeed') end
+  if value & 32 then table.insert(stop_start_errors,'slow_speed') end
+  if value & 1024 then table.insert(stop_start_errors, "engine_doesnt_stop") end
   return stop_start_errors
   end
 end
@@ -155,9 +151,9 @@ function parse_digital_error(value)
   if type(value) == 'number' then
   local digital_errors = {}
 
-    if value & 8 then table.insert(digital_errors, "gas_pressure_max") end
-    if value & 16 then table.insert(digital_errors, 'gas_pressure_min') end
-    return digital_errors
+  if value & 8 then table.insert(digital_errors, "gas_pressure_max") end
+  if value & 16 then table.insert(digital_errors, 'gas_pressure_min') end
+  return digital_errors
   end
 end
 
@@ -167,8 +163,8 @@ function parse_external_error(value)
   if type(value) == 'number' then
   local external_errors = {}
 
-    if value & 1 then table.insert(external_errors, "power_module_generator") end
-    if value & 2 then table.insert(external_errors, 'power_module_reverse') end
+  if value & 1 then table.insert(external_errors, "power_module_generator") end
+  if value & 2 then table.insert(external_errors, 'power_module_reverse') end
   return external_errors
   end
 end
@@ -179,9 +175,9 @@ function parse_other_error(value)
   if type(value) == 'number' then
   local other_errors = {}
 
-    if value & 1 then table.insert(other_errors, "pump_dry_1") end
-    if value & 2 then table.insert(other_errors, 'pump_dry_2') end
-    if value & 4 then table.insert(other_errors,'pump_dry') end
+  if value & 1 then table.insert(other_errors, "pump_dry_1") end
+  if value & 2 then table.insert(other_errors, 'pump_dry_2') end
+  if value & 4 then table.insert(other_errors,'pump_dry') end
   return other_errors
   end
 end
@@ -192,18 +188,18 @@ end
 
 VitoblocModbusTcp = {}
 
-function VitoblocModbusTcp.new(addr, unit_id)
-  assert(type(addr) == 'string', 'addr (arg #1) must be string, given: '..inspect(addr))
+function VitoblocModbusTcp.new(ip_address, unit_id)
+  assert(type(ip_address) == 'string', 'ip_address (arg #1) must be string, given: '..inspect(ip_address))
   assert(type(unit_id) == 'number', 'unit_id (arg #2) must be number, given: '..inspect(unit_id))
 
   local self = setmetatable({}, { __index = VitoblocModbusTcp })
-  self.addr = addr
+  self.ip_address = ip_address
   self.unit_id = unit_id
   return self
 end
 
 function VitoblocModbusTcp:connect()
-  self.modbus = modbustcp.new(self.addr)
+  self.modbus = modbustcp.new(self.ip_address)
 end
 
 function VitoblocModbusTcp:read_holdings(address, number)
@@ -222,6 +218,8 @@ function VitoblocModbusTcp:read_holdings(address, number)
   end
   return registers
 end
+
+--I really don't understand the whole '>I2I2' and reg[1] == 0x00FF thing, help
 
 function VitoblocModbusTcp:read_u32(address)
   local reg = self:read_holdings(address, 2)
@@ -246,6 +244,7 @@ function VitoblocModbusTcp:read_u32_enum(address)
   return self:read_u32(address)
 end
 
+-- I don't know how to check for u16 in u8
 
 function VitoblocModbusTcp:read_u8(address)
   local reg = self:read_holdings(address, 1)
@@ -256,8 +255,6 @@ function VitoblocModbusTcp:read_u8(address)
     return nil
   end
 
-  local raw = string.pack('>I2I2', reg[1], reg[2])
-  return string.unpack('>I4', raw)
 end
 
 function VitoblocModbusTcp:read_u16(address)
@@ -273,16 +270,7 @@ function VitoblocModbusTcp:read_u16(address)
   if reg[1] == 0x00FF and reg[2] == 0xFFFD then
     return nil
   end
-
-  local raw = string.pack('>I2I2', reg[1], reg[2])
-  return string.unpack('>I4', raw)
 end
-
-
-function VitoblocModbusTcp:read_u16_enum(address)
-  return self:read_u32(address)
-end
-
 
 function VitoblocModbusTcp:read_i16(address)
   local reg = self:read_holdings(address, 1)
@@ -292,9 +280,6 @@ function VitoblocModbusTcp:read_i16(address)
   if reg[1] == 0x00FF and reg[2] == 0xFFFD then
     return nil
   end
-
-  local raw = string.pack('>I2I2', reg[1], reg[2])
-  return string.unpack('>I4', raw)
 end
 
 main()

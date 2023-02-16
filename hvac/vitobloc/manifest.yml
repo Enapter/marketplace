@@ -157,7 +157,7 @@ alerts:
     display_name: Unknown Value
     description: Cannot read or decipher the value.
   no_interference:
-    severity: error
+    severity: info
     display_name: No Interference
     description: There's no interference.
   underspeed:
