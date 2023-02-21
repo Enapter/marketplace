@@ -1,4 +1,6 @@
 go 1.19
 
-use ./.scripts/blueprint_vendor_checker
-
+use (
+    ./.scripts/blueprint_vendor_checker
+    ./.scripts/blueprints_collector
+)
