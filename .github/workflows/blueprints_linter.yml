@@ -37,7 +37,7 @@ jobs:
           docker run --rm \
           -v "$(pwd)":/marketplace \
           -w /marketplace/ \
-          golang:1.18 go run .scripts/blueprints_collector/main.go -p /marketplace ${{ steps.changes.outputs.changed-files }} >> "$GITHUB_OUTPUT"
+          golang:1.19 go run blueprints_collector -p /marketplace ${{ steps.changes.outputs.changed-files }} >> "$GITHUB_OUTPUT"
       - name: Run Linter
         run: |
           docker run --rm \
