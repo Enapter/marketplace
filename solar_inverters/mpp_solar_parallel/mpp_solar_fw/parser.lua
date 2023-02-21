@@ -1,4 +1,5 @@
 local mpp_solar = require("mpp_solar")
+local moving_average = require("moving_average")
 local commands = require("commands")
 
 local device_rating_info = commands.device_rating_info
@@ -39,9 +40,9 @@ function parser:get_protocol_version()
 end
 
 function parser:get_device_rating_info()
-    local data = mpp_solar:run_command(device_rating_info.command)
+    local result, data = mpp_solar:run_with_cache(device_rating_info.command)
     local telemetry = {}
-    if data then
+    if result then
       for name, index in pairs(device_rating_info.data) do
         telemetry[name] = tonumber(split(data)[index])
       end
@@ -72,6 +73,8 @@ function parser:get_all_parallel_info(devices_number)
         for name, _ in pairs(parallel_info.data.total) do
           telemetry[name] = data[name]
         end
+
+        telemetry["battery_volt"] = parser:get_battery_voltage(telemetry["battery_volt"])
       else
         non_existing_devices = non_existing_devices + 1
       end
@@ -83,6 +86,17 @@ function parser:get_all_parallel_info(devices_number)
       telemetry["total_pv_input_power"] = total_pv_input_power
       telemetry["alerts"] = alerts
       return telemetry, nil
+    end
+end
+
+function parser:get_battery_voltage(voltage)
+    if voltage then
+        moving_average:add_to_table(voltage)
+        return moving_average:get_value()
+    else
+        moving_average.table = {}
+        enapter.log("No battery voltage", 'error')
+        return nil
     end
 end
 
@@ -120,9 +134,9 @@ function parser:get_parallel_info(device_number)
           telemetry["fault_code_"..device_number]
         )
 
-        telemetry["charger_source_priority_"..device_number] = parser:get_charger_priority(
+        telemetry["charger_source_priority_"..device_number] = priorities.charger.values[
           telemetry["charger_source_priority_"..device_number]
-        )
+        ]
 
         for name, index in pairs(parallel_info.data.total) do
           telemetry[name] = tonumber(data[index])
@@ -143,14 +157,6 @@ function parser:get_parallel_device_alerts(value)
   else
     return nil
   end
-end
-
-function parser:get_charger_priority(priority)
-    for name, value in pairs(priorities.charger.values) do
-      if value == priority then
-        return name
-      end
-    end
 end
 
 function parser:get_device_mode(value)
