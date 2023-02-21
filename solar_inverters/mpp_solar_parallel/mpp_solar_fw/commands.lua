@@ -79,7 +79,6 @@ local commands = {
           ac_out_apparent_power = 9,
           ac_out_active_power = 10,
           load_percentage = 11,
-          battery_volt = 12,
           battery_charge_current = 13,
           battery_capacity= 14,
           pv_input_volt = 15,
@@ -98,6 +97,7 @@ local commands = {
         }
       },
       total = {
+        battery_volt = 12,
         total_charging_current = 16,
         total_ac_out_apparent_power = 17,
         total_ac_out_active_power = 18,
@@ -142,13 +142,13 @@ commands.output_mode.values['2'] = 'Phase 1'
 commands.output_mode.values['3'] = 'Phase 2'
 commands.output_mode.values['4'] = 'Phase 3'
 
-commands.set_priorities.output.values["Utility first"] = 0
-commands.set_priorities.output.values["Solar first"] = 1
-commands.set_priorities.output.values["SBU"] = 2
+commands.set_priorities.output.values[0] = "Utility first"
+commands.set_priorities.output.values[1] = "Solar first"
+commands.set_priorities.output.values[2] = "SBU"
 
-commands.set_priorities.charger.values["Utility first"] = 0
-commands.set_priorities.charger.values["Solar first"] = 1
-commands.set_priorities.charger.values["Solar and utility"] = 2
-commands.set_priorities.charger.values["Only solar"] = 3
+commands.set_priorities.charger.values[0] = "Utility first"
+commands.set_priorities.charger.values[1] = "Solar first"
+commands.set_priorities.charger.values[2] = "Solar and utility"
+commands.set_priorities.charger.values[3] = "Only solar"
 
 return commands

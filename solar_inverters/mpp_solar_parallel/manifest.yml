@@ -54,6 +54,10 @@ telemetry:
     display_name: Total Charging Current
     type: float
     unit: amp
+  battery_volt:
+    display_name: Battery Voltage
+    type: float
+    unit: volt
   total_ac_out_percentage:
     display_name: Total AC Output Load Percent
     type: float
@@ -862,6 +866,7 @@ alerts:
     - total_charging_current
     - total_ac_out_percentage
     - total_ac_out_apparent_power
+    - battery_volt
 
   mobile_charts:
     - total_ac_out_active_power
@@ -869,3 +874,4 @@ alerts:
     - total_charging_current
     - total_ac_out_percentage
     - total_ac_out_apparent_power
+    - battery_volt
