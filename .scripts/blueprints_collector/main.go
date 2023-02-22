@@ -7,12 +7,11 @@ import (
 	"strings"
 )
 
-var marketplacePath = flag.String("p", "./", "path to marketplace directory")
-
 func main() {
+	marketplacePath := flag.String("p", "./", "path to marketplace directory")
 	flag.Parse()
 
-	changed, err := changedBlueprints(*marketplacePath, os.Args[1:])
+	changed, err := changedBlueprints(*marketplacePath, flag.Args())
 	if err != nil {
 		fmt.Printf("::error::failed to get chnaged blueprints: %s\n", err)
 		os.Exit(1)
