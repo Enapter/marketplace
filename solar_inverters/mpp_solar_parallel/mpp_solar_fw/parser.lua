@@ -39,17 +39,12 @@ function parser:get_protocol_version()
     end
 end
 
-function parser:get_device_rating_info()
-    local result, data = mpp_solar:run_with_cache(device_rating_info.command)
-    local telemetry = {}
-    if result then
-      for name, index in pairs(device_rating_info.data) do
-        telemetry[name] = tonumber(split(data)[index])
-      end
-
-      return telemetry, nil
+function parser:get_device_mode()
+    local res, data = mpp_solar:run_with_cache(device_mode.command, 10)
+    if not res then
+      return 'unknown'
     else
-      return nil, 'no_data'
+      return device_mode.values[data]
     end
 end
 
@@ -70,7 +65,7 @@ function parser:get_all_parallel_info(devices_number)
           total_pv_input_power = total_pv_input_power + data["pv_input_power_"..i]
         end
 
-        for name, _ in pairs(parallel_info.data.total) do
+        for name, _ in pairs(parallel_info.data.total.num) do
           telemetry[name] = data[name]
         end
 
@@ -97,6 +92,7 @@ function parser:get_parallel_info(device_number)
 
       if data[parallel_info.data.general.num.parallel_num_exists] == '1' then
         local telemetry = {}
+
         for name, index in pairs(parallel_info.data.general.num) do
           telemetry[name.."_"..device_number] = tonumber(data[index])
         end
@@ -104,10 +100,6 @@ function parser:get_parallel_info(device_number)
         for name, index in pairs(parallel_info.data.general.str) do
           telemetry[name.."_"..device_number] = data[index]
         end
-
-        telemetry["work_mode_"..device_number] = parser:get_device_mode(
-          telemetry["work_mode_"..device_number]
-        )
 
         telemetry["output_mode_"..device_number] = parser:get_output_mode(
           telemetry["output_mode_"..device_number]
@@ -127,10 +119,11 @@ function parser:get_parallel_info(device_number)
           telemetry["charger_source_priority_"..device_number]
         ]
 
-        for name, index in pairs(parallel_info.data.total) do
+        for name, index in pairs(parallel_info.data.total.num) do
           telemetry[name] = tonumber(data[index])
         end
 
+        telemetry["work_mode"] = data[parallel_info.data.total.str.work_mode]
         return telemetry
       else
         return nil, 'no_device_with_such_number'
@@ -157,14 +150,6 @@ function parser:get_parallel_device_alerts(value)
   else
     return nil
   end
-end
-
-function parser:get_device_mode(value)
-    if not value then
-      return 'unknown'
-    else
-      return device_mode.values[value]
-    end
 end
 
 function parser:get_output_mode(value)

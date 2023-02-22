@@ -90,18 +90,22 @@ local commands = {
         },
         str = {
           serial_number = 2,
-          work_mode = 3,
           fault_code = 4,
           output_mode = 21,
         }
       },
       total = {
-        battery_volt = 12,
-        battery_capacity = 14,
-        total_charging_current = 16,
-        total_ac_out_apparent_power = 17,
-        total_ac_out_active_power = 18,
-        total_ac_out_percentage = 19,
+        num = {
+          battery_volt = 12,
+          battery_capacity = 14,
+          total_charging_current = 16,
+          total_ac_out_apparent_power = 17,
+          total_ac_out_active_power = 18,
+          total_ac_out_percentage = 19,
+        },
+        str = {
+          work_mode = 3, -- theoretically you can't set different work modes for parallel devices
+        }
       },
     },
     fault_codes = {}

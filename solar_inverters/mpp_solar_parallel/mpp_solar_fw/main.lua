@@ -66,13 +66,7 @@ function send_telemetry()
         local data, err = parser:get_all_parallel_info(max_parallel_number)
         if data then
             merge_tables(telemetry, data)
-
-            if #telemetry["alerts"] > 0 then
-              telemetry["status"] = 'error'
-            else
-              telemetry["status"] = 'ok'
-            end
-
+            telemetry["status"] = parser:get_device_mode()
         else
             enapter.log("Failed to get parallel info: "..err, 'error')
             enapter.send_telemetry({status = 'no_data', alerts = {'no_data'}})

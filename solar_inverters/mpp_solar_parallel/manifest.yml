@@ -35,9 +35,15 @@ telemetry:
     display_name: Status
     type: string
     enum:
-      - ok
+      - power_on
+      - standby
+      - line
+      - battery
       - error
+      - power_saving
       - no_data
+      - unknown
+      - ok
   total_pv_input_power:
     display_name: Total PV Input Power
     type: float
