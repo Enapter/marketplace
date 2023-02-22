@@ -152,14 +152,6 @@ function parser:get_parallel_device_alerts(value)
   end
 end
 
--- function parser:get_device_mode(value)
---     if not value then
---       return 'unknown'
---     else
---       return device_mode.values[value]
---     end
--- end
-
 function parser:get_output_mode(value)
     return output_mode.values[value]
 end
