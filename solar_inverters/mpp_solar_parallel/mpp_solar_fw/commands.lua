@@ -80,7 +80,6 @@ local commands = {
           ac_out_active_power = 10,
           load_percentage = 11,
           battery_charge_current = 13,
-          battery_capacity= 14,
           pv_input_volt = 15,
           -- inverter_status = 20,
           charger_source_priority = 22,
@@ -98,6 +97,7 @@ local commands = {
       },
       total = {
         battery_volt = 12,
+        battery_capacity = 14,
         total_charging_current = 16,
         total_ac_out_apparent_power = 17,
         total_ac_out_active_power = 18,

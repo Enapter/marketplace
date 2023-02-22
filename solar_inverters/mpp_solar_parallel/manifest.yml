@@ -58,6 +58,10 @@ telemetry:
     display_name: Battery Voltage
     type: float
     unit: volt
+  battery_capacity:
+    display_name: Battery SOC
+    type: float
+    unit: percent
   total_ac_out_percentage:
     display_name: Total AC Output Load Percent
     type: float
@@ -867,6 +871,7 @@ alerts:
     - total_ac_out_percentage
     - total_ac_out_apparent_power
     - battery_volt
+    - battery_capacity
 
   mobile_charts:
     - total_ac_out_active_power
@@ -875,3 +880,4 @@ alerts:
     - total_ac_out_percentage
     - total_ac_out_apparent_power
     - battery_volt
+    - battery_capacity
