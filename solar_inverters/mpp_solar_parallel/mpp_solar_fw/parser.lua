@@ -89,21 +89,10 @@ function parser:get_all_parallel_info(devices_number)
     end
 end
 
-function parser:get_battery_voltage(voltage)
-    if voltage then
-        moving_average:add_to_table(voltage)
-        return moving_average:get_value()
-    else
-        moving_average.table = {}
-        enapter.log("No battery voltage", 'error')
-        return nil
-    end
-end
-
 function parser:get_parallel_info(device_number)
-    local data = mpp_solar:run_command(parallel_info.command..device_number)
+    local res, data = mpp_solar:run_with_cache(parallel_info.command..device_number, 3)
 
-    if data then
+    if res then
       data = split(data)
 
       if data[parallel_info.data.general.num.parallel_num_exists] == '1' then
@@ -148,6 +137,17 @@ function parser:get_parallel_info(device_number)
       end
     else
       return nil, 'no_data'
+    end
+end
+
+function parser:get_battery_voltage(voltage)
+    if voltage then
+        moving_average:add_to_table(voltage)
+        return moving_average:get_value()
+    else
+        moving_average.table = {}
+        enapter.log("No battery voltage", 'error')
+        return nil
     end
 end
 

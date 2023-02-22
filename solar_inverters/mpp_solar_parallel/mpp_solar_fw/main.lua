@@ -73,12 +73,12 @@ function send_telemetry()
               telemetry["status"] = 'ok'
             end
 
-            enapter.send_telemetry(telemetry)
         else
             enapter.log("Failed to get parallel info: "..err, 'error')
             enapter.send_telemetry({status = 'no_data', alerts = {'no_data'}})
             return
         end
+        enapter.send_telemetry(telemetry)
     end
 end
 
