@@ -1,0 +1,133 @@
+blueprint_spec: device/1.0
+
+display_name: Generic IO for ENP-RL6
+description: Generic input/output interface for controlling Enapter 6-channel relay module.
+icon: enapter-module-din-2
+vendor: enapter
+author: enapter
+contributors:
+  - nikitug
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
+
+communication_module:
+  product: ENP-RL6
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - error
+      - ok
+  channel_1_closed:
+    type: boolean
+    display_name: Channel 1 Closed
+  channel_2_closed:
+    type: boolean
+    display_name: Channel 2 Closed
+  channel_3_closed:
+    type: boolean
+    display_name: Channel 3 Closed
+  channel_4_closed:
+    type: boolean
+    display_name: Channel 4 Closed
+  channel_5_closed:
+    type: boolean
+    display_name: Channel 5 Closed
+  channel_6_closed:
+    type: boolean
+    display_name: Channel 6 Closed
+
+command_groups:
+  relays:
+    display_name: Relays
+commands:
+  close_channel:
+    display_name: Close Channel
+    group: relays
+    ui:
+      icon: electric-switch-closed
+      quick_access: true
+    arguments:
+      channel:
+        display_name: Channel Number
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+  close_all_channels:
+    display_name: Close All Channels
+    group: relays
+    ui:
+      icon: electric-switch-closed
+      quick_access: true
+  open_channel:
+    display_name: Open Channel
+    group: relays
+    ui:
+      icon: electric-switch
+      quick_access: true
+    arguments:
+      channel:
+        display_name: Channel Number
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+  open_all_channels:
+    display_name: Open All Channels
+    group: relays
+    ui:
+      icon: electric-switch
+      quick_access: true
+  is_channel_closed:
+    display_name: Channel State
+    group: relays
+    ui:
+      icon: light-switch
+    arguments:
+      channel:
+        display_name: Channel Number
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+  all_channels_state:
+    display_name: All Channels State
+    group: relays
+    ui:
+      icon: dip-switch
+
+alerts:
+  cannot_read_channel_state:
+    severity: error
+    display_name: Cannot Read Channel State
+    description: Relay channel might be broken. Check the module logs or contact Enapter support.
+
+.cloud:
+  mqtt_channel_id: gio
