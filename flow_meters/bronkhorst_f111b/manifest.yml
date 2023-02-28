@@ -10,10 +10,9 @@ support:
   email: support@enapter.com
 verification_level: verified
 
-communication_modules:
-  rs485:
-    product: ENP-RS485
-    lua_file: firmware.lua
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
 
 properties:
   vendor:
