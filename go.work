@@ -3,4 +3,5 @@ go 1.19
 use (
     ./.scripts/blueprint_vendor_checker
     ./.scripts/blueprints_collector
+    ./.scripts/marketplace_vendors_checker
 )

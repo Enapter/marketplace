@@ -31,6 +31,18 @@ jobs:
           fi
       - name: Check Category Icon
         run: ./.scripts/category_icon_checker.sh
+      - name: Check Vendors
+        env:
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          docker run --rm \
+          -v "$(pwd)":/marketplace \
+          -w /marketplace/ \
+          golang:1.19 go run marketplace_vendors_checker \
+          -p /marketplace \
+          -r ${{ github.event.pull_request.head.repo.full_name }} \
+          -b "$BRANCH" \
+          ${{ steps.changes.outputs.changed-files }}
       - name: Get Changed Blueprints Paths
         id: paths
         run: |
