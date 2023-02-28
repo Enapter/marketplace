@@ -15,6 +15,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: Get Changed Files
+        id: changes
+        run: |
+          echo "changed-files=$(git diff --name-only ${{ github.event.pull_request.head.sha }} ${{ github.sha }} | xargs)" >> "$GITHUB_OUTPUT"
+      - name: Check Formatting
+        uses: JohnnyMorganz/stylua-action@v2
+        if: ${{ steps.changes.outputs.changed-files }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: v0.16.1
+          args: --check --allow-hidden ${{ steps.changes.outputs.changed-files }}
       - name: Lint Code Base
         uses: github/super-linter/slim@v4
         env:
