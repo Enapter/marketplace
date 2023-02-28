@@ -38,7 +38,7 @@ Blueprint files are validated using several linters:
 - [`luacheck`](https://luacheck.readthedocs.io/en/stable/)
 - [`markdownlint`](https://github.com/igorshubovych/markdownlint-cli#readme)
 
-The configuration can be found in `.yamllint.yml`, `.luacheckrc` and `..markdownlint.yml` files respectively.
+The configuration can be found in `.yamllint.yml`, `.luacheckrc` and `.markdownlint.yml` files respectively.
 
 Run the linters locally before creating a pull request:
 
