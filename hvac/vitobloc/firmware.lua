@@ -186,38 +186,27 @@ end
 -- Vitobloc ModbusTCP API
 ---------------------------------
 
+--NEW ModbusTCP part, I'm confused
+
 VitoblocModbusTcp = {}
 
-function VitoblocModbusTcp.new(ip_address, unit_id)
-  assert(type(ip_address) == 'string', 'ip_address (arg #1) must be string, given: '..inspect(ip_address))
-  assert(type(unit_id) == 'number', 'unit_id (arg #2) must be number, given: '..inspect(unit_id))
-
-  local self = setmetatable({}, { __index = VitoblocModbusTcp })
-  self.ip_address = ip_address
-  self.unit_id = unit_id
-  return self
+function VitoblocModbusTcp.new(ip_address)
 end
 
-function VitoblocModbusTcp:connect()
-  self.modbus = modbustcp.new(self.ip_address)
+function VitoblocModbusTcp = VitoblocModbusTcp.new(ip_address)
 end
 
-function VitoblocModbusTcp:read_holdings(address, number)
-  assert(type(address) == 'number', 'address (arg #1) must be number, given: '..inspect(address))
-  assert(type(number) == 'number', 'number (arg #1) must be number, given: '..inspect(number))
-
-  local registers, err = self.modbus:read_holdings(self.unit_id, address, number, 1000)
+ function modbus:read_holdings(unit_id, 5, 186, 1000)
   if err and err ~= 0 then
     enapter.log('read error: '..err, 'error')
     if err == 1 then
-      -- Sometimes timeout happens and it may break underlying Modbus client,
-      -- this is a temporary workaround which manually reconnects.
       self:connect()
     end
     return nil
   end
-  return registers
 end
+
+-- end of modbus part
 
 --I really don't understand the whole '>I2I2' and reg[1] == 0x00FF thing, help
 
@@ -244,7 +233,7 @@ function VitoblocModbusTcp:read_u32_enum(address)
   return self:read_u32(address)
 end
 
--- I don't know how to check for u16 in u8
+-- I don't know how to check for u16 in u8, help
 
 function VitoblocModbusTcp:read_u8(address)
   local reg = self:read_holdings(address, 1)
@@ -281,5 +270,17 @@ function VitoblocModbusTcp:read_i16(address)
     return nil
   end
 end
+
+-- is this how I'm supposed to parse resolution? (this is an example)
+
+function VitoblocModbusTcp:read_u33(address)
+  local v = self:read_s32(address)
+  if v then
+    return v * 1
+  else
+    return v
+  end
+end
+
 
 main()
