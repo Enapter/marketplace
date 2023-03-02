@@ -55,7 +55,7 @@ stylua --check .
 To automatically run the checks before each commit, consider enabling [pre-commit hooks](https://pre-commit.com):
 
 ```bash
-pre-commit install --config .pre-commit-config.yml
+pre-commit install
 ```
 
 ## Lua Codestyle
