@@ -39,7 +39,7 @@ Blueprint files are validated using several linters:
 - [`markdownlint`](https://github.com/igorshubovych/markdownlint-cli#readme)
 - [`StyLua`](https://github.com/JohnnyMorganz/StyLua)
 
-The configuration can be found in `.yamllint.yml`, `.luacheckrc`, `.markdownlint.yml` and `stylua.toml` files respectively.
+The configuration can be found in `.yamllint.yml`, `.luacheckrc`, `.markdownlint.yml` and `.stylua.toml` files respectively.
 
 Run the linters locally before creating a pull request:
 
