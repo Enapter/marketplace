@@ -1,0 +1,100 @@
+blueprint_spec: device/1.0
+
+display_name: Generic IO for ENP-RS485
+description: Generic input/output interface for controlling Enapter RS-485 module.
+icon: enapter-module-din-2
+vendor: enapter
+author: enapter
+contributors:
+  - kulti
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
+
+communication_module:
+  product: ENP-RS485
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.2.1-1
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - error
+      - ok
+
+command_groups:
+  settings:
+    display_name: Settings
+
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Write Configuration
+    group: settings
+    ui:
+      icon: wrench-outline
+    arguments:
+      baud_rate:
+        display_name: Baud Rate
+        type: integer
+        required: true
+      data_bits:
+        display_name: Data Bits
+        type: integer
+        enum:
+          - 5
+          - 6
+          - 7
+          - 8
+        required: true
+      stop_bits:
+        display_name: Stop Bits
+        type: integer
+        enum:
+          - 1
+          - 2
+        required: true
+      parity:
+        display_name: Parity
+        type: string
+        enum:
+          O:
+            display_name: Odd Parity
+          E:
+            display_name: Even Parity
+          N:
+            display_name: Parity Disabled
+        required: true
+      buffer_size:
+        display_name: Buffer Size
+        description: Size of buffer for data receiving, limit is 4096 bytes.
+        type: integer
+        max: 4096
+  read_configuration:
+    display_name: Read Configuration
+    group: settings
+    ui:
+      icon: wrench-outline
+
+alerts:
+  not_configured:
+    severity: info
+    display_name: Module Not Configured
+    description: Use "Write Configuration" command to setup connection.
+
+.cloud:
+  mqtt_channel_id: gio
