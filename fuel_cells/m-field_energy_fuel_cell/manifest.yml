@@ -16,10 +16,9 @@ verification_level: verified
 
 communication_module:
   product: ENP-RS485
-  lua:
-    file: firmware.lua
-    dependencies:
-      - enapter-ucm
+  lua_file: firmware.lua
+    # dependencies:
+    #   - enapter-ucm
 
 properties:
   vendor:
@@ -85,7 +84,7 @@ commands:
     arguments:
       device_id:
         display_name: Modbus device ID
-        description: Must be hexadecimal (e.g. 25 = 0x25)
+        description: Must be hexadecimal (e.g. 0x25 = 25)
         type: string
         required: true
   read_configuration:
