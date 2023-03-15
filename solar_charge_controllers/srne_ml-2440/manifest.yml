@@ -24,14 +24,6 @@ properties:
   model:
     type: string
     display_name: Model
-
-telemetry:
-  status:
-    display_name: Status
-    type: string
-    enum:
-      - ok
-      - read_error
   max_voltage:
     display_name: Maximum Voltage Supported by System
     type: float
@@ -41,10 +33,123 @@ telemetry:
     type: float
     unit: A
 
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  battery_soc:
+    display_name: Battery SOC
+    type: float
+    unit: '%'
+  battery_voltage:
+    display_name: Battery Voltage
+    type: float
+    unit: V
+  charging_current:
+    display_name: Charging Current
+    type: float
+    unit: A
+  load_dc_voltage:
+    display_name: Load DC Voltage
+    type: float
+    unit: V
+  load_dc_current:
+    display_name: Load DC Current
+    type: float
+    unit: A
+  load_dc_power:
+    display_name: Load DC Power
+    type: float
+    unit: W
+  solar_panel_voltage:
+    display_name: Solar Panel Voltage
+    type: float
+    unit: V
+  solar_panel_current:
+    display_name: Solar Panel Current
+    type: float
+    unit: V
+  charging_power:
+    display_name: Charging Power
+    type: float
+    unit: W
+  # controller_temp:
+  #   display_name: Controller temperature
+  #   type: float
+  #   unit: '°C'
+  # battery_temp:
+  #   display_name: Battery temperature
+  #   type: float
+  #   unit: '°C'
+
 alerts:
   communication_failed:
     display_name: Communication Failed
     severity: error
+  charge_mos_short_circuit:
+    display_name: Charge MOS short circuit
+    severity: error
+  anti_reverse_mos_short:
+    display_name: Anti-reverse MOS short circuit
+    severity: error
+  solar_panel_reverse_connect:
+    display_name: Solar panel reversely connected
+    severity: error
+  solar_panel_over_voltage:
+    display_name: Solar panel working point over-voltage
+    severity: error
+  solar_panel_ctr_current:
+    display_name: Solar panel counter-current
+    severity: error
+  pv_input_over_voltage:
+    display_name: PV input side over-voltage
+    severity: error
+  pv_input_short_circuit:
+    display_name: PV input side short circuit
+    severity: error
+  pv_input_overpower:
+    display_name: PV input side over-power
+    severity: error
+  high_ambient_temp:
+    display_name: High ambient temperature
+    severity: error
+  high_controller_temp:
+    display_name: High controller temperature
+    severity: error
+  load_overpower:
+    display_name: Load over-power
+    severity: error
+  load_short_circuit:
+    display_name: Load short circuit
+    severity: error
+  battery_under_voltage:
+    display_name: Battery under-voltage
+    severity: warning
+  battery_over_voltage:
+    display_name: Battery over-voltage
+    severity: error
+  battery_over_discharge:
+    display_name: Battery over-discharge
+    severity: error
 
 .cloud:
   category: renewable_energy_sources
+  mobile_main_chart: battery_soc
+  mobile_telemetry:
+    - battery_soc
+    - battery_voltage
+    - charging_current
+    - load_dc_power
+    - solar_panel_voltage
+  mobile_charts:
+    - battery_soc
+    - battery_voltage
+    - charging_current
+    - load_dc_voltage
+    - load_dc_current
+    - load_dc_power
+    - solar_panel_voltage
+    - charging_power

@@ -3,11 +3,14 @@ ADDRESS = 1
 function main()
   local result = rs232.init(9600, 8, "N", 1)
   if result ~= 0 then
-    enapter.log("RS-232 failed: "..result.." "..rs232.err_to_str(result), "error", true)
+    enapter.log("RS232 failed: "..result.." "..rs232.err_to_str(result), "error", true)
   end
 
   scheduler.add(30000, send_properties)
-  scheduler.add(1000, metrics)
+  scheduler.add(1000, send_telemetry)
+
+  enapter.register_command_handler("read_controller_parameters", read_controller_parameters)
+  enapter.register_command_handler("write_controller_parameters", write_controller_parameters)
 end
 
 function send_properties()
@@ -27,20 +30,20 @@ function send_properties()
   enapter.send_properties(properties)
 end
 
-function metrics()
+function send_telemetry()
   local telemetry = {}
   local alerts = {}
   local status = "ok"
 
-  local data, result = modbus.read_holdings(ADDRESS, 11, 1, 1000)
-  if data then
-    telemetry["rated_disc_current"] = data[1] >> 8
-    telemetry["device_type"] = data[1] & 0xFF
-  else
-    enapter.log("Register 11 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 11, 1, 1000)
+  -- if data then
+  --   telemetry["rated_disc_current"] = data[1] >> 8
+  --   telemetry["device_type"] = data[1] & 0xFF
+  -- else
+  --   enapter.log("Register 11 reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
   -- Controller dynamic information
   local data, result = modbus.read_holdings(ADDRESS, 256, 1, 1000)
@@ -56,7 +59,7 @@ function metrics()
   if data then
     telemetry["battery_voltage"] = data[1] / 10.0
   else
-    enapter.log("Register 256 reading failed: "..modbus.err_to_str(result), "error")
+    enapter.log("Register 257 reading failed: "..modbus.err_to_str(result), "error")
     alerts = {"communication_failed"}
     status = "read_error"
   end
@@ -70,15 +73,15 @@ function metrics()
     status = "read_error"
   end
 
-  local data, result = modbus.read_holdings(ADDRESS, 259, 1, 1000)
-  if data then
-    telemetry["controller_temp"] = tosignedint(data[1] >> 8)
-    telemetry["battery_temp"] = tosignedint(data[1] >> 0xFF)
-  else
-    enapter.log("Register 259 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 259, 1, 1000)
+  -- if data then
+  --   telemetry["controller_temp"] = tosignedint(data[1] >> 8)
+  --   telemetry["battery_temp"] = tosignedint(data[1] >> 0xFF)
+  -- else
+  --   enapter.log("Register 259 reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
   local data, result = modbus.read_holdings(ADDRESS, 260, 1, 1000)
   if data then
@@ -136,180 +139,170 @@ function metrics()
   end
 
   -- Battery information
-  local data, result = modbus.read_holdings(ADDRESS, 267, 1, 1000)
-  if data then
-    telemetry["today_min_battery_volt"] = data[1] / 10.0
-  else
-    enapter.log("Register 267 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 267, 1, 1000)
+  -- if data then
+  --   telemetry["today_min_battery_volt"] = data[1] / 10.0
+  -- else
+  --   enapter.log("Register 267 reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 268, 1, 1000)
-  if data then
-    telemetry["today_max_battery_volt"] = data[1] / 10.0
-  else
-    enapter.log("Register 268 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 268, 1, 1000)
+  -- if data then
+  --   telemetry["today_max_battery_volt"] = data[1] / 10.0
+  -- else
+  --   enapter.log("Register 268 reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 269, 1, 1000)
-  if data then
-    telemetry["today_max_charging_curr"] = data[1] / 100.0
-  else
-    enapter.log("Register 269 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 269, 1, 1000)
+  -- if data then
+  --   telemetry["today_max_charging_curr"] = data[1] / 100.0
+  -- else
+  --   enapter.log("Register 269 reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 270, 1, 1000)
-  if data then
-    telemetry["today_max_discharging_curr"] = data[1] / 100.0
-  else
-    enapter.log("Register 270 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 270, 1, 1000)
+  -- if data then
+  --   telemetry["today_max_discharging_curr"] = data[1] / 100.0
+  -- else
+  --   enapter.log("Register 270 reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x10F, 1, 1000)
-  if data then
-    telemetry["today_max_charging_power"] = data[1]
-  else
-    enapter.log("Register 0x10F reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x10F, 1, 1000)
+  -- if data then
+  --   telemetry["today_max_charging_power"] = data[1]
+  -- else
+  --   enapter.log("Register 0x10F reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x110, 1, 1000)
-  if data then
-    telemetry["today_max_discharging_power"] = data[1]
-  else
-    enapter.log("Register 0x110 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x110, 1, 1000)
+  -- if data then
+  --   telemetry["today_max_discharging_power"] = data[1]
+  -- else
+  --   enapter.log("Register 0x110 reading failed: "..modbus.err_to_str(result), "error")
+    -- alerts = {"communication_failed"}
+    -- status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x111, 1, 1000)
-  if data then
-    telemetry["today_charging_amp_hrs"] = data[1]
-  else
-    enapter.log("Register 0x111 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x111, 1, 1000)
+  -- if data then
+    -- telemetry["today_charging_amp_hrs"] = data[1]
+  -- else
+    -- enapter.log("Register 0x111 reading failed: "..modbus.err_to_str(result), "error")
+    -- alerts = {"communication_failed"}
+    -- status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x112, 1, 1000)
-  if data then
-    telemetry["today_discharging_amp_hrs"] = data[1]
-  else
-    enapter.log("Register 0x112 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x112, 1, 1000)
+  -- if data then
+    -- telemetry["today_discharging_amp_hrs"] = data[1]
+  -- else
+    -- enapter.log("Register 0x112 reading failed: "..modbus.err_to_str(result), "error")
+    -- alerts = {"communication_failed"}
+    -- status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x113, 1, 1000)
-  if data then
-    telemetry["today_power_generation"] = data[1]
-  else
-    enapter.log("Register 0x113 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x113, 1, 1000)
+  -- if data then
+    -- telemetry["today_power_generation"] = data[1]
+  -- else
+    -- enapter.log("Register 0x113 reading failed: "..modbus.err_to_str(result), "error")
+    -- alerts = {"communication_failed"}
+    -- status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x114, 1, 1000)
-  if data then
-    telemetry["today_power_consumption"] = data[1]
-  else
-    enapter.log("Register 0x114 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x114, 1, 1000)
+  -- if data then
+    -- telemetry["today_power_consumption"] = data[1]
+  -- else
+    -- enapter.log("Register 0x114 reading failed: "..modbus.err_to_str(result), "error")
+    -- alerts = {"communication_failed"}
+    -- status = "read_error"
+  -- end
 
-  -- Historical data information
-  local data, result = modbus.read_holdings(ADDRESS, 0x115, 1, 1000)
-  if data then
-    telemetry["operating_days"] = data[1]
-  else
-    enapter.log("Register 0x115 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- -- Historical data information
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x115, 1, 1000)
+  -- if data then
+    -- telemetry["operating_days"] = data[1]
+  -- else
+    -- enapter.log("Register 0x115 reading failed: "..modbus.err_to_str(result), "error")
+    -- alerts = {"communication_failed"}
+    -- status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x116, 1, 1000)
-  if data then
-    telemetry["battery_over_discharges"] = data[1]
-  else
-    enapter.log("Register 0x116 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x116, 1, 1000)
+  -- if data then
+  --   telemetry["battery_over_discharges"] = data[1]
+  -- else
+  --   enapter.log("Register 0x116 reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x117, 1, 1000)
-  if data then
-    telemetry["battery_full_charges"] = data[1]
-  else
-    enapter.log("Register 0x117 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x117, 1, 1000)
+  -- if data then
+  --   telemetry["battery_full_charges"] = data[1]
+  -- else
+  --   enapter.log("Register 0x117 reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x118, 2, 1000)
-  if data then
-    telemetry["charging_amp_hrs"] = toint(data)
-  else
-    enapter.log("Register 0x118 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x118, 2, 1000)
+  -- if data then
+  --   telemetry["charging_amp_hrs"] = toint(data)
+  -- else
+  --   enapter.log("Register 0x118 reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x11A, 2, 1000)
-  if data then
-    telemetry["discharging_amp_hrs"] = toint(data)
-  else
-    enapter.log("Register 0x11A reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x11A, 2, 1000)
+  -- if data then
+  --   telemetry["discharging_amp_hrs"] = toint(data)
+  -- else
+  --   enapter.log("Register 0x11A reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x11C, 2, 1000)
-  if data then
-    telemetry["cumulative_power_gen"] = toint(data)
-  else
-    enapter.log("Register 0x11C reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x11C, 2, 1000)
+  -- if data then
+  --   telemetry["cumulative_power_gen"] = toint(data)
+  -- else
+  --   enapter.log("Register 0x11C reading failed: "..modbus.err_to_str(result), "error")
+  --   alerts = {"communication_failed"}
+  --   status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x11E, 2, 1000)
-  if data then
-    telemetry["cumulative_power_consum"] = toint(data)
-  else
-    enapter.log("Register 0x11E reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x11E, 2, 1000)
+  -- if data then
+  --   telemetry["cumulative_power_consum"] = toint(data)
+  -- else
+    -- enapter.log("Register 0x11E reading failed: "..modbus.err_to_str(result), "error")
+    -- alerts = {"communication_failed"}
+    -- status = "read_error"
+  -- end
 
-  local data, result = modbus.read_holdings(ADDRESS, 0x120, 1, 1000)
-  if data then
-    telemetry["load_status"] = is_on(data[1] >> 15)
-    telemetry["load_brightness"] = (data[1] >> 8) & 0x7F
-    telemetry["charging_state"] = data[1] >> 0xFF
-  else
-    enapter.log("Register 0x120 reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
-
-  --- TEST ---
-  local data, result = modbus.read_holdings(ADDRESS, 0xE01D, 1, 1000)
-  if data then
-    telemetry["load_working_mode"] = data[1]
-  else
-    enapter.log("Register 0xE01D reading failed: "..modbus.err_to_str(result), "error")
-    alerts = {"communication_failed"}
-    status = "read_error"
-  end
+  -- local data, result = modbus.read_holdings(ADDRESS, 0x120, 1, 1000)
+  -- if data then
+    -- telemetry["load_status"] = is_on(data[1] >> 15)
+    -- telemetry["load_brightness"] = (data[1] >> 8) & 0x7F
+    -- telemetry["charging_state"] = data[1] >> 0xFF
+  -- else
+    -- enapter.log("Register 0x120 reading failed: "..modbus.err_to_str(result), "error")
+    -- alerts = {"communication_failed"}
+    -- status = "read_error"
+  -- end
 
   -- Controller fault information
   local data, result = modbus.read_holdings(ADDRESS, 0x121, 2, 1000)
@@ -332,8 +325,6 @@ function metrics()
       table.insert(alerts, "pv_input_overpower")
     elseif (data[1] << 9) >> 15 == 1 then
       table.insert(alerts, "high_ambient_temp")
-    elseif (data[1] << 10) >> 15 == 1 then
-      table.insert(alerts, "high_controller_temp")
     elseif (data[1] << 10) >> 15 == 1 then
       table.insert(alerts, "high_controller_temp")
     elseif (data[1] << 11) >> 15 == 1 then
@@ -359,28 +350,28 @@ function metrics()
   enapter.send_telemetry(telemetry)
 end
 
-function is_on(value)
-  if value == 1 then
-    return true
-  else
-    return false
-  end
-end
+-- function is_on(value)
+--   if value == 1 then
+--     return true
+--   else
+--     return false
+--   end
+-- end
 
-function toint(register)
-  local raw_str = string.pack("BBBB", register[1]>>8, register[1]&0xff, register[2]>>8, register[2]&0xff)
-  return string.unpack(">I4", raw_str)
-end
+-- function toint(register)
+--   local raw_str = string.pack("BBBB", register[1]>>8, register[1]&0xff, register[2]>>8, register[2]&0xff)
+--   return string.unpack(">I4", raw_str)
+-- end
 
-function tosignedint(value)
-  local byte7 = value >> 7
-  local result = value & 0x7F
-  if byte7 == 1 then
-    return result * (-1)
-  else
-    return result
-  end
-end
+-- function tosignedint(value)
+--   local byte7 = value >> 7
+--   local result = value & 0x7F
+--   if byte7 == 1 then
+--     return result * (-1)
+--   else
+--     return result
+--   end
+-- end
 
 function read_controller_parameters(ctx)
   local parameters = {}
@@ -424,9 +415,6 @@ function write_controller_parameters(ctx, args)
     ctx.error("Register 0xE014 writing failed: "..modbus.err_to_str(result), "error")
   end
 end
-
-enapter.register_command_handler("read_controller_parameters", read_controller_parameters)
-enapter.register_command_handler("write_controller_parameters", write_controller_parameters)
 
 main()
 
