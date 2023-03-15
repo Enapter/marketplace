@@ -44,32 +44,32 @@ function send_telemetry()
 
   enapter.send_telemetry({
     status= parse_status(vitobloc:read_u16(5)),
-    alerts = parse_start_stop_error(table.unpack(stop_start_errors), parse_digital_error(table.unpack(digital_errors)), parse_external_error(table.unpack(external_errors)),parse_other_error(table.unpack(other_errors))),
+    alerts =  {parse_start_stop_error(table.unpack(stop_start_errors)), parse_digital_error(table.unpack(digital_errors)), parse_external_error(table.unpack(external_errors)),parse_other_error(table.unpack(other_errors))},
     start_stop_errors = parse_start_stop_error(vitobloc:read_u8(100)),
     operating_states = parse_operating_states(vitobloc:read_u8(190)),
     digital_errors = parse_digital_error(vitobloc:read_u8(132)),
     external_errors = parse_external_error(vitobloc:read_u8(140)),
     other_errors = parse_other_error(vitobloc:read_u8(144)),
-    ext_power_setpoint = vitobloc:read_i16(7),
-    int_power_setpoint = vitobloc:read_i16(8),
-    uptime = vitobloc:read_u32(9),
-    number_of_launches = vitobloc:read_i16(12),
-    time_till_next_maintenance = vitobloc:read_i16(18),
-    time_till_next_repair = vitobloc:read_u32(22),
-    kwh_counter = vitobloc:read_u32(26),
-    t_cooling_water_inlet = vitobloc:read_i16(40),
-    t_cooling_water_outlet = vitobloc:read_i16(44),
-    t_engine_oil_tank_A = vitobloc:read_i16(47),
-    t_engine_oil_tank_B = vitobloc:read_i16(48),
-    generator_temp = vitobloc:read_i16(49),
-    battery_voltage = vitobloc:read_i16(64),
-    oil_pressure = vitobloc:read_i16(65),
-    grid_voltage_L1 = vitobloc:read_i16(73),
-    grid_voltage_L2 = vitobloc:read_i16(74),
-    grid_voltage_L3 = vitobloc:read_i16(75),
-    generator_voltage_L1 = vitobloc:read_i16(77),
-    generator_voltage_L2 = vitobloc:read_i16(78),
-    generator_voltage_L3 = vitobloc:read_i16(79)
+    ext_power_setpoint = vitobloc:read_i16(7), -- 0.1
+    int_power_setpoint = vitobloc:read_i16(8), -- 0.1
+    uptime = vitobloc:read_u32(9), -- 1
+    number_of_launches = vitobloc:read_i16(12), --1
+    time_till_next_maintenance = vitobloc:read_i16(18), -- 1
+    time_till_next_repair = vitobloc:read_u32(22), --1
+    kwh_counter = vitobloc:read_u32(26), -- 0.1
+    t_cooling_water_inlet = vitobloc:read_i16(40), --0.1
+    t_cooling_water_outlet = vitobloc:read_i16(44), -- 0.1
+    t_engine_oil_tank_A = vitobloc:read_i16(47), -- 0.1
+    t_engine_oil_tank_B = vitobloc:read_i16(48), -- 0.1
+    generator_temp = vitobloc:read_i16(49,0.1), -- 0.1
+    battery_voltage = vitobloc:read_i16(64), -- 0.1
+    oil_pressure = vitobloc:read_i16(65), -- 0.1
+    grid_voltage_L1 = vitobloc:read_i16(73), -- 0.1
+    grid_voltage_L2 = vitobloc:read_i16(74), -- 0.1
+    grid_voltage_L3 = vitobloc:read_i16(75), -- 0.1
+    generator_voltage_L1 = vitobloc:read_i16(77), -- 0.1
+    generator_voltage_L2 = vitobloc:read_i16(78), --0.1
+    generator_voltage_L3 = vitobloc:read_i16(79) -- 0.1
   })
 end
 
@@ -100,16 +100,17 @@ end
 function parse_status(value)
   if not value then return {} end
   if value == 0 then return {'unknown_value'} end
+
   if type(value) == 'number' then
 
-  if value == 0 then return 'Off'
-  elseif value == 1 then return 'Ready'
-  elseif value == 2 then return 'Start'
-  elseif value == 3 then return 'Operation'
-  elseif value == 4 then return 'Error'
-  else
-    enapter.log('Cannot decode status: '..tostring(value), 'error')
-    return tostring(value)
+    if value == 0 then return 'Off'
+    elseif value == 1 then return 'Ready'
+    elseif value == 2 then return 'Start'
+    elseif value == 3 then return 'Operation'
+    elseif value == 4 then return 'Error'
+    else
+      enapter.log('Cannot decode status: '..tostring(value), 'error')
+      return tostring(value)
     end
   end
 end
@@ -149,11 +150,11 @@ function parse_digital_error(value)
   if not value then return {} end
   if value == 0 then return {'unknown_value'} end
   if type(value) == 'number' then
-  local digital_errors = {}
+    local digital_errors = {}
 
-  if value & 8 then table.insert(digital_errors, "gas_pressure_max") end
-  if value & 16 then table.insert(digital_errors, 'gas_pressure_min') end
-  return digital_errors
+    if value & 8 then table.insert(digital_errors, "gas_pressure_max") end
+    if value & 16 then table.insert(digital_errors, 'gas_pressure_min') end
+    return digital_errors
   end
 end
 
@@ -161,11 +162,11 @@ function parse_external_error(value)
   if not value then return {} end
   if value == 0 then return {'unknown_value'} end
   if type(value) == 'number' then
-  local external_errors = {}
+    local external_errors = {}
 
-  if value & 1 then table.insert(external_errors, "power_module_generator") end
-  if value & 2 then table.insert(external_errors, 'power_module_reverse') end
-  return external_errors
+    if value & 1 then table.insert(external_errors, "power_module_generator") end
+    if value & 2 then table.insert(external_errors, 'power_module_reverse') end
+    return external_errors
   end
 end
 
@@ -173,12 +174,12 @@ function parse_other_error(value)
   if not value then return {} end
   if value == 0 then return {'unknown_value'} end
   if type(value) == 'number' then
-  local other_errors = {}
+    local other_errors = {}
 
-  if value & 1 then table.insert(other_errors, "pump_dry_1") end
-  if value & 2 then table.insert(other_errors, 'pump_dry_2') end
-  if value & 4 then table.insert(other_errors,'pump_dry') end
-  return other_errors
+    if value & 1 then table.insert(other_errors, "pump_dry_1") end
+    if value & 2 then table.insert(other_errors, 'pump_dry_2') end
+    if value & 4 then table.insert(other_errors,'pump_dry') end
+    return other_errors
   end
 end
 
@@ -216,6 +217,7 @@ function VitoblocModbusTcp:read_u32(address)
 
   -- NaN for U32 values
   if reg[1] == 0xFFFF and reg[2] == 0xFFFF then
+
     return nil
   end
 
@@ -244,6 +246,8 @@ function VitoblocModbusTcp:read_u8(address)
     return nil
   end
 
+  local raw = string.pack('>I2', reg[1]) -- 2 bits
+  return string.unpack('>I2', raw)
 end
 
 function VitoblocModbusTcp:read_u16(address)
@@ -259,9 +263,15 @@ function VitoblocModbusTcp:read_u16(address)
   if reg[1] == 0x00FF and reg[2] == 0xFFFD then
     return nil
   end
+
+  local raw = string.pack('>I2', reg[1])
+  return string.unpack('>I2', raw)
 end
 
-function VitoblocModbusTcp:read_i16(address)
+function VitoblocModbusTcp:read_i16(address, factor)
+if not factor then factor = 1 end
+
+
   local reg = self:read_holdings(address, 1)
   if not reg then return end
 
@@ -269,18 +279,11 @@ function VitoblocModbusTcp:read_i16(address)
   if reg[1] == 0x00FF and reg[2] == 0xFFFD then
     return nil
   end
+
+  local raw = string.pack('>i2', reg[1])
+  return string.unpack('>i2', raw) * factor
+
+
 end
-
--- is this how I'm supposed to parse resolution? (this is an example)
-
-function VitoblocModbusTcp:read_u33(address)
-  local v = self:read_s32(address)
-  if v then
-    return v * 1
-  else
-    return v
-  end
-end
-
 
 main()
