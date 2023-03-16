@@ -319,10 +319,7 @@ function VitoblocModbusTcp:read_u32(address, factor)
   return string.unpack('>I4', raw) * factor
 end
 
-function VitoblocModbusTcp:read_u32_enum(address, factor)
-  if not factor then
-    factor = 1
-  end
+function VitoblocModbusTcp:read_u32_enum(address)
   return self:read_u32(address)
 end
 
