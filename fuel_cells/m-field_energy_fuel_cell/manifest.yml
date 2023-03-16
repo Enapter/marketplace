@@ -9,19 +9,28 @@ contributors:
   - anataty
   - Rina-an
 support:
-  url: https://enapter.com/support
+  url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
 license: MIT
 verification_level: verified
 
 communication_module:
   product: ENP-RS485
-  lua_file: firmware.lua
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
 
 properties:
-  serial_number:
+  vendor:
     type: string
-    display_name: Serial Number
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  device_id:
+    type: string
+    display_name: Device ID
 
 telemetry:
   status:
@@ -29,7 +38,7 @@ telemetry:
     type: string
     enum:
       - ok
-      - read_error
+      - no_data
   output_volt:
     type: float
     unit: volt
@@ -62,6 +71,28 @@ telemetry:
     type: float
     unit: celsius
     display_name: System Temperature 2
+
+command_groups:
+  config:
+    display_name: Configuration
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      device_id:
+        display_name: Modbus device ID
+        description: Must be hexadecimal (e.g. 25 = 0x25)
+        type: string
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
 
 .cloud:
   category: fuel_cells

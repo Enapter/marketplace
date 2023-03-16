@@ -1,0 +1,62 @@
+blueprint_spec: device/1.0
+display_name: Flow meter F-111B
+description: EL-FLOW Select Mass Flow Meter
+icon: enapter-gas-flow-meter
+vendor: bronkhorst
+license: MIT
+author: enapter
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+verification_level: verified
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - modbus_error
+  fluid_name:
+    display_name: Fluid name
+    type: string
+    enum:
+      - hydrogen
+      - oxygen
+  unit:
+    display_name: Unit
+    type: string
+    enum:
+      - ln/h
+      - ln/min
+      - uln/h
+      - uln/min
+      - mln/h
+      - mln/min
+  measure:
+    display_name: Flow
+    type: float
+    unit: ln/h
+
+.cloud:
+  category: sensors
+  mobile_main_chart: measure
+  mobile_telemetry:
+    - measure
+    - fluid_name
+    - unit
+
+  mobile_charts:
+    - measure

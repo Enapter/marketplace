@@ -30,15 +30,16 @@ Please follow this simple checklist for every blueprint README file:
 - Device pictures and vendor logos are always welcome, but we ask you to respect the author of said pictures and to follow copyright and licencing guidelines.
 - References should be given to the device vendor page, manual, API documentation, etc.
 
-## Linters
+## Linters and Formatters
 
 Blueprint files are validated using several linters:
 
 - [`yamllint`](https://yamllint.readthedocs.io/en/stable/)
 - [`luacheck`](https://luacheck.readthedocs.io/en/stable/)
 - [`markdownlint`](https://github.com/igorshubovych/markdownlint-cli#readme)
+- [`StyLua`](https://github.com/JohnnyMorganz/StyLua)
 
-The configuration can be found in `.yamllint.yml`, `.luacheckrc` and `..markdownlint.yml` files respectively.
+The configuration can be found in `.yamllint.yml`, `.luacheckrc`, `.markdownlint.yml` and `.stylua.toml` files respectively.
 
 Run the linters locally before creating a pull request:
 
@@ -46,20 +47,28 @@ Run the linters locally before creating a pull request:
 luacheck .
 yamllint .
 markdownlint .
+stylua --check .
+```
+
+:warning: Some of the existing files have not been auto-formatted yet, so `stylua --check .` will fail. Changes introduced by auto-formatting require [review, which is still in progress](https://github.com/Enapter/marketplace/issues/199).
+
+To automatically run the checks before each commit, consider enabling [pre-commit hooks](https://pre-commit.com):
+
+```bash
+pre-commit install
 ```
 
 ## Lua Codestyle
 
+Lua code is expected to be autoformatted with [`StyLua`](https://github.com/JohnnyMorganz/StyLua).
+
+Here are some conventions besides that enforced by the auto-formatter:
+
 - Document with [LDoc](https://stevedonovan.github.io/ldoc/).
-- Use 2 spaces for indentation.
 - Use `snake_case` for variables and functions.
 - Use `CamelCase` for OOP class names.
 - Use `UPPER_CASE` for constants. Put top-level constants at the beginning of the file.
 - Use `is_` when naming boolean functions, e.g. `is_between()`.
-- Use single quotes `'` over double `"` quotes. Use double quotes when string contains single quotes already.
-- Use parenthesis in function calls (`local a = myfun('any')`). Though it's ok to omit it for `require` (`local a = require 'rules'`).
-- No spaces in concatenation operator (`'some'..var..' ok'`).
-- No spaces around function args declaration (`function hello(a, b)`).
 - Typecheck in critical places (`assert(type(myvar) == 'string')`).
 
 Some more coding conventions are available in the [LuaRocks style guide](https://github.com/luarocks/lua-style-guide).

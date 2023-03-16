@@ -9,10 +9,9 @@ support:
 license: MIT
 verification_level: verified
 
-communication_modules:
-  eth:
-    product: ENP-VIRTUAL
-    lua_file: firmware.lua
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
 
 properties:
   model:

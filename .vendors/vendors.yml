@@ -60,12 +60,12 @@
 
 - id: kilowatt-labs
   display_name: Kilowatt Labs
-  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/kilowatt-labs.jpeg
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/kilowatt-labs.png
   website: https://kilowattlabs.com
 
 - id: h2sys
   display_name: H2SYS
-  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/h2sys.jpg
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/h2sys.png
   website: https://h2sys.fr/en/
 
 - id: intelligent-energy
@@ -115,7 +115,7 @@
 
 - id: srne
   display_name: SRNE
-  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/srne.jpeg
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/srne.png
   website: https://www.srnesolar.com
 
 - id: bwt
@@ -142,3 +142,13 @@
   display_name: EMS-ESP
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/ems-esp.png
   website: https://emsesp.github.io/docs/#/
+
+- id: mpp-solar
+  display_name: MPP Solar
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/mpp-solar.png
+  website: https://www.mppsolar.com/v3/
+
+- id: bronkhorst
+  display_name: Bronkhorst
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/bronkhorst.png
+  website: https://www.bronkhorst.com/int/

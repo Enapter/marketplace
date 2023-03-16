@@ -1,0 +1,889 @@
+blueprint_spec: device/1.0
+display_name: MPP Solar Inverter (Parallel mode)
+description: Solar inverter with monitoring and control via WatchPower protocol.
+icon: enapter-inverter-battery
+vendor: mpp-solar
+license: MIT
+author: enapter
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+verification_level: verified
+
+communication_module:
+  product: ENP-RS232
+  lua:
+    dir: mpp_solar_fw
+    amalg_mode: nodebug
+
+properties:
+  model:
+    display_name: Model
+    type: string
+  max_parallel_num:
+    display_name: Maximum number of parallel devices
+    type: integer
+  fw_ver:
+    display_name: Firmware version
+    type: string
+  protocol_ver:
+    display_name: Protocol version
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - power_on
+      - standby
+      - line
+      - battery
+      - error
+      - power_saving
+      - no_data
+      - unknown
+      - ok
+  total_pv_input_power:
+    display_name: Total PV Input Power
+    type: float
+    unit: watt
+  total_ac_out_active_power:
+    display_name: Total AC Output Active Power
+    type: float
+    unit: watt
+  total_ac_out_apparent_power:
+    display_name: Total AC Output Apparent Power
+    type: float
+    unit: watt
+  total_charging_current:
+    display_name: Total Charging Current
+    type: float
+    unit: amp
+  battery_volt:
+    display_name: Battery Voltage
+    type: float
+    unit: volt
+  battery_capacity:
+    display_name: Battery SOC
+    type: float
+    unit: percent
+  total_ac_out_percentage:
+    display_name: Total AC Output Load Percent
+    type: float
+    unit: percent
+
+command_groups:
+  inverter:
+    display_name: Inverter
+commands:
+  get_parallel_info:
+    display_name: Get parallel info
+    description: Get parallel info about specific inverter.
+    group: inverter
+    ui:
+      icon: format-list-numbered
+      quick_access: true
+    arguments:
+      device:
+        display_name: Device number (0-9)
+        type: integer
+        required: true
+        min: 0
+        max: 9
+
+alerts:
+  no_data:
+    severity: error
+    display_name: No data from device
+    description: >
+      Can not get data from device, please check connection between Enapter
+      communication module and the inverter.
+  single_mode:
+    severity: info
+    display_name: Single mode detected
+    description: Please upload blueprint 'MPP Solar Inverter (Single mode)'.
+  fan_locked_0:
+    severity: error
+    display_name: Fan locked (inverter 0)
+  fan_locked_1:
+    severity: error
+    display_name: Fan locked (inverter 1)
+  fan_locked_2:
+    severity: error
+    display_name: Fan locked (inverter 2)
+  fan_locked_3:
+    severity: error
+    display_name: Fan locked (inverter 3)
+  fan_locked_4:
+    severity: error
+    display_name: Fan locked (inverter 4)
+  fan_locked_5:
+    severity: error
+    display_name: Fan locked (inverter 5)
+  fan_locked_6:
+    severity: error
+    display_name: Fan locked (inverter 6)
+  fan_locked_7:
+    severity: error
+    display_name: Fan locked (inverter 7)
+  fan_locked_8:
+    severity: error
+    display_name: Fan locked (inverter 8)
+
+  over_temperature_0:
+    severity: error
+    display_name: Over temperature (inverter 0)
+  over_temperature_1:
+    severity: error
+    display_name: Over temperature (inverter 1)
+  over_temperature_2:
+    severity: error
+    display_name: Over temperature (inverter 2)
+  over_temperature_3:
+    severity: error
+    display_name: Over temperature (inverter 3)
+  over_temperature_4:
+    severity: error
+    display_name: Over temperature (inverter 4)
+  over_temperature_5:
+    severity: error
+    display_name: Over temperature (inverter 5)
+  over_temperature_6:
+    severity: error
+    display_name: Over temperature (inverter 6)
+  over_temperature_7:
+    severity: error
+    display_name: Over temperature (inverter 7)
+  over_temperature_8:
+    severity: error
+    display_name: Over temperature (inverter 9)
+
+  battery_voltage_is_too_high_0:
+    severity: error
+    display_name: Battery Voltage Too High (inverter 0)
+  battery_voltage_is_too_high_1:
+    severity: error
+    display_name: Battery Voltage Too High (inverter 1)
+  battery_voltage_is_too_high_2:
+    severity: error
+    display_name: Battery Voltage Too High (inverter 2)
+  battery_voltage_is_too_high_3:
+    severity: error
+    display_name: Battery Voltage Too High (inverter 3)
+  battery_voltage_is_too_high_4:
+    severity: error
+    display_name: Battery Voltage Too High (inverter 4)
+  battery_voltage_is_too_high_5:
+    severity: error
+    display_name: Battery Voltage Too High (inverter 5)
+  battery_voltage_is_too_high_6:
+    severity: error
+    display_name: Battery Voltage Too High (inverter 6)
+  battery_voltage_is_too_high_7:
+    severity: error
+    display_name: Battery Voltage Too High (inverter 7)
+  battery_voltage_is_too_high_8:
+    severity: error
+    display_name: Battery Voltage Too High (inverter 8)
+
+  battery_voltage_is_too_low_0:
+    severity: error
+    display_name: Battery voltage too low (inverter 0)
+  battery_voltage_is_too_low_1:
+    severity: error
+    display_name: Battery voltage too low (inverter 1)
+  battery_voltage_is_too_low_2:
+    severity: error
+    display_name: Battery voltage too low (inverter 2)
+  battery_voltage_is_too_low_3:
+    severity: error
+    display_name: Battery voltage too low (inverter 3)
+  battery_voltage_is_too_low_4:
+    severity: error
+    display_name: Battery voltage too low (inverter 4)
+  battery_voltage_is_too_low_5:
+    severity: error
+    display_name: Battery voltage too low (inverter 5)
+  battery_voltage_is_too_low_6:
+    severity: error
+    display_name: Battery voltage too low (inverter 6)
+  battery_voltage_is_too_low_7:
+    severity: error
+    display_name: Battery voltage too low (inverter 7)
+  battery_voltage_is_too_low_8:
+    severity: error
+    display_name: Battery voltage too low (inverter 8)
+
+  output_short_circuited_or_over_temperature_0:
+    severity: error
+    display_name: Output short circuited or over temperature (inverter 0)
+  output_short_circuited_or_over_temperature_1:
+    severity: error
+    display_name: Output short circuited or over temperature (inverter 1)
+  output_short_circuited_or_over_temperature_2:
+    severity: error
+    display_name: Output short circuited or over temperature (inverter 2)
+  output_short_circuited_or_over_temperature_3:
+    severity: error
+    display_name: Output short circuited or over temperature (inverter 3)
+  output_short_circuited_or_over_temperature_4:
+    severity: error
+    display_name: Output short circuited or over temperature (inverter 4)
+  output_short_circuited_or_over_temperature_5:
+    severity: error
+    display_name: Output short circuited or over temperature (inverter 5)
+  output_short_circuited_or_over_temperature_6:
+    severity: error
+    display_name: Output short circuited or over temperature (inverter 6)
+  output_short_circuited_or_over_temperature_7:
+    severity: error
+    display_name: Output short circuited or over temperature (inverter 7)
+  output_short_circuited_or_over_temperature_8:
+    severity: error
+    display_name: Output short circuited or over temperature (inverter 8)
+
+  output_voltage_is_too_high_0:
+    severity: error
+    display_name: Output voltage too high (inverter 0)
+  output_voltage_is_too_high_1:
+    severity: error
+    display_name: Output voltage too high (inverter 1)
+  output_voltage_is_too_high_2:
+    severity: error
+    display_name: Output voltage too high (inverter 2)
+  output_voltage_is_too_high_3:
+    severity: error
+    display_name: Output voltage too high (inverter 3)
+  output_voltage_is_too_high_4:
+    severity: error
+    display_name: Output voltage too high (inverter 4)
+  output_voltage_is_too_high_5:
+    severity: error
+    display_name: Output voltage too high (inverter 5)
+  output_voltage_is_too_high_6:
+    severity: error
+    display_name: Output voltage too high (inverter 6)
+  output_voltage_is_too_high_7:
+    severity: error
+    display_name: Output voltage too high (inverter 7)
+  output_voltage_is_too_high_8:
+    severity: error
+    display_name: Output voltage too high (inverter 8)
+
+  over_load_time_out_0:
+    severity: error
+    display_name: Overload time (inverter 0)
+  over_load_time_out_1:
+    severity: error
+    display_name: Overload time (inverter 1)
+  over_load_time_out_2:
+    severity: error
+    display_name: Overload time (inverter 2)
+  over_load_time_out_3:
+    severity: error
+    display_name: Overload time (inverter 3)
+  over_load_time_out_4:
+    severity: error
+    display_name: Overload time (inverter 4)
+  over_load_time_out_5:
+    severity: error
+    display_name: Overload time (inverter 5)
+  over_load_time_out_6:
+    severity: error
+    display_name: Overload time (inverter 6)
+  over_load_time_out_7:
+    severity: error
+    display_name: Overload time (inverter 7)
+  over_load_time_out_8:
+    severity: error
+    display_name: Overload time (inverter 8)
+
+  bus_voltage_is_too_high_0:
+    severity: error
+    display_name: Bus voltage too high (inverter 0)
+  bus_voltage_is_too_high_1:
+    severity: error
+    display_name: Bus voltage too high (inverter 1)
+  bus_voltage_is_too_high_2:
+    severity: error
+    display_name: Bus voltage too high (inverter 2)
+  bus_voltage_is_too_high_3:
+    severity: error
+    display_name: Bus voltage too high (inverter 3)
+  bus_voltage_is_too_high_4:
+    severity: error
+    display_name: Bus voltage too high (inverter 4)
+  bus_voltage_is_too_high_5:
+    severity: error
+    display_name: Bus voltage too high (inverter 5)
+  bus_voltage_is_too_high_6:
+    severity: error
+    display_name: Bus voltage too high (inverter 6)
+  bus_voltage_is_too_high_7:
+    severity: error
+    display_name: Bus voltage too high (inverter 7)
+  bus_voltage_is_too_high_8:
+    severity: error
+    display_name: Bus voltage too high (inverter 8)
+
+  bus_soft_start_failed_0:
+    severity: error
+    display_name: Bus software start failed (inverter 0)
+  bus_soft_start_failed_1:
+    severity: error
+    display_name: Bus software start failed (inverter 1)
+  bus_soft_start_failed_2:
+    severity: error
+    display_name: Bus software start failed (inverter 2)
+  bus_soft_start_failed_3:
+    severity: error
+    display_name: Bus software start failed (inverter 3)
+  bus_soft_start_failed_4:
+    severity: error
+    display_name: Bus software start failed (inverter 4)
+  bus_soft_start_failed_5:
+    severity: error
+    display_name: Bus software start failed (inverter 5)
+  bus_soft_start_failed_6:
+    severity: error
+    display_name: Bus software start failed (inverter 6)
+  bus_soft_start_failed_7:
+    severity: error
+    display_name: Bus software start failed (inverter 7)
+  bus_soft_start_failed_8:
+    severity: error
+    display_name: Bus software start failed (inverter 8)
+
+  main_relay_failed_0:
+    severity: error
+    display_name: Main relay failure (inverter 0)
+  main_relay_failed_1:
+    severity: error
+    display_name: Main relay failure (inverter 1)
+  main_relay_failed_2:
+    severity: error
+    display_name: Main relay failure (inverter 2)
+  main_relay_failed_3:
+    severity: error
+    display_name: Main relay failure (inverter 3)
+  main_relay_failed_4:
+    severity: error
+    display_name: Main relay failure (inverter 4)
+  main_relay_failed_5:
+    severity: error
+    display_name: Main relay failure (inverter 5)
+  main_relay_failed_6:
+    severity: error
+    display_name: Main relay failure (inverter 6)
+  main_relay_failed_7:
+    severity: error
+    display_name: Main relay failure (inverter 7)
+  main_relay_failed_8:
+    severity: error
+    display_name: Main relay failure (inverter 8)
+
+  over_current_inverter_0:
+    severity: error
+    display_name: Over current (inverter 0)
+  over_current_inverter_1:
+    severity: error
+    display_name: Over current (inverter 1)
+  over_current_inverter_2:
+    severity: error
+    display_name: Over current (inverter 2)
+  over_current_inverter_3:
+    severity: error
+    display_name: Over current (inverter 3)
+  over_current_inverter_4:
+    severity: error
+    display_name: Over current (inverter 4)
+  over_current_inverter_5:
+    severity: error
+    display_name: Over current (inverter 5)
+  over_current_inverter_6:
+    severity: error
+    display_name: Over current (inverter 6)
+  over_current_inverter_7:
+    severity: error
+    display_name: Over current (inverter 7)
+  over_current_inverter_8:
+    severity: error
+    display_name: Over current (inverter 8)
+
+  inverter_soft_start_failed_0:
+    severity: error
+    display_name: Inverter software start failed (inverter 0)
+  inverter_soft_start_failed_1:
+    severity: error
+    display_name: Inverter software start failed (inverter 1)
+  inverter_soft_start_failed_2:
+    severity: error
+    display_name: Inverter software start failed (inverter 2)
+  inverter_soft_start_failed_3:
+    severity: error
+    display_name: Inverter software start failed (inverter 3)
+  inverter_soft_start_failed_4:
+    severity: error
+    display_name: Inverter software start failed (inverter 4)
+  inverter_soft_start_failed_5:
+    severity: error
+    display_name: Inverter software start failed (inverter 5)
+  inverter_soft_start_failed_6:
+    severity: error
+    display_name: Inverter software start failed (inverter 6)
+  inverter_soft_start_failed_7:
+    severity: error
+    display_name: Inverter software start failed (inverter 7)
+  inverter_soft_start_failed_8:
+    severity: error
+    display_name: Inverter software start failed (inverter 8)
+
+  self_test_failed_0:
+    severity: error
+    display_name: Self Test Failure (inverter 0)
+  self_test_failed_1:
+    severity: error
+    display_name: Self Test Failure (inverter 1)
+  self_test_failed_2:
+    severity: error
+    display_name: Self Test Failure (inverter 2)
+  self_test_failed_3:
+    severity: error
+    display_name: Self Test Failure (inverter 3)
+  self_test_failed_4:
+    severity: error
+    display_name: Self Test Failure (inverter 4)
+  self_test_failed_5:
+    severity: error
+    display_name: Self Test Failure (inverter 5)
+  self_test_failed_6:
+    severity: error
+    display_name: Self Test Failure (inverter 6)
+  self_test_failed_7:
+    severity: error
+    display_name: Self Test Failure (inverter 7)
+  self_test_failed_8:
+    severity: error
+    display_name: Self Test Failure (inverter 8)
+
+  over_dc_voltage_on_output_of_inverter_0:
+    severity: error
+    display_name: Over DC voltage on output of inverter 0
+  over_dc_voltage_on_output_of_inverter_1:
+    severity: error
+    display_name: Over DC voltage on output of inverter 1
+  over_dc_voltage_on_output_of_inverter_2:
+    severity: error
+    display_name: Over DC voltage on output of inverter 2
+  over_dc_voltage_on_output_of_inverter_3:
+    severity: error
+    display_name: Over DC voltage on output of inverter 3
+  over_dc_voltage_on_output_of_inverter_4:
+    severity: error
+    display_name: Over DC voltage on output of inverter 4
+  over_dc_voltage_on_output_of_inverter_5:
+    severity: error
+    display_name: Over DC voltage on output of inverter 5
+  over_dc_voltage_on_output_of_inverter_6:
+    severity: error
+    display_name: Over DC voltage on output of inverter 6
+  over_dc_voltage_on_output_of_inverter_7:
+    severity: error
+    display_name: Over DC voltage on output of inverter 7
+  over_dc_voltage_on_output_of_inverter_8:
+    severity: error
+    display_name: Over DC voltage on output of inverter 8
+
+  battery_connection_is_open_0:
+    severity: error
+    display_name: Battery connection is open (inverter 0)
+  battery_connection_is_open_1:
+    severity: error
+    display_name: Battery connection is open (inverter 1)
+  battery_connection_is_open_2:
+    severity: error
+    display_name: Battery connection is open (inverter 2)
+  battery_connection_is_open_3:
+    severity: error
+    display_name: Battery connection is open (inverter 3)
+  battery_connection_is_open_4:
+    severity: error
+    display_name: Battery connection is open (inverter 4)
+  battery_connection_is_open_5:
+    severity: error
+    display_name: Battery connection is open (inverter 5)
+  battery_connection_is_open_6:
+    severity: error
+    display_name: Battery connection is open (inverter 6)
+  battery_connection_is_open_7:
+    severity: error
+    display_name: Battery connection is open (inverter 7)
+  battery_connection_is_open_8:
+    severity: error
+    display_name: Battery connection is open (inverter 8)
+
+  current_sensor_failed_0:
+    severity: error
+    display_name: Current sensor failure (inverter 0)
+  current_sensor_failed_1:
+    severity: error
+    display_name: Current sensor failure (inverter 1)
+  current_sensor_failed_2:
+    severity: error
+    display_name: Current sensor failure (inverter 2)
+  current_sensor_failed_3:
+    severity: error
+    display_name: Current sensor failure (inverter 3)
+  current_sensor_failed_4:
+    severity: error
+    display_name: Current sensor failure (inverter 4)
+  current_sensor_failed_5:
+    severity: error
+    display_name: Current sensor failure (inverter 5)
+  current_sensor_failed_6:
+    severity: error
+    display_name: Current sensor failure (inverter 6)
+  current_sensor_failed_7:
+    severity: error
+    display_name: Current sensor failure (inverter 7)
+  current_sensor_failed_8:
+    severity: error
+    display_name: Current sensor failure (inverter 8)
+
+  output_voltage_is_too_low_0:
+    severity: error
+    display_name: Output voltage is too low (inverter 0)
+  output_voltage_is_too_low_1:
+    severity: error
+    display_name: Output voltage is too low (inverter 1)
+  output_voltage_is_too_low_2:
+    severity: error
+    display_name: Output voltage is too low (inverter 2)
+  output_voltage_is_too_low_3:
+    severity: error
+    display_name: Output voltage is too low (inverter 3)
+  output_voltage_is_too_low_4:
+    severity: error
+    display_name: Output voltage is too low (inverter 4)
+  output_voltage_is_too_low_5:
+    severity: error
+    display_name: Output voltage is too low (inverter 5)
+  output_voltage_is_too_low_6:
+    severity: error
+    display_name: Output voltage is too low (inverter 6)
+  output_voltage_is_too_low_7:
+    severity: error
+    display_name: Output voltage is too low (inverter 7)
+  output_voltage_is_too_low_8:
+    severity: error
+    display_name: Output voltage is too low (inverter 8)
+
+  inverter_negative_power_0:
+    severity: error
+    display_name: Negative power (inverter 0)
+  inverter_negative_power_1:
+    severity: error
+    display_name: Negative power (inverter 1)
+  inverter_negative_power_2:
+    severity: error
+    display_name: Negative power (inverter 2)
+  inverter_negative_power_3:
+    severity: error
+    display_name: Negative power (inverter 3)
+  inverter_negative_power_4:
+    severity: error
+    display_name: Negative power (inverter 4)
+  inverter_negative_power_5:
+    severity: error
+    display_name: Negative power (inverter 5)
+  inverter_negative_power_6:
+    severity: error
+    display_name: Negative power (inverter 6)
+  inverter_negative_power_7:
+    severity: error
+    display_name: Negative power (inverter 7)
+  inverter_negative_power_8:
+    severity: error
+    display_name: Negative power (inverter 8)
+
+  parallel_version_different_0:
+    severity: error
+    display_name: Parallel version different (inverter 0)
+  parallel_version_different_1:
+    severity: error
+    display_name: Parallel version different (inverter 1)
+  parallel_version_different_2:
+    severity: error
+    display_name: Parallel version different (inverter 2)
+  parallel_version_different_3:
+    severity: error
+    display_name: Parallel version different (inverter 3)
+  parallel_version_different_4:
+    severity: error
+    display_name: Parallel version different (inverter 4)
+  parallel_version_different_5:
+    severity: error
+    display_name: Parallel version different (inverter 5)
+  parallel_version_different_6:
+    severity: error
+    display_name: Parallel version different (inverter 6)
+  parallel_version_different_7:
+    severity: error
+    display_name: Parallel version different (inverter 7)
+  parallel_version_different_8:
+    severity: error
+    display_name: Parallel version different (inverter 8)
+
+  output_circuit_failed_0:
+    severity: warning
+    display_name: Output circuit failure (inverter 0)
+  output_circuit_failed_1:
+    severity: warning
+    display_name: Output circuit failure (inverter 1)
+  output_circuit_failed_2:
+    severity: warning
+    display_name: Output circuit failure (inverter 2)
+  output_circuit_failed_3:
+    severity: warning
+    display_name: Output circuit failure (inverter 3)
+  output_circuit_failed_4:
+    severity: warning
+    display_name: Output circuit failure (inverter 4)
+  output_circuit_failed_5:
+    severity: warning
+    display_name: Output circuit failure (inverter 5)
+  output_circuit_failed_6:
+    severity: warning
+    display_name: Output circuit failure (inverter 6)
+  output_circuit_failed_7:
+    severity: warning
+    display_name: Output circuit failure (inverter 7)
+  output_circuit_failed_8:
+    severity: warning
+    display_name: Output circuit failure (inverter 8)
+
+  can_communication_failed_0:
+    severity: warning
+    display_name: CAN communication failed (inverter 0)
+  can_communication_failed_1:
+    severity: warning
+    display_name: CAN communication failed (inverter 1)
+  can_communication_failed_2:
+    severity: warning
+    display_name: CAN communication failed (inverter 2)
+  can_communication_failed_3:
+    severity: warning
+    display_name: CAN communication failed (inverter 3)
+  can_communication_failed_4:
+    severity: warning
+    display_name: CAN communication failed (inverter 4)
+  can_communication_failed_5:
+    severity: warning
+    display_name: CAN communication failed (inverter 5)
+  can_communication_failed_6:
+    severity: warning
+    display_name: CAN communication failed (inverter 6)
+  can_communication_failed_7:
+    severity: warning
+    display_name: CAN communication failed (inverter 7)
+  can_communication_failed_8:
+    severity: warning
+    display_name: CAN communication failed (inverter 8)
+
+  parallel_host_line_lost_0:
+    severity: error
+    display_name: Parallel host line lost (inverter 0)
+  parallel_host_line_lost_1:
+    severity: error
+    display_name: Parallel host line lost (inverter 1)
+  parallel_host_line_lost_2:
+    severity: error
+    display_name: Parallel host line lost (inverter 2)
+  parallel_host_line_lost_3:
+    severity: error
+    display_name: Parallel host line lost (inverter 3)
+  parallel_host_line_lost_4:
+    severity: error
+    display_name: Parallel host line lost (inverter 4)
+  parallel_host_line_lost_5:
+    severity: error
+    display_name: Parallel host line lost (inverter 5)
+  parallel_host_line_lost_6:
+    severity: error
+    display_name: Parallel host line lost (inverter 6)
+  parallel_host_line_lost_7:
+    severity: error
+    display_name: Parallel host line lost (inverter 7)
+  parallel_host_line_lost_8:
+    severity: error
+    display_name: Parallel host line lost (inverter 8)
+
+  parallel_synchronized_signal_lost_0:
+    severity: error
+    display_name: Parallel synchronized signal lost (inverter 0)
+  parallel_synchronized_signal_lost_1:
+    severity: error
+    display_name: Parallel synchronized signal lost (inverter 1)
+  parallel_synchronized_signal_lost_2:
+    severity: error
+    display_name: Parallel synchronized signal lost (inverter 2)
+  parallel_synchronized_signal_lost_3:
+    severity: error
+    display_name: Parallel synchronized signal lost (inverter 3)
+  parallel_synchronized_signal_lost_4:
+    severity: error
+    display_name: Parallel synchronized signal lost (inverter 4)
+  parallel_synchronized_signal_lost_5:
+    severity: error
+    display_name: Parallel synchronized signal lost (inverter 5)
+  parallel_synchronized_signal_lost_6:
+    severity: error
+    display_name: Parallel synchronized signal lost (inverter 6)
+  parallel_synchronized_signal_lost_7:
+    severity: error
+    display_name: Parallel synchronized signal lost (inverter 7)
+  parallel_synchronized_signal_lost_8:
+    severity: error
+    display_name: Parallel synchronized signal lost (inverter 8)
+
+  parallel_battery_voltage_detect_different_0:
+    severity: warning
+    display_name: Parallel battery voltage detect different (inverter 0)
+  parallel_battery_voltage_detect_different_1:
+    severity: warning
+    display_name: Parallel battery voltage detect different (inverter 1)
+  parallel_battery_voltage_detect_different_2:
+    severity: warning
+    display_name: Parallel battery voltage detect different (inverter 2)
+  parallel_battery_voltage_detect_different_3:
+    severity: warning
+    display_name: Parallel battery voltage detect different (inverter 3)
+  parallel_battery_voltage_detect_different_4:
+    severity: warning
+    display_name: Parallel battery voltage detect different (inverter 4)
+  parallel_battery_voltage_detect_different_5:
+    severity: warning
+    display_name: Parallel battery voltage detect different (inverter 5)
+  parallel_battery_voltage_detect_different_6:
+    severity: warning
+    display_name: Parallel battery voltage detect different (inverter 6)
+  parallel_battery_voltage_detect_different_7:
+    severity: warning
+    display_name: Parallel battery voltage detect different (inverter 7)
+  parallel_battery_voltage_detect_different_8:
+    severity: warning
+    display_name: Parallel battery voltage detect different (inverter 8)
+
+  parallel_line_voltage_or_frequency_detect_different_0:
+    severity: error
+    display_name: >
+      Parallel line voltage or frequency detect different (inverter 0)
+  parallel_line_voltage_or_frequency_detect_different_1:
+    severity: error
+    display_name: >
+      Parallel line voltage or frequency detect different (inverter 1)
+  parallel_line_voltage_or_frequency_detect_different_2:
+    severity: error
+    display_name: >
+      Parallel line voltage or frequency detect different (inverter 2)
+  parallel_line_voltage_or_frequency_detect_different_3:
+    severity: error
+    display_name: >
+      Parallel line voltage or frequency detect different (inverter 3)
+  parallel_line_voltage_or_frequency_detect_different_4:
+    severity: error
+    display_name: >
+      Parallel line voltage or frequency detect different (inverter 4)
+  parallel_line_voltage_or_frequency_detect_different_5:
+    severity: error
+    display_name: >
+      Parallel line voltage or frequency detect different (inverter 5)
+  parallel_line_voltage_or_frequency_detect_different_6:
+    severity: error
+    display_name: >
+      Parallel line voltage or frequency detect different (inverter 6)
+  parallel_line_voltage_or_frequency_detect_different_7:
+    severity: error
+    display_name: >
+      Parallel line voltage or frequency detect different (inverter 7)
+  parallel_line_voltage_or_frequency_detect_different_8:
+    severity: error
+    display_name: >
+      Parallel line voltage or frequency detect different (inverter 8)
+
+  parallel_line_input_current_unbalanced_0:
+    severity: error
+    display_name: Parallel line input current unbalanced (inverter 0)
+  parallel_line_input_current_unbalanced_1:
+    severity: error
+    display_name: Parallel line input current unbalanced (inverter 1)
+  parallel_line_input_current_unbalanced_2:
+    severity: error
+    display_name: Parallel line input current unbalanced (inverter 2)
+  parallel_line_input_current_unbalanced_3:
+    severity: error
+    display_name: Parallel line input current unbalanced (inverter 3)
+  parallel_line_input_current_unbalanced_4:
+    severity: error
+    display_name: Parallel line input current unbalanced (inverter 5)
+  parallel_line_input_current_unbalanced_5:
+    severity: error
+    display_name: Parallel line input current unbalanced (inverter 5)
+  parallel_line_input_current_unbalanced_6:
+    severity: error
+    display_name: Parallel line input current unbalanced (inverter 6)
+  parallel_line_input_current_unbalanced_7:
+    severity: error
+    display_name: Parallel line input current unbalanced (inverter 7)
+  parallel_line_input_current_unbalanced_8:
+    severity: error
+    display_name: Parallel line input current unbalanced (inverter 8)
+
+  parallel_output_setting_different_0:
+    severity: error
+    display_name: Parallel output setting different (inverter 0)
+  parallel_output_setting_different_1:
+    severity: error
+    display_name: Parallel output setting different (inverter 1)
+  parallel_output_setting_different_2:
+    severity: error
+    display_name: Parallel output setting different (inverter 2)
+  parallel_output_setting_different_3:
+    severity: error
+    display_name: Parallel output setting different (inverter 3)
+  parallel_output_setting_different_4:
+    severity: error
+    display_name: Parallel output setting different (inverter 4)
+  parallel_output_setting_different_5:
+    severity: error
+    display_name: Parallel output setting different (inverter 5)
+  parallel_output_setting_different_6:
+    severity: error
+    display_name: Parallel output setting different (inverter 6)
+  parallel_output_setting_different_7:
+    severity: error
+    display_name: Parallel output setting different (inverter 7)
+  parallel_output_setting_different_8:
+    severity: error
+    display_name: Parallel output setting different (inverter 8)
+
+.cloud:
+  category: renewable_energy_sources
+  mobile_main_chart: total_ac_out_active_power
+  mobile_telemetry:
+    - total_pv_input_power
+    - total_charging_current
+    - total_ac_out_percentage
+    - total_ac_out_apparent_power
+    - battery_volt
+    - battery_capacity
+
+  mobile_charts:
+    - total_ac_out_active_power
+    - total_pv_input_power
+    - total_charging_current
+    - total_ac_out_percentage
+    - total_ac_out_apparent_power
+    - battery_volt
+    - battery_capacity

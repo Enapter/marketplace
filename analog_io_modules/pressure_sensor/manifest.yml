@@ -8,14 +8,17 @@ contributors:
   - anataty
   - nkrasko
 support:
-  url: https://enapter.com/support
+  url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
 license: MIT
 verification_level: verified
 
 communication_module:
   product: ENP-AI4-50V
-  lua_file: firmware.lua
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.1.8
 
 properties:
   calib_slope:

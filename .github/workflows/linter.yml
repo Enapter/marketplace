@@ -15,6 +15,19 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: Get changed Lua files
+        id: changed-lua-files
+        uses: tj-actions/changed-files@v35
+        with:
+          files: |
+            **/*.lua
+      - name: Check Formatting
+        uses: JohnnyMorganz/stylua-action@v2
+        if: steps.changed-lua-files.outputs.any_changed == 'true'
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: v0.16.1
+          args: --check --allow-hidden ${{ steps.changed-lua-files.outputs.all_changed_files }}
       - name: Lint Code Base
         uses: github/super-linter/slim@v4
         env:

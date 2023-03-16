@@ -1,0 +1,285 @@
+blueprint_spec: device/1.0
+display_name: MPP Solar Inverter
+description: Solar inverter with monitoring and control via WatchPower protocol.
+icon: enapter-inverter-battery
+vendor: mpp-solar
+license: MIT
+author: enapter
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+verification_level: verified
+
+communication_module:
+  product: ENP-RS232
+  lua:
+    dir: mpp_solar_fw
+    amalg_mode: nodebug
+
+properties:
+  model:
+    display_name: Model
+    type: string
+  output_mode:
+    display_name: Output Mode
+    type: string
+  serial_num:
+    display_name: Serial Number
+    type: string
+  fw_ver:
+    display_name: Firmware version
+    type: string
+  protocol_ver:
+    display_name: Protocol version
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - power_on
+      - standby
+      - line
+      - battery
+      - error
+      - power_saving
+      - no_data
+      - unknown
+  output_source_priority:
+    display_name: Output Source Priority
+    type: string
+    enum:
+      - Utility first
+      - Solar first
+      - SBU
+  charger_source_priority:
+    display_name: Charger Source Priority
+    type: string
+    enum:
+      - Utility first
+      - Solar first
+      - Solar and utility
+      - Only solar
+  pv_input_power:
+    display_name: PV Input Power
+    type: float
+    unit: watt
+  ac_out_active_power:
+    display_name: AC Output Active Power
+    type: float
+    unit: watt
+  battery_volt:
+    display_name: Battery Voltage
+    type: float
+    unit: volt
+  pv_input_amp:
+    display_name: PV Input Current
+    type: float
+    unit: amp
+  pv_input_volt:
+    display_name: PV Input Voltage
+    type: float
+    unit: volt
+  ac_out_volt:
+    display_name: AC Output Voltage
+    type: float
+    unit: volt
+  ac_out_freq:
+    display_name: AC Output Frequency
+    type: float
+    unit: hertz
+  ac_out_load_percent:
+    display_name: AC Output Load Percent
+    type: float
+    unit: percent
+  battery_charge_amp:
+    display_name: Battery Charge Current
+    type: float
+    unit: amp
+  battery_discharge_amp:
+    display_name: Battery Discharge Current
+    type: float
+    unit: amp
+  battery_capacity:
+    display_name: Battery Capacity
+    type: float
+    unit: percent
+  grid_volt:
+    display_name: Grid Voltage
+    type: float
+    unit: volt
+  grid_freq:
+    display_name: Grid Frequency
+    type: float
+    unit: hertz
+
+command_groups:
+  inverter:
+    display_name: Inverter
+commands:
+  set_charger_priority:
+    display_name: Set Charger Priority
+    group: inverter
+    ui:
+      icon: lightning-bolt
+      quick_access: true
+    arguments:
+      priority:
+        display_name: Charger Priority
+        type: string
+        required: true
+        enum:
+          - Utility first
+          - Solar first
+          - Solar and utility
+          - Only solar
+  set_output_priority:
+    display_name: Set Output Priority
+    group: inverter
+    ui:
+      icon: home-heart
+      quick_access: true
+    arguments:
+      priority:
+        display_name: Output Priority
+        type: string
+        required: true
+        enum:
+          - Utility first
+          - Solar first
+          - SBU
+
+alerts:
+  no_data:
+    severity: error
+    display_name: No data from device
+    description: >
+      Can not get data from device, please check connection between Enapter
+      communication module and the inverter.
+  parallel_mode:
+    severity: info
+    display_name: Parallel mode detected
+    description: Please upload blueprint 'MPP Solar Inverter (Parallel mode)'.
+  rules_unavailable:
+    severity: error
+    display_name: Rules Unavailable
+    description: Can not get data from device, rules applying is not working.
+  inverter_fault:
+    severity: error
+    display_name: Inverter Fault
+  bus_over:
+    severity: error
+    display_name: Bus Over
+  bus_under:
+    severity: error
+    display_name: Bus Under
+  bus_soft_fail:
+    severity: error
+    display_name: Bus Soft Failure
+  inverter_voltage_low:
+    severity: error
+    display_name: Inverter Voltage Too Low
+  inverter_voltage_high:
+    severity: error
+    display_name: Inverter Voltage Too High
+  inverter_over_current:
+    severity: error
+    display_name: Inverter Overcurrent
+  inverter_soft_fail:
+    severity: error
+    display_name: Inverter Soft Fail
+  self_test_fail:
+    severity: error
+    display_name: Self Test Failure
+  op_dc_voltage_over:
+    severity: error
+    display_name: OP DC Voltage Over
+  battery_open:
+    severity: error
+    display_name: Battery Open
+  current_sensor_fail:
+    severity: error
+    display_name: Current Sensor Fail
+  battery_short:
+    severity: error
+    display_name: Battery Short
+  over_temperature:
+    severity: error
+    display_name: Over Temperature
+  fan_locked:
+    severity: error
+    display_name: Fan Locked
+  battery_voltage_high:
+    severity: error
+    display_name: Battery Voltage High
+  overload:
+    severity: error
+    display_name: Overload
+  line_fail:
+    severity: warning
+    display_name: Line Fail
+  opvshort:
+    severity: warning
+    display_name: OPVShort
+  battery_low_alarm:
+    severity: warning
+    display_name: Battery Low Alarm
+  battery_shutdown:
+    severity: warning
+    display_name: Battery Under Shutdown
+  eeprom_fault:
+    severity: warning
+    display_name: EEPROM Fault
+  power_limit:
+    severity: warning
+    display_name: Power Limit
+  pv_voltage_high:
+    severity: warning
+    display_name: PV Voltage High
+  mppt_overload_fault:
+    severity: warning
+    display_name: MPPT Overload Fault
+  mppt_overload_warning:
+    severity: warning
+    display_name: MPPT Overload Warning
+  over_temperature_w:
+    severity: warning
+    display_name: Over Temperature
+  fan_locked_w:
+    severity: warning
+    display_name: Fan Locked
+  battery_voltage_high_w:
+    severity: warning
+    display_name: Battery Voltage High
+  overload_w:
+    severity: warning
+    display_name: Overload
+
+.cloud:
+  category: renewable_energy_sources
+  mobile_main_chart: ac_out_active_power
+  mobile_telemetry:
+    - charger_source_priority
+    - output_source_priority
+    - ac_out_active_power
+    - pv_input_power
+    - pv_input_volt
+    - pv_input_amp
+    - battery_volt
+    - battery_charge_amp
+    - battery_discharge_amp
+
+  mobile_charts:
+    - ac_out_volt
+    - ac_out_freq
+    - ac_out_active_power
+    - ac_out_load_percent
+    - battery_volt
+    - battery_charge_amp
+    - battery_discharge_amp
+    - battery_capacity
+    - pv_input_amp
+    - pv_input_volt
+    - grid_volt
+    - grid_freq
