@@ -1,8 +1,8 @@
-local config = require("enapter.ucm.config")
+local config = require('enapter.ucm.config')
 -- Configuration variables must be also defined
 -- in `write_configuration` command arguments in manifest.yml
-ADDRESS_CONFIG = "address"
-UNIT_ID_CONFIG = "unit_id"
+ADDRESS_CONFIG = 'address'
+UNIT_ID_CONFIG = 'unit_id'
 
 -- Initiate device firmware. Called at the end of the file.
 function main()
@@ -10,8 +10,8 @@ function main()
   scheduler.add(2000, send_telemetry)
 
   config.init({
-    [ADDRESS_CONFIG] = { type = "string", required = true },
-    [UNIT_ID_CONFIG] = { type = "number", required = true },
+    [ADDRESS_CONFIG] = { type = 'string', required = true },
+    [UNIT_ID_CONFIG] = { type = 'number', required = true },
   })
 end
 
@@ -20,7 +20,7 @@ function send_properties()
 
   local values, err = config.read_all()
   if err then
-    enapter.log("cannot read config: " .. tostring(err), "error")
+    enapter.log('cannot read config: ' .. tostring(err), 'error')
   else
     for name, val in pairs(values) do
       properties[name] = val
@@ -33,10 +33,10 @@ end
 function send_telemetry()
   local vitobloc, err = connect_vitobloc()
   if not vitobloc then
-    if err == "cannot_read_config" then
-      enapter.send_telemetry({ status = "error", alerts = { "cannot_read_config" } })
-    elseif err == "not_configured" then
-      enapter.send_telemetry({ status = "ok", alerts = { "not_configured" } })
+    if err == 'cannot_read_config' then
+      enapter.send_telemetry({ status = 'error', alerts = { 'cannot_read_config' } })
+    elseif err == 'not_configured' then
+      enapter.send_telemetry({ status = 'ok', alerts = { 'not_configured' } })
     end
     return
   end
@@ -87,12 +87,12 @@ function connect_vitobloc()
 
   local values, err = config.read_all()
   if err then
-    enapter.log("cannot read config: " .. tostring(err), "error")
-    return nil, "cannot_read_config"
+    enapter.log('cannot read config: ' .. tostring(err), 'error')
+    return nil, 'cannot_read_config'
   else
     local address, unit_id = values[ADDRESS_CONFIG], values[UNIT_ID_CONFIG]
     if not address or not unit_id then
-      return nil, "not_configured"
+      return nil, 'not_configured'
     else
       -- Declare global variable to reuse connection between function calls
       vitobloc = VitoblocModbusTcp.new(address, unit_id)
@@ -107,22 +107,22 @@ function parse_status(value)
     return {}
   end
   if value == 0 then
-    return { "unknown_value" }
+    return { 'unknown_value' }
   end
 
-  if type(value) == "number" then
+  if type(value) == 'number' then
     if value == 0 then
-      return "Off"
+      return 'Off'
     elseif value == 1 then
-      return "Ready"
+      return 'Ready'
     elseif value == 2 then
-      return "Start"
+      return 'Start'
     elseif value == 3 then
-      return "Operation"
+      return 'Operation'
     elseif value == 4 then
-      return "Error"
+      return 'Error'
     else
-      enapter.log("Cannot decode status: " .. tostring(value), "error")
+      enapter.log('Cannot decode status: ' .. tostring(value), 'error')
       return tostring(value)
     end
   end
@@ -133,31 +133,31 @@ function parse_operating_states(value)
     return {}
   end
   if value == 0 then
-    return { "unknown_value" }
+    return { 'unknown_value' }
   end
-  if type(value) == "number" then
+  if type(value) == 'number' then
     local operating_states = {}
 
     if value & 64 then
-      table.insert(operating_states, "engine_stopped")
+      table.insert(operating_states, 'engine_stopped')
     end
     if value & 128 then
-      table.insert(operating_states, "engine_on")
+      table.insert(operating_states, 'engine_on')
     end
     if value & 256 then
-      table.insert(operating_states, "fan_on")
+      table.insert(operating_states, 'fan_on')
     end
     if value & 512 then
-      table.insert(operating_states, "cooling_water_pump_on")
+      table.insert(operating_states, 'cooling_water_pump_on')
     end
     if value & 1024 then
-      table.insert(operating_states, "heating_water_pump_on")
+      table.insert(operating_states, 'heating_water_pump_on')
     end
     if value & 4096 then
-      table.insert(operating_states, "ignition_on")
+      table.insert(operating_states, 'ignition_on')
     end
     if value & 8192 then
-      table.insert(operating_states, "gas_valves_open")
+      table.insert(operating_states, 'gas_valves_open')
     end
     return operating_states
   end
@@ -168,22 +168,22 @@ function parse_start_stop_error(value)
     return {}
   end
   if value == 0 then
-    return { "unknow_value" }
+    return { 'unknow_value' }
   end
-  if type(value) == "number" then
+  if type(value) == 'number' then
     local stop_start_errors = {}
 
     if value & 1 then
-      table.insert(stop_start_errors, "no_interference")
+      table.insert(stop_start_errors, 'no_interference')
     end
     if value & 2 then
-      table.insert(stop_start_errors, "underspeed")
+      table.insert(stop_start_errors, 'underspeed')
     end
     if value & 32 then
-      table.insert(stop_start_errors, "slow_speed")
+      table.insert(stop_start_errors, 'slow_speed')
     end
     if value & 1024 then
-      table.insert(stop_start_errors, "engine_doesnt_stop")
+      table.insert(stop_start_errors, 'engine_doesnt_stop')
     end
     return stop_start_errors
   end
@@ -194,16 +194,16 @@ function parse_digital_error(value)
     return {}
   end
   if value == 0 then
-    return { "unknown_value" }
+    return { 'unknown_value' }
   end
-  if type(value) == "number" then
+  if type(value) == 'number' then
     local digital_errors = {}
 
     if value & 8 then
-      table.insert(digital_errors, "gas_pressure_max")
+      table.insert(digital_errors, 'gas_pressure_max')
     end
     if value & 16 then
-      table.insert(digital_errors, "gas_pressure_min")
+      table.insert(digital_errors, 'gas_pressure_min')
     end
     return digital_errors
   end
@@ -214,16 +214,16 @@ function parse_external_error(value)
     return {}
   end
   if value == 0 then
-    return { "unknown_value" }
+    return { 'unknown_value' }
   end
-  if type(value) == "number" then
+  if type(value) == 'number' then
     local external_errors = {}
 
     if value & 1 then
-      table.insert(external_errors, "power_module_generator")
+      table.insert(external_errors, 'power_module_generator')
     end
     if value & 2 then
-      table.insert(external_errors, "power_module_reverse")
+      table.insert(external_errors, 'power_module_reverse')
     end
     return external_errors
   end
@@ -234,19 +234,19 @@ function parse_other_error(value)
     return {}
   end
   if value == 0 then
-    return { "unknown_value" }
+    return { 'unknown_value' }
   end
-  if type(value) == "number" then
+  if type(value) == 'number' then
     local other_errors = {}
 
     if value & 1 then
-      table.insert(other_errors, "pump_dry_1")
+      table.insert(other_errors, 'pump_dry_1')
     end
     if value & 2 then
-      table.insert(other_errors, "pump_dry_2")
+      table.insert(other_errors, 'pump_dry_2')
     end
     if value & 4 then
-      table.insert(other_errors, "pump_dry")
+      table.insert(other_errors, 'pump_dry')
     end
     return other_errors
   end
@@ -259,8 +259,11 @@ end
 VitoblocModbusTcp = {}
 
 function VitoblocModbusTcp.new(ip_address, unit_id)
-  assert(type(ip_address) == "string", "ip_address (arg #1) must be string, given: " .. inspect(ip_address))
-  assert(type(unit_id) == "number", "unit_id (arg #2) must be number, given: " .. inspect(unit_id))
+  assert(
+    type(ip_address) == 'string',
+    'ip_address (arg #1) must be string, given: ' .. inspect(ip_address)
+  )
+  assert(type(unit_id) == 'number', 'unit_id (arg #2) must be number, given: ' .. inspect(unit_id))
 
   local self = setmetatable({}, { __index = VitoblocModbusTcp })
   self.ip_address = ip_address
@@ -273,15 +276,15 @@ function VitoblocModbusTcp:connect()
 end
 
 function VitoblocModbusTcp:read_holdings(address, registers_count)
-  assert(type(address) == "number", "address (arg #1) must be number, given: " .. inspect(address))
+  assert(type(address) == 'number', 'address (arg #1) must be number, given: ' .. inspect(address))
   assert(
-    type(registers_count) == "number",
-    "refisters_count (arg #1) must be number, given: " .. inspect(registers_count)
+    type(registers_count) == 'number',
+    'refisters_count (arg #1) must be number, given: ' .. inspect(registers_count)
   )
 
   local registers, err = self.modbus:read_holdings(self.unit_id, address, registers_count, 1000)
   if err and err ~= 0 then
-    enapter.log("read error: " .. err, "error")
+    enapter.log('read error: ' .. err, 'error')
     if err == 1 then
       -- Sometimes timeout happens and it may break underlying Modbus client,
       -- this is a temporary workaround which manually reconnects.
@@ -312,8 +315,8 @@ function VitoblocModbusTcp:read_u32(address, factor)
     return nil
   end
 
-  local raw = string.pack(">I2I2", reg[1], reg[2])
-  return string.unpack(">I4", raw) * factor
+  local raw = string.pack('>I2I2', reg[1], reg[2])
+  return string.unpack('>I4', raw) * factor
 end
 
 function VitoblocModbusTcp:read_u32_enum(address, factor)
@@ -338,8 +341,8 @@ function VitoblocModbusTcp:read_u8(address, factor)
     return nil
   end
 
-  local raw = string.pack(">I2", reg[1])
-  return string.unpack(">I2", raw) * factor
+  local raw = string.pack('>I2', reg[1])
+  return string.unpack('>I2', raw) * factor
 end
 
 function VitoblocModbusTcp:read_u16(address, factor)
@@ -362,8 +365,8 @@ function VitoblocModbusTcp:read_u16(address, factor)
     return nil
   end
 
-  local raw = string.pack(">I2", reg[1])
-  return string.unpack(">I2", raw) * factor
+  local raw = string.pack('>I2', reg[1])
+  return string.unpack('>I2', raw) * factor
 end
 
 function VitoblocModbusTcp:read_i16(address, factor)
@@ -381,8 +384,8 @@ function VitoblocModbusTcp:read_i16(address, factor)
     return nil
   end
 
-  local raw = string.pack(">i2", reg[1])
-  return string.unpack(">i2", raw) * factor
+  local raw = string.pack('>i2', reg[1])
+  return string.unpack('>i2', raw) * factor
 end
 
 main()
