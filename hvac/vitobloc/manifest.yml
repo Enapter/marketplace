@@ -16,6 +16,7 @@ verification_level: ready_for_testing
 communication_module:
   product: ENP-VIRTUAL
   lua_file: firmware.lua
+  dependencies: enapter-ucm ~> 0.1.8
 
 properties:
   model:
