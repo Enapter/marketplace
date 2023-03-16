@@ -119,16 +119,16 @@ function parse_operating_states(value)
   if not value then return {} end
   if value == 0 then return {'unknown_value'} end
   if type(value) == 'number' then
-  local operating_states = {}
+    local operating_states = {}
 
-  if value & 64 then table.insert(operating_states,'engine_stopped') end
-  if value & 128  then table.insert(operating_states, 'engine_on') end
-  if value & 256 then table.insert(operating_states,'fan_on') end
-  if value & 512 then table.insert(operating_states,'cooling_water_pump_on') end
-  if value & 1024 then table.insert(operating_states, 'heating_water_pump_on') end
-  if value & 4096 then table.insert(operating_states,'ignition_on') end
-  if value & 8192 then table.insert(operating_states, 'gas_valves_open') end
-  return operating_states
+    if value & 64 then table.insert(operating_states,'engine_stopped') end
+    if value & 128  then table.insert(operating_states, 'engine_on') end
+    if value & 256 then table.insert(operating_states,'fan_on') end
+    if value & 512 then table.insert(operating_states,'cooling_water_pump_on') end
+    if value & 1024 then table.insert(operating_states, 'heating_water_pump_on') end
+    if value & 4096 then table.insert(operating_states,'ignition_on') end
+    if value & 8192 then table.insert(operating_states, 'gas_valves_open') end
+    return operating_states
   end
 end
 
@@ -136,13 +136,13 @@ function parse_start_stop_error(value)
   if not value then return {} end
   if value == 0 then return {'unknow_value'} end
   if type(value) == 'number' then
-  local stop_start_errors = {}
+    local stop_start_errors = {}
 
-  if value & 1 then table.insert(stop_start_errors,'no_interference') end
-  if value & 2 then table.insert(stop_start_errors,'underspeed') end
-  if value & 32 then table.insert(stop_start_errors,'slow_speed') end
-  if value & 1024 then table.insert(stop_start_errors, "engine_doesnt_stop") end
-  return stop_start_errors
+    if value & 1 then table.insert(stop_start_errors,'no_interference') end
+    if value & 2 then table.insert(stop_start_errors,'underspeed') end
+    if value & 32 then table.insert(stop_start_errors,'slow_speed') end
+    if value & 1024 then table.insert(stop_start_errors, "engine_doesnt_stop") end
+    return stop_start_errors
   end
 end
 
@@ -187,8 +187,6 @@ end
 -- Vitobloc ModbusTCP API
 ---------------------------------
 
---NEW ModbusTCP part, I'm confused
-
 VitoblocModbusTcp = {}
 
 function VitoblocModbusTcp.new(ip_address)
@@ -207,9 +205,6 @@ end
   end
 end
 
--- end of modbus part
-
---I really don't understand the whole '>I2I2' and reg[1] == 0x00FF thing, help
 
 function VitoblocModbusTcp:read_u32(address, factor)
   if not factor then factor = 1 end

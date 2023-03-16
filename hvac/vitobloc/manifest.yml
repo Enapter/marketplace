@@ -34,7 +34,7 @@ telemetry:
       - Operation
       - Error
       - ok
-      - Unknown value
+      - unknown_value
   ext_power_setpoint:
     display_name: External power setpoint
     type: float
