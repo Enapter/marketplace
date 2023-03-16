@@ -50,26 +50,26 @@ function send_telemetry()
     digital_errors = parse_digital_error(vitobloc:read_u8(132)),
     external_errors = parse_external_error(vitobloc:read_u8(140)),
     other_errors = parse_other_error(vitobloc:read_u8(144)),
-    ext_power_setpoint = vitobloc:read_i16(7,0.1), -- 0.1
-    int_power_setpoint = vitobloc:read_i16(8,0.1), -- 0.1
-    uptime = vitobloc:read_u32(9), -- 1
-    number_of_launches = vitobloc:read_i16(12), --1
-    time_till_next_maintenance = vitobloc:read_i16(18), -- 1
-    time_till_next_repair = vitobloc:read_u32(22), --1
-    kwh_counter = vitobloc:read_u32(26,0.1), -- 0.1
-    t_cooling_water_inlet = vitobloc:read_i16(40,0.1), --0.1
-    t_cooling_water_outlet = vitobloc:read_i16(44,0.1), -- 0.1
-    t_engine_oil_tank_A = vitobloc:read_i16(47,0.1), -- 0.1
-    t_engine_oil_tank_B = vitobloc:read_i16(48,0.1), -- 0.1
-    generator_temp = vitobloc:read_i16(49,0.1), -- 0.1
-    battery_voltage = vitobloc:read_i16(64,0.1), -- 0.1
-    oil_pressure = vitobloc:read_i16(65,0.1), -- 0.1
-    grid_voltage_L1 = vitobloc:read_i16(73,0.1), -- 0.1
-    grid_voltage_L2 = vitobloc:read_i16(74,0.1), -- 0.1
-    grid_voltage_L3 = vitobloc:read_i16(75,0.1), -- 0.1
-    generator_voltage_L1 = vitobloc:read_i16(77,0.1), -- 0.1
-    generator_voltage_L2 = vitobloc:read_i16(78,0.1), --0.1
-    generator_voltage_L3 = vitobloc:read_i16(79,0.1) -- 0.1
+    ext_power_setpoint = vitobloc:read_i16(7,0.1),
+    int_power_setpoint = vitobloc:read_i16(8,0.1),
+    uptime = vitobloc:read_u32(9),
+    number_of_launches = vitobloc:read_i16(12),
+    time_till_next_maintenance = vitobloc:read_i16(18),
+    time_till_next_repair = vitobloc:read_u32(22),
+    kwh_counter = vitobloc:read_u32(26,0.1),
+    t_cooling_water_inlet = vitobloc:read_i16(40,0.1),
+    t_cooling_water_outlet = vitobloc:read_i16(44,0.1),
+    t_engine_oil_tank_A = vitobloc:read_i16(47,0.1),
+    t_engine_oil_tank_B = vitobloc:read_i16(48,0.1),
+    generator_temp = vitobloc:read_i16(49,0.1),
+    battery_voltage = vitobloc:read_i16(64,0.1),
+    oil_pressure = vitobloc:read_i16(65,0.1),
+    grid_voltage_L1 = vitobloc:read_i16(73,0.1),
+    grid_voltage_L2 = vitobloc:read_i16(74,0.1),
+    grid_voltage_L3 = vitobloc:read_i16(75,0.1),
+    generator_voltage_L1 = vitobloc:read_i16(77,0.1),
+    generator_voltage_L2 = vitobloc:read_i16(78,0.1),
+    generator_voltage_L3 = vitobloc:read_i16(79,0.1)
   })
 end
 
@@ -189,20 +189,35 @@ end
 
 VitoblocModbusTcp = {}
 
-function VitoblocModbusTcp.new(ip_address)
+function VitoblocModbusTcp.new(ip_address, unit_id)
+  assert(type(ip_address) == 'string', 'ip_address (arg #1) must be string, given: '..inspect(ip_address))
+  assert(type(unit_id) == 'number', 'unit_id (arg #2) must be number, given: '..inspect(unit_id))
+
+  local self = setmetatable({}, { __index = VitoblocModbusTcp })
+  self.ip_address = ip_address
+  self.unit_id = unit_id
+  return self
 end
 
-function VitoblocModbusTcp = VitoblocModbusTcp.new(ip_address)
+function VitoblocModbusTcp:connect()
+  self.modbus = modbustcp.new(self.ip_address)
 end
 
- function modbus:read_holdings(unit_id, 5, 186, 1000)
+function VitoblocModbusTcp:read_holdings(address, registers_count)
+  assert(type(address) == 'number', 'address (arg #1) must be number, given: '..inspect(address))
+  assert(type(registers_count) == 'number', 'refisters_count (arg #1) must be number, given: '..inspect(registers_count))
+
+  local registers, err = self.modbus:read_holdings(self.unit_id, address, registers_count, 1000)
   if err and err ~= 0 then
     enapter.log('read error: '..err, 'error')
     if err == 1 then
+      -- Sometimes timeout happens and it may break underlying Modbus client,
+      -- this is a temporary workaround which manually reconnects.
       self:connect()
     end
     return nil
   end
+  return registers
 end
 
 
@@ -246,7 +261,7 @@ function VitoblocModbusTcp:read_u8(address, factor)
     return nil
   end
 
-  local raw = string.pack('>I2', reg[1]) -- 2 bits
+  local raw = string.pack('>I2', reg[1])
   return string.unpack('>I2', raw) * factor
 end
 
