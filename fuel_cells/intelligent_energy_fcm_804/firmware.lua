@@ -7,14 +7,13 @@ VENDOR = 'Intelligent Energy'
 MODEL = 'FCM 804'
 
 telemetry = {}
-alerts = {}
 total_can_packets = 0
 is_serial_number_completed = false
 serial_number = nil
 fw_ver = nil
 temp_serial_number = ''
-alerts_ab_received = false
-alerts_d_received = false
+ab_alerts = nil
+cd_alerts = nil
 
 can_index = 1
 save_0x400 = false
@@ -67,11 +66,11 @@ function send_telemetry()
 
   -- Make sure to add alerts only if it was really reported by the FC
   -- to avoid accidental cleaning of alerts in the Cloud
-  if alerts_ab_received and alerts_d_received then
-    telemetry.alerts = alerts
-    alerts = {}
-    alerts_ab_received = false
-    alerts_d_received = false
+  if ab_alerts and cd_alerts then
+    telemetry.alerts = ab_alerts
+    table.move(cd_alerts, 1, #cd_alerts, #telemetry.alerts + 1, telemetry.alerts)
+    ab_alerts = nil
+    cd_alerts = nil
   end
 
   enapter.send_telemetry(telemetry)
@@ -109,14 +108,14 @@ function can_handler(msg_id, data)
     telemetry['run_hours'] = touint32(string.sub(data, 1, 4))
     telemetry['total_run_energy'] = touint32(string.sub(data, 5, 8))
   elseif msg_id == (0x328 + can_index - 1) then
-    local flag_a = flag_a_error(touint32(string.sub(data, 1, 4)))
-    telemetry['fault_flags_a'] = touint32(string.sub(data, 1, 4))
-    alerts = table.move(flag_a, 1, #flag_a, 1, alerts)
-
-    local flag_b = flag_b_error(touint32(string.sub(data, 5, 8)))
-    telemetry['fault_flags_b'] = touint32(string.sub(data, 5, 8))
-    alerts = table.move(flag_b, 1, #flag_b, #alerts + 1, alerts)
-    alerts_ab_received = true
+    local flag_a, flag_b = touint32(string.sub(data, 1, 4)), touint32(string.sub(data, 5, 8))
+    telemetry['fault_flags_a'] = flag_a
+    telemetry['fault_flags_b'] = flag_b
+    local flag_a_errs = flag_a_error(flag_a)
+    local flag_b_errs = flag_b_error(flag_b)
+    ab_alerts = {}
+    ab_alerts = table.move(flag_a_errs, 1, #flag_a_errs, 1, ab_alerts)
+    ab_alerts = table.move(flag_b_errs, 1, #flag_b_errs, #ab_alerts + 1, ab_alerts)
   elseif msg_id == (0x338 + can_index - 1) then
     telemetry['watt'] = toint16(string.sub(data, 1, 2))
     telemetry['volt'] = toint16(string.sub(data, 3, 4)) / rx_scale_factor100
@@ -135,14 +134,14 @@ function can_handler(msg_id, data)
     -- telemetry["load_logic"] = string.byte(data, 2)
     -- telemetry["out_bits"] = string.byte(data, 3)
   elseif msg_id == (0x378 + can_index - 1) then
-    local flag_c = flag_c_error(touint32(string.sub(data, 1, 4)))
-    telemetry['fault_flags_c'] = touint32(string.sub(data, 1, 4))
-    alerts = table.move(flag_c, 1, #flag_c, #alerts + 1, alerts)
-
-    local flag_d = flag_d_error(touint32(string.sub(data, 5, 8)))
-    telemetry['fault_flags_d'] = touint32(string.sub(data, 5, 8))
-    alerts = table.move(flag_d, 1, #flag_d, #alerts + 1, alerts)
-    alerts_d_received = true
+    local flag_c, flag_d = touint32(string.sub(data, 1, 4)), touint32(string.sub(data, 5, 8))
+    telemetry['fault_flags_c'] = flag_c
+    telemetry['fault_flags_d'] = flag_d
+    local flag_c_errs = flag_c_error(flag_c)
+    local flag_d_errs = flag_d_error(flag_d)
+    cd_alerts = {}
+    cd_alerts = table.move(flag_c_errs, 1, #flag_c_errs, 1, cd_alerts)
+    cd_alerts = table.move(flag_d_errs, 1, #flag_d_errs, #cd_alerts + 1, cd_alerts)
   end
 end
 
