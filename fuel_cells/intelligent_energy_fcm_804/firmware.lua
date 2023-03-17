@@ -6,6 +6,7 @@ SAVE_0x400_CONFIG = 'save_0x400'
 VENDOR = 'Intelligent Energy'
 MODEL = 'FCM 804'
 
+configured = false
 telemetry = {}
 total_can_packets = 0
 is_serial_number_completed = false
@@ -31,12 +32,22 @@ function main()
   config.init({
     [INDEX_CONFIG] = { type = 'number', default = 1, required = true },
     [SAVE_0x400_CONFIG] = { type = 'boolean', default = false },
+  }, {
+    after_write = setup_options,
   })
-  -- Store index in memory to prevent reading it from flash on every CAN message
-  scheduler.add(5000, function()
-    can_index = config.read(INDEX_CONFIG) or 1
-    save_0x400 = config.read(SAVE_0x400_CONFIG) or false
-  end)
+
+  local args, err = config.read_all()
+  if err == nil then
+    setup_options(args)
+  else
+    enapter.log('failed to read config: ' .. err, 'error', true)
+  end
+end
+
+function setup_options(args)
+  can_index = args[INDEX_CONFIG]
+  save_0x400 = args[SAVE_0x400_CONFIG]
+  configured = true
 end
 
 function send_properties()
@@ -52,6 +63,11 @@ function send_properties()
 end
 
 function send_telemetry()
+  if not configured then
+    enapter.send_telemetry({ alerts = 'not_configured' })
+    return
+  end
+
   telemetry['total_can_packets'] = total_can_packets
 
   local str_0x400
