@@ -72,7 +72,7 @@ function send_telemetry()
 
   local str_0x400
   for _, data in pairs(messages_0x400) do
-    str_0x400 = '' or str_0x400
+    str_0x400 = str_0x400 or ''
     local str_0x400_part =
       string.format('%02x%02x%02x%02x%02x%02x%02x%02x', string.unpack('I1I1I1I1I1I1I1I1', data))
     str_0x400 = str_0x400 .. ' ' .. str_0x400_part
