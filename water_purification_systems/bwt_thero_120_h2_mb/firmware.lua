@@ -1,10 +1,12 @@
-VENDOR = "BWT"
-MODEL = "THERO 120 H2 MB"
+local config = require('enapter.ucm.config')
+
+VENDOR = 'BWT'
+MODEL = 'THERO 120 H2 MB'
 
 -- Configuration variables must be also defined
 -- in `write_configuration` command arguments in manifest.yml
-IP_ADDRESS_CONFIG = "ip_address"
-UNIT_ID_CONFIG = "modbus_unit_id"
+IP_ADDRESS_CONFIG = 'ip_address'
+UNIT_ID_CONFIG = 'modbus_unit_id'
 
 -- Initiate device firmware. Called at the end of the file.
 function main()
@@ -28,15 +30,15 @@ function send_properties()
   if device then
     local data = device:read_inputs(26, 1)
     if data then
-      properties.fw_version = tostring(data[1] >> 8).."."..tostring(data[1] & 0xff)
+      properties.fw_version = tostring(data[1] >> 8) .. '.' .. tostring(data[1] & 0xff)
     end
 
     local data = device:read_inputs(27, 1)
     if data then
-      properties.hw_version = tostring(data[1] >> 8).."."..tostring(data[1] & 0xff)
+      properties.hw_version = tostring(data[1] >> 8) .. '.' .. tostring(data[1] & 0xff)
     end
   else
-    enapter.log("Modbus TCP connection error", 'error')
+    enapter.log('Modbus TCP connection error', 'error')
   end
 
   properties.vendor = VENDOR
@@ -51,9 +53,9 @@ function send_telemetry()
   local device, err = connect_device()
   if not device then
     if err == 'cannot_read_config' then
-      enapter.send_telemetry({ status = 'error', alerts = {'cannot_read_config'} })
+      enapter.send_telemetry({ status = 'error', alerts = { 'cannot_read_config' } })
     elseif err == 'not_configured' then
-      enapter.send_telemetry({ status = 'ok', alerts = {'not_configured'} })
+      enapter.send_telemetry({ status = 'ok', alerts = { 'not_configured' } })
     end
     return
   end
@@ -70,9 +72,9 @@ function send_telemetry()
   if data then
     local ro_status, alert = get_ro_status(data[1])
     telemetry.ro_status = ro_status
-    if ro_status == "alarm" or ro_status == "unknown" then
+    if ro_status == 'alarm' or ro_status == 'unknown' then
       telemetry.status = 'error'
-    elseif ro_status == "warning" or ro_status == "dripping_faucet_recovery_attempt" then
+    elseif ro_status == 'warning' or ro_status == 'dripping_faucet_recovery_attempt' then
       telemetry.status = 'warning'
     else
       telemetry.status = 'ok'
@@ -174,75 +176,75 @@ end
 
 function get_ro_status(value)
   if value == 1 then
-    return "ready"
+    return 'ready'
   elseif value == 2 then
-    return "working"
+    return 'working'
   elseif value >= 3 and value <= 7 or value == 60 then
-    return "alarm"
+    return 'alarm'
   elseif value == 9 then
-    return "rinse"
+    return 'rinse'
   elseif value == 10 then
-    return "dripping_faucet_recovery_attempt"
+    return 'dripping_faucet_recovery_attempt'
   elseif value == 51 then
-    return "pause"
+    return 'pause'
   elseif value == 53 or value == 61 then
-    return "warning"
+    return 'warning'
   elseif value == 54 then
-    return "alarm", "internal_pressure_sensor_failure"
+    return 'alarm', 'internal_pressure_sensor_failure'
   else
-    return "unknown"
+    return 'unknown'
   end
 end
 
 function get_service_status(value)
   local status = {}
   status[0] = nil
-  status[1] = "A"
-  status[2] = "B"
-  status[3] = "C"
-  status[4] = "AB"
-  status[5] = "AC"
-  status[6] = "BC"
-  status[7] = "ABC"
-  status[49] = "D"
-  status[50] = "AD"
-  status[51] = "BD"
-  status[52] = "CD"
-  status[53] = "ABD"
-  status[54] = "ACD"
-  status[55] = "BCD"
-  status[56] = "ABCD"
+  status[1] = 'A'
+  status[2] = 'B'
+  status[3] = 'C'
+  status[4] = 'AB'
+  status[5] = 'AC'
+  status[6] = 'BC'
+  status[7] = 'ABC'
+  status[49] = 'D'
+  status[50] = 'AD'
+  status[51] = 'BD'
+  status[52] = 'CD'
+  status[53] = 'ABD'
+  status[54] = 'ACD'
+  status[55] = 'BCD'
+  status[56] = 'ABCD'
   return status[value]
 end
 
 function get_alarms(value)
   local alerts = {}
   if value & 0x0001 ~= 0 then
-    table.insert(alerts, "RO_pump_error")
+    table.insert(alerts, 'RO_pump_error')
   end
   if value & 0x0002 ~= 0 then
-    table.insert(alerts, "RO_pump_thermal_protection")
+    table.insert(alerts, 'RO_pump_thermal_protection')
   end
   if value & 0x0004 ~= 0 then
-    table.insert(alerts, "internal_leak_detected")
+    table.insert(alerts, 'internal_leak_detected')
   end
   if value & 0x0008 ~= 0 then
-    table.insert(alerts, "wcf_too_low")
+    table.insert(alerts, 'wcf_too_low')
   end
   if value & 0x0010 ~= 0 then
-    table.insert(alerts, "outlet_pressure_transducer_failure")
+    table.insert(alerts, 'outlet_pressure_transducer_failure')
   end
   if value & 0x0040 ~= 0 then
-    table.insert(alerts, "dripping_faucet")
+    table.insert(alerts, 'dripping_faucet')
   end
   if value & 0x0080 ~= 0 then
-    table.insert(alerts, "inlet_flow_meter")
+    table.insert(alerts, 'inlet_flow_meter')
   end
   if value & 0x1000 ~= 0 then
-    table.insert(alerts, "membrane_conductivity_too_high")
+    table.insert(alerts, 'membrane_conductivity_too_high')
   end
   if value & 0x2000 ~= 0 then
-    table.insert(alerts, "demin_conductivity_too_high")
+    table.insert(alerts, 'demin_conductivity_too_high')
   end
   return alerts
 end
@@ -251,11 +253,13 @@ end
 local device
 
 function connect_device()
-  if device then return device, nil end
+  if device then
+    return device, nil
+  end
 
   local values, err = config.read_all()
   if err then
-    enapter.log('cannot read config: '..tostring(err), 'error')
+    enapter.log('cannot read config: ' .. tostring(err), 'error')
     return nil, 'cannot_read_config'
   else
     local address, unit_id = values[IP_ADDRESS_CONFIG], values[UNIT_ID_CONFIG]
@@ -272,25 +276,25 @@ end
 
 function command_reset(ctx, args)
   local value
-  if args.value == "Dripping facet alarm" then
+  if args.value == 'Dripping facet alarm' then
     value = 0x0040
-  elseif args.value == "Membrane partial counter" then
+  elseif args.value == 'Membrane partial counter' then
     value = 0x1000
-  elseif args.value == "Demin partial counter" then
+  elseif args.value == 'Demin partial counter' then
     value = 0x2000
   else
-    ctx.error("Unknown counter or alarm is selected")
+    ctx.error('Unknown counter or alarm is selected')
   end
 
   if device then
     local err = device:write_holding(0, value)
     if err == 0 then
-      return "Reset command is sent"
+      return 'Reset command is sent'
     else
-      ctx.error("Command failed, Modbus TCP error: "..tostring(err))
+      ctx.error('Command failed, Modbus TCP error: ' .. tostring(err))
     end
   else
-    ctx.error("Device connection is not configured")
+    ctx.error('Device connection is not configured')
   end
 end
 
@@ -301,161 +305,23 @@ function command_control_ro(ctx, args)
   elseif args.enable == false then
     value = 1
   else
-    ctx.error("Invalid value to write. Must be true or false")
+    ctx.error('Invalid value to write. Must be true or false')
   end
 
   if device then
     local err = device:write_holding(1, value)
     if err == 0 then
-      return "Reset counter command is sent"
+      return 'Reset counter command is sent'
     else
-      ctx.error("Command failed, Modbus TCP error: "..tostring(err))
+      ctx.error('Command failed, Modbus TCP error: ' .. tostring(err))
     end
   else
-    ctx.error("Device connection is not configured")
+    ctx.error('Device connection is not configured')
   end
 end
-
 
 function toint32(data)
-  return string.unpack(">I4", string.pack(">I2I2", data[1], data[2]))
-end
-
----------------------------------
--- Stored Configuration API
----------------------------------
-
-config = {}
-
--- Initializes config options. Registers required UCM commands.
--- @param options: key-value pairs with option name and option params
--- @example
---   config.init({
---     address = { type = 'string', required = true },
---     unit_id = { type = 'number', default = 1 },
---     reconnect = { type = 'boolean', required = true }
---   })
-function config.init(options)
-  assert(next(options) ~= nil, 'at least one config option should be provided')
-  assert(not config.initialized, 'config can be initialized only once')
-  for name, params in pairs(options) do
-    local type_ok = params.type == 'string' or params.type == 'number' or params.type == 'boolean'
-    assert(type_ok, 'type of `'..name..'` option should be either string or number or boolean')
-  end
-
-  enapter.register_command_handler('write_configuration', config.build_write_configuration_command(options))
-  enapter.register_command_handler('read_configuration', config.build_read_configuration_command(options))
-
-  config.options = options
-  config.initialized = true
-end
-
--- Reads all initialized config options
--- @return table: key-value pairs
--- @return nil|error
-function config.read_all()
-  local result = {}
-
-  for name, _ in pairs(config.options) do
-    local value, err = config.read(name)
-    if err then
-      return nil, 'cannot read `'..name..'`: '..err
-    else
-      result[name] = value
-    end
-  end
-
-  return result, nil
-end
-
--- @param name string: option name to read
--- @return string
--- @return nil|error
-function config.read(name)
-  local params = config.options[name]
-  assert(params, 'undeclared config option: `'..name..'`, declare with config.init')
-
-  local ok, value, ret = pcall(function()
-    return storage.read(name)
-  end)
-
-  if not ok then
-    return nil, 'error reading from storage: '..tostring(value)
-  elseif ret and ret ~= 0 then
-    return nil, 'error reading from storage: '..storage.err_to_str(ret)
-  elseif value then
-    return config.deserialize(name, value), nil
-  else
-    return params.default, nil
-  end
-end
-
--- @param name string: option name to write
--- @param val string: value to write
--- @return nil|error
-function config.write(name, val)
-  local ok, ret = pcall(function()
-    return storage.write(name, config.serialize(name, val))
-  end)
-
-  if not ok then
-    return 'error writing to storage: '..tostring(ret)
-  elseif ret and ret ~= 0 then
-    return 'error writing to storage: '..storage.err_to_str(ret)
-  end
-end
-
--- Serializes value into string for storage
-function config.serialize(_, value)
-  if value then
-    return tostring(value)
-  else
-    return nil
-  end
-end
-
--- Deserializes value from stored string
-function config.deserialize(name, value)
-  local params = config.options[name]
-  assert(params, 'undeclared config option: `'..name..'`, declare with config.init')
-
-  if params.type == 'number' then
-    return tonumber(value)
-  elseif params.type == 'string' then
-    return value
-  elseif params.type == 'boolean' then
-    if value == 'true' then
-      return true
-    elseif value == 'false' then
-      return false
-    else
-      return nil
-    end
-  end
-end
-
-function config.build_write_configuration_command(options)
-  return function(ctx, args)
-    for name, params in pairs(options) do
-      if params.required then
-        assert(args[name], '`'..name..'` argument required')
-      end
-
-      local err = config.write(name, args[name])
-      if err then ctx.error('cannot write `'..name..'`: '..err) end
-    end
-  end
-end
-
-function config.build_read_configuration_command(_config_options)
-  return function(ctx)
-    local result, err = config.read_all()
-    if err then
-      ctx.error(err)
-    else
-      return result
-    end
-  end
+  return string.unpack('>I4', string.pack('>I2I2', data[1], data[2]))
 end
 
 ---------------------------------
@@ -465,8 +331,8 @@ end
 BwtTheroModbusTcp = {}
 
 function BwtTheroModbusTcp.new(addr, unit_id)
-  assert(type(addr) == 'string', 'addr (arg #1) must be string, given: '..inspect(addr))
-  assert(type(unit_id) == 'number', 'unit_id (arg #2) must be number, given: '..inspect(unit_id))
+  assert(type(addr) == 'string', 'addr (arg #1) must be string, given: ' .. inspect(addr))
+  assert(type(unit_id) == 'number', 'unit_id (arg #2) must be number, given: ' .. inspect(unit_id))
 
   local self = setmetatable({}, { __index = BwtTheroModbusTcp })
   self.addr = addr
@@ -479,12 +345,12 @@ function BwtTheroModbusTcp:connect()
 end
 
 function BwtTheroModbusTcp:read_inputs(address, number)
-  assert(type(address) == 'number', 'address (arg #1) must be number, given: '..inspect(address))
-  assert(type(number) == 'number', 'number (arg #1) must be number, given: '..inspect(number))
+  assert(type(address) == 'number', 'address (arg #1) must be number, given: ' .. inspect(address))
+  assert(type(number) == 'number', 'number (arg #1) must be number, given: ' .. inspect(number))
 
   local registers, err = self.modbus:read_inputs(self.unit_id, address, number, 1000)
   if err and err ~= 0 then
-    enapter.log('Register '..tostring(address)..' read error: '..err, 'error')
+    enapter.log('Register ' .. tostring(address) .. ' read error: ' .. err, 'error')
     if err == 1 then
       -- Sometimes timeout happens and it may break underlying Modbus client,
       -- this is a temporary workaround which manually reconnects.
@@ -497,12 +363,12 @@ function BwtTheroModbusTcp:read_inputs(address, number)
 end
 
 function BwtTheroModbusTcp:write_holding(address, number)
-  assert(type(address) == 'number', 'address (arg #1) must be number, given: '..inspect(address))
-  assert(type(number) == 'number', 'number (arg #1) must be number, given: '..inspect(number))
+  assert(type(address) == 'number', 'address (arg #1) must be number, given: ' .. inspect(address))
+  assert(type(number) == 'number', 'number (arg #1) must be number, given: ' .. inspect(number))
 
   local err = self.modbus:write_holding(self.unit_id, address, number, 1000)
   if err ~= 0 then
-    enapter.log('Register '..tostring(address)..' write error: '..err, 'error')
+    enapter.log('Register ' .. tostring(address) .. ' write error: ' .. err, 'error')
     if err == 1 then
       -- Sometimes timeout happens and it may break underlying Modbus client,
       -- this is a temporary workaround which manually reconnects.
