@@ -195,7 +195,7 @@
   vendor: intelligent-energy
   category: fuel_cells
   blueprint_options:
-    - blueprint: fuel_cells/intelligent_energy_fcm_801
+    - blueprint: fuel_cells/intelligent_energy_fcm_801_can
       display_name: ENP-CAN Telemetry Only
       description: Use ENP-CAN to monitor your fuel cell. It does not include control functions.
     - blueprint: fuel_cells/intelligent_energy_fcm_80x_rl6
@@ -209,7 +209,7 @@
   vendor: intelligent-energy
   category: fuel_cells
   blueprint_options:
-    - blueprint: fuel_cells/intelligent_energy_fcm_804
+    - blueprint: fuel_cells/intelligent_energy_fcm_804_can
       display_name: ENP-CAN Telemetry Only
       description: Use ENP-CAN to monitor your fuel cell. It does not include control functions.
     - blueprint: fuel_cells/intelligent_energy_fcm_80x_rl6

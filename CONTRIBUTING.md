@@ -25,7 +25,7 @@ Please follow this simple checklist for every blueprint README file:
 - Level 1 header should contain vendor and full model or product family.
 - Intro paragraph should briefly describe the device.
 - Make sure that blueprint's use case is clear.
-- Some blueprints may require physical connection schematics. You can add it as a picture to the README file or as a link to a PDF file. Place the file into the `.assets` blueprint subdirectory ([example](fuel_cells/intelligent_energy_fcm_801/)).
+- Some blueprints may require physical connection schematics. You can add it as a picture to the README file or as a link to a PDF file. Place the file into the `.assets` blueprint subdirectory ([example](fuel_cells/intelligent_energy_fcm_801_can/)).
 - List the hardware needed for the physical connection. This may be an Enapter UCM model, communication interface converter, etc.
 - Device pictures and vendor logos are always welcome, but we ask you to respect the author of said pictures and to follow copyright and licencing guidelines.
 - References should be given to the device vendor page, manual, API documentation, etc.
