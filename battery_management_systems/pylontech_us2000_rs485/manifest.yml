@@ -1,6 +1,6 @@
 blueprint_spec: device/1.0
 
-display_name: Pylontech Battery US2000 (RS485)
+display_name: Pylontech 8 batteries (RS485)
 description: Lithium battery
 icon: enapter-battery-storage
 vendor: pylontech
@@ -16,78 +16,117 @@ verification_level: verified
 
 communication_module:
   product: ENP-RS485
-  lua_file: firmware.lua
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
 
 properties:
-  serial_number:
+  vendor:
     type: string
-    display_name: Serial Number
+    display_name: Vendor
+  baudrate:
+    type: integer
+    display_name: Baudrate
 
 telemetry:
-  b0_total_current:
+  cells_count_0:
+    type: number
+    display_name: Cells number
+  temp_count_0:
+    type: number
+    display_name: Temperature number
+  total_current_0:
     type: float
     unit: amp
     display_name: Total Current - Battery 0
-  b0_total_voltage:
+  total_voltage_0:
     type: float
     unit: volt
     display_name: Total Voltage - Battery 0
-  b0_total_power:
+  total_power_0:
     type: float
     unit: watt
     display_name: Total Power - Battery 0
-  b0_battery_level:
+  battery_level_0:
     type: float
     unit: percent
     display_name: Battery Level - Battery 0
-  b1_total_current:
+  total_current_1:
     type: float
     unit: amp
     display_name: Total Current - Battery 1
-  b1_total_voltage:
+  total_voltage_1:
     type: float
     unit: volt
     display_name: Total Voltage - Battery 1
-  b1_total_power:
+  total_power_1:
     type: float
     unit: watt
     display_name: Total Power - Battery 1
-  b1_battery_level:
+  battery_level_1:
     type: float
     unit: percent
     display_name: Battery Level - Battery 1
-  b2_total_current:
+  total_current_2:
     type: float
     unit: amp
     display_name: Total Current - Battery 2
-  b2_total_voltage:
+  total_voltage_2:
     type: float
     unit: volt
     display_name: Total Voltage - Battery 2
-  b2_total_power:
+  total_power_2:
     type: float
     unit: watt
     display_name: Total Power - Battery 2
-  b2_battery_level:
+  battery_level_2:
     type: float
     unit: percent
     display_name: Battery Level - Battery 2
-  b3_total_current:
+  total_current_3:
     type: float
     unit: amp
     display_name: Total Current - Battery 3
-  b3_total_voltage:
+  total_voltage_3:
     type: float
     unit: volt
     display_name: Total Voltage - Battery 3
-  b3_total_power:
+  total_power_3:
     type: float
     unit: watt
     display_name: Total Power - Battery 3
-  b3_battery_level:
+  battery_level_3:
     type: float
     unit: percent
     display_name: Battery Level - Battery 3
+
+command_groups:
+  config:
+    display_name: Configuration
+
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      baudrate:
+        display_name: Baudrate
+        description: Transmission rate in kbit/s
+        type: integer
+        enum:
+          - 9600
+          - 115200
+          - 500000
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
 
 .cloud:
   category: batteries
