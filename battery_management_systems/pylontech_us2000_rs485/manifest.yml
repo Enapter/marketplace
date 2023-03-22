@@ -31,10 +31,10 @@ properties:
 
 telemetry:
   cells_count_0:
-    type: number
+    type: integer
     display_name: Cells number
   temp_count_0:
-    type: number
+    type: integer
     display_name: Temperature number
   total_current_0:
     type: float

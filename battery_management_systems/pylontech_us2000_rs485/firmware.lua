@@ -58,14 +58,14 @@ function get_analog_value(addr)
 
   rs485.send(message)
 
-  local data, res = rs485.receive(2000)
+  local response, res = rs485.receive(2000)
 
-  if not data then
+  if not response then
     enapter.log("RS485 receiving failed: "..rs485.err_to_str(res))
     return nil
   end
 
-  local binary_data = fromhex(data:sub(14, -6))
+  local binary_data = fromhex(response:sub(14, -6))
 
   local data = {}
   CELL_COUNT = binary_data:byte(3)
