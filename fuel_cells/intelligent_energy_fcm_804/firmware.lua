@@ -64,7 +64,7 @@ end
 
 function send_telemetry()
   if not configured then
-    enapter.send_telemetry({ alerts = 'not_configured' })
+    enapter.send_telemetry({ alerts = { 'not_configured' } })
     return
   end
 
