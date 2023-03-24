@@ -85,7 +85,7 @@ telemetry:
     display_name: Fan SP duty
   run_hours:
     type: float
-    unit: h
+    unit: s
     display_name: Run Hours
   total_run_energy:
     type: float
