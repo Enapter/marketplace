@@ -215,6 +215,9 @@
     - blueprint: fuel_cells/intelligent_energy_fcm_80x_rl6
       display_name: ENP-RL6 Remote Control
       description: Use ENP-RL6 to control your fuel cell. It does not include monitoring functions.
+    - blueprint: fuel_cells/intelligent_energy_fcm_804
+      display_name: Full Integration with Gateway
+      description: Use Enapter Gateway and Generic IO to integrate fuel cell as a single devices.
 
 - id: m-field-energy-fuel-cell
   display_name: M-Field Fuel Cell
