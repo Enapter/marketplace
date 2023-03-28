@@ -2,7 +2,7 @@ local config = require('enapter.ucm.config')
 
 BAUDRATE_CONFIG = 'baudrate'
 CELLS_CONFIG = 'cells'
-GROUP_CONFIG = 'group'
+-- GROUP_CONFIG = 'group'
 
 local BAUDRATE, CELL_COUNT, GROUP_COUNT
 local DATA_BITS, PARITY, STOP_BITS = 8, 'N', 1
@@ -10,8 +10,8 @@ local DATA_BITS, PARITY, STOP_BITS = 8, 'N', 1
 function main()
   config.init({
     [BAUDRATE_CONFIG] = { type = 'number', required = true, default = 115200 },
-    [CELLS_CONFIG] = { type = 'number', required = true, default = 8 },
-    [GROUP_CONFIG] = { type = 'number', required = true, default = 0 },
+    [CELLS_CONFIG] = { type = 'number', required = false, default = 8 },
+    -- [GROUP_CONFIG] = { type = 'number', required = true, default = 0 },
   })
 
   local values, err = config.read_all()
@@ -62,7 +62,7 @@ function get_analog_value(addr)
 
   if not response then
     enapter.log("RS485 receiving failed: "..rs485.err_to_str(res))
-    return nil
+    return {}
   end
 
   local binary_data = fromhex(response:sub(14, -6))
