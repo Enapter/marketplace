@@ -2,7 +2,7 @@ local config = require('enapter.ucm.config')
 
 BAUDRATE_CONFIG = 'baudrate'
 CELLS_CONFIG = 'cells'
--- GROUP_CONFIG = 'group'
+GROUP_CONFIG = 'group'
 
 local BAUDRATE, CELL_COUNT, GROUP_COUNT
 local DATA_BITS, PARITY, STOP_BITS = 8, 'N', 1
@@ -10,15 +10,15 @@ local DATA_BITS, PARITY, STOP_BITS = 8, 'N', 1
 function main()
   config.init({
     [BAUDRATE_CONFIG] = { type = 'number', required = true, default = 115200 },
-    [CELLS_CONFIG] = { type = 'number', required = false, default = 8 },
-    -- [GROUP_CONFIG] = { type = 'number', required = true, default = 0 },
+    [CELLS_CONFIG] = { type = 'number', required = false, default = 2 },
+    [GROUP_CONFIG] = { type = 'number', required = false, default = 0 },
   })
 
   local values, err = config.read_all()
   if err then
     enapter.log('cannot read config: '..tostring(err), 'error')
   else
-    BAUDRATE = values[BAUDRATE_CONFIG]
+    BAUDRATE = math.floor(values[BAUDRATE_CONFIG])
   end
 
   local result = rs485.init(BAUDRATE, DATA_BITS, PARITY, STOP_BITS)
@@ -26,18 +26,25 @@ function main()
     enapter.log("RS485 init failed: "..rs485.err_to_str(result))
   end
 
-  scheduler.add(30000, properties)
-  scheduler.add(1000, telemetry)
+  scheduler.add(30000, send_properties)
+  scheduler.add(1000, send_telemetry)
 end
 
-function properties()
+function send_properties()
+  local values, err = config.read_all()
+  if err then
+    enapter.log('cannot read config: '..tostring(err), 'error')
+  end
+
   enapter.send_properties({
     vendor = "Pylontech",
-    baudrate = BAUDRATE
+    baudrate = math.floor(values[BAUDRATE_CONFIG]),
+    cells = CELL_COUNT,
+    groups = GROUP_COUNT
   })
 end
 
-function telemetry()
+function send_telemetry()
   local values, err = config.read_all()
   if err then
     enapter.log('cannot read config: '..tostring(err), 'error')
@@ -57,27 +64,37 @@ function get_analog_value(addr)
   local message = make_message(addr, 0x42, 2)
 
   rs485.send(message)
+  -- enapter.log("Sent message: "..message)
 
   local response, res = rs485.receive(2000)
 
   if not response then
-    enapter.log("RS485 receiving failed: "..rs485.err_to_str(res))
+    enapter.log("RS485 receiving failed (address "..addr.."): "..rs485.err_to_str(res))
     return {}
   end
 
-  local binary_data = fromhex(response:sub(14, -6))
+  local INFO_START_SYMBOL_COUNT = 15
+  local binary_data = from_hex_to_char(response:sub(INFO_START_SYMBOL_COUNT, -6))
 
   local data = {}
-  CELL_COUNT = binary_data:byte(3)
+
+  -- uncoment for debug and check raw response in hex
+  -- local s = ''
+  -- for i = 1, #binary_data do
+  --   s = s .. string.format("%02X", response:byte(i)) .. ' '
+  -- end
+  -- enapter.log('RESPONSE: '..s)
+
+  CELL_COUNT = binary_data:byte(2)
   GROUP_COUNT = binary_data:byte(CELL_COUNT * 2 + 4)
   local data_pos = CELL_COUNT * 2 + GROUP_COUNT * 2 + 9
 
   data['total_current_'..addr] = get_int2_complement(binary_data:sub(data_pos, data_pos + 1)) / 100.0
 
   data_pos = data_pos + 2
-  data['total_voltage'..addr] = get_int2(binary_data:sub(data_pos, data_pos + 1)) / 100.0
+  data['total_voltage_'..addr] = get_int2(binary_data:sub(data_pos, data_pos + 1)) / 100.0
 
-  data['total_power_'..addr] = data['total_voltage'..addr] * data['total_current_'..addr]
+  data['total_power_'..addr] = data['total_voltage_'..addr] * data['total_current_'..addr]
 
   data_pos = data_pos + 2
   data['remaining_capacity_'..addr] = get_int2(binary_data:sub(data_pos, data_pos + 1)) / 100.0
@@ -85,7 +102,7 @@ function get_analog_value(addr)
   data_pos = data_pos + 2
   data['total_capacity_'..addr] = get_int2(binary_data:sub(data_pos, data_pos + 1)) / 100.0
 
-  data['battery_level_'..addr] = data['remaining_capacity_'..addr] / data['total_capacity_'..addr]
+  data['battery_level_'..addr] = data['remaining_capacity_'..addr] / data['total_capacity_'..addr] * 100
 
   -- data_pos = data_pos + 2
   -- data['cycles_'..addr] = get_int2(binary_data:sub(data_pos, data_pos + 1))
@@ -113,7 +130,7 @@ function make_message(addr, cid2, command)
   return payload
 end
 
-function fromhex(str)
+function from_hex_to_char(str)
   return (str:gsub('..', function(cc)
     return string.char(tonumber(cc, 16))
   end))

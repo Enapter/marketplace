@@ -28,14 +28,14 @@ properties:
   baudrate:
     type: integer
     display_name: Baudrate
+  cells:
+    type: integer
+    display_name: Cells
+  groups:
+    type: integer
+    display_name: Groups
 
 telemetry:
-  cells_count_0:
-    type: integer
-    display_name: Cells number
-  temp_count_0:
-    type: integer
-    display_name: Temperature number
   total_current_0:
     type: float
     unit: amp
@@ -68,6 +68,14 @@ telemetry:
     type: float
     unit: percent
     display_name: Battery Level - Battery 1
+  total_capacity_2:
+    type: float
+    unit: amph
+    display_name: Total Capacity - Battery 2
+  remaining_capacity_2:
+    type: float
+    unit: amph
+    display_name: Remaining Capacity - Battery 2
   total_current_2:
     type: float
     unit: amp
