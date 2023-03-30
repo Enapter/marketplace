@@ -1,4 +1,5 @@
 local config = require('enapter.ucm.config')
+
 -- Configuration variables must be also defined
 -- in `write_configuration` command arguments in manifest.yml
 ADDRESS_CONFIG = 'address'
@@ -49,11 +50,6 @@ function send_telemetry()
       parse_external_error(table.unpack(external_errors)),
       parse_other_error(table.unpack(other_errors)),
     },
-    start_stop_errors = parse_start_stop_error(vitobloc:read_u8(100)),
-    operating_states = parse_operating_states(vitobloc:read_u8(190)),
-    digital_errors = parse_digital_error(vitobloc:read_u8(132)),
-    external_errors = parse_external_error(vitobloc:read_u8(140)),
-    other_errors = parse_other_error(vitobloc:read_u8(144)),
     ext_power_setpoint = vitobloc:read_i16(7, 0.1),
     int_power_setpoint = vitobloc:read_i16(8, 0.1),
     uptime = vitobloc:read_u32(9),
@@ -105,9 +101,6 @@ end
 function parse_status(value)
   if not value then
     return {}
-  end
-  if value == 0 then
-    return { 'unknown_value' }
   end
 
   if type(value) == 'number' then
@@ -168,7 +161,7 @@ function parse_start_stop_error(value)
     return {}
   end
   if value == 0 then
-    return { 'unknow_value' }
+    return { 'unknown_value' }
   end
   if type(value) == 'number' then
     local stop_start_errors = {}
@@ -279,7 +272,7 @@ function VitoblocModbusTcp:read_holdings(address, registers_count)
   assert(type(address) == 'number', 'address (arg #1) must be number, given: ' .. inspect(address))
   assert(
     type(registers_count) == 'number',
-    'refisters_count (arg #1) must be number, given: ' .. inspect(registers_count)
+    'refisters_count (arg #2) must be number, given: ' .. inspect(registers_count)
   )
 
   local registers, err = self.modbus:read_holdings(self.unit_id, address, registers_count, 1000)
@@ -305,22 +298,8 @@ function VitoblocModbusTcp:read_u32(address, factor)
     return
   end
 
-  -- NaN for U32 values
-  if reg[1] == 0xFFFF and reg[2] == 0xFFFF then
-    return nil
-  end
-
-  -- NaN for ENUM values
-  if reg[1] == 0x00FF and reg[2] == 0xFFFD then
-    return nil
-  end
-
   local raw = string.pack('>I2I2', reg[1], reg[2])
   return string.unpack('>I4', raw) * factor
-end
-
-function VitoblocModbusTcp:read_u32_enum(address)
-  return self:read_u32(address)
 end
 
 function VitoblocModbusTcp:read_u8(address, factor)
@@ -358,7 +337,7 @@ function VitoblocModbusTcp:read_u16(address, factor)
   end
 
   -- NaN for ENUM values
-  if reg[1] == 0x00FF and reg[2] == 0xFFFD then
+  if reg[1] == 0x00FF then
     return nil
   end
 
@@ -377,7 +356,7 @@ function VitoblocModbusTcp:read_i16(address, factor)
   end
 
   -- NaN for ENUM values
-  if reg[1] == 0x00FF and reg[2] == 0xFFFD then
+  if reg[1] == 0x00FF then
     return nil
   end
 

@@ -8,7 +8,6 @@ contributors:
   - anataty
   - Rina-an
 support:
-  url: https://enapter.com/support
   email: support@enapter.com
 license: MIT
 verification_level: ready_for_testing
@@ -142,8 +141,6 @@ commands:
     ui:
       icon: wrench-outline
 
-# yamllint disable rule:line-length
-
 alerts:
   cannot_read_config:
     severity: error
@@ -229,8 +226,6 @@ alerts:
     severity: info
     display_name: Gas Valves Open
     description: Gas Valves are open.
-
-# yamllint enable rule:line-length
 
 .cloud:
   category: hvac
