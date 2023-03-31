@@ -85,8 +85,10 @@ local commands = {
           charger_source_priority = 22,
           -- max_charger_current = 23,
           -- max_charger_range = 24,
-          pv_input_amp = 25,
-          battery_discharge_current = 26,
+          pv_input_amp = 26,
+          battery_discharge_current = 27,
+          -- in reality device can send 2 metrics on positions 28 and 29
+          -- which are not described in protocol
         },
         str = {
           serial_number = 2,

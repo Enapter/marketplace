@@ -88,9 +88,10 @@ function parser:get_parallel_info(device_number)
     local res, data = mpp_solar:run_with_cache(parallel_info.command..device_number, 3)
 
     if res then
-      data = split(data)
+      -- check if parallel data exists for the device
+      if string.sub(data, 1, 1) == '1' then
+        data = split(data)
 
-      if data[parallel_info.data.general.num.parallel_num_exists] == '1' then
         local telemetry = {}
 
         for name, index in pairs(parallel_info.data.general.num) do
