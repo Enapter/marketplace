@@ -25,6 +25,7 @@ function send_properties()
   else
     for name, val in pairs(values) do
       properties[name] = val
+      properties[vendor]= "Viessman"
     end
   end
 
@@ -45,10 +46,11 @@ function send_telemetry()
   enapter.send_telemetry({
     status = parse_status(vitobloc:read_u16(5)),
     alerts = {
-      parse_start_stop_error(table.unpack(stop_start_errors)),
-      parse_digital_error(table.unpack(digital_errors)),
-      parse_external_error(table.unpack(external_errors)),
-      parse_other_error(table.unpack(other_errors)),
+      table.unpack(parse_start_stop_error(vitobloc:read_u16(100))),
+      table.unpack(parse_digital_error(vitobloc:read_u16(132))),
+      table.unpack(parse_external_error(vitobloc:read_u16(140))),
+      table.unpack(parse_other_error(vitobloc:read_u16(144))),
+      table.unpack(parse_operating_states(vitobloc:read_u16(190)))
     },
     ext_power_setpoint = vitobloc:read_i16(7, 0.1),
     int_power_setpoint = vitobloc:read_i16(8, 0.1),

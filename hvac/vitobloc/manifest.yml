@@ -18,8 +18,14 @@ communication_module:
   dependencies: enapter-ucm ~> 0.1.8
 
 properties:
-  model:
-    display_name: Model
+  vendor:
+    display_name: Vendor
+    type: string
+  ADDRESS_CONFIG:
+    display_name: Vitobloc IP address
+    type: string
+  UNIT_ID_CONFIG:
+    display_name: Vitobloc unit ID
     type: string
 
 telemetry:
