@@ -25,10 +25,10 @@ function send_properties()
   else
     for name, val in pairs(values) do
       properties[name] = val
-      properties[vendor]= "Viessman"
     end
   end
 
+  properties["vendor"] = "Viessman"
   enapter.send_properties(properties)
 end
 
