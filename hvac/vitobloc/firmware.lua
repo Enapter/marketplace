@@ -28,7 +28,7 @@ function send_properties()
     end
   end
 
-  properties["vendor"] = "Viessman"
+  properties['vendor'] = 'Viessman'
   enapter.send_properties(properties)
 end
 
@@ -50,7 +50,7 @@ function send_telemetry()
       table.unpack(parse_digital_error(vitobloc:read_u16(132))),
       table.unpack(parse_external_error(vitobloc:read_u16(140))),
       table.unpack(parse_other_error(vitobloc:read_u16(144))),
-      table.unpack(parse_operating_states(vitobloc:read_u16(190)))
+      table.unpack(parse_operating_states(vitobloc:read_u16(190))),
     },
     ext_power_setpoint = vitobloc:read_i16(7, 0.1),
     int_power_setpoint = vitobloc:read_i16(8, 0.1),
