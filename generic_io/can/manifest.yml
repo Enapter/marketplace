@@ -1,0 +1,90 @@
+blueprint_spec: device/1.0
+
+display_name: Generic IO for ENP-CAN
+description: Generic input/output interface for controlling Enapter CAN module.
+icon: enapter-module-din-2
+vendor: enapter
+author: enapter
+contributors:
+  - kulti
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
+
+communication_module:
+  product: ENP-CAN
+  lua:
+    dir: src
+    rockspec: generic-can-dev-1.rockspec
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - error
+      - ok
+  subscribed_ids:
+    display_name: Subscribed IDs
+    type: integer
+
+command_groups:
+  settings:
+    display_name: Settings
+
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Write Configuration
+    group: settings
+    ui:
+      icon: wrench-outline
+    arguments:
+      baud_rate:
+        display_name: Baud Rate
+        type: integer
+        enum:
+          - 1000
+          - 800
+          - 500
+          - 250
+          - 100
+        required: true
+      cache_bucket_size:
+        display_name: Cache bucket size.
+        description: >
+          CAN packets are cached in buckets one-per-message.
+          Each bucket holds messages received in the same second.
+        type: integer
+        default: 20
+      cache_ttl_seconds:
+        display_name: Cache TTL (seconds)
+        description: >
+          CAN packets are cached only for requested message IDs.
+          If some message ID is not requested too long, its cache will be deleted after cache TTL.
+        type: integer
+        default: 60
+  read_configuration:
+    display_name: Read Configuration
+    group: settings
+    ui:
+      icon: wrench-outline
+
+alerts:
+  not_configured:
+    severity: info
+    display_name: Module Not Configured
+    description: Use "Write Configuration" command to setup connection.
+
+.cloud:
+  mqtt_channel_id: gio

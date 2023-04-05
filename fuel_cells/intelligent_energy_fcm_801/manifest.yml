@@ -16,7 +16,7 @@ communication_module:
   lua:
     file: firmware.lua
     dependencies:
-      - enapter-ucm ~> 0.1.8
+      - enapter-ucm ~> 0.2.1
 
 properties:
   vendor:
@@ -85,7 +85,7 @@ telemetry:
     display_name: Fan SP duty
   run_hours:
     type: float
-    unit: h
+    unit: s
     display_name: Run Hours
   total_run_energy:
     type: float
@@ -139,6 +139,10 @@ commands:
       icon: wrench-outline
 
 alerts:
+  not_configured:
+    severity: info
+    display_name: Not Configured
+    description: Use "Configure" command to setup.
   AnodeOverPressure:
     display_name: Anode Over Pressure
     severity: error
