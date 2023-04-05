@@ -59,6 +59,7 @@ function send_telemetry()
     if not max_parallel_number then
         enapter.send_telemetry({status = 'no_data', alerts = {'no_data'}})
         return
+    -- check output mode instead
     elseif max_parallel_number == 0 then
         enapter.send_telemetry({status = 'no_data', alerts = {'single_mode'}})
         return

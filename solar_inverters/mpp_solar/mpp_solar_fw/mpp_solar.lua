@@ -8,7 +8,7 @@ mpp_solar.stop_bits = 1
 function mpp_solar:run_with_cache(name)
     if mpp_solar:is_in_cache(name) then
         local data = mpp_solar:run_command(name)
-        if data then
+        if data and data ~= 'NAK' then
             mpp_solar:add_to_cache(name, data, os.time())
             return true, data
         end

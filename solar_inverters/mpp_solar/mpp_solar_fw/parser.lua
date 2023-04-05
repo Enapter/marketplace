@@ -144,7 +144,7 @@ end
 
 function parser:get_connection_scheme(max_parallel_number)
     local scheme_table = {}
-    if max_parallel_number == 0 then
+    if max_parallel_number < 2 then
         local result, data = mpp_solar:run_with_cache(serial_number.command)
         local serial_num = nil
         if result then serial_num = data end
@@ -173,7 +173,7 @@ end
 function parser:get_max_parallel_number()
     local result, data = mpp_solar:run_with_cache(device_rating_info.command)
     if result then
-      enapter.log('MAX PARALLEL DATA :'..tostring(data))
+      -- enapter.log('device rating info: '..tostring(data))
       local max_parallel_number = split(data)[device_rating_info.data.parallel_max_num]
       if max_parallel_number == '-' then
         return 0
