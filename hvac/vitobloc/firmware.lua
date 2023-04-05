@@ -333,16 +333,6 @@ function VitoblocModbusTcp:read_u16(address, factor)
     return
   end
 
-  -- NaN for U16 values
-  if reg[1] == 0xFFFF and reg[2] == 0xFFFF then
-    return nil
-  end
-
-  -- NaN for ENUM values
-  if reg[1] == 0x00FF then
-    return nil
-  end
-
   local raw = string.pack('>I2', reg[1])
   return string.unpack('>I2', raw) * factor
 end
@@ -355,11 +345,6 @@ function VitoblocModbusTcp:read_i16(address, factor)
   local reg = self:read_holdings(address, 1)
   if not reg then
     return
-  end
-
-  -- NaN for ENUM values
-  if reg[1] == 0x00FF then
-    return nil
   end
 
   local raw = string.pack('>i2', reg[1])
