@@ -2,19 +2,25 @@ local config = require('enapter.ucm.config')
 local sinexcel_modbus = require('sinexcel')
 
 ADDRESS_CONFIG = 'address'
-UNIT_ID_CONFIG = 'unit_id'
+BAUDRATE_CONFIG = 'baudrate'
+DATA_BITS_CONFIG = 'data_bits'
+STOP_BITS_CONFIG = 'stop_bits'
+PARITY_CONFIG = 'parity_bits'
 
 -- global Modbus TCP connection, initialized below
 sinexcel = nil
 
 function main()
-  scheduler.add(30000, send_properties)
   scheduler.add(1000, send_realtime_telemetry)
+  scheduler.add(30000, send_properties)
   scheduler.add(5000, send_detailed_telemetry)
 
   config.init({
-    [ADDRESS_CONFIG] = { type = 'string', required = true },
-    [UNIT_ID_CONFIG] = { type = 'number', required = true }
+    [ADDRESS_CONFIG] = { type = 'number', required = true, default = 1 },
+    [BAUDRATE_CONFIG] = { type = 'number', required = true, default = 19200 },
+    [DATA_BITS_CONFIG] = { type = 'number', required = true, default = 8 },
+    [STOP_BITS_CONFIG] = { type = 'number', required = true, default = 1 },
+    [PARITY_CONFIG] = { type = 'string', required = true, default = 'N' },
   })
 end
 

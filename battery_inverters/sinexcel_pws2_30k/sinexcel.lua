@@ -1,24 +1,30 @@
 local SinexcelModbusTcp = {}
 
-function SinexcelModbusTcp.new(addr, unit_id)
-  assert(type(addr) == 'string', 'addr (arg #1) must be string, given: '..inspect(addr))
-  assert(type(unit_id) == 'number', 'unit_id (arg #2) must be number, given: '..inspect(unit_id))
+function SinexcelModbusTcp.new(addr, baudrate, data_bits, parity, stop_bits)
+  assert(type(addr) == 'number', 'addr (arg #1) must be number, given: '..inspect(addr))
+  assert(type(baudrate) == 'number', 'baudrate (arg #2) must be number, given: '..inspect(baudrate))
+  assert(type(data_bits) == 'number', 'data_bits (arg #3) must be number, given: '..inspect(data_bits))
+  assert(type(parity) == 'string', 'parity (arg #4) must be number, given: '..inspect(parity))
+  assert(type(stop_bits) == 'number', 'stop_bits (arg #5) must be number, given: '..inspect(stop_bits))
 
   local self = setmetatable({}, { __index = SinexcelModbusTcp })
   self.addr = addr
-  self.unit_id = unit_id
+  self.baudrate = baudrate
+  self.data_bits = data_bits
+  self.parity = parity
+  self.stop_bits = stop_bits
   return self
 end
 
 function SinexcelModbusTcp:connect()
-  self.modbus = modbustcp.new(self.addr)
+  rs485.init(self.baudrate, self.data_bits, self.parity, self.stop_bits)
 end
 
 function SinexcelModbusTcp:read_holdings(address, number)
   assert(type(address) == 'number', 'address (arg #1) must be number, given: '..inspect(address))
   assert(type(number) == 'number', 'number (arg #1) must be number, given: '..inspect(number))
 
-  local registers, err = self.modbus:read_holdings(self.unit_id, address, number, 1000)
+  local registers, err = self.modbus:read_holdings(self.addr, address, number, 1000)
   if err and err ~= 0 then
     enapter.log('read error: '..err, 'error')
     if err == 1 then
@@ -38,11 +44,6 @@ function SinexcelModbusTcp:read_u32(address)
 
   -- NaN for U32 values
   if reg[1] == 0xFFFF and reg[2] == 0xFFFF then
-    return nil
-  end
-
-  -- NaN for ENUM values
-  if reg[1] == 0x00FF and reg[2] == 0xFFFD then
     return nil
   end
 

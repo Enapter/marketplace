@@ -30,9 +30,18 @@ properties:
   address:
     display_name: Modbus Address
     type: string
-  unit_id:
-    display_name: Modbus Unit ID
+  baudrate:
+    display_name: Baudrate
     type: integer
+  data_bits:
+    display_name: Data Bits
+    type: integer
+  parity:
+    display_name: Parity
+    type: string
+  stop_bits:
+    display_name: Parity
+    type: string
 
 telemetry:
   status:
@@ -148,12 +157,28 @@ commands:
       icon: wrench-outline
     arguments:
       address:
-        display_name: Modbus Address
-        description: Hostname and port, e.g. 192.168.14.45:512
-        type: string
+        display_name: Modbus address
+        description: 1-247
+        type: number
         required: true
-      unit_id:
-        display_name: Modbus Unit ID
+      baudrate:
+        display_name: Baudrate
+        type: integer
+        required: true
+      data_bits:
+        display_name: Data bits
+        type: integer
+        required: true
+      parity:
+        display_name: None
+        type: string
+        enum:
+          - N
+          - O
+          - E
+        required: true
+      stop_bits:
+        display_name: Stop bits
         type: integer
         required: true
   read_configuration:
