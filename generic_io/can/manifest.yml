@@ -37,6 +37,19 @@ telemetry:
   subscribed_ids:
     display_name: Subscribed IDs
     type: integer
+  received_can_packets:
+    display_name: Received CAN packets
+    type: integer
+  accepted_can_packets:
+    display_name: Accepted CAN packets
+    description: Count of received CAN packets which subscribed.
+    type: integer
+  total_reads:
+    display_name: Total Read Commands
+    type: integer
+  total_writes:
+    display_name: Total Write Commands
+    type: integer
 
 command_groups:
   settings:
@@ -60,14 +73,14 @@ commands:
           - 250
           - 100
         required: true
-      cache_bucket_size:
+      cache_size:
         display_name: Cache bucket size.
         description: >
           CAN packets are cached in buckets one-per-message.
           Each bucket holds messages received in the same second.
         type: integer
         default: 20
-      cache_ttl_seconds:
+      cache_ttl:
         display_name: Cache TTL (seconds)
         description: >
           CAN packets are cached only for requested message IDs.
