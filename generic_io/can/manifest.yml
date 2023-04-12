@@ -58,7 +58,7 @@ command_groups:
 commands:
   write_configuration:
     populate_values_command: read_configuration
-    display_name: Write Configuration
+    display_name: Configure
     group: settings
     ui:
       icon: wrench-outline
@@ -97,7 +97,7 @@ alerts:
   not_configured:
     severity: info
     display_name: Module Not Configured
-    description: Use "Write Configuration" command to setup connection.
+    description: Use "Configure" command to setup connection.
 
 .cloud:
   mqtt_channel_id: gio
