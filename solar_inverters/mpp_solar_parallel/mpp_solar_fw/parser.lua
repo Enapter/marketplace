@@ -54,7 +54,7 @@ function parser:get_all_parallel_info(devices_number)
   local total_pv_input_power = 0
   local non_existing_devices = 0
 
-  for i = 0, devices_number do
+  for i = 1, devices_number do
     local data = parser:get_parallel_info(i)
     if data then
       if data['fault_code_' .. i] then
