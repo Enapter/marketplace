@@ -102,15 +102,23 @@ function connect_sinexcel()
     enapter.log('cannot read config: ' .. tostring(err), 'error')
     return nil, 'cannot_read_config'
   else
-    local address, unit_id = values[ADDRESS_CONFIG], values[UNIT_ID_CONFIG]
-    if not address or not unit_id then
-      return nil, 'not_configured'
-    else
-      -- Declare global variable to reuse connection between function calls
-      sinexcel = sinexcel_modbus.new(address, tonumber(unit_id))
-      sinexcel:connect()
-      return sinexcel, nil
+    for _, value in pairs(values) do
+      if not value then
+        return nil, 'not_configured'
+      end
     end
+
+    sinexcel = sinexcel_modbus.new(
+      tonumber(values[ADDRESS_CONFIG]),
+      tonumber(values[BAUDRATE_CONFIG]),
+      tonumber(values[DATA_BITS_CONFIG]),
+      values[PARITY_CONFIG],
+      tonumber(values[STOP_BITS_CONFIG])
+    )
+
+    -- Declare global variable to reuse connection between function calls
+    sinexcel:connect()
+    return sinexcel, nil
   end
 end
 

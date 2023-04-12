@@ -170,7 +170,7 @@ commands:
         display_name: None
         type: string
         enum:
-          - 'N'
+          - N
           - O
           - E
         required: true
