@@ -3,7 +3,7 @@
 
 local commands = {
   device_rating_info = {
-    command = 'QPIRI',
+    command = "QPIRI",
     data = {
       -- grid_rating_voltage = 1,
       -- grid_rating_current = 2,
@@ -30,19 +30,19 @@ local commands = {
       -- battery_discharge_voltage = 23,
       -- pv_ok_condition_for_parallel = 24,
       -- pv_power_balance = 25,
-    }
+    },
   },
   firmware_version = {
-    command = 'QVFW',
+    command = "QVFW",
   },
   serial_number = {
-    command = 'QID',
+    command = "QID",
   },
   device_protocol = {
-    command = 'QPI',
+    command = "QPI",
   },
   general_parameters = {
-    command = 'QPIGS',
+    command = "QPIGS",
     data = {
       grid_volt = 1,
       grid_freq = 2,
@@ -65,14 +65,14 @@ local commands = {
       -- eeprom_version = 19,
       -- pv_charging_power = 20,
       -- device_status1 = 21
-    }
+    },
   },
   output_mode = {
-    command = 'QOPM',
-    values = {}
+    command = "QOPM",
+    values = {},
   },
   default_settings_info = {
-    command = 'QDI',
+    command = "QDI",
     data = {
       ac_output_voltage = 1,
       ac_output_freq = 2,
@@ -94,18 +94,18 @@ local commands = {
     },
   },
   device_mode = {
-    command = 'QMOD',
+    command = "QMOD",
     values = {
-      P = 'power_on',
-      S = 'standby',
-      L = 'line',
-      B = 'battery',
-      F = 'error',
-      H = 'power_saving'
-    }
+      P = "power_on",
+      S = "standby",
+      L = "line",
+      B = "battery",
+      F = "error",
+      H = "power_saving",
+    },
   },
   device_warning_status = {
-    command = 'QPIWS',
+    command = "QPIWS",
     general = {
       fault_flag = 1,
       inverter_fault = 2,
@@ -137,33 +137,33 @@ local commands = {
       fan_locked = 11,
       battery_voltage_high = 12,
       overload = 17,
-    }
+    },
   },
   set_priorities = {
-    charger =  {
-      cmd = 'PCP0',
-      values = {}
+    charger = {
+      cmd = "PCP0",
+      values = {},
     },
     output = {
-      cmd = 'POP0',
-      values = {}
-    }
+      cmd = "POP0",
+      values = {},
+    },
   },
   parallel_info = {
-    command = 'QPGS',
+    command = "QPGS",
     data = {
       parallel_num_exists = 1,
       serial_number = 2,
       work_mode = 3,
-    }
-  }
+    },
+  },
 }
 
-commands.output_mode.values['0'] = 'Single'
-commands.output_mode.values['1'] = 'Parallel'
-commands.output_mode.values['2'] = 'Phase 1'
-commands.output_mode.values['3'] = 'Phase 2'
-commands.output_mode.values['4'] = 'Phase 3'
+commands.output_mode.values["0"] = "Single"
+commands.output_mode.values["1"] = "Parallel"
+commands.output_mode.values["2"] = "Phase 1"
+commands.output_mode.values["3"] = "Phase 2"
+commands.output_mode.values["4"] = "Phase 3"
 
 commands.set_priorities.output.values["Utility first"] = 0
 commands.set_priorities.output.values["Solar first"] = 1
