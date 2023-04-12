@@ -3,7 +3,7 @@
 
 local commands = {
   device_rating_info = {
-    command = "QPIRI",
+    command = 'QPIRI',
     data = {
       -- grid_rating_voltage = 1,
       -- grid_rating_current = 2,
@@ -33,16 +33,16 @@ local commands = {
     },
   },
   firmware_version = {
-    command = "QVFW",
+    command = 'QVFW',
   },
   serial_number = {
-    command = "QID",
+    command = 'QID',
   },
   device_protocol = {
-    command = "QPI",
+    command = 'QPI',
   },
   general_parameters = {
-    command = "QPIGS",
+    command = 'QPIGS',
     data = {
       grid_volt = 1,
       grid_freq = 2,
@@ -68,11 +68,11 @@ local commands = {
     },
   },
   output_mode = {
-    command = "QOPM",
+    command = 'QOPM',
     values = {},
   },
   default_settings_info = {
-    command = "QDI",
+    command = 'QDI',
     data = {
       ac_output_voltage = 1,
       ac_output_freq = 2,
@@ -94,18 +94,18 @@ local commands = {
     },
   },
   device_mode = {
-    command = "QMOD",
+    command = 'QMOD',
     values = {
-      P = "power_on",
-      S = "standby",
-      L = "line",
-      B = "battery",
-      F = "error",
-      H = "power_saving",
+      P = 'power_on',
+      S = 'standby',
+      L = 'line',
+      B = 'battery',
+      F = 'error',
+      H = 'power_saving',
     },
   },
   device_warning_status = {
-    command = "QPIWS",
+    command = 'QPIWS',
     general = {
       fault_flag = 1,
       inverter_fault = 2,
@@ -141,16 +141,16 @@ local commands = {
   },
   set_priorities = {
     charger = {
-      cmd = "PCP0",
+      cmd = 'PCP0',
       values = {},
     },
     output = {
-      cmd = "POP0",
+      cmd = 'POP0',
       values = {},
     },
   },
   parallel_info = {
-    command = "QPGS",
+    command = 'QPGS',
     data = {
       parallel_num_exists = 1,
       serial_number = 2,
@@ -159,19 +159,19 @@ local commands = {
   },
 }
 
-commands.output_mode.values["0"] = "Single"
-commands.output_mode.values["1"] = "Parallel"
-commands.output_mode.values["2"] = "Phase 1"
-commands.output_mode.values["3"] = "Phase 2"
-commands.output_mode.values["4"] = "Phase 3"
+commands.output_mode.values['0'] = 'Single'
+commands.output_mode.values['1'] = 'Parallel'
+commands.output_mode.values['2'] = 'Phase 1'
+commands.output_mode.values['3'] = 'Phase 2'
+commands.output_mode.values['4'] = 'Phase 3'
 
-commands.set_priorities.output.values["Utility first"] = 0
-commands.set_priorities.output.values["Solar first"] = 1
-commands.set_priorities.output.values["SBU"] = 2
+commands.set_priorities.output.values['Utility first'] = 0
+commands.set_priorities.output.values['Solar first'] = 1
+commands.set_priorities.output.values['SBU'] = 2
 
-commands.set_priorities.charger.values["Utility first"] = 0
-commands.set_priorities.charger.values["Solar first"] = 1
-commands.set_priorities.charger.values["Solar and utility"] = 2
-commands.set_priorities.charger.values["Only solar"] = 3
+commands.set_priorities.charger.values['Utility first'] = 0
+commands.set_priorities.charger.values['Solar first'] = 1
+commands.set_priorities.charger.values['Solar and utility'] = 2
+commands.set_priorities.charger.values['Only solar'] = 3
 
 return commands

@@ -1,6 +1,6 @@
-local mpp_solar = require("mpp_solar")
-local moving_average = require("moving_average")
-local commands = require("commands")
+local mpp_solar = require('mpp_solar')
+local moving_average = require('moving_average')
+local commands = require('commands')
 
 local device_rating_info = commands.device_rating_info
 local firmware_version = commands.firmware_version
@@ -17,9 +17,9 @@ local parser = {}
 function parser:get_device_model()
   local result, data = mpp_solar:run_with_cache(device_rating_info.command)
   if result then
-    return split(data)[device_rating_info.data.ac_out_apparent_power] .. "VA", nil
+    return split(data)[device_rating_info.data.ac_out_apparent_power] .. 'VA', nil
   else
-    return nil, "no_data"
+    return nil, 'no_data'
   end
 end
 
@@ -28,7 +28,7 @@ function parser:get_firmware_version()
   if result then
     return data, nil
   else
-    return nil, "no_data"
+    return nil, 'no_data'
   end
 end
 
@@ -37,7 +37,7 @@ function parser:get_protocol_version()
   if result then
     return data, nil
   else
-    return nil, "no_data"
+    return nil, 'no_data'
   end
 end
 
@@ -51,12 +51,12 @@ function parser:get_device_general_status_params()
       telemetry[name] = tonumber(data[index])
     end
 
-    telemetry["battery_volt"] = parser:get_battery_voltage(telemetry["battery_volt"])
-    telemetry["pv_input_power"] = tonumber(data[general_parameters.data.pv_input_amp])
+    telemetry['battery_volt'] = parser:get_battery_voltage(telemetry['battery_volt'])
+    telemetry['pv_input_power'] = tonumber(data[general_parameters.data.pv_input_amp])
       * tonumber(data[general_parameters.data.pv_input_volt])
     return telemetry, nil
   else
-    return nil, "no_data"
+    return nil, 'no_data'
   end
 end
 
@@ -72,20 +72,20 @@ function parser:get_device_rating_info()
 
     return telemetry, nil
   else
-    return nil, "no_data"
+    return nil, 'no_data'
   end
 end
 
 function parser:get_priorities(telemetry)
   for name, value in pairs(priorities.charger.values) do
-    if value == telemetry["charger_source_priority"] then
-      telemetry["charger_source_priority"] = name
+    if value == telemetry['charger_source_priority'] then
+      telemetry['charger_source_priority'] = name
     end
   end
 
   for name, value in pairs(priorities.output.values) do
-    if value == telemetry["output_source_priority"] then
-      telemetry["output_source_priority"] = name
+    if value == telemetry['output_source_priority'] then
+      telemetry['output_source_priority'] = name
     end
   end
 
@@ -95,7 +95,7 @@ end
 function parser:get_device_mode()
   local data = mpp_solar:run_command(device_mode.command)
   if not data then
-    return "unknown"
+    return 'unknown'
   else
     return device_mode.values[data]
   end
@@ -106,23 +106,23 @@ function parser:get_device_alerts()
   if data then
     local alerts = {}
     for alert, pos in pairs(device_warning_status.general) do
-      if string.sub(data, pos, pos) == "1" then
+      if string.sub(data, pos, pos) == '1' then
         table.insert(alerts, alert)
       end
     end
 
     local index = device_warning_status.general.fault_flag
-    local warning_flag = string.sub(data, index, index) == "1" and "" or "_w"
+    local warning_flag = string.sub(data, index, index) == '1' and '' or '_w'
 
     for alert, pos in pairs(device_warning_status.dependent) do
-      if string.sub(data, pos, pos) == "1" then
+      if string.sub(data, pos, pos) == '1' then
         table.insert(alerts, alert .. warning_flag)
       end
     end
 
     return alerts
   else
-    enapter.log("Warning status failure", "error")
+    enapter.log('Warning status failure', 'error')
     return nil
   end
 end
@@ -133,7 +133,7 @@ function parser:get_battery_voltage(voltage)
     return moving_average:get_value()
   else
     moving_average.table = {}
-    enapter.log("No battery voltage", "error")
+    enapter.log('No battery voltage', 'error')
     return nil
   end
 end
@@ -150,8 +150,8 @@ function parser:get_connection_scheme(max_parallel_number)
     if result then
       serial_num = data
     end
-    local device_table = { sn = serial_num, out_mode = "0" }
-    scheme_table["0"] = device_table
+    local device_table = { sn = serial_num, out_mode = '0' }
+    scheme_table['0'] = device_table
   else
     local parallel_info = commands.parallel_info
     for i = 0, max_parallel_number do
@@ -177,7 +177,7 @@ function parser:get_max_parallel_number()
   if result then
     -- enapter.log('device rating info: '..tostring(data))
     local max_parallel_number = split(data)[device_rating_info.data.parallel_max_num]
-    if max_parallel_number == "-" then
+    if max_parallel_number == '-' then
       return 0
     else
       return tonumber(max_parallel_number)
@@ -187,11 +187,11 @@ end
 
 function split(str, sep)
   if sep == nil then
-    sep = "%s"
+    sep = '%s'
   end
 
   local t = {}
-  for part in string.gmatch(str, "([^" .. sep .. "]+)") do
+  for part in string.gmatch(str, '([^' .. sep .. ']+)') do
     table.insert(t, part)
   end
 

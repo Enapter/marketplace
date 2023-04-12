@@ -3,7 +3,7 @@
 
 local commands = {
   device_rating_info = {
-    command = "QPIRI",
+    command = 'QPIRI',
     data = {
       -- grid_rating_voltage = 1,
       -- grid_rating_current = 2,
@@ -33,41 +33,41 @@ local commands = {
     },
   },
   firmware_version = {
-    command = "QVFW",
+    command = 'QVFW',
   },
   serial_number = {
-    command = "QID",
+    command = 'QID',
   },
   device_protocol = {
-    command = "QPI",
+    command = 'QPI',
   },
   output_mode = {
-    command = "QOPM",
+    command = 'QOPM',
     values = {},
   },
   device_mode = {
-    command = "QMOD",
+    command = 'QMOD',
     values = {
-      P = "power_on",
-      S = "standby",
-      L = "line",
-      B = "battery",
-      F = "error",
-      H = "power_saving",
+      P = 'power_on',
+      S = 'standby',
+      L = 'line',
+      B = 'battery',
+      F = 'error',
+      H = 'power_saving',
     },
   },
   set_priorities = {
     charger = {
-      cmd = "PCP0",
+      cmd = 'PCP0',
       values = {},
     },
     output = {
-      cmd = "POP0",
+      cmd = 'POP0',
       values = {},
     },
   },
   parallel_info = {
-    command = "QPGS",
+    command = 'QPGS',
     data = {
       general = {
         num = {
@@ -114,47 +114,47 @@ local commands = {
   },
 }
 
-commands.parallel_info.fault_codes["01"] = "fan_locked"
-commands.parallel_info.fault_codes["02"] = "over_temperature"
-commands.parallel_info.fault_codes["03"] = "battery_voltage_is_too_high"
-commands.parallel_info.fault_codes["04"] = "battery_voltage_is_too_low"
-commands.parallel_info.fault_codes["05"] = "output_short_circuited_or_over_temperature"
-commands.parallel_info.fault_codes["06"] = "output_voltage_is_too_high"
-commands.parallel_info.fault_codes["07"] = "over_load_time_out"
-commands.parallel_info.fault_codes["08"] = "bus_voltage_is_too_high"
-commands.parallel_info.fault_codes["09"] = "bus_soft_start_failed"
-commands.parallel_info.fault_codes["11"] = "main_relay_failed"
-commands.parallel_info.fault_codes["51"] = "over_current_inverter"
-commands.parallel_info.fault_codes["53"] = "inverter_soft_start_failed"
-commands.parallel_info.fault_codes["54"] = "self_test_failed"
-commands.parallel_info.fault_codes["55"] = "over_dc_voltage_on_output_of_inverter"
-commands.parallel_info.fault_codes["56"] = "battery_connection_is_open"
-commands.parallel_info.fault_codes["57"] = "current_sensor_failed"
-commands.parallel_info.fault_codes["58"] = "output_voltage_is_too_low"
-commands.parallel_info.fault_codes["60"] = "inverter_negative_power"
-commands.parallel_info.fault_codes["71"] = "parallel_version_different"
-commands.parallel_info.fault_codes["72"] = "output_circuit_failed"
-commands.parallel_info.fault_codes["80"] = "can_communication_failed"
-commands.parallel_info.fault_codes["81"] = "parallel_host_line_lost"
-commands.parallel_info.fault_codes["82"] = "parallel_synchronized_signal_lost"
-commands.parallel_info.fault_codes["83"] = "parallel_battery_voltage_detect_different"
-commands.parallel_info.fault_codes["84"] = "parallel_line_voltage_or_frequency_detect_different"
-commands.parallel_info.fault_codes["85"] = "parallel_line_input_current_unbalanced"
-commands.parallel_info.fault_codes["86"] = "parallel_output_setting_different"
+commands.parallel_info.fault_codes['01'] = 'fan_locked'
+commands.parallel_info.fault_codes['02'] = 'over_temperature'
+commands.parallel_info.fault_codes['03'] = 'battery_voltage_is_too_high'
+commands.parallel_info.fault_codes['04'] = 'battery_voltage_is_too_low'
+commands.parallel_info.fault_codes['05'] = 'output_short_circuited_or_over_temperature'
+commands.parallel_info.fault_codes['06'] = 'output_voltage_is_too_high'
+commands.parallel_info.fault_codes['07'] = 'over_load_time_out'
+commands.parallel_info.fault_codes['08'] = 'bus_voltage_is_too_high'
+commands.parallel_info.fault_codes['09'] = 'bus_soft_start_failed'
+commands.parallel_info.fault_codes['11'] = 'main_relay_failed'
+commands.parallel_info.fault_codes['51'] = 'over_current_inverter'
+commands.parallel_info.fault_codes['53'] = 'inverter_soft_start_failed'
+commands.parallel_info.fault_codes['54'] = 'self_test_failed'
+commands.parallel_info.fault_codes['55'] = 'over_dc_voltage_on_output_of_inverter'
+commands.parallel_info.fault_codes['56'] = 'battery_connection_is_open'
+commands.parallel_info.fault_codes['57'] = 'current_sensor_failed'
+commands.parallel_info.fault_codes['58'] = 'output_voltage_is_too_low'
+commands.parallel_info.fault_codes['60'] = 'inverter_negative_power'
+commands.parallel_info.fault_codes['71'] = 'parallel_version_different'
+commands.parallel_info.fault_codes['72'] = 'output_circuit_failed'
+commands.parallel_info.fault_codes['80'] = 'can_communication_failed'
+commands.parallel_info.fault_codes['81'] = 'parallel_host_line_lost'
+commands.parallel_info.fault_codes['82'] = 'parallel_synchronized_signal_lost'
+commands.parallel_info.fault_codes['83'] = 'parallel_battery_voltage_detect_different'
+commands.parallel_info.fault_codes['84'] = 'parallel_line_voltage_or_frequency_detect_different'
+commands.parallel_info.fault_codes['85'] = 'parallel_line_input_current_unbalanced'
+commands.parallel_info.fault_codes['86'] = 'parallel_output_setting_different'
 
-commands.output_mode.values["0"] = "Single"
-commands.output_mode.values["1"] = "Parallel"
-commands.output_mode.values["2"] = "Phase 1"
-commands.output_mode.values["3"] = "Phase 2"
-commands.output_mode.values["4"] = "Phase 3"
+commands.output_mode.values['0'] = 'Single'
+commands.output_mode.values['1'] = 'Parallel'
+commands.output_mode.values['2'] = 'Phase 1'
+commands.output_mode.values['3'] = 'Phase 2'
+commands.output_mode.values['4'] = 'Phase 3'
 
-commands.set_priorities.output.values[0] = "Utility first"
-commands.set_priorities.output.values[1] = "Solar first"
-commands.set_priorities.output.values[2] = "SBU"
+commands.set_priorities.output.values[0] = 'Utility first'
+commands.set_priorities.output.values[1] = 'Solar first'
+commands.set_priorities.output.values[2] = 'SBU'
 
-commands.set_priorities.charger.values[0] = "Utility first"
-commands.set_priorities.charger.values[1] = "Solar first"
-commands.set_priorities.charger.values[2] = "Solar and utility"
-commands.set_priorities.charger.values[3] = "Only solar"
+commands.set_priorities.charger.values[0] = 'Utility first'
+commands.set_priorities.charger.values[1] = 'Solar first'
+commands.set_priorities.charger.values[2] = 'Solar and utility'
+commands.set_priorities.charger.values[3] = 'Only solar'
 
 return commands

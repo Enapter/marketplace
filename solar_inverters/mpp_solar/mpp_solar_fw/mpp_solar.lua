@@ -2,13 +2,13 @@ local mpp_solar = {}
 
 mpp_solar.baudrate = 2400
 mpp_solar.data_bits = 8
-mpp_solar.parity = "N"
+mpp_solar.parity = 'N'
 mpp_solar.stop_bits = 1
 
 function mpp_solar:run_with_cache(name)
   if mpp_solar:is_in_cache(name) then
     local data = mpp_solar:run_command(name)
-    if data and data ~= "NAK" then
+    if data and data ~= 'NAK' then
       mpp_solar:add_to_cache(name, data, os.time())
       return true, data
     end
@@ -24,15 +24,15 @@ end
 function mpp_solar:set_value(name)
   local res = mpp_solar:run_command(name)
   if res then
-    if res == "ACK" then
+    if res == 'ACK' then
       return true, nil
-    elseif res == "NAK" then
-      return false, "Response: NAK"
+    elseif res == 'NAK' then
+      return false, 'Response: NAK'
     else
-      return false, "Response neither ACK or NAK"
+      return false, 'Response neither ACK or NAK'
     end
   else
-    return false, "No response from device"
+    return false, 'No response from device'
   end
 end
 
@@ -48,13 +48,16 @@ function mpp_solar:run_command(name)
     if raw_data and string.byte(raw_data, #raw_data) == 0x0d then
       local data = string.sub(raw_data, 1, -4)
       local r_crc = mpp_solar:crc16(data)
-      if (r_crc & 0xFF00) >> 8 == string.byte(raw_data, -3) and r_crc & 0x00FF == string.byte(raw_data, -2) then
+      if
+        (r_crc & 0xFF00) >> 8 == string.byte(raw_data, -3)
+        and r_crc & 0x00FF == string.byte(raw_data, -2)
+      then
         local com_response = string.sub(data, 2)
         mpp_solar:add_to_cache(name, com_response, os.time())
         return com_response
       end
     else
-      enapter.log(name .. " command failed: " .. rs232.err_to_str(result), "error")
+      enapter.log(name .. ' command failed: ' .. rs232.err_to_str(result), 'error')
     end
   end
   return nil
