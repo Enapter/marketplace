@@ -7,10 +7,20 @@ DATA_BITS_CONFIG = 'data_bits'
 STOP_BITS_CONFIG = 'stop_bits'
 PARITY_CONFIG = 'parity_bits'
 
--- global Modbus TCP connection, initialized below
+-- global Modbus connection, initialized below
 sinexcel = nil
 
 function main()
+  local sinexcel, err = connect_sinexcel()
+  if not sinexcel then
+    if err == 'cannot_read_config' then
+      enapter.send_telemetry({ status = 'communication_error', alerts = { 'cannot_read_config' } })
+    elseif err == 'not_configured' then
+      enapter.send_telemetry({ status = 'ok', alerts = { 'not_configured' } })
+    end
+    return
+  end
+
   scheduler.add(1000, send_realtime_telemetry)
   scheduler.add(30000, send_properties)
   scheduler.add(5000, send_detailed_telemetry)
@@ -29,7 +39,7 @@ function send_properties()
 
   local values, err = config.read_all()
   if err then
-    enapter.log('cannot read config: '..tostring(err), 'error')
+    enapter.log('cannot read config: ' .. tostring(err), 'error')
   else
     for name, val in pairs(values) do
       properties[name] = val
@@ -40,16 +50,6 @@ function send_properties()
 end
 
 function send_realtime_telemetry()
-  local sinexcel, err = connect_sinexcel()
-  if not sinexcel then
-    if err == 'cannot_read_config' then
-      enapter.send_telemetry({ status = 'communication_error', alerts = {'cannot_read_config'} })
-    elseif err == 'not_configured' then
-      enapter.send_telemetry({ status = 'ok', alerts = {'not_configured'} })
-    end
-    return
-  end
-
   local telemetry = {
     status = parse_status(sinexcel:read_i16(32)),
 
@@ -76,9 +76,6 @@ function send_realtime_telemetry()
 end
 
 function send_detailed_telemetry()
-  local sinexcel = connect_sinexcel()
-  if not sinexcel then return end -- send_realtime_telemetry reports alert
-
   local started = os.clock()
   local telemetry = {
     total_active_power = sinexcel:read_i16(122) / 100,
@@ -96,11 +93,13 @@ function send_detailed_telemetry()
 end
 
 function connect_sinexcel()
-  if sinexcel then return sinexcel, nil end
+  if sinexcel then
+    return sinexcel, nil
+  end
 
   local values, err = config.read_all()
   if err then
-    enapter.log('cannot read config: '..tostring(err), 'error')
+    enapter.log('cannot read config: ' .. tostring(err), 'error')
     return nil, 'cannot_read_config'
   else
     local address, unit_id = values[ADDRESS_CONFIG], values[UNIT_ID_CONFIG]
@@ -116,18 +115,28 @@ function connect_sinexcel()
 end
 
 function parse_status(value)
-  if not value then return end
+  if not value then
+    return
+  end
 
-  if value & (1 << 0) ~= 0  then return 'fault'
-  elseif value & (1 << 1) ~= 0  then return 'alert'
-  elseif value & (1 << 2) ~= 0  then return 'on-off'
-  elseif value & (1 << 3) ~= 0  then return 'grid-tied'
-  elseif value & (1 << 4) ~= 0  then return 'off-grid'
-  elseif value & (1 << 5) ~= 0  then return 'derating'
-  elseif value & (1 << 6) ~= 0  then return 'allow_grid_connection_judgement'
-  elseif value & (1 << 7) ~= 0  then return 'standby'
+  if value & (1 << 0) ~= 0 then
+    return 'fault'
+  elseif value & (1 << 1) ~= 0 then
+    return 'alert'
+  elseif value & (1 << 2) ~= 0 then
+    return 'on-off'
+  elseif value & (1 << 3) ~= 0 then
+    return 'grid-tied'
+  elseif value & (1 << 4) ~= 0 then
+    return 'off-grid'
+  elseif value & (1 << 5) ~= 0 then
+    return 'derating'
+  elseif value & (1 << 6) ~= 0 then
+    return 'allow_grid_connection_judgement'
+  elseif value & (1 << 7) ~= 0 then
+    return 'standby'
   else
-    enapter.log('Cannot decode status: '..tostring(value), 'error')
+    enapter.log('Cannot decode status: ' .. tostring(value), 'error')
     return tostring(value)
   end
 end

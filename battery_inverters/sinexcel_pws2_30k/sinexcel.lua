@@ -1,13 +1,13 @@
-local SinexcelModbusTcp = {}
+local SinexcelModbusRtu = {}
 
-function SinexcelModbusTcp.new(addr, baudrate, data_bits, parity, stop_bits)
+function SinexcelModbusRtu.new(addr, baudrate, data_bits, parity, stop_bits)
   assert(type(addr) == 'number', 'addr (arg #1) must be number, given: '..inspect(addr))
   assert(type(baudrate) == 'number', 'baudrate (arg #2) must be number, given: '..inspect(baudrate))
   assert(type(data_bits) == 'number', 'data_bits (arg #3) must be number, given: '..inspect(data_bits))
   assert(type(parity) == 'string', 'parity (arg #4) must be number, given: '..inspect(parity))
   assert(type(stop_bits) == 'number', 'stop_bits (arg #5) must be number, given: '..inspect(stop_bits))
 
-  local self = setmetatable({}, { __index = SinexcelModbusTcp })
+  local self = setmetatable({}, { __index = SinexcelModbusRtu })
   self.addr = addr
   self.baudrate = baudrate
   self.data_bits = data_bits
@@ -16,11 +16,11 @@ function SinexcelModbusTcp.new(addr, baudrate, data_bits, parity, stop_bits)
   return self
 end
 
-function SinexcelModbusTcp:connect()
+function SinexcelModbusRtu:connect()
   rs485.init(self.baudrate, self.data_bits, self.parity, self.stop_bits)
 end
 
-function SinexcelModbusTcp:read_holdings(address, number)
+function SinexcelModbusRtu:read_holdings(address, number)
   assert(type(address) == 'number', 'address (arg #1) must be number, given: '..inspect(address))
   assert(type(number) == 'number', 'number (arg #1) must be number, given: '..inspect(number))
 
@@ -38,7 +38,7 @@ function SinexcelModbusTcp:read_holdings(address, number)
   return registers
 end
 
-function SinexcelModbusTcp:read_u32(address)
+function SinexcelModbusRtu:read_u32(address)
   local reg = self:read_holdings(address, 2)
   if not reg then return end
 
@@ -51,7 +51,7 @@ function SinexcelModbusTcp:read_u32(address)
   return string.unpack('>I4', raw)
 end
 
-function SinexcelModbusTcp:read_i16(address)
+function SinexcelModbusRtu:read_i16(address)
   local reg = self:read_holdings(address, 1)
   if not reg then
     return
@@ -60,4 +60,4 @@ function SinexcelModbusTcp:read_i16(address)
   end
 end
 
-return SinexcelModbusTcp
+return SinexcelModbusRtu

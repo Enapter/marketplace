@@ -11,7 +11,7 @@ contributors:
 support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
-verification_level: verified
+verification_level: ready_for_testing
 
 communication_module:
   product: ENP-VIRTUAL
@@ -24,9 +24,6 @@ properties:
   model:
     display_name: Model
     type: string
-  serial_num:
-    display_name: Serial Number
-    type: integer
   address:
     display_name: Modbus Address
     type: string
@@ -173,7 +170,7 @@ commands:
         display_name: None
         type: string
         enum:
-          - N
+          - 'N'
           - O
           - E
         required: true
