@@ -8,4 +8,4 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) imple
 - Use the [Enapter ENP-CAN](https://go.enapter.com/handbook-enp-can) module for physical connection. See [connection instructions](https://go.enapter.com/handbook-enp-can-conn) in the module manual.
 - [Add ENP-CAN to your site](https://go.enapter.com/handbook-mobile-app) using the mobile app.
 - [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to ENP-CAN.
-- Configure RS-CAN connection via "Write Configuration" command.
+- Configure ENP-CAN connection via "Configure" command.
