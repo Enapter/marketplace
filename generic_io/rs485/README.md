@@ -8,4 +8,4 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) imple
 - Use the [Enapter ENP-RS485](https://go.enapter.com/handbook-enp-rs485) module for physical connection. See [connection instructions](https://go.enapter.com/handbook-enp-rs485-conn) in the module manual.
 - [Add ENP-RS485 to your site](https://go.enapter.com/handbook-mobile-app) using the mobile app.
 - [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to ENP-RS485.
-- Configure RS-485 connection via "Write Configuration" command.
+- Configure RS-485 connection via "Configure" command.
