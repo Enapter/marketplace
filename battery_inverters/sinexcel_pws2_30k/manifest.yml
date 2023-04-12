@@ -156,7 +156,7 @@ commands:
       address:
         display_name: Modbus address
         description: 1-247
-        type: number
+        type: integer
         required: true
       baudrate:
         display_name: Baudrate
