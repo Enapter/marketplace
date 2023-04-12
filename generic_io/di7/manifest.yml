@@ -1,0 +1,205 @@
+blueprint_spec: device/1.0
+
+display_name: Generic DI for ENP-DI7
+description: Generic input interface for controlling Enapter digital 7-input module.
+icon: enapter-module-din-2
+vendor: enapter
+author: enapter
+contributors:
+  - nsmak
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
+
+communication_module:
+  product: ENP-DI7
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.2.3
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - error
+      - ok
+  di1_is_closed:
+    display_name: DI1 is closed
+    type: boolean
+  di2_is_closed:
+    display_name: DI2 is closed
+    type: boolean
+  di3_is_closed:
+    display_name: DI3 is closed
+    type: boolean
+  di4_is_closed:
+    display_name: DI4 is closed
+    type: boolean
+  di5_is_closed:
+    display_name: DI5 is closed
+    type: boolean
+  di6_is_closed:
+    display_name: DI6 is closed
+    type: boolean
+  di7_is_closed:
+    display_name: DI7 is closed
+    type: boolean
+  di1_counter:
+    display_name: DI1 counter
+    type: integer
+  di2_counter:
+    display_name: DI2 counter
+    type: integer
+  di3_counter:
+    display_name: DI3 counter
+    type: integer
+  di4_counter:
+    display_name: DI4 counter
+    type: integer
+  di5_counter:
+    display_name: DI5 counter
+    type: integer
+  di6_counter:
+    display_name: DI6 counter
+    type: integer
+  di7_counter:
+    display_name: DI7 counter
+    type: integer
+  di1_reset_time:
+    display_name: DI1 reset time
+    type: integer
+    unit: s
+  di2_reset_time:
+    display_name: DI2 reset time
+    type: integer
+    unit: s
+  di3_reset_time:
+    display_name: DI3 reset time
+    type: integer
+    unit: s
+  di4_reset_time:
+    display_name: DI4 reset time
+    type: integer
+    unit: s
+  di5_reset_time:
+    display_name: DI5 reset time
+    type: integer
+    unit: s
+  di6_reset_time:
+    display_name: DI6 reset time
+    type: integer
+    unit: s
+  di7_reset_time:
+    display_name: DI7 reset time
+    type: integer
+    unit: s
+
+command_groups:
+  config:
+    display_name: Configuration
+  control:
+    display_name: Control
+
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      debounce_delay:
+        display_name: Anti-bounce delay (us)
+        type: integer
+        default: 100
+  read_configuration:
+    display_name: Read Config
+    group: config
+    ui:
+      icon: wrench-outline
+  is_closed:
+    display_name: Close status on digital input
+    group: control
+    ui:
+      icon: light-switch
+    arguments:
+      input:
+        display_name: Input Number
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+  is_opened:
+    display_name: Open status on digital input
+    group: control
+    ui:
+      icon: light-switch
+    arguments:
+      input:
+        display_name: Input Number
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+  read_counter:
+    display_name: Read counter and time in seconds since last reset of digital input
+    group: control
+    ui:
+      icon: clock-out
+    arguments:
+      input:
+        display_name: Input Number
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+  set_counter:
+    display_name: Set counter on digital input
+    group: control
+    ui:
+      icon: clock-in
+    arguments:
+      input:
+        display_name: Input Number
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+      count:
+        display_name: Counter value of digital input
+        type: integer
+
+.cloud:
+  mqtt_channel_id: gio

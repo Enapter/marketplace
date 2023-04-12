@@ -64,7 +64,7 @@ end
 
 function send_telemetry()
   if not configured then
-    enapter.send_telemetry({ alerts = 'not_configured' })
+    enapter.send_telemetry({ alerts = { 'not_configured' } })
     return
   end
 
@@ -267,7 +267,7 @@ function flag_a_error(flag)
   if flag & 0x00000040 ~= 0 then
     table.insert(errors, 'Sib2Fault')
   end
-  if flag & 0x00000040 ~= 0 then
+  if flag & 0x00000020 ~= 0 then
     table.insert(errors, 'Sib3Fault')
   end
   if flag & 0x00000010 ~= 0 then
