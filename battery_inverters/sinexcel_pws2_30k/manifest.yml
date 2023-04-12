@@ -1,0 +1,213 @@
+blueprint_spec: device/1.0
+
+display_name: Sinexcel Inverter
+description: Power Converting Module
+icon: enapter-inverter-battery
+vendor: sinexcel
+license: MIT
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+verification_level: ready_for_testing
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
+
+properties:
+  model:
+    display_name: Model
+    type: string
+  address:
+    display_name: Modbus Address
+    type: string
+  baudrate:
+    display_name: Baudrate
+    type: integer
+  data_bits:
+    display_name: Data Bits
+    type: integer
+  parity:
+    display_name: Parity
+    type: string
+  stop_bits:
+    display_name: Parity
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - communication_error
+      - fault
+      - alert
+      - on-off
+      - grid-tied
+      - derating
+      - allow_grid_connection_judgement
+      - standby
+
+  dc_current:
+    display_name: DC Amperage
+    type: float
+    unit: A
+  dc_voltage:
+    display_name: DC Voltage
+    type: float
+    unit: V
+  dc_power:
+    display_name: DC Power
+    type: float
+    unit: W
+
+  active_power_a:
+    display_name: AC Power Phase 1
+    type: float
+    unit: kW
+  active_power_b:
+    display_name: AC Power Phase 2
+    type: float
+    unit: kW
+  active_power_c:
+    display_name: AC Power Phase 3
+    type: float
+    unit: kW
+  grid_frequency:
+    display_name: Grid Frequency
+    type: float
+    unit: Hz
+  output_voltage_a:
+    display_name: AC Voltage Phase 1
+    type: float
+    unit: V
+  output_voltage_b:
+    display_name: AC Voltage Phase 2
+    type: float
+    unit: V
+  output_voltage_c:
+    display_name: AC Voltage Phase 3
+    type: float
+    unit: V
+  reactive_power_a:
+    display_name: AC Active Power Phase 1
+    type: float
+    unit: VAr
+  reactive_power_b:
+    display_name: AC Active Power Phase 2
+    type: float
+    unit: VAr
+  reactive_power_c:
+    display_name: AC Active Power Phase 3
+    type: float
+    unit: VAr
+  total_power_factor:
+    display_name: AC Power Factor
+    type: float
+
+  total_active_power:
+    display_name: Active Power 3 Phases
+    type: float
+    unit: kW
+  total_reactive_power:
+    display_name: Reactive Power 3 Phases
+    type: float
+    unit: kVAr
+  total_apparent_power:
+    display_name: Apparent Power 3 Phases
+    type: float
+    unit: kVA
+
+  discharge_energy:
+    display_name: Discharge Energy
+    type: float
+    unit: kWh
+  charge_energy:
+    display_name: Charge Energy
+    type: float
+    unit: kWh
+  dc_discharge_energy:
+    display_name: DC Discharge Energy
+    type: float
+    unit: kWh
+  dc_charge_energy:
+    display_name: DC Charge Energy
+    type: float
+    unit: kWh
+
+command_groups:
+  config:
+    display_name: Configuration
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      address:
+        display_name: Modbus address
+        description: 1-247
+        type: integer
+        required: true
+      baudrate:
+        display_name: Baudrate
+        type: integer
+        required: true
+      data_bits:
+        display_name: Data bits
+        type: integer
+        required: true
+      parity:
+        display_name: None
+        type: string
+        enum:
+          - N
+          - O
+          - E
+        required: true
+      stop_bits:
+        display_name: Stop bits
+        type: integer
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+alerts:
+  cannot_read_config:
+    display_name: Cannot read configuration
+    severity: error
+  not_configured:
+    display_name: Not configured
+    severity: info
+
+.cloud:
+  category: renewable_energy_sources
+  mobile_main_chart: total_active_power
+  mobile_telemetry:
+    - total_active_power
+    - total_reactive_power
+    - discharge_energy
+    - charge_energy
+  mobile_charts:
+    - output_voltage_a
+    - output_voltage_b
+    - output_voltage_c
+    - grid_current_a
+    - grid_current_b
+    - grid_current_c
+    - grid_frequency
+    - dc_power
+    - dc_voltage
+    - dc_current

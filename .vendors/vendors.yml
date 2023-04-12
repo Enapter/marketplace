@@ -157,3 +157,8 @@
   display_name: Mebay
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/mebay.png
   website: https://www.mebay.cn/#/index/home
+
+- id: sinexcel
+  display_name: Sinexcel
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/sinexcel.png
+  website: https://en.sinexcel.com/
