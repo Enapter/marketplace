@@ -18,7 +18,7 @@ communication_module:
   lua:
     file: firmware.lua
     dependencies:
-      - enapter-ucm
+      - enapter-ucm ~> 0.2.3
 
 properties:
   vendor:
