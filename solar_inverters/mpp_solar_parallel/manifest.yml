@@ -86,10 +86,10 @@ commands:
       quick_access: true
     arguments:
       device:
-        display_name: Device number (0-9)
+        display_name: Device number (1-9)
         type: integer
         required: true
-        min: 0
+        min: 1
         max: 9
 
 alerts:
