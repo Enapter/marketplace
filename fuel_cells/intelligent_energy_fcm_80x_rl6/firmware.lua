@@ -14,7 +14,7 @@ function main()
 
   config.init({
     [POWER_RELAY_CONFIG] = { type = 'number', default = 4, required = true },
-    [START_RELAY_CONFIG] = { type = 'number', default = 1, required = true }
+    [START_RELAY_CONFIG] = { type = 'number', default = 1, required = true },
   })
 end
 
@@ -27,7 +27,7 @@ function send_telemetry()
 
   local powered, err = is_powered()
   if err then
-    telemetry.alerts = {'cannot_read_relay_state'}
+    telemetry.alerts = { 'cannot_read_relay_state' }
     telemetry.alert_details = { cannot_read_relay_state = err }
   else
     telemetry.powered = powered
@@ -35,7 +35,7 @@ function send_telemetry()
 
   local started, err = is_started()
   if err then
-    telemetry.alerts = {'cannot_read_relay_state'}
+    telemetry.alerts = { 'cannot_read_relay_state' }
     telemetry.alert_details = { cannot_read_relay_state = err }
   else
     telemetry.started = started
@@ -79,22 +79,26 @@ end
 function power_on_command(ctx)
   local channel, err = config.read(POWER_RELAY_CONFIG)
   if err then
-    ctx.error('Unable to read config: '..err)
+    ctx.error('Unable to read config: ' .. err)
   end
   local result = rl6.close(math.tointeger(channel))
   if result and result ~= 0 then
-    ctx.error('Unable to close relay channel '..tostring(channel)..': '..rl6.err_to_str(result))
+    ctx.error(
+      'Unable to close relay channel ' .. tostring(channel) .. ': ' .. rl6.err_to_str(result)
+    )
   end
 end
 
 function power_off_command(ctx)
   local channel, err = config.read(POWER_RELAY_CONFIG)
   if err then
-    ctx.error('Unable to read config: '..err)
+    ctx.error('Unable to read config: ' .. err)
   end
   local result = rl6.open(math.tointeger(channel))
   if result and result ~= 0 then
-    ctx.error('Unable to open relay channel '..tostring(channel)..': '..rl6.err_to_str(result))
+    ctx.error(
+      'Unable to open relay channel ' .. tostring(channel) .. ': ' .. rl6.err_to_str(result)
+    )
   end
 end
 
@@ -104,11 +108,13 @@ function start_command(ctx)
   end
   local channel, err = config.read(START_RELAY_CONFIG)
   if err then
-    ctx.error('Unable to read config: '..err)
+    ctx.error('Unable to read config: ' .. err)
   end
   local result = rl6.close(math.tointeger(channel))
   if result and result ~= 0 then
-    ctx.error('Unable to close relay channel '..tostring(channel)..': '..rl6.err_to_str(result))
+    ctx.error(
+      'Unable to close relay channel ' .. tostring(channel) .. ': ' .. rl6.err_to_str(result)
+    )
   end
 end
 
@@ -118,11 +124,13 @@ function stop_command(ctx)
   end
   local channel, err = config.read(START_RELAY_CONFIG)
   if err then
-    ctx.error('Unable to read config: '..err)
+    ctx.error('Unable to read config: ' .. err)
   end
   local result = rl6.open(math.tointeger(channel))
   if result and result ~= 0 then
-    ctx.error('Unable to open relay channel '..tostring(channel)..': '..rl6.err_to_str(result))
+    ctx.error(
+      'Unable to open relay channel ' .. tostring(channel) .. ': ' .. rl6.err_to_str(result)
+    )
   end
 end
 
