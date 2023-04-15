@@ -101,8 +101,17 @@ return {
         ctx.error(can_not_configured_err)
       end
 
-      if not args.msg_ids or type(args.msg_ids) ~= 'table' then
-        ctx.error('msg_ids arg is required and must be a table')
+      if not args.msg_ids or type(args.msg_ids) ~= 'string' then
+        ctx.error('msg_ids arg is required and must be a string')
+      end
+
+      local parsed_msg_ids = {}
+      for m in args.msg_ids:gmatch('([^,%s]+)') do
+        local i = math.tointeger(m)
+        if i == nil then
+          ctx.error('msg_id must be an integer')
+        end
+        table.insert(parsed_msg_ids, i)
       end
 
       local args_cursor = math.tointeger(args.cursor)
@@ -110,7 +119,7 @@ return {
         ctx.error('cursor must be a value from previous read')
       end
 
-      local results, cursor = can_packets.get_since(args_cursor, args.msg_ids)
+      local results, cursor = can_packets.get_since(args_cursor, parsed_msg_ids)
       return { cursor = tostring(cursor), results = results }
     end
 
