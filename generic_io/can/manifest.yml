@@ -54,8 +54,24 @@ telemetry:
 command_groups:
   settings:
     display_name: Settings
+  communication:
+    display_name: Communication
 
 commands:
+  write:
+    display_name: Write
+    group: communication
+    arguments:
+      msg_id:
+        display_name: Message ID
+        type: integer
+        required: true
+      data:
+        display_name: Data
+        description: 16-char string where every 2 char represent a byte in hex format.
+        type: string
+        required: true
+
   write_configuration:
     populate_values_command: read_configuration
     display_name: Configure
