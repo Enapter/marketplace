@@ -6,6 +6,16 @@ local CACHE_TTL_CONFIG = 'cache_ttl'
 
 local can_not_configured_err = 'can is not properly configured'
 
+local function convert_data(d)
+  local v = { string.unpack('c2c2c2c2c2c2c2c2', d) }
+  local vv = {}
+  for j = 1, 8 do
+    vv[j] = tonumber(v[j], 16)
+  end
+
+  return string.pack('BBBBBBBB', table.unpack(vv))
+end
+
 return {
   new = function()
     local app = {
@@ -111,21 +121,23 @@ return {
         ctx.error(can_not_configured_err)
       end
 
-      if not args.packets or type(args.packets) ~= 'table' then
-        ctx.error('packets arg is required and must be a table')
+      local msg_id = math.tointeger(args.msg_id)
+      if not msg_id then
+        ctx.error('msg_id arg is required and must be an integer')
       end
 
-      local results = {}
-      for i, p in ipairs(args.packets) do
-        local result = can.send(p.msg_id, p.data)
-        if result == 0 then
-          results[i] = {}
-        else
-          results[i] = { errcode = result, errmsg = can.err_to_str(result) }
-        end
+      if not args.data or type(args.data) ~= 'string' then
+        ctx.error('data arg is required and must be a string')
       end
 
-      return results
+      if #args.data ~= 16 then
+        ctx.error('data arg must be a 16-char string')
+      end
+
+      local result = can.send(msg_id, convert_data(args.data))
+      if result ~= 0 then
+        return { errcode = result, errmsg = can.err_to_str(result) }
+      end
     end
 
     function app.cleanup_unused_can_packets()
