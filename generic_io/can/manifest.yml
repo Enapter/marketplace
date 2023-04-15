@@ -58,6 +58,19 @@ command_groups:
     display_name: Communication
 
 commands:
+  read:
+    display_name: Read
+    group: communication
+    arguments:
+      cursor:
+        display_name: Cursor
+        description: The value of cursor from previous read. Should be passed to continues reading.
+        type: string
+      msg_ids:
+        display_name: Message IDs
+        description: Array of message IDS. Should be passed as coma-separated list "12, 34, 56".
+        type: string
+        required: true
   write:
     display_name: Write
     group: communication
