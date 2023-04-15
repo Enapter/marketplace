@@ -37,7 +37,7 @@ return {
       local baud_rate = math.tointeger(args[BAUD_RATE_CONFIG])
       if baud_rate == nil then
         app.configured = false
-        return 'CAN is not configured'
+        return 'baud rate is required and must be an integer'
       end
 
       local result = can.init(baud_rate, app.can_handler)
@@ -116,7 +116,7 @@ return {
 
       local args_cursor = math.tointeger(args.cursor)
       if args.cursor ~= nil and args_cursor == nil then
-        ctx.error('cursor must be a value from previous read')
+        ctx.error('cursor must be a value from the previous read')
       end
 
       local results, cursor = can_packets.get_since(args_cursor, parsed_msg_ids)
