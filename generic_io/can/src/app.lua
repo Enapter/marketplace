@@ -45,11 +45,14 @@ return {
     function app.can_handler(msg_id, data)
       app.received_can_packets = app.received_can_packets + 1
       local ok, err = pcall(function()
-        can_packets.push(
-          msg_id,
-          string.format('%02x%02x%02x%02x%02x%02x%02x%02x', string.unpack('BBBBBBBB', data))
-        )
-        app.accepted_can_packets = app.accepted_can_packets + 1
+        if
+          can_packets.push(
+            msg_id,
+            string.format('%02x%02x%02x%02x%02x%02x%02x%02x', string.unpack('BBBBBBBB', data))
+          )
+        then
+          app.accepted_can_packets = app.accepted_can_packets + 1
+        end
       end)
       if not ok then
         enapter.log('can packet push failed: ' .. err, 'error')

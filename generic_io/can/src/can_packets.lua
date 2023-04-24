@@ -26,9 +26,11 @@ end
 
 function can_packets.push(msg_id, data)
   local msg_id_key = tostring(math.tointeger(msg_id))
-  if can_packets.packets[msg_id_key] then
+  local subscribed = (can_packets.packets[msg_id_key] ~= nil)
+  if subscribed then
     can_packets.packets[msg_id_key].rb:push_data(os.time(), data)
   end
+  return subscribed
 end
 
 function can_packets.get_since(ts, msg_ids)
