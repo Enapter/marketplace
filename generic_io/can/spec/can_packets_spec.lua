@@ -18,10 +18,10 @@ describe('can packets', function()
     local msg_id = 456
     local data = 'test data'
 
-    can_packets.push(msg_id, data)
+    assert.is.False(can_packets.push(msg_id, data))
     assert.is.same({ {} }, can_packets.get_since(ts, { msg_id }))
 
-    can_packets.push(msg_id, data)
+    assert.is.True(can_packets.push(msg_id, data))
     assert.is.same({ { data } }, can_packets.get_since(ts, { msg_id }))
   end)
 
