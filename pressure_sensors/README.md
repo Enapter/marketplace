@@ -1,3 +1,3 @@
 # Pressure Sensors
 
-Pressure sensors are devices that are used to measure the pressure of a fluid or gases, such as water or hydrogen, in a system or container. They are used in a wide range of applications, including industrial processes, medical equipment, and automotive systems. Pressure sensors are available in a variety of sizes and configurations to meet the specific measurement needs of different applications. Some of the key factors to consider when choosing a pressure sensor include accuracy, sensitivity, response time, and compatibility with different fluids. Pressure sensors are an essential component of many systems and are used to monitor and control the pressure of fluids for a variety of purposes.
+Pressure sensors are devices that are used to measure the pressure of a fluid or gases, such as water or hydrogen, in a system or container. Enapter Blueprints supports both analogue and digital pressure sensors.
