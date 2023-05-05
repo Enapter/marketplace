@@ -1,3 +1,3 @@
 # Power Meters
 
-Power meters are devices that are used to measure the electric power usage of a building, facility, or system. They are used in a wide range of residential, commercial, and industrial applications, and are available in a variety of sizes and configurations to meet the specific measurement needs of different properties. Some of the key features to consider when choosing a power meter include accuracy, measurement range, data logging capabilities, and compatibility with different electrical systems. Power meters are an essential component of any electrical system and are used to monitor and control energy usage for a variety of purposes. They can help to reduce energy consumption, improve energy efficiency, and lower energy costs.
+Power meters are devices that are used to measure the electric power usage of a building, facility, or system.

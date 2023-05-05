@@ -1,3 +1,3 @@
 # Relays
 
-Relays are electrical switches that are used to control the flow of electricity in a circuit. They are used in a wide range of applications, including automotive systems, industrial processes, and home appliances. Relays are available in a variety of sizes and configurations to meet the specific switching needs of different applications. Some of the key factors to consider when choosing a relay include switching capacity, contact rating, operating temperature range, and mounting style. Relays are an essential component of many electrical systems and are used to control and direct the flow of electricity for a variety of purposes.
+Relays are electrical switches that are used to control the flow of electricity in a circuit. They are used in a wide range of applications, including automotive systems, industrial processes, and home appliances. Enapter Blueprints helps to control relays from different manufacturers.
