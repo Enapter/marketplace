@@ -136,8 +136,9 @@ function parser:get_parallel_info(device_number)
         telemetry['pv2_input_volt_' .. device_number]
         and telemetry['pv2_input_amp_' .. device_number]
       then
-        pv2_input_volt = telemetry['pv2_input_volt_' .. device_number]
-        pv2_input_amp = telemetry['pv2_input_amp_' .. device_number]
+        local pv2_input_volt = telemetry['pv2_input_volt_' .. device_number]
+        local pv2_input_amp = telemetry['pv2_input_amp_' .. device_number]
+
         telemetry['pv_input_power_' .. device_number] = pv_input_volt * pv_input_amp
           + pv2_input_volt * pv2_input_amp
       end
