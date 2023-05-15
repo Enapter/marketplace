@@ -51,9 +51,9 @@ end
 function table_contains(tbl, x)
   local result = false
   for _, v in pairs(tbl) do
-      if v == x then
-        result = true
-      end
+    if v == x then
+      result = true
+    end
   end
   return result
 end
