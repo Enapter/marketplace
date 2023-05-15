@@ -52,7 +52,7 @@ function table_contains(tbl, x)
   local result = false
   for _, v in pairs(tbl) do
       if v == x then
-          result = true
+        result = true
       end
   end
   return result
@@ -85,7 +85,7 @@ function parser:get_all_parallel_info(devices_number)
 
         telemetry['battery_volt'] = parser:get_battery_voltage(telemetry['battery_volt'])
 
-        table.insert(sn,data['serial_number_' .. i])
+        table.insert(sn, data['serial_number_' .. i])
       end
     else
       non_existing_devices = non_existing_devices + 1
@@ -98,7 +98,7 @@ function parser:get_all_parallel_info(devices_number)
   else
     telemetry['total_pv_input_power'] = total_pv_input_power
     telemetry['alerts'] = alerts
-    enapter.log("Available devices: " .. device_avail )
+    enapter.log("Available devices: " .. device_avail)
     return telemetry, nil
   end
 end
@@ -132,10 +132,14 @@ function parser:get_parallel_info(device_number)
         telemetry['pv_input_power_' .. device_number] = pv_input_volt * pv_input_amp
       end
 
-      if telemetry['pv2_input_volt_' .. device_number] and telemetry['pv2_input_amp_' .. device_number] then
+      if
+        telemetry['pv2_input_volt_' .. device_number]
+        and telemetry['pv2_input_amp_' .. device_number]
+      then
         pv2_input_volt = telemetry['pv2_input_volt_' .. device_number]
         pv2_input_amp = telemetry['pv2_input_amp_' .. device_number]
-        telemetry['pv_input_power_' .. device_number] = pv_input_volt * pv_input_amp + pv2_input_volt * pv2_input_amp
+        telemetry['pv_input_power_' .. device_number] = pv_input_volt * pv_input_amp
+          + pv2_input_volt * pv2_input_amp
       end
 
       telemetry['fault_code_' .. device_number] =
