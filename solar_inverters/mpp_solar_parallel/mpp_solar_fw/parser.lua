@@ -48,30 +48,48 @@ function parser:get_device_mode()
   end
 end
 
+function table_contains(tbl, x)
+  local result = false
+  for _, v in pairs(tbl) do
+    if v == x then
+      result = true
+    end
+  end
+  return result
+end
+
 function parser:get_all_parallel_info(devices_number)
   local telemetry = {}
   local alerts = {}
   local total_pv_input_power = 0
   local non_existing_devices = 0
+  local sn = {}
+  local device_avail = 0
 
-  for i = 1, devices_number do
+  for i = 0, devices_number do
     local data = parser:get_parallel_info(i)
     if data then
-      if data['fault_code_' .. i] then
-        table.insert(alerts, data['fault_code_' .. i])
-      end
+      if not table_contains(sn, data['serial_number_' .. i]) then
+        device_avail = device_avail + 1
+        if data['fault_code_' .. i] then
+          table.insert(alerts, data['fault_code_' .. i])
+        end
 
-      if data['pv_input_power_' .. i] ~= nil then
-        total_pv_input_power = total_pv_input_power + data['pv_input_power_' .. i]
-      end
+        if data['pv_input_power_' .. i] ~= nil then
+          total_pv_input_power = total_pv_input_power + data['pv_input_power_' .. i]
+        end
 
-      for name, _ in pairs(parallel_info.data.total.num) do
-        telemetry[name] = data[name]
-      end
+        for name, _ in pairs(parallel_info.data.total.num) do
+          telemetry[name] = data[name]
+        end
 
-      telemetry['battery_volt'] = parser:get_battery_voltage(telemetry['battery_volt'])
+        telemetry['battery_volt'] = parser:get_battery_voltage(telemetry['battery_volt'])
+
+        table.insert(sn, data['serial_number_' .. i])
+      end
     else
       non_existing_devices = non_existing_devices + 1
+      -- enapter.log("Ignoring not connected device: " .. non_existing_devices)
     end
   end
 
@@ -80,6 +98,7 @@ function parser:get_all_parallel_info(devices_number)
   else
     telemetry['total_pv_input_power'] = total_pv_input_power
     telemetry['alerts'] = alerts
+    enapter.log('Available devices: ' .. device_avail)
     return telemetry, nil
   end
 end
@@ -108,8 +127,20 @@ function parser:get_parallel_info(device_number)
 
       local pv_input_volt = telemetry['pv_input_volt_' .. device_number]
       local pv_input_amp = telemetry['pv_input_amp_' .. device_number]
+
       if pv_input_volt and pv_input_amp then
         telemetry['pv_input_power_' .. device_number] = pv_input_volt * pv_input_amp
+      end
+
+      if
+        telemetry['pv2_input_volt_' .. device_number]
+        and telemetry['pv2_input_amp_' .. device_number]
+      then
+        local pv2_input_volt = telemetry['pv2_input_volt_' .. device_number]
+        local pv2_input_amp = telemetry['pv2_input_amp_' .. device_number]
+
+        telemetry['pv_input_power_' .. device_number] = pv_input_volt * pv_input_amp
+          + pv2_input_volt * pv2_input_amp
       end
 
       telemetry['fault_code_' .. device_number] =

@@ -89,6 +89,8 @@ local commands = {
           battery_discharge_current = 27,
           -- in reality device can send 2 metrics on positions 28 and 29
           -- which are not described in protocol
+          pv2_input_volt = 28,
+          pv2_input_amp = 29,
         },
         str = {
           serial_number = 2,
