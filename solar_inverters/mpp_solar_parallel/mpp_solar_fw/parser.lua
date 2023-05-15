@@ -98,7 +98,7 @@ function parser:get_all_parallel_info(devices_number)
   else
     telemetry['total_pv_input_power'] = total_pv_input_power
     telemetry['alerts'] = alerts
-    enapter.log("Available devices: " .. device_avail)
+    enapter.log('Available devices: ' .. device_avail)
     return telemetry, nil
   end
 end
