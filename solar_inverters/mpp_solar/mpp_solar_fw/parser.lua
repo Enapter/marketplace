@@ -77,19 +77,20 @@ function parser:get_device_rating_info()
 end
 
 function parser:get_priorities(telemetry)
+  local new_data = {}
   for name, value in pairs(priorities.charger.values) do
     if value == telemetry['charger_source_priority'] then
-      telemetry['charger_source_priority'] = name
+      new_data['charger_source_priority'] = name
     end
   end
 
   for name, value in pairs(priorities.output.values) do
     if value == telemetry['output_source_priority'] then
-      telemetry['output_source_priority'] = name
+      new_data['output_source_priority'] = name
     end
   end
 
-  return telemetry
+  return new_data
 end
 
 function parser:get_device_mode()
@@ -111,7 +112,7 @@ function parser:get_device_alerts()
       end
     end
 
-    local index = device_warning_status.general.fault_flag
+    local index = device_warning_status.general.inverter_fault
     local warning_flag = string.sub(data, index, index) == '1' and '' or '_w'
 
     for alert, pos in pairs(device_warning_status.dependent) do
