@@ -128,4 +128,5 @@ alerts:
     description: Use "Configure" command to setup connection.
 
 .cloud:
+  category: communication_modules
   mqtt_channel_id: gio

@@ -129,4 +129,5 @@ alerts:
     description: Relay channel might be broken. Check the module logs or contact Enapter support.
 
 .cloud:
+  category: communication_modules
   mqtt_channel_id: gio
