@@ -30,7 +30,7 @@ local commands = {
       -- battery_discharge_voltage = 23,
       -- pv_ok_condition_for_parallel = 24,
       -- pv_power_balance = 25,
-    }
+    },
   },
   firmware_version = {
     command = 'QVFW',
@@ -43,7 +43,7 @@ local commands = {
   },
   output_mode = {
     command = 'QOPM',
-    values = {}
+    values = {},
   },
   device_mode = {
     command = 'QMOD',
@@ -53,18 +53,18 @@ local commands = {
       L = 'line',
       B = 'battery',
       F = 'error',
-      H = 'power_saving'
-    }
+      H = 'power_saving',
+    },
   },
   set_priorities = {
-    charger =  {
+    charger = {
       cmd = 'PCP0',
-      values = {}
+      values = {},
     },
     output = {
       cmd = 'POP0',
-      values = {}
-    }
+      values = {},
+    },
   },
   parallel_info = {
     command = 'QPGS',
@@ -85,14 +85,18 @@ local commands = {
           charger_source_priority = 22,
           -- max_charger_current = 23,
           -- max_charger_range = 24,
-          pv_input_amp = 25,
-          battery_discharge_current = 26,
+          pv_input_amp = 26,
+          battery_discharge_current = 27,
+          -- in reality device can send 2 metrics on positions 28 and 29
+          -- which are not described in protocol
+          pv2_input_volt = 28,
+          pv2_input_amp = 29,
         },
         str = {
           serial_number = 2,
           fault_code = 4,
           output_mode = 21,
-        }
+        },
       },
       total = {
         num = {
@@ -105,11 +109,11 @@ local commands = {
         },
         str = {
           work_mode = 3, -- theoretically you can't set different work modes for parallel devices
-        }
+        },
       },
     },
-    fault_codes = {}
-  }
+    fault_codes = {},
+  },
 }
 
 commands.parallel_info.fault_codes['01'] = 'fan_locked'
@@ -146,13 +150,13 @@ commands.output_mode.values['2'] = 'Phase 1'
 commands.output_mode.values['3'] = 'Phase 2'
 commands.output_mode.values['4'] = 'Phase 3'
 
-commands.set_priorities.output.values[0] = "Utility first"
-commands.set_priorities.output.values[1] = "Solar first"
-commands.set_priorities.output.values[2] = "SBU"
+commands.set_priorities.output.values[0] = 'Utility first'
+commands.set_priorities.output.values[1] = 'Solar first'
+commands.set_priorities.output.values[2] = 'SBU'
 
-commands.set_priorities.charger.values[0] = "Utility first"
-commands.set_priorities.charger.values[1] = "Solar first"
-commands.set_priorities.charger.values[2] = "Solar and utility"
-commands.set_priorities.charger.values[3] = "Only solar"
+commands.set_priorities.charger.values[0] = 'Utility first'
+commands.set_priorities.charger.values[1] = 'Solar first'
+commands.set_priorities.charger.values[2] = 'Solar and utility'
+commands.set_priorities.charger.values[3] = 'Only solar'
 
 return commands

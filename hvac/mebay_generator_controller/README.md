@@ -1,6 +1,6 @@
-# Generic IO for ENP-RS485
+# Mebay DC6xD Generator Controller
 
-This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) implements generic input/output functions of RS-485 module – Enapter ENP-RS485. It can be used as is or as a base IO layer for virtual devices using UCM-to-UCM communication.
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Mebay DC6xD series** series generator controller with [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) over [RS-485](https://go.enapter.com/developers-enapter-rs485).
 
 ## Connect to Enapter
 
@@ -8,4 +8,3 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) imple
 - Use the [Enapter ENP-RS485](https://go.enapter.com/handbook-enp-rs485) module for physical connection. See [connection instructions](https://go.enapter.com/handbook-enp-rs485-conn) in the module manual.
 - [Add ENP-RS485 to your site](https://go.enapter.com/handbook-mobile-app) using the mobile app.
 - [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to ENP-RS485.
-- Configure RS-485 connection via "Configure" command.

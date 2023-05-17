@@ -37,15 +37,57 @@ telemetry:
   subscribed_ids:
     display_name: Subscribed IDs
     type: integer
+  received_can_packets:
+    display_name: Received CAN packets
+    type: integer
+  accepted_can_packets:
+    display_name: Accepted CAN packets
+    description: Count of received CAN packets which subscribed.
+    type: integer
+  total_reads:
+    display_name: Total Read Commands
+    type: integer
+  total_writes:
+    display_name: Total Write Commands
+    type: integer
 
 command_groups:
   settings:
     display_name: Settings
+  communication:
+    display_name: Communication
 
 commands:
+  read:
+    display_name: Read
+    group: communication
+    arguments:
+      cursor:
+        display_name: Cursor
+        description: The value of cursor from previous read. Should be passed to continues reading.
+        type: string
+      msg_ids:
+        display_name: Message IDs
+        description: Array of message IDS. Should be passed as coma-separated list "12, 34, 56".
+        type: string
+        required: true
+  write:
+    display_name: Write
+    group: communication
+    arguments:
+      msg_id:
+        display_name: Message ID
+        type: integer
+        required: true
+      data:
+        display_name: Data
+        description: 16-char string where every 2 char represent a byte in hex format.
+        type: string
+        required: true
+
   write_configuration:
     populate_values_command: read_configuration
-    display_name: Write Configuration
+    display_name: Configure
     group: settings
     ui:
       icon: wrench-outline
@@ -60,14 +102,14 @@ commands:
           - 250
           - 100
         required: true
-      cache_bucket_size:
+      cache_size:
         display_name: Cache bucket size.
         description: >
           CAN packets are cached in buckets one-per-message.
           Each bucket holds messages received in the same second.
         type: integer
         default: 20
-      cache_ttl_seconds:
+      cache_ttl:
         display_name: Cache TTL (seconds)
         description: >
           CAN packets are cached only for requested message IDs.
@@ -84,7 +126,7 @@ alerts:
   not_configured:
     severity: info
     display_name: Module Not Configured
-    description: Use "Write Configuration" command to setup connection.
+    description: Use "Configure" command to setup connection.
 
 .cloud:
   mqtt_channel_id: gio

@@ -1,0 +1,125 @@
+blueprint_spec: device/1.0
+
+display_name: Mebay DC6xD
+description: Generator controller
+icon: enapter-module-din-1
+vendor: mebay
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+verification_level: ready_for_testing
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      - ok
+      - no_data
+  total_runtime:
+    type: float
+    unit: h
+    display_name: Total Runtime
+  fuel_level:
+    type: float
+    unit: percentage
+    display_name: Fuel Level
+  voltage_1:
+    type: float
+    unit: volt
+    display_name: Voltage L1
+  voltage_2:
+    type: float
+    unit: volt
+    display_name: Voltage L2
+  voltage_3:
+    type: float
+    unit: volt
+    display_name: Voltage L3
+  current_1:
+    type: float
+    unit: amp
+    display_name: Current L1
+  current_2:
+    type: float
+    unit: amp
+    display_name: Current L2
+  current_3:
+    type: float
+    unit: amp
+    display_name: Current L3
+  active_power_1:
+    type: float
+    unit: W
+    display_name: Active Power L1
+  active_power_2:
+    type: float
+    unit: W
+    display_name: Active Power L2
+  active_power_3:
+    type: float
+    unit: W
+    display_name: Active Power L3
+  total_active_power:
+    type: float
+    unit: W
+    display_name: Total Active Power
+  mains_voltage_1:
+    type: float
+    unit: volt
+    display_name: Mains Voltage L1
+  mains_voltage_2:
+    type: float
+    unit: volt
+    display_name: Mains Voltage L2
+  mains_voltage_3:
+    type: float
+    unit: volt
+    display_name: Mains Voltage L3
+  mains_frequency:
+    type: float
+    unit: Hz
+    display_name: Mains Frequency
+  frequency:
+    type: float
+    unit: Hz
+    display_name: Generator Frequency
+
+.cloud:
+  category: hvac
+  mobile_main_chart: total_active_power
+  mobile_telemetry:
+    - total_active_power
+    - fuel_level
+    - total_runtime
+    - frequency
+  mobile_charts:
+    - voltage_1
+    - voltage_2
+    - voltage_3
+    - current_1
+    - current_2
+    - current_3
+    - active_power_1
+    - active_power_2
+    - active_power_3
+    - mains_voltage_1
+    - mains_voltage_2
+    - mains_voltage_3
+    - mains_frequency_3

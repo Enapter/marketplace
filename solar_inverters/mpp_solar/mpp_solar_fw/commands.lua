@@ -12,7 +12,7 @@ local commands = {
       -- ac_out_current = 5,
       ac_out_apparent_power = 6,
       -- ac_out_active_power = 7,
-      -- battery_volt = 8,
+      battery_volt = 8,
       -- battery_recharge_voltage = 9,
       -- battery_under_voltage = 10,
       -- battery_bulk_voltage = 11,
@@ -30,7 +30,7 @@ local commands = {
       -- battery_discharge_voltage = 23,
       -- pv_ok_condition_for_parallel = 24,
       -- pv_power_balance = 25,
-    }
+    },
   },
   firmware_version = {
     command = 'QVFW',
@@ -65,11 +65,11 @@ local commands = {
       -- eeprom_version = 19,
       -- pv_charging_power = 20,
       -- device_status1 = 21
-    }
+    },
   },
   output_mode = {
     command = 'QOPM',
-    values = {}
+    values = {},
   },
   default_settings_info = {
     command = 'QDI',
@@ -101,8 +101,8 @@ local commands = {
       L = 'line',
       B = 'battery',
       F = 'error',
-      H = 'power_saving'
-    }
+      H = 'power_saving',
+    },
   },
   device_warning_status = {
     command = 'QPIWS',
@@ -137,17 +137,17 @@ local commands = {
       fan_locked = 11,
       battery_voltage_high = 12,
       overload = 17,
-    }
+    },
   },
   set_priorities = {
-    charger =  {
+    charger = {
       cmd = 'PCP0',
-      values = {}
+      values = {},
     },
     output = {
       cmd = 'POP0',
-      values = {}
-    }
+      values = {},
+    },
   },
   parallel_info = {
     command = 'QPGS',
@@ -155,8 +155,8 @@ local commands = {
       parallel_num_exists = 1,
       serial_number = 2,
       work_mode = 3,
-    }
-  }
+    },
+  },
 }
 
 commands.output_mode.values['0'] = 'Single'
@@ -165,13 +165,13 @@ commands.output_mode.values['2'] = 'Phase 1'
 commands.output_mode.values['3'] = 'Phase 2'
 commands.output_mode.values['4'] = 'Phase 3'
 
-commands.set_priorities.output.values["Utility first"] = 0
-commands.set_priorities.output.values["Solar first"] = 1
-commands.set_priorities.output.values["SBU"] = 2
+commands.set_priorities.output.values['Utility first'] = 0
+commands.set_priorities.output.values['Solar first'] = 1
+commands.set_priorities.output.values['SBU'] = 2
 
-commands.set_priorities.charger.values["Utility first"] = 0
-commands.set_priorities.charger.values["Solar first"] = 1
-commands.set_priorities.charger.values["Solar and utility"] = 2
-commands.set_priorities.charger.values["Only solar"] = 3
+commands.set_priorities.charger.values['Utility first'] = 0
+commands.set_priorities.charger.values['Solar first'] = 1
+commands.set_priorities.charger.values['Solar and utility'] = 2
+commands.set_priorities.charger.values['Only solar'] = 3
 
 return commands
