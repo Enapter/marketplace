@@ -31,6 +31,9 @@ properties:
   unit_id:
     display_name: Modbus Unit ID
     type: integer
+  nominal_capacity:
+    display_name: Nominal Capacity, kWh
+    type: float
 
 telemetry:
   status:
