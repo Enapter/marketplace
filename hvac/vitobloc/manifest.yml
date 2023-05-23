@@ -157,7 +157,7 @@ alerts:
     severity: info
     display_name: Modbus Not Configured
     description: Use "Configure" command to set up Modbus connection.
-  unknown_status:
+  unknown:
     severity: info
     display_name: Unknown Device Status
     description: Cannot read or decipher device status.
