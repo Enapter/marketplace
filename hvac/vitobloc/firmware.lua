@@ -102,7 +102,7 @@ end
 
 function parse_status(value)
   if not value then
-    return {}
+    return {'unknown_status'}
   end
 
   if type(value) == 'number' then
