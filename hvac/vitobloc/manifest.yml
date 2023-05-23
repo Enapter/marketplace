@@ -27,7 +27,7 @@ properties:
     type: string
   unit_id:
     display_name: Vitobloc unit ID
-    type: number
+    type: integer
 
 telemetry:
   status:
