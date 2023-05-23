@@ -1,0 +1,272 @@
+blueprint_spec: device/1.0
+
+display_name: Viessman Vitobloc 200/300
+description: Combined heat and power unit for natural gas and LPG operation
+icon: enapter-power-supply-unit
+author: enapter
+contributors:
+  - anataty
+  - Rina-an
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+verification_level: ready_for_testing
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+  dependencies: enapter-ucm ~> 0.1.8
+
+properties:
+  vendor:
+    display_name: Vendor
+    type: string
+  address:
+    display_name: Vitobloc IP address
+    type: string
+  unit_id:
+    display_name: Vitobloc unit ID
+    type: integer
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - 'Off'
+      - Ready
+      - Start
+      - Operation
+      - Error
+      - ok
+      - unknown
+  ext_power_setpoint:
+    display_name: External power setpoint
+    type: float
+    unit: kW
+  int_power_setpoint:
+    display_name: Internal power setpoint
+    type: float
+    unit: kW
+  uptime:
+    display_name: Uptime
+    type: integer
+    unit: h
+  number_of_launches:
+    display_name: Number of launches
+    type: integer
+  time_till_next_maintenance:
+    display_name: Time before next maintenance
+    type: integer
+    unit: h
+  time_till_next_repair:
+    display_name: Time before next repair
+    type: integer
+    unit: h
+  kwh_counter:
+    display_name: kwh counter
+    type: float
+    unit: kwh
+  t_cooling_water_inlet:
+    display_name: Inlet cooling water temperature
+    type: float
+    unit: °C
+  t_cooling_water_outlet:
+    display_name: Outlet cooling water temperature
+    type: float
+    unit: °C
+  t_engine_oil_tank_A:
+    display_name: Engine oil temperature in tank A
+    type: float
+    unit: °C
+  t_engine_oil_tank_B:
+    display_name: Engine oil temperature in tank B
+    type: float
+    unit: °C
+  generator_temp:
+    display_name: Engine temperature
+    type: float
+    unit: °C
+  battery_voltage:
+    display_name: Battery voltage
+    type: float
+    unit: v
+  oil_pressure:
+    display_name: Oil pressure
+    type: float
+    unit: bar
+  grid_voltage_L1:
+    display_name: L1 grid voltage
+    type: float
+    unit: v
+  grid_voltage_L2:
+    display_name: L2 grid voltage
+    type: float
+    unit: v
+  grid_voltage_L3:
+    display_name: L3 grid voltage
+    type: float
+    unit: v
+  generator_voltage_L1:
+    display_name: L1 generator voltage
+    type: float
+    unit: v
+  generator_voltage_L2:
+    display_name: L2 generator voltage
+    type: float
+    unit: v
+  generator_voltage_L3:
+    display_name: L3 generator voltage
+    type: float
+    unit: v
+
+command_groups:
+  config:
+    display_name: Configuration
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Set Up Connection
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      address:
+        display_name: Modbus Address
+        description: Hostname and port, e.g. 192.168.14.45:512
+        type: string
+        required: true
+      unit_id:
+        display_name: Modbus Unit ID
+        description: Can be obtained from the built-in LAN interface or via customer support
+        type: integer
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read Modbus configuration from flash storage. Check logs.
+  not_configured:
+    severity: info
+    display_name: Modbus Not Configured
+    description: Use "Configure" command to set up Modbus connection.
+  unknown:
+    severity: info
+    display_name: Unknown Device Status
+    description: Cannot read or decipher device status.
+  unknown_value_operating_states:
+    severity: info
+    display_name: Unknown Operating State Value
+    description: Cannot read or decipher the value.
+  unknown_value_start_stop_error:
+    severity: info
+    display_name: Unknown Stop/Start Value
+    description: Cannot read or decipher the value.
+  unknown_value_digital_error:
+    severity: info
+    display_name: Unknown Digital Value
+    description: Cannot read or decipher the value.
+  unknown_value_external_error:
+    severity: info
+    display_name: Unknown External Value
+    description: Cannot read or decipher the value.
+  unknown_value_other_error:
+    severity: info
+    display_name: Unknown Other Value
+    description: Cannot read or decipher the value.
+  no_interference:
+    severity: info
+    display_name: No Interference
+    description: There's no interference.
+  underspeed:
+    severity: warning
+    display_name: Underspeed
+    description: Speed is slower than desirable.
+  slow_speed:
+    severity: error
+    display_name: Slow speed
+    description: Speed < 50 rpm.
+  engine_doesnt_stop:
+    severity: error
+    display_name: Engine Doesn't Stop
+    description: Vitobloc engine is not stopping.
+  gas_pressure_max:
+    severity: error
+    display_name: Gas pressure max
+    description: Gas pressure is at the max value.
+  gas_ressure_min:
+    severity: error
+    display_name: Gas pressure min
+    description: Gas pressure is at the min value.
+  power_module_generator:
+    severity: error
+    display_name: Power module generator error
+    description: Power module generator contactor is stuck.
+  power_module_reverse:
+    severity: warning
+    display_name: Power module power
+    description: Power module is running in reverse power.
+  pump_dry_1:
+    severity: error
+    display_name: Pump dry protection 1
+    description: Pump is running dry-running protection 1.
+  pump_dry_2:
+    severity: error
+    display_name: Pump dry protection 2
+    description: Pump is running dry-running protection 2.
+  pump_dry:
+    severity: error
+    display_name: Pump dry protection
+    description: Pump is running dry-running protection.
+  engine_stopped:
+    severity: info
+    display_name: Engine Stopped
+    description: Engine was stoped.
+  engine_on:
+    severity: info
+    display_name: Engine ON
+    description: Engine is turned ON.
+  fan_on:
+    severity: info
+    display_name: Fan ON
+    description: Fan is switched ON.
+  cooling_water_pump_on:
+    severity: info
+    display_name: Cooling water pump ON
+    description: Cooling water pump is switched on.
+  heating_water_pump_on:
+    severity: info
+    display_name: Heating water pump is switched on
+    description: Engine is ON.
+  ignition_on:
+    severity: info
+    display_name: Ignition ON
+    description: Ignition is ON.
+  gas_valves_open:
+    severity: info
+    display_name: Gas Valves Open
+    description: Gas Valves are open.
+
+.cloud:
+  category: hvac
+  mobile_main_chart: kwh_counter
+  mobile_telemetry:
+    - uptime
+    - kwh_counter
+    - battery_voltage
+    - oil_pressure
+  mobile_charts:
+    - grid_voltage_L1
+    - generator_voltage_L1
+    - generator_temp
+    - t_cooling_water_inlet
+    - t_cooling_water_outlet
+    - t_engine_oil_tank_A
+    - t_engine_oil_tank_B
