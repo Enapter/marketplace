@@ -1,6 +1,6 @@
 # Viessmann Vitobloc 200/300
 
-This Enapter Device Blueprint integrates Viessmann Vitobloc 200/300 - combined heat and power units for natural gas and LPG operation via Modbus TCP implemented on [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm).
+This Enapter Device Blueprint integrates Viessmann Vitobloc 200/300 - combined heat and power units for natural gas and LPG operation via [Modbus TCP](https://go.enapter.com/developers-modbustcp) implemented on [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm).
 
 ## Connect to Enapter
 

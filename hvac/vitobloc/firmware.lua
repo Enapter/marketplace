@@ -128,7 +128,7 @@ function parse_operating_states(value)
     return {}
   end
   if value == 0 then
-    return { 'unknown_value' }
+    return { 'unknown_value_operating_states' }
   end
   if type(value) == 'number' then
     local operating_states = {}
@@ -163,7 +163,7 @@ function parse_start_stop_error(value)
     return {}
   end
   if value == 0 then
-    return { 'unknown_value' }
+    return { 'unknown_value_start_stop_error' }
   end
   if type(value) == 'number' then
     local stop_start_errors = {}
@@ -189,7 +189,7 @@ function parse_digital_error(value)
     return {}
   end
   if value == 0 then
-    return { 'unknown_value' }
+    return { 'unknown_value_digital_error' }
   end
   if type(value) == 'number' then
     local digital_errors = {}
@@ -209,7 +209,7 @@ function parse_external_error(value)
     return {}
   end
   if value == 0 then
-    return { 'unknown_value' }
+    return { 'unknown_value_external_error' }
   end
   if type(value) == 'number' then
     local external_errors = {}
@@ -229,7 +229,7 @@ function parse_other_error(value)
     return {}
   end
   if value == 0 then
-    return { 'unknown_value' }
+    return { 'unknown_value_other_error' }
   end
   if type(value) == 'number' then
     local other_errors = {}

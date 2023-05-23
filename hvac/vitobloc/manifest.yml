@@ -27,7 +27,7 @@ properties:
     type: string
   unit_id:
     display_name: Vitobloc unit ID
-    type: string
+    type: number
 
 telemetry:
   status:
@@ -157,9 +157,25 @@ alerts:
     severity: info
     display_name: Modbus Not Configured
     description: Use "Configure" command to set up Modbus connection.
-  unknown_value:
+  unknown_value_operating_states:
     severity: info
-    display_name: Unknown Value
+    display_name: Unknown Operating State Value
+    description: Cannot read or decipher the value.
+  unknown_value_start_stop_error:
+    severity: info
+    display_name: Unknown Stop/Start Value
+    description: Cannot read or decipher the value.
+  unknown_value_digital_error:
+    severity: info
+    display_name: Unknown Digital Value
+    description: Cannot read or decipher the value.
+  unknown_value_external_error:
+    severity: info
+    display_name: Unknown External Value
+    description: Cannot read or decipher the value.
+  unknown_value_other_error:
+    severity: info
+    display_name: Unknown Other Value
     description: Cannot read or decipher the value.
   no_interference:
     severity: info
