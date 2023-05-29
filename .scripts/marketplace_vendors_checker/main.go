@@ -14,8 +14,8 @@ import (
 )
 
 const (
-  vendorsFile   = ".vendors/vendors.yml"
-  iconURLPrefix = "https://raw.githubusercontent.com/Enapter/marketplace/main/.vendors/icons/"
+  vendorsFile   = ".marketplace/vendors/vendors.yml"
+  iconURLPrefix = "https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/"
 )
 
 var (

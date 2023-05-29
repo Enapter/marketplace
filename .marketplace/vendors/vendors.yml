@@ -1,0 +1,164 @@
+- id: enapter
+  display_name: Enapter
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/enapter.png
+  website: https://enapter.com
+
+- id: pylontech
+  display_name: Pylontech
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/pylontech.png
+  website: https://en.pylontech.com.cn
+
+- id: seneca
+  display_name: Seneca
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/seneca.png
+  website: https://www.seneca.it/en/
+
+- id: tesla
+  display_name: Tesla
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/tesla-energy.png
+  website: https://www.tesla.com/energy
+
+- id: crowcon
+  display_name: Crowcon
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/crowcon.png
+  website: https://www.crowcon.com
+
+- id: alicat
+  display_name: Alicat
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/alicat.png
+  website: https://www.alicat.com
+
+- id: sma
+  display_name: SMA
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sma.png
+  website: https://www.sma.de/en
+
+- id: sonoff
+  display_name: Sonoff
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sonoff.png
+  website: https://sonoff.tech
+
+- id: enel-x
+  display_name: Enel X
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/enel-x.png
+  website: https://www.enelx.com/de/en
+
+- id: hydrogenics
+  display_name: Hydrogenics
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/hydrogenics.png
+  website: https://www.cummins.com/new-power
+
+- id: buderus
+  display_name: Buderus
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/buderus.png
+  website: https://www.buderus.com
+
+- id: lg
+  display_name: LG
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/lg.png
+  website: https://www.lgessbattery.com
+
+- id: kilowatt-labs
+  display_name: Kilowatt Labs
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/kilowatt-labs.png
+  website: https://kilowattlabs.com
+
+- id: h2sys
+  display_name: H2SYS
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/h2sys.png
+  website: https://h2sys.fr/en/
+
+- id: intelligent-energy
+  display_name: Intelligent Energy
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/intelligent-energy.png
+  website: https://www.intelligent-energy.com
+
+- id: m-field
+  display_name: M-Field
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/m-field.png
+  website: http://www.m-field.com.tw
+
+- id: cs-instruments
+  display_name: CS Instruments
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/cs-instruments.png
+  website: https://www.cs-instruments.com
+
+- id: imt
+  display_name: IMT Solar
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/imt-solar.png
+  website: https://imtsolar.com
+
+- id: eastron
+  display_name: Eastron
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/eastron.png
+  website: http://www.eastrongroup.com
+
+- id: edmi
+  display_name: EDMI
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/edmi.png
+  website: https://www.edmi-meters.com
+
+- id: incotex
+  display_name: Incotex
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/incotex.png
+  website: https://www.incotex.com/en/
+
+- id: schneider-electric
+  display_name: Schneider Electric
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/schneider-electric.png
+  website: https://www.se.com/ww/en/
+
+- id: bart
+  display_name: Bart
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/bart.png
+  website: https://www.bart-e.com/en/
+
+- id: srne
+  display_name: SRNE
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/srne.png
+  website: https://www.srnesolar.com
+
+- id: bwt
+  display_name: BWT
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/bwt.png
+  website: https://www.bwt.com/en/
+
+- id: ardetem-sfere
+  display_name: Ardetem Sfere
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/ardetem-sfere.png
+  website: https://ardetem-sfere.com/en/
+
+- id: powercell-group
+  display_name: PowerCell Group
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/powercell-group.png
+  website: https://powercellgroup.com
+
+- id: komfovent
+  display_name: Komfovent
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/komfovent.png
+  website: https://www.komfovent.com/en/
+
+- id: ems-esp
+  display_name: EMS-ESP
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/ems-esp.png
+  website: https://emsesp.github.io/docs/#/
+
+- id: mpp-solar
+  display_name: MPP Solar
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/mpp-solar.png
+  website: https://www.mppsolar.com/v3/
+
+- id: bronkhorst
+  display_name: Bronkhorst
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/bronkhorst.png
+  website: https://www.bronkhorst.com/int/
+
+- id: mebay
+  display_name: Mebay
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/mebay.png
+  website: https://www.mebay.cn/#/index/home
+
+- id: sinexcel
+  display_name: Sinexcel
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sinexcel.png
+  website: https://en.sinexcel.com/
