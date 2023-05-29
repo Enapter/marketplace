@@ -62,4 +62,4 @@ jobs:
           docker run --rm \
           -v "$(pwd)":/marketplace \
           -w /marketplace/ \
-          golang:1.19 go run blueprint_vendor_checker -vp ./.vendors/vendors.yml ${{ steps.paths.outputs.blueprints-paths }}
+          golang:1.19 go run blueprint_vendor_checker -vp ./.marketplace/vendors/vendors.yml ${{ steps.paths.outputs.blueprints-paths }}
