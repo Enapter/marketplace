@@ -162,3 +162,28 @@
   display_name: Sinexcel
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sinexcel.png
   website: https://en.sinexcel.com/
+
+- id: bosch
+  display_name: Bosch
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/bosch.png
+  website: https://www.bosch.com
+
+- id: nefit
+  display_name: Nefit
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/nefit.png
+  website: https://www.nefit-bosch.nl
+
+- id: junkers
+  display_name: Junkers
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/junkers.png
+  website: https://www.junkers.com
+
+- id: worcester
+  display_name: Worcester
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/worcester.png
+  website: https://www.worcester-bosch.co.uk
+
+- id: sieger
+  display_name: Sieger
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sieger.png
+  website: https://sieger.net

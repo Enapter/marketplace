@@ -1,0 +1,522 @@
+- id: alarm-with-sonoff-433-rf-bridge
+  display_name: Alarm sensor connected to Sonoff 433 RF Bridge
+  description: TODO
+  icon: enapter-alarm-sensor
+  vendor: sonoff
+  category: alarms
+  blueprint_options:
+    - blueprint: alarms/alarm_with_sonoff_433_rf_bridge
+
+- id: pressure-sensor
+  display_name: Pressure Sensor
+  description: TODO
+  icon: enapter-gauge
+  category: analog_io_modules
+  blueprint_options:
+    - blueprint: analog_io_modules/pressure_sensor
+
+- id: sfere-ucv-4001
+  display_name: Sfere uCv 4001
+  description: TODO
+  icon: enapter-module-din-1
+  vendor: ardetem-sfere
+  category: analog_io_modules
+  blueprint_options:
+    - blueprint: analog_io_modules/sfere_ucv_4001
+
+- id: sinexcel-pws2-30k
+  display_name: Sinexcel Inverter
+  description: TODO
+  icon: enapter-inverter-battery
+  vendor: sinexcel
+  category: battery_inverters
+  blueprint_options:
+    - blueprint: battery_inverters/sinexcel_pws2_30k
+
+- id: sma-sunny-island
+  display_name: SMA Sunny Island
+  description: TODO
+  icon: enapter-inverter-battery
+  vendor: sma
+  category: battery_inverters
+  blueprint_options:
+    - blueprint: battery_inverters/sma_sunny_island
+
+- id: tesla-powerwall
+  display_name: Tesla Powerwall
+  description: TODO
+  icon: enapter-wall-battery-storage
+  vendor: tesla
+  category: battery_inverters
+  blueprint_options:
+    - blueprint: battery_inverters/tesla_powerwall
+
+- id: lg-resu-prime
+  display_name: LG RESU Prime
+  description: TODO
+  icon: enapter-battery-storage
+  vendor: lg
+  category: battery_management_systems
+  blueprint_options:
+    - blueprint: battery_management_systems/lg_resu_prime_http
+
+- id: pylontech-us2000
+  display_name: Pylontech Battery US2000
+  description: TODO
+  icon: enapter-battery-storage
+  vendor: pylontech
+  category: battery_management_systems
+  blueprint_options:
+    - blueprint: battery_management_systems/pylontech_us2000_can
+      display_name: TODO
+      description: TODO
+    - blueprint: battery_management_systems/pylontech_us2000_rs485
+      display_name: TODO
+      description: TODO
+
+- id: bosch-gas-boiler-ems-bus
+  display_name: Bosch Gas Boiler (EMS bus)
+  description: TODO
+  icon: enapter-gas-boiler
+  vendor: bosch
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+
+- id: buderus-gas-boiler-ems-bus
+  display_name: Buderus Gas Boiler (EMS bus)
+  description: TODO
+  icon: enapter-gas-boiler
+  vendor: buderus
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+
+- id: nefit-gas-boiler-ems-bus
+  display_name: Nefit Gas Boiler (EMS bus)
+  description: TODO
+  icon: enapter-gas-boiler
+  vendor: nefit
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+
+- id: junkers-gas-boiler-ems-bus
+  display_name: Junkers Gas Boiler (EMS bus)
+  description: TODO
+  icon: enapter-gas-boiler
+  vendor: junkers
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+
+- id: worcester-gas-boiler-ems-bus
+  display_name: Worcester Gas Boiler (EMS bus)
+  description: TODO
+  icon: enapter-gas-boiler
+  vendor: worcester
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+
+- id: sieger-gas-boiler-ems-bus
+  display_name: Sieger Gas Boiler (EMS bus)
+  description: TODO
+  icon: enapter-gas-boiler
+  vendor: sieger
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+
+- id: kilowatt-labs-centauri-energy-server
+  display_name: Kilowatt Labs Centauri Energy Server
+  description: TODO
+  icon: enapter-power-supply-unit
+  vendor: kilowatt-labs
+  category: energy_storages
+  blueprint_options:
+    - blueprint: energy_storages/kilowatt_labs_centauri_energy_server
+
+- id: enel-juicebox-32
+  display_name: Enel JuiceBox 32
+  description: TODO
+  icon: enapter-car-charger
+  vendor: enel-x
+  category: ev_chargers
+  blueprint_options:
+    - blueprint: ev_chargers/enel_juicebox_32
+
+- id: alicat-scientific-m10slpm-d485
+  display_name: Alicat scientific Mass Flow Meter M-10SLPM-D-485
+  description: TODO
+  icon: enapter-module-din-1
+  vendor: alicat
+  category: flow_meters
+  blueprint_options:
+    - blueprint: flow_meters/alicat_scientific_m10slpm_d485
+
+- id: bronkhorst-f111b
+  display_name: Flow meter F-111B
+  description: TODO
+  icon: enapter-gas-flow-meter
+  vendor: bronkhorst
+  category: flow_meters
+  blueprint_options:
+    - blueprint: flow_meters/bronkhorst_f111b
+
+- id: h2sys-acs-1000
+  display_name: H2Sys ACS 1000
+  description: TODO
+  icon: enapter-fuel-cell
+  vendor: h2sys
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/h2sys_acs_1000
+
+- id: hydrogenics-hypm-hd-8
+  display_name: Hydrogenics HyPM HD 8
+  description: TODO
+  icon: enapter-fuel-cell
+  vendor: hydrogenics
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/hydrogenics_hypm_hd_8
+
+- id: intelligent-energy-fcm-801
+  display_name: Intelligent Energy FCM 801
+  description: TODO
+  icon: enapter-fuel-cell
+  vendor: intelligent-energy
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/intelligent_energy_fcm_801
+      display_name: TODO
+      description: TODO
+    - blueprint: fuel_cells/intelligent_energy_fcm_80x_rl6
+      display_name: TODO
+      description: TODO
+
+- id: intelligent-energy-fcm-804
+  display_name: Intelligent Energy FCM 804
+  description: TODO
+  icon: enapter-fuel-cell
+  vendor: intelligent-energy
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/intelligent_energy_fcm_804
+      display_name: TODO
+      description: TODO
+    - blueprint: fuel_cells/intelligent_energy_fcm_80x_rl6
+      display_name: TODO
+      description: TODO
+
+- id: m-field-energy-fuel-cell
+  display_name: M-Field Fuel Cell
+  description: TODO
+  icon: enapter-fuel-cell
+  vendor: m-field
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/m-field_energy_fuel_cell
+
+- id: powercell-ps5
+  display_name: Powercell PS-5
+  description: TODO
+  icon: enapter-fuel-cell
+  vendor: powercell-group
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/powercell_ps5
+
+- id: crowcon-xgard-bright
+  display_name: Crowcon Xgard Bright
+  description: TODO
+  icon: enapter-gas-sensor
+  vendor: crowcon
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/crowcon_xgard_bright
+
+- id: crowcon-xgardiq
+  display_name: Crowcon XgardIQ
+  description: TODO
+  icon: enapter-module-din-1
+  vendor: crowcon
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/crowcon_xgardiq
+
+- id: cs-instruments-fa-510
+  display_name: CS Instruments FA 510
+  description: TODO
+  icon: enapter-module-din-1
+  vendor: cs-instruments
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/cs_instruments_fa_510
+
+- id: generic-can
+  display_name: Generic IO for ENP-CAN
+  description: TODO
+  icon: enapter-module-din-2
+  vendor: enapter
+  category: generic_io
+  blueprint_options:
+    - blueprint: generic_io/can
+
+- id: generic-di7
+  display_name: Generic DI for ENP-DI7
+  description: TODO
+  icon: enapter-module-din-2
+  vendor: enapter
+  category: generic_io
+  blueprint_options:
+    - blueprint: generic_io/di7
+
+- id: generic-rl6
+  display_name: Generic IO for ENP-RL6
+  description: TODO
+  icon: enapter-module-din-2
+  vendor: enapter
+  category: generic_io
+  blueprint_options:
+    - blueprint: generic_io/rl6
+
+- id: generic-rs485
+  display_name: Generic IO for ENP-RS485
+  description: TODO
+  icon: enapter-module-din-2
+  vendor: enapter
+  category: generic_io
+  blueprint_options:
+    - blueprint: generic_io/rs485
+
+- id: komfovent-ping2
+  display_name: Komfovent AHU Ping2
+  description: TODO
+  icon: enapter-vent-recuperator
+  vendor: komfovent
+  category: hvac
+  blueprint_options:
+    - blueprint: hvac/komfovent_ping2
+
+- id: mebay-generator-controller
+  display_name: Mebay DC6xD
+  description: TODO
+  icon: enapter-module-din-1
+  vendor: mebay
+  category: hvac
+  blueprint_options:
+    - blueprint: hvac/mebay_generator_controller
+
+- id: imt-solar-si-rS485tc-2t
+  display_name: IMT Solar Irradiance Sensor Si-RS485TC-2T
+  description: TODO
+  icon: enapter-solar-panel
+  vendor: imt
+  category: irradiance_sensors
+  blueprint_options:
+    - blueprint: irradiance_sensors/imt_solar_si-rS485tc-2t
+
+- id: eastron-sdm120ct
+  display_name: Eastron SDM120CT
+  description: TODO
+  icon: enapter-power-meter
+  vendor: eastron
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/eastron_sdm120ct
+
+- id: edmi-mk10a
+  display_name: EDMI Mk10A
+  description: TODO
+  icon: enapter-power-meter
+  vendor: edmi
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/edmi_mk10a
+
+- id: mercury-230
+  display_name: Mercury 230 Power Meter
+  description: TODO
+  icon: enapter-power-meter
+  vendor: incotex
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/mercury_230
+
+- id: schneider-electric-pm2100
+  display_name: Schneider Electric PM2100 series
+  description: TODO
+  icon: enapter-power-meter
+  vendor: schneider-electric
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/schneider_electric_pm2100
+
+- id: seneca-s203t
+  display_name: Seneca S203T
+  description: TODO
+  icon: enapter-power-meter
+  vendor: seneca
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/seneca_s203t
+
+- id: bart-lab-dmm2
+  display_name: Bart LAB-DM2
+  description: TODO
+  icon: enapter-gauge
+  vendor: bart
+  category: pressure_sensors
+  blueprint_options:
+    - blueprint: pressure_sensors/bart_lab_dmm2
+
+- id: enp-di7-mobile-notifier
+  display_name: ENP-DI7 Mobile Notifier
+  description: TODO
+  icon: enapter-module-din-2
+  vendor: enapter
+  category: relays
+  blueprint_options:
+    - blueprint: relays/di7_alerts
+
+- id: impulse-push-button
+  display_name: Impulse Push Button
+  description: TODO
+  icon: enapter-load
+  vendor: enapter
+  category: relays
+  blueprint_options:
+    - blueprint: relays/impulse_push_button
+
+- id: nc-contactor
+  display_name: NC Contactor Management
+  description: TODO
+  icon: enapter-load
+  vendor: enapter
+  category: relays
+  blueprint_options:
+    - blueprint: relays/nc_contactor
+
+- id: no-contactor
+  display_name: NO Contactor Management
+  description: TODO
+  icon: enapter-load
+  vendor: enapter
+  category: relays
+  blueprint_options:
+    - blueprint: relays/no_contactor
+
+- id: sonoff-4ch-ewelink
+  display_name: Sonoff 4CH
+  description: TODO
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_4ch_ewelink
+
+- id: sonoff-basic-r2-ewelink
+  display_name: Sonoff Basic2
+  description: TODO
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_basic_r2_ewelink
+
+- id: sonoff-dual-r3-ewelink
+  display_name: Sonoff Dual R3
+  description: TODO
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_dual_r3_ewelink
+
+- id: sonoff-mini-r2
+  display_name: Sonoff MINI R2
+  description: TODO
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_mini_r2
+
+- id: sonoff-pow-r2-ewelink
+  display_name: Sonoff POWR2
+  description: TODO
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_pow_r2_ewelink
+
+- id: sonoff-th10-th16-ewelink
+  display_name: Sonoff TH10/TH16
+  description: TODO
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_th10_th16_ewelink
+
+- id: ucm-kit-rl1-impulse-push-button
+  display_name: Impulse Push Button for Enapter UCM Kit
+  description: TODO
+  icon: enapter-load
+  vendor: enapter
+  category: relays
+  blueprint_options:
+    - blueprint: relays/ucm_kit_rl1_impulse_push_button
+
+- id: srne-ml-2440
+  display_name: SRNE ML-2440
+  description: TODO
+  icon: enapter-inverter-solar
+  vendor: srne
+  category: solar_charge_controllers
+  blueprint_options:
+    - blueprint: solar_charge_controllers/srne_ml-2440
+
+- id: mpp-solar
+  display_name: MPP Solar Inverter
+  description: TODO
+  icon: enapter-inverter-battery
+  vendor: mpp-solar
+  category: solar_inverters
+  blueprint_options:
+    - blueprint: solar_inverters/mpp_solar
+      display_name: TODO
+      description: TODO
+    - blueprint: solar_inverters/mpp_solar_parallel
+      display_name: TODO
+      description: TODO
+
+- id: sma-sunny-boy
+  display_name: SMA Sunny Boy
+  description: TODO
+  icon: enapter-inverter-solar
+  vendor: sma
+  category: solar_inverters
+  blueprint_options:
+    - blueprint: solar_inverters/sma_sunny_boy
+
+- id: sma-sunny-tripower
+  display_name: SMA Sunny Tripower
+  description: TODO
+  icon: enapter-inverter-solar
+  vendor: sma
+  category: solar_inverters
+  blueprint_options:
+    - blueprint: solar_inverters/sma_sunny_tripower
+
+- id: bwt-thero-120-h2-mb
+  display_name: BWT Thero 120 H2 MB
+  description: TODO
+  icon: enapter-water-filter
+  vendor: bwt
+  category: water_purification_systems
+  blueprint_options:
+    - blueprint: water_purification_systems/bwt_thero_120_h2_mb
