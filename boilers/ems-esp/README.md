@@ -1,4 +1,4 @@
-# Bosch, Buderus, Nefit, Junkers, Worcester and Sieger Gas Boiler (EMS)
+# Gas Boiler (EMS Bus)
 
 This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates domestic gas boiler equipment from manufacturers like Bosch, Buderus, Nefit, Junkers, Worcester and Sieger using open-source solution [EMS-ESP](https://github.com/emsesp/EMS-ESP32). The Blueprint is running on [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm). This Blueprint allow to monitor and control your gas boiler over Internet in secure way using Enapter Mobile App ans Enapter Cloud.
 
