@@ -103,7 +103,7 @@ commands:
           - 100
         required: true
       cache_size:
-        display_name: Cache bucket size.
+        display_name: Cache bucket size
         description: >
           CAN packets are cached in buckets one-per-message.
           Each bucket holds messages received in the same second.
