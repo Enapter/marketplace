@@ -6,7 +6,7 @@
 blueprint_spec: device/1.0
 
 display_name: Sonoff Dual R3
-description: This Enapter Blueprint enables Sonoff Dual R2 support in Enapter Cloud via eWelink REST API.
+description: This Enapter Blueprint enables Sonoff Dual R3 support in Enapter Cloud via eWelink REST API.
 icon: enapter-light-switch
 vendor: sonoff
 author: enapter
