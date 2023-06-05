@@ -1,6 +1,6 @@
 # Mebay DC6xD Generator Controller
 
-This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Mebay DC6xD series** series generator controller with [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) over [RS-485](https://go.enapter.com/developers-enapter-rs485).
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Mebay DC6xD series** Diesel, Gasoline, Gas generators controller with [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) over [RS-485](https://go.enapter.com/developers-enapter-rs485).
 
 ## Connect to Enapter
 
