@@ -1,6 +1,6 @@
 - id: alarm-with-sonoff-433-rf-bridge
   display_name: Alarm sensor connected to Sonoff 433 RF Bridge
-  description: TODO
+  description: Alarm sensor connected to Sonoff 433 RF Bridge via eWelink REST API Server.
   icon: enapter-alarm-sensor
   vendor: sonoff
   category: alarms
@@ -9,7 +9,7 @@
 
 - id: pressure-sensor
   display_name: Pressure Sensor
-  description: TODO
+  description: Any analog pressure sensor integrated using voltage-based analog input interface.
   icon: enapter-gauge
   category: analog_io_modules
   blueprint_options:
@@ -17,7 +17,7 @@
 
 - id: sfere-ucv-4001
   display_name: Sfere uCv 4001
-  description: TODO
+  description: Programmable signal conditioner.
   icon: enapter-module-din-1
   vendor: ardetem-sfere
   category: analog_io_modules
@@ -26,7 +26,7 @@
 
 - id: sinexcel-pws2-30k
   display_name: Sinexcel Inverter
-  description: TODO
+  description: The Sinexcel power converting module.
   icon: enapter-inverter-battery
   vendor: sinexcel
   category: battery_inverters
@@ -35,7 +35,7 @@
 
 - id: sma-sunny-island
   display_name: SMA Sunny Island
-  description: TODO
+  description: SMA Sunny Island battery inverter.
   icon: enapter-inverter-battery
   vendor: sma
   category: battery_inverters
@@ -44,7 +44,7 @@
 
 - id: tesla-powerwall
   display_name: Tesla Powerwall
-  description: TODO
+  description: Rechargeable home battery system.
   icon: enapter-wall-battery-storage
   vendor: tesla
   category: battery_inverters
@@ -53,7 +53,7 @@
 
 - id: lg-resu-prime
   display_name: LG RESU Prime
-  description: TODO
+  description: LG RESU 10h and LG RESU 16h Prime lithium battery control and monitoring.
   icon: enapter-battery-storage
   vendor: lg
   category: battery_management_systems
@@ -62,21 +62,25 @@
 
 - id: pylontech-us2000
   display_name: Pylontech Battery US2000
-  description: TODO
+  description: Pylontech US2000 lithium battery control and monitoring.
   icon: enapter-battery-storage
   vendor: pylontech
   category: battery_management_systems
   blueprint_options:
     - blueprint: battery_management_systems/pylontech_us2000_can
-      display_name: TODO
-      description: TODO
+      display_name: ENP-CAN
+      description: |
+        Use RS485 port for communication with monitoring system.
+        RS485 port availability depends on factory configuration.
     - blueprint: battery_management_systems/pylontech_us2000_rs485
-      display_name: TODO
-      description: TODO
+      display_name: ENP-RS485
+      description: |
+        Use CAN port for communication with monitoring system.
+        CAN port availability depends on factory configuration.
 
 - id: bosch-gas-boiler-ems-bus
   display_name: Bosch Gas Boiler (EMS bus)
-  description: TODO
+  description: Bosch Gas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: bosch
   category: boilers
@@ -85,7 +89,7 @@
 
 - id: buderus-gas-boiler-ems-bus
   display_name: Buderus Gas Boiler (EMS bus)
-  description: TODO
+  description: Buderus Gas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: buderus
   category: boilers
@@ -94,7 +98,7 @@
 
 - id: nefit-gas-boiler-ems-bus
   display_name: Nefit Gas Boiler (EMS bus)
-  description: TODO
+  description: Nefit Gas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: nefit
   category: boilers
@@ -103,7 +107,7 @@
 
 - id: junkers-gas-boiler-ems-bus
   display_name: Junkers Gas Boiler (EMS bus)
-  description: TODO
+  description: Junkers Gas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: junkers
   category: boilers
@@ -112,7 +116,7 @@
 
 - id: worcester-gas-boiler-ems-bus
   display_name: Worcester Gas Boiler (EMS bus)
-  description: TODO
+  description: Worcester GasGas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: worcester
   category: boilers
@@ -121,7 +125,7 @@
 
 - id: sieger-gas-boiler-ems-bus
   display_name: Sieger Gas Boiler (EMS bus)
-  description: TODO
+  description: Sieger Gas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: sieger
   category: boilers
@@ -130,7 +134,9 @@
 
 - id: kilowatt-labs-centauri-energy-server
   display_name: Kilowatt Labs Centauri Energy Server
-  description: TODO
+  description: |
+    Power electronics hardware and software platform that delivers utility grade power
+    from any combination of DC or AC sources, including 100% renewable generation and storage.
   icon: enapter-power-supply-unit
   vendor: kilowatt-labs
   category: energy_storages
@@ -139,7 +145,7 @@
 
 - id: enel-juicebox-32
   display_name: Enel JuiceBox 32
-  description: TODO
+  description: Wi-fi enabled smart home EV charging station.
   icon: enapter-car-charger
   vendor: enel-x
   category: ev_chargers
@@ -148,7 +154,7 @@
 
 - id: alicat-scientific-m10slpm-d485
   display_name: Alicat scientific Mass Flow Meter M-10SLPM-D-485
-  description: TODO
+  description: Mass flow meter which monitors mixed gases in changing process conditions.
   icon: enapter-module-din-1
   vendor: alicat
   category: flow_meters
@@ -157,7 +163,7 @@
 
 - id: bronkhorst-f111b
   display_name: Flow meter F-111B
-  description: TODO
+  description: Digital thermal mass flow meter for gases
   icon: enapter-gas-flow-meter
   vendor: bronkhorst
   category: flow_meters
@@ -166,7 +172,7 @@
 
 - id: h2sys-acs-1000
   display_name: H2Sys ACS 1000
-  description: TODO
+  description: Air cooled hydrogen fuel cell system
   icon: enapter-fuel-cell
   vendor: h2sys
   category: fuel_cells
@@ -175,7 +181,7 @@
 
 - id: hydrogenics-hypm-hd-8
   display_name: Hydrogenics HyPM HD 8
-  description: TODO
+  description: Hydrogen fuel cell module.
   icon: enapter-fuel-cell
   vendor: hydrogenics
   category: fuel_cells
@@ -184,35 +190,35 @@
 
 - id: intelligent-energy-fcm-801
   display_name: Intelligent Energy FCM 801
-  description: TODO
+  description: Hydrogen fuel cell module.
   icon: enapter-fuel-cell
   vendor: intelligent-energy
   category: fuel_cells
   blueprint_options:
     - blueprint: fuel_cells/intelligent_energy_fcm_801
-      display_name: TODO
-      description: TODO
+      display_name: ENP-CAN Telemetry Only
+      description: Use ENP-CAN to monitor your fuel cell. It does not include control functions.
     - blueprint: fuel_cells/intelligent_energy_fcm_80x_rl6
-      display_name: TODO
-      description: TODO
+      display_name: ENP-RL6 Remote Control
+      description: Use ENP-RL6 to control your fuel cell. It does not include monitoring functions.
 
 - id: intelligent-energy-fcm-804
   display_name: Intelligent Energy FCM 804
-  description: TODO
+  description: Hydrogen fuel cell module
   icon: enapter-fuel-cell
   vendor: intelligent-energy
   category: fuel_cells
   blueprint_options:
     - blueprint: fuel_cells/intelligent_energy_fcm_804
-      display_name: TODO
-      description: TODO
+      display_name: ENP-CAN Telemetry Only
+      description: Use ENP-CAN to monitor your fuel cell. It does not include control functions.
     - blueprint: fuel_cells/intelligent_energy_fcm_80x_rl6
-      display_name: TODO
-      description: TODO
+      display_name: ENP-RL6 Remote Control
+      description: Use ENP-RL6 to control your fuel cell. It does not include monitoring functions.
 
 - id: m-field-energy-fuel-cell
   display_name: M-Field Fuel Cell
-  description: TODO
+  description: Energy storage & fuel cell power generator.
   icon: enapter-fuel-cell
   vendor: m-field
   category: fuel_cells
@@ -221,7 +227,7 @@
 
 - id: powercell-ps5
   display_name: Powercell PS-5
-  description: TODO
+  description: Power generation system based on PowerCellution V Stack.
   icon: enapter-fuel-cell
   vendor: powercell-group
   category: fuel_cells
@@ -230,7 +236,7 @@
 
 - id: crowcon-xgard-bright
   display_name: Crowcon Xgard Bright
-  description: TODO
+  description: Versatile platform offering flammable and toxic gas detection and oxygen monitoring.
   icon: enapter-gas-sensor
   vendor: crowcon
   category: gas_sensors
@@ -239,7 +245,7 @@
 
 - id: crowcon-xgardiq
   display_name: Crowcon XgardIQ
-  description: TODO
+  description: Fixed-point gas detector.
   icon: enapter-module-din-1
   vendor: crowcon
   category: gas_sensors
@@ -248,7 +254,7 @@
 
 - id: cs-instruments-fa-510
   display_name: CS Instruments FA 510
-  description: TODO
+  description: Dew point sensor for refrigeration dryers.
   icon: enapter-module-din-1
   vendor: cs-instruments
   category: gas_sensors
@@ -257,7 +263,7 @@
 
 - id: generic-can
   display_name: Generic IO for ENP-CAN
-  description: TODO
+  description: Enapter ENP-CAN generic IO module.
   icon: enapter-module-din-2
   vendor: enapter
   category: generic_io
@@ -266,7 +272,7 @@
 
 - id: generic-di7
   display_name: Generic DI for ENP-DI7
-  description: TODO
+  description: Enapter ENP-DI7 generic IO module.
   icon: enapter-module-din-2
   vendor: enapter
   category: generic_io
@@ -275,7 +281,7 @@
 
 - id: generic-rl6
   display_name: Generic IO for ENP-RL6
-  description: TODO
+  description: Enapter ENP-RL6 generic IO module.
   icon: enapter-module-din-2
   vendor: enapter
   category: generic_io
@@ -284,7 +290,7 @@
 
 - id: generic-rs485
   display_name: Generic IO for ENP-RS485
-  description: TODO
+  description: Enapter ENP-RS485 generic IO module.
   icon: enapter-module-din-2
   vendor: enapter
   category: generic_io
@@ -293,7 +299,7 @@
 
 - id: komfovent-ping2
   display_name: Komfovent AHU Ping2
-  description: TODO
+  description: Air Handling Unit with rotary heat recovery using PING 2 communication module.
   icon: enapter-vent-recuperator
   vendor: komfovent
   category: hvac
@@ -302,7 +308,7 @@
 
 - id: mebay-generator-controller
   display_name: Mebay DC6xD
-  description: TODO
+  description: Diesel, Gasoline, Gas generators controller.
   icon: enapter-module-din-1
   vendor: mebay
   category: hvac
@@ -311,7 +317,7 @@
 
 - id: imt-solar-si-rS485tc-2t
   display_name: IMT Solar Irradiance Sensor Si-RS485TC-2T
-  description: TODO
+  description: Irradiance sensor.
   icon: enapter-solar-panel
   vendor: imt
   category: irradiance_sensors
@@ -320,7 +326,7 @@
 
 - id: eastron-sdm120ct
   display_name: Eastron SDM120CT
-  description: TODO
+  description: Single phase 5A CT operated MID.
   icon: enapter-power-meter
   vendor: eastron
   category: power_meters
@@ -329,7 +335,7 @@
 
 - id: edmi-mk10a
   display_name: EDMI Mk10A
-  description: TODO
+  description: Three phase CT/WC smart meter
   icon: enapter-power-meter
   vendor: edmi
   category: power_meters
@@ -338,7 +344,9 @@
 
 - id: mercury-230
   display_name: Mercury 230 Power Meter
-  description: TODO
+  description: |
+    Electricity meter designed for unidirectional multi-tariff measurement of active
+    and reactive electric energy and power.
   icon: enapter-power-meter
   vendor: incotex
   category: power_meters
@@ -347,7 +355,7 @@
 
 - id: schneider-electric-pm2100
   display_name: Schneider Electric PM2100 series
-  description: TODO
+  description: Multifunction energy and power meters.
   icon: enapter-power-meter
   vendor: schneider-electric
   category: power_meters
@@ -356,7 +364,7 @@
 
 - id: seneca-s203t
   display_name: Seneca S203T
-  description: TODO
+  description: Three phase network analyzer.
   icon: enapter-power-meter
   vendor: seneca
   category: power_meters
@@ -365,7 +373,7 @@
 
 - id: bart-lab-dmm2
   display_name: Bart LAB-DM2
-  description: TODO
+  description: Digital pressure gauge.
   icon: enapter-gauge
   vendor: bart
   category: pressure_sensors
@@ -374,7 +382,7 @@
 
 - id: enp-di7-mobile-notifier
   display_name: ENP-DI7 Mobile Notifier
-  description: TODO
+  description: Track digital inputs' states with mobile alerts
   icon: enapter-module-din-2
   vendor: enapter
   category: relays
@@ -383,16 +391,21 @@
 
 - id: impulse-push-button
   display_name: Impulse Push Button
-  description: TODO
+  description: Impulse Push Button functionality.
   icon: enapter-load
   vendor: enapter
   category: relays
   blueprint_options:
     - blueprint: relays/impulse_push_button
+      display_name: ENP-RL6
+      description: Integrates impulse push button functionality based on Enapter ENP-RL6.
+    - blueprint: relays/ucm_kit_rl1_impulse_push_button
+      display_name: ENP-KIT-RL1
+      description: Integrates impulse push button functionality based on Enapter UCM Kit RL1.
 
 - id: nc-contactor
   display_name: NC Contactor Management
-  description: TODO
+  description: Normally closed contactor.
   icon: enapter-load
   vendor: enapter
   category: relays
@@ -401,7 +414,7 @@
 
 - id: no-contactor
   display_name: NO Contactor Management
-  description: TODO
+  description: Normally opened contactor.
   icon: enapter-load
   vendor: enapter
   category: relays
@@ -410,7 +423,7 @@
 
 - id: sonoff-4ch-ewelink
   display_name: Sonoff 4CH
-  description: TODO
+  description: Four channel relay.
   icon: enapter-light-switch
   vendor: sonoff
   category: relays
@@ -418,8 +431,8 @@
     - blueprint: relays/sonoff_4ch_ewelink
 
 - id: sonoff-basic-r2-ewelink
-  display_name: Sonoff Basic2
-  description: TODO
+  display_name: Sonoff Basic R2
+  description: One channel relay.
   icon: enapter-light-switch
   vendor: sonoff
   category: relays
@@ -428,7 +441,7 @@
 
 - id: sonoff-dual-r3-ewelink
   display_name: Sonoff Dual R3
-  description: TODO
+  description: Dual Relay Wi-Fi Smart Switch with Power Metering
   icon: enapter-light-switch
   vendor: sonoff
   category: relays
@@ -437,7 +450,7 @@
 
 - id: sonoff-mini-r2
   display_name: Sonoff MINI R2
-  description: TODO
+  description: Wi-Fi DIY smart switch
   icon: enapter-light-switch
   vendor: sonoff
   category: relays
@@ -446,7 +459,7 @@
 
 - id: sonoff-pow-r2-ewelink
   display_name: Sonoff POWR2
-  description: TODO
+  description: Smart Power Meter Switch.
   icon: enapter-light-switch
   vendor: sonoff
   category: relays
@@ -455,25 +468,16 @@
 
 - id: sonoff-th10-th16-ewelink
   display_name: Sonoff TH10/TH16
-  description: TODO
+  description: Smart Switch one channel relay with humidity and temperature sensors.
   icon: enapter-light-switch
   vendor: sonoff
   category: relays
   blueprint_options:
     - blueprint: relays/sonoff_th10_th16_ewelink
 
-- id: ucm-kit-rl1-impulse-push-button
-  display_name: Impulse Push Button for Enapter UCM Kit
-  description: TODO
-  icon: enapter-load
-  vendor: enapter
-  category: relays
-  blueprint_options:
-    - blueprint: relays/ucm_kit_rl1_impulse_push_button
-
 - id: srne-ml-2440
   display_name: SRNE ML-2440
-  description: TODO
+  description: Solar Panel Regulator Charge Controller.
   icon: enapter-inverter-solar
   vendor: srne
   category: solar_charge_controllers
@@ -482,21 +486,21 @@
 
 - id: mpp-solar
   display_name: MPP Solar Inverter
-  description: TODO
+  description: MPP Solar Inverters.
   icon: enapter-inverter-battery
   vendor: mpp-solar
   category: solar_inverters
   blueprint_options:
     - blueprint: solar_inverters/mpp_solar
-      display_name: TODO
-      description: TODO
+      display_name: ENP-RS232 Single Mode
+      description: Monitoring of inverter in single mode.
     - blueprint: solar_inverters/mpp_solar_parallel
-      display_name: TODO
-      description: TODO
+      display_name: ENP-RS232 Parallel Mode
+      description: Monitoring of inverter in parallel mode.
 
 - id: sma-sunny-boy
   display_name: SMA Sunny Boy
-  description: TODO
+  description: SMA Sunny Boy solar inverter
   icon: enapter-inverter-solar
   vendor: sma
   category: solar_inverters
@@ -505,7 +509,7 @@
 
 - id: sma-sunny-tripower
   display_name: SMA Sunny Tripower
-  description: TODO
+  description: SMA Sunny Tripower solar inverters.
   icon: enapter-inverter-solar
   vendor: sma
   category: solar_inverters
@@ -514,7 +518,7 @@
 
 - id: bwt-thero-120-h2-mb
   display_name: BWT Thero 120 H2 MB
-  description: TODO
+  description: Ultra compact reverse osmosis cartridge system.
   icon: enapter-water-filter
   vendor: bwt
   category: water_purification_systems
