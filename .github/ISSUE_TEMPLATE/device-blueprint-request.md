@@ -10,8 +10,11 @@ assignees: ''
 **Device Description**
 Provide a clear and concise description of the device, and include the link to the device model on the vendor website.
 
+**Device Access**
+Do you have access to this device? Will you be able to test the integration?
+
 **Communication Protocols**
-Specify the communication protocols  that the device supports. E.g. Ethernet, RS485, RS232, CAN, DIO, etc.
+Specify the communication protocols that the device supports. E.g. Ethernet, RS485, RS232, CAN, DIO, etc.
 
 **Documentation**
 Include publicly available links to the device documentation. If there are no public links available, please attach the documentation file to the issue.
