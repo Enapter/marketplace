@@ -187,3 +187,8 @@
   display_name: Sieger
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sieger.png
   website: https://sieger.net
+
+- id: viessmann
+  display_name: Viessmann
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/viessmann.png
+  website: https://www.viessmann.family/
