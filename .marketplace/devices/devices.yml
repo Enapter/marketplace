@@ -527,3 +527,12 @@
   category: water_purification_systems
   blueprint_options:
     - blueprint: water_purification_systems/bwt_thero_120_h2_mb
+
+- id: vitobloc
+  display_name: Viessmann Vitobloc 200/300
+  description: Combined heat and power unit for natural gas and LPG operation.
+  icon: enapter-power-supply-unit
+  vendor: viessmann
+  category: hvac
+  blueprint_options:
+    - blueprint: hvac/vitobloc
