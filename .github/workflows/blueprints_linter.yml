@@ -43,6 +43,14 @@ jobs:
           -r ${{ github.event.pull_request.head.repo.full_name }} \
           -b "$BRANCH" \
           ${{ steps.changes.outputs.changed-files }}
+      - name: Check Devices
+        run: |
+          docker run --rm \
+          -v "$(pwd)":/marketplace \
+          -w /marketplace/ \
+          golang:1.19 go run marketplace_devices_checker \
+          -p /marketplace \
+          ${{ steps.changes.outputs.changed-files }}
       - name: Get Changed Blueprints Paths
         id: paths
         run: |

@@ -4,4 +4,5 @@ use (
     ./.scripts/blueprint_vendor_checker
     ./.scripts/blueprints_collector
     ./.scripts/marketplace_vendors_checker
+    ./.scripts/marketplace_devices_checker
 )
