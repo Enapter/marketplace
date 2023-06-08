@@ -192,3 +192,8 @@
   display_name: Viessmann
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/viessmann.png
   website: https://www.viessmann.family/
+
+- id: igd
+  display_name: International Gas Detectors Ltd
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/igd.png
+  website: https://www.internationalgasdetectors.com
