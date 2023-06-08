@@ -1,0 +1,123 @@
+blueprint_spec: device/1.0
+
+display_name: IGD TOC 635
+description: Addressable gas-detector control panel
+icon: enapter-gas-sensor
+vendor: igd
+author: enapter
+contributors:
+  - nikitug
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
+
+communication_module:
+  product: ENP-RS485
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.3.2-1
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - error
+      - disabled
+  h2_concentration:
+    type: float
+    unit: '%LEL'
+    display_name: H2 Concentration
+  volts:
+    type: float
+    unit: V
+    display_name: Voltage
+  sensor_status:
+    type: integer
+    display_name: Sensor Status
+
+alerts:
+  not_configured:
+    display_name: Module Not Configured
+    description: Use "Configure" command to set up required parameters.
+    severity: info
+  cannot_read_config:
+    display_name: Cannot Read Configuration
+    severity: error
+  rs485_init_failed:
+    display_name: Canont Init Connection to RS-485
+    severity: error
+  communication_failed:
+    display_name: Communication Failed
+    severity: error
+    grace_period: 15s
+  alarm_1:
+    display_name: Alarm 1
+    description: Alarm level 1 is rising.
+    severity: warning
+  alarm_2:
+    display_name: Alarm 2
+    description: Alarm level 2 is rising.
+    severity: warning
+  alarm_3:
+    display_name: Alarm 3
+    description: Alarm level 3 is rising.
+    severity: warning
+  fault:
+    display_name: Fault
+    severity: warning
+  sensor_fault:
+    display_name: Sensor Fault
+    severity: warning
+  under_range_fault:
+    display_name: Under Range Fault
+    severity: warning
+  over_range_fault:
+    display_name: Over Range Fault
+    severity: warning
+  communication_fault:
+    display_name: Sensor Communication Fault
+    severity: warning
+
+command_groups:
+  config:
+    display_name: Configuration
+
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      sensor:
+        required: true
+        display_name: Sensor Number
+        description: Number of sensor to monitor.
+        type: integer
+        min: 1
+        max: 999
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+.cloud:
+  category: sensors
+  mobile_main_chart: h2_concentration
+  mobile_telemetry:
+    - h2_concentration

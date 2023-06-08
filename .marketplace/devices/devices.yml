@@ -536,3 +536,12 @@
   category: hvac
   blueprint_options:
     - blueprint: hvac/vitobloc
+
+- id: igd_toc_635
+  display_name: IGD TOC 635
+  description: Addressable gas-detector control panel.
+  icon: enapter-gas-sensor
+  vendor: igd
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/igd_toc_635
