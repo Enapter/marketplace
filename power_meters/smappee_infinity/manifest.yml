@@ -1,0 +1,200 @@
+blueprint_spec: device/1.0
+display_name: Smappee Infinity
+description: Smart energy monitoring system
+icon: enapter-home
+vendor: smappee
+license: MIT
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+verification_level: verified
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    dir: smappee_lua
+    amalg_mode: nodebug
+    dependencies:
+      - enapter-ucm
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    type: string
+    display_name: State
+    enum:
+      - ok
+      - warning
+  consumption_power:
+    type: float
+    unit: Wh
+    display_name: Consumption
+  voltage1:
+    type: float
+    unit: V
+    display_name: Voltage Line 1
+  voltage2:
+    type: float
+    unit: V
+    display_name: Voltage Line 2
+  voltage3:
+    type: float
+    unit: V
+    display_name: Voltage Line 3
+  current1_PHASEA:
+    type: float
+    unit: A
+    display_name: Main Load Current phase A
+  current1_PHASEB:
+    type: float
+    unit: A
+    display_name: Main Load Current phase B
+  current1_PHASEC:
+    type: float
+    unit: A
+    display_name: Main Load Current phase C
+  active1_PHASEA:
+    type: float
+    unit: W
+    display_name: Main Load active power phase A
+  active1_PHASEB:
+    type: float
+    unit: W
+    display_name: Main Load active power phase B
+  active1_PHASEC:
+    type: float
+    unit: W
+    display_name: Main Load active power phase C
+  current2_PHASEA:
+    type: float
+    unit: A
+    display_name: Zone Carport/Cafe Current phase A
+  current2_PHASEB:
+    type: float
+    unit: A
+    display_name: Zone Carport/Cafe Current phase B
+  current2_PHASEC:
+    type: float
+    unit: A
+    display_name: Zone Carport/Cafe Current phase C
+  active2_PHASEA:
+    type: float
+    unit: W
+    display_name: Zone Carport/Cafe active power phase A
+  active2_PHASEB:
+    type: float
+    unit: W
+    display_name: Zone Carport/Cafe active power phase B
+  active2_PHASEC:
+    type: float
+    unit: W
+    display_name: Zone Carport/Cafe active power phase C
+  current3_PHASEA:
+    type: float
+    unit: A
+    display_name: Zone Hotel / Office Current phase A
+  current3_PHASEB:
+    type: float
+    unit: A
+    display_name: Zone Hotel / Office Current phase B
+  current3_PHASEC:
+    type: float
+    unit: A
+    display_name: Zone Hotel / Office Current phase C
+  active3_PHASEA:
+    type: float
+    unit: W
+    display_name: Zone Hotel / Office active power phase A
+  active3_PHASEB:
+    type: float
+    unit: W
+    display_name: Zone Hotel / Office active power phase B
+  active3_PHASEC:
+    type: float
+    unit: W
+    display_name: Zone Hotel / Office active power phase C
+
+alerts:
+  no_data:
+    severity: warning
+    display_name: No data from device
+    description: >
+      Can't read data from Smappee Infinity.
+      Please check connection parameters.
+  connection_error:
+    severity: warning
+    display_name: Connection Error
+    description: >
+      Please use "Set Up Connection" command to set up your
+      Smappee account configuration.
+  no_service_location_name:
+    severity: warning
+    display_name: No service location name
+    description: >
+      Please use "Set Up Connection" command to set up your
+      Smappee service location name.
+  invalid_service_location_id:
+    severity: warning
+    display_name: Incorrect service location name
+    description: >
+      Please double check Smappee service location name.
+
+command_groups:
+  connection:
+    display_name: Connection
+
+commands:
+  # TODO: mark commands containing secrets
+  write_configuration:
+    display_name: Set Up Connection
+    description: Set your Smappee account parameters
+    group: connection
+    populate_values_command: read_configuration
+    ui:
+      icon: file-document-edit-outline
+    arguments:
+      username:
+        display_name: Smappee username
+        type: string
+        required: true
+      password:
+        display_name: Smappee password
+        type: string
+        required: true
+      client_id:
+        display_name: Smappee Client ID
+        type: string
+        required: true
+      client_secret:
+        display_name: Smappee Client Secret
+        type: string
+        required: true
+      service_location_name:
+        display_name: Smappee Service Location name
+        type: string
+        required: false
+  read_configuration:
+    display_name: Read Connection Parameters
+    group: connection
+    ui:
+      icon: file-check-outline
+
+.cloud:
+  mobile_main_chart: consumption_power
+  mobile_charts:
+    - consumption_power
+    - active_power
+    - current
+    - voltage1
+    - voltage2
+    - voltage3
