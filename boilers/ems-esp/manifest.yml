@@ -5,7 +5,7 @@
 
 blueprint_spec: device/1.0
 
-display_name: Gas Boiler (EMS Bus)
+display_name: Gas Boiler via EMS Bus
 description: A domestic gas boiler equipement.
 icon: enapter-gas-boiler
 vendor: ems-esp
