@@ -1,0 +1,69 @@
+blueprint_spec: device/1.0
+
+display_name: Variable frequency drive
+description:
+icon: enapter-power-meter
+vendor: kostal
+author: enapter
+contributors:
+  - anataty
+  - alexandershalin
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+verification_level: ready_for_testing
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  target_freq:
+    type: float
+    unit: Hz
+    display_name: Target Frequency
+  actual_freq:
+    type: float
+    unit: Hz
+    display_name: Actual Frequency
+  output_volt:
+    type: float
+    unit: V
+    display_name: Output Voltage
+  motor_curr:
+    type: float
+    unit: A
+    display_name: Motor Current
+  igbt_temp:
+    type: float
+    unit: °C
+    display_name: IGBT Temperature
+  inner_temp:
+    type: float
+    unit: °C
+    display_name: Inner Temperature
+
+.cloud:
+  category: power_meters
+  mobile_telemetry:
+    - target_freq
+    - actual_freq
+    - output_volt
+    - motor_curr
+    - igbt_temp
+    - inner_temp
