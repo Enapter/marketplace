@@ -11,7 +11,6 @@ contributors:
 support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
-verification_level: ready_for_testing
 
 communication_module:
   product: ENP-VIRTUAL
