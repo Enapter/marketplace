@@ -608,3 +608,13 @@
   blueprint_options:
     - blueprint: gas_sensors/igd_toc_635
       verification_level: verified
+
+- id: smappee_infinity
+  display_name: Smappee Infinity
+  description: All-in-one energy management system.
+  icon: enapter-home
+  vendor: igd
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/smappee_infinity
+      verification_level: verified

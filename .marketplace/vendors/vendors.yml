@@ -197,3 +197,8 @@
   display_name: International Gas Detectors Ltd
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/igd.png
   website: https://www.internationalgasdetectors.com
+
+- id: smappee
+  display_name: Smappee
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/smappee.png
+  website: https://www.smappee.com/
