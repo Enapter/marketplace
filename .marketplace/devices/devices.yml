@@ -87,8 +87,8 @@
         CAN port availability depends on factory configuration.
       verification_level: verified
 
-- id: bosch-gas-boiler-ems-bus
-  display_name: Bosch Gas Boiler (EMS bus)
+- id: bosch-gas-boiler
+  display_name: Bosch Gas Boiler
   description: Bosch Gas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: bosch
@@ -97,8 +97,8 @@
     - blueprint: boilers/ems-esp
       verification_level: ready_for_testing
 
-- id: buderus-gas-boiler-ems-bus
-  display_name: Buderus Gas Boiler (EMS bus)
+- id: buderus-gas-boiler
+  display_name: Buderus Gas Boiler
   description: Buderus Gas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: buderus
@@ -107,8 +107,8 @@
     - blueprint: boilers/ems-esp
       verification_level: verified
 
-- id: nefit-gas-boiler-ems-bus
-  display_name: Nefit Gas Boiler (EMS bus)
+- id: nefit-gas-boiler
+  display_name: Nefit Gas Boiler
   description: Nefit Gas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: nefit
@@ -117,8 +117,8 @@
     - blueprint: boilers/ems-esp
       verification_level: ready_for_testing
 
-- id: junkers-gas-boiler-ems-bus
-  display_name: Junkers Gas Boiler (EMS bus)
+- id: junkers-gas-boiler
+  display_name: Junkers Gas Boiler
   description: Junkers Gas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: junkers
@@ -127,8 +127,8 @@
     - blueprint: boilers/ems-esp
       verification_level: ready_for_testing
 
-- id: worcester-gas-boiler-ems-bus
-  display_name: Worcester Gas Boiler (EMS bus)
+- id: worcester-gas-boiler
+  display_name: Worcester Gas Boiler
   description: Worcester GasGas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: worcester
@@ -137,8 +137,8 @@
     - blueprint: boilers/ems-esp
       verification_level: ready_for_testing
 
-- id: sieger-gas-boiler-ems-bus
-  display_name: Sieger Gas Boiler (EMS bus)
+- id: sieger-gas-boiler
+  display_name: Sieger Gas Boiler
   description: Sieger Gas Boiler control and monitoring.
   icon: enapter-gas-boiler
   vendor: sieger
