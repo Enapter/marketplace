@@ -609,12 +609,22 @@
     - blueprint: gas_sensors/igd_toc_635
       verification_level: verified
 
-- id: deye_inverter-sun-10k-sg04lp3-eu
-  display_name: Deye Inverter SUN-10k-SG04LP3-EU
-  description: Three-phase hybrid inverter.
+- id: deye-3-phase-hybrid-inverter
+  display_name: Deye Three-Phase Hybrid Inverter
+  description: Three-phase hybrid inverter models Deye SUN-4/5/6/7/8/10/12/15K-G06P3-EU-AM2.
   icon: enapter-inverter-solar
   vendor: deye
   category: solar_inverters
   blueprint_options:
     - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
       verification_level: verified
+
+- id: sunsync-3-phase-hybrid-inverter
+  display_name: Sunsync Three-Phase Hybrid Inverter
+  description: Three-phase hybrid inverter models Sunsync SYNK-8K-SG04LP3 / SYNK-10K-SG04LP3 / SYNK-12K-SG04LP3.
+  icon: enapter-inverter-solar
+  vendor: sunsync
+  category: solar_inverters
+  blueprint_options:
+    - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
+      verification_level: ready_for_testing

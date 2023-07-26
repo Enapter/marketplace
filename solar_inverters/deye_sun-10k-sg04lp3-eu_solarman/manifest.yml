@@ -1,8 +1,8 @@
 blueprint_spec: device/1.0
-display_name: Deye Inverter (HTTP API)
+
+display_name: Deye / Sunsync Inverter (via Solarman API)
 description: Three phase hybrid inverter with low battery voltage 48V.
-icon: enapter-home
-vendor: deye
+icon: enapter-solar-inverter
 license: MIT
 author: enapter
 contributors:
@@ -23,9 +23,6 @@ communication_module:
     allow_dev_dependencies: true
 
 properties:
-  vendor:
-    type: string
-    display_name: Vendor
   serial_number:
     type: string
     display_name: Serial number

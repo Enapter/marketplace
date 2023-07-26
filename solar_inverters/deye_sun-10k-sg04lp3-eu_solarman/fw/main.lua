@@ -51,7 +51,6 @@ function send_properties()
     properties['serial_number'] = sn
   end
 
-  properties['vendor'] = 'Deye'
   enapter.send_properties(properties)
 end
 

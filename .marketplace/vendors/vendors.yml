@@ -202,3 +202,8 @@
   display_name: Deye
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/deye.png
   website: https://www.deyeinverter.com/
+
+- id: sunsync
+  display_name: Sunsync
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sunsync.png
+  website: https://www.sunsynk.org
