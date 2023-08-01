@@ -52,22 +52,28 @@ function build_telemetry()
 end
 
 function read_telemetry(sensor_number)
-  local results, err = qmodbus.read({
+  local qreads = {
     { type = 'inputs', addr = ADDRESS, reg = 30000 + sensor_number, count = 1, timeout = 1000 },
     { type = 'inputs', addr = ADDRESS, reg = 31000 + sensor_number, count = 1, timeout = 1000 },
     { type = 'inputs', addr = ADDRESS, reg = 33000 + sensor_number, count = 1, timeout = 1000 },
-  })
+  }
+  local results, err = qmodbus.read(qreads)
 
   if err then
-    return { status = 'error', alerts = { 'communication_failed' } }
+    enapter.log('Error reading Modbus: ' .. err, 'error', true)
+    return { status = 'error', communication_status = 'error', alerts = { 'communication_failed' } }
   end
 
-  local telemetry = { status = 'ok' }
+  local telemetry = { status = 'ok', communication_status = 'ok' }
 
-  for _, result in ipairs(results) do
+  for i, result in ipairs(results) do
     if result.errmsg then
-      enapter.log('Error reading Modbus: ' .. result.errmsg, 'error', true)
-      telemetry['status'] = 'error'
+      enapter.log(
+        'Error reading Modbus register ' .. tostring(qreads[i].reg) .. ': ' .. result.errmsg,
+        'error',
+        true
+      )
+      telemetry['communication_status'] = 'error'
       telemetry['alerts'] = { 'communication_failed' }
       break
     end

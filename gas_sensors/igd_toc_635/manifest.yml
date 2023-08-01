@@ -35,6 +35,12 @@ telemetry:
       - ok
       - error
       - disabled
+  communication_status:
+    display_name: Communication Status
+    type: string
+    enum:
+      - ok
+      - error
   h2_concentration:
     type: float
     unit: '%LEL'
