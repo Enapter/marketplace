@@ -2,7 +2,7 @@ blueprint_spec: device/1.0
 
 display_name: KOSTAL INVEOR
 description: Variable frequency drive
-icon: enapter-power-meter
+icon: enapter-motor-controller
 vendor: kostal
 author: enapter
 contributors:
