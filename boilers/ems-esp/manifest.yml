@@ -339,6 +339,7 @@ commands:
         display_name: Heating
         description: Enable or Disable Heating
         type: boolean
+        required: true
       heating_temp:
         display_name: Heating Temperature
         description: Heating temperature
