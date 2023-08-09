@@ -43,6 +43,14 @@ jobs:
           -r ${{ github.event.pull_request.head.repo.full_name }} \
           -b "$BRANCH" \
           ${{ steps.changes.outputs.changed-files }}
+      - name: Check Devices
+        run: |
+          docker run --rm \
+          -v "$(pwd)":/marketplace \
+          -w /marketplace/ \
+          golang:1.19 go run marketplace_devices_checker \
+          -p /marketplace \
+          ${{ steps.changes.outputs.changed-files }}
       - name: Get Changed Blueprints Paths
         id: paths
         run: |
@@ -56,10 +64,18 @@ jobs:
           -v "$(pwd)":/marketplace \
           -w /marketplace/ \
           --env ENAPTER_API_TOKEN=${{ secrets.ENAPTER_API_TOKEN }} \
-          docker.enapter.com/tools/blueprints-linter:v0.3.3 run -g -m ${{ steps.paths.outputs.blueprints-paths }}
+          docker.enapter.com/tools/blueprints-linter:v0.4.0 run -g -m ${{ steps.paths.outputs.blueprints-paths }}
       - name: Check Blueprint Vendor
         run: |
           docker run --rm \
           -v "$(pwd)":/marketplace \
           -w /marketplace/ \
-          golang:1.19 go run blueprint_vendor_checker -vp ./.vendors/vendors.yml ${{ steps.paths.outputs.blueprints-paths }}
+          golang:1.19 go run blueprint_vendor_checker -vp ./.marketplace/vendors/vendors.yml ${{ steps.paths.outputs.blueprints-paths }}
+      - name: Check Device Blueprint Link
+        run: |
+          docker run --rm \
+          -v "$(pwd)":/marketplace \
+          -w /marketplace/ \
+          golang:1.19 go run device_blueprint_link_checker \
+          -p /marketplace \
+          ${{ steps.paths.outputs.blueprints-paths }}

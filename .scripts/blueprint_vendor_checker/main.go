@@ -23,7 +23,7 @@ type Blueprint struct {
 }
 
 func main() {
-  vendorsFilePath := flag.String("vp", "./.vendors/vendors.yml", "path to vendors file")
+  vendorsFilePath := flag.String("vp", "./.marketplace/vendors/vendors.yml", "path to vendors file")
   flag.Parse()
   if err := run(*vendorsFilePath, flag.Args()); err != nil {
     if !errors.Is(err, errLinterFailed) {
@@ -115,7 +115,7 @@ func parseBlueprint(path string) (Blueprint, error) {
 func logVendorNotFound(filePath string, v yaml.Node) {
   fmt.Printf(
     "::warning file=%s,line=%d,col=%d::vendor %s not found at "+
-      "https://github.com/Enapter/marketplace/blob/main/.vendors/vendors.yml\n",
+      "https://github.com/Enapter/marketplace/blob/main/.marketplace/vendors/vendors.yml\n",
     filePath, v.Line, v.Column, v.Value,
   )
 }

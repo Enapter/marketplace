@@ -11,7 +11,6 @@ contributors:
 support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
-verification_level: verified
 
 communication_module:
   product: ENP-VIRTUAL
@@ -126,6 +125,7 @@ commands:
       icon: file-check-outline
 
 .cloud:
+  category: ev_chargers
   mobile_main_chart: power
   mobile_charts:
     - power

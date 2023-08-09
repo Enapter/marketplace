@@ -15,7 +15,6 @@ support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
 license: MIT
-verification_level: verified
 
 communication_module:
   product: ENP-RS485

@@ -10,14 +10,11 @@ support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
 
-verification_level: verified
-
 communication_module:
-  product: ENP-CAN
+  product: ENP-VIRTUAL
   lua:
-    file: firmware.lua
-    dependencies:
-      - enapter-ucm ~> 0.2.1
+    dir: src
+    rockspec: fuel-cell-dev-1.rockspec
 
 properties:
   vendor:
@@ -38,12 +35,19 @@ telemetry:
     display_name: Status
     type: string
     enum:
-      # - idle ?
-      - unpowered
+      - "on"
+      - "off"
       - inactive
       - steady
       - run
       - fault
+      - error
+  powered:
+    display_name: Powered
+    type: boolean
+  started:
+    display_name: Started
+    type: boolean
   volt:
     type: float
     unit: V
@@ -92,7 +96,6 @@ telemetry:
     type: float
     unit: joule
     display_name: Total Run Energy
-
   fault_flags_a:
     type: integer
     display_name: Fault Flags A
@@ -105,18 +108,41 @@ telemetry:
   fault_flags_d:
     type: integer
     display_name: Fault Flags D
-  total_can_packets:
-    type: integer
-    display_name: Total CAN Packets Received
   messages_0x400:
     type: string
     display_name: CAN Messages 0x400
     description: Troubleshooting logs for analysis by Intelligent Energy service team
 
 command_groups:
+  fuel_cell:
+    display_name: Fuel Cell
   config:
     display_name: Configuration
 commands:
+  start:
+    display_name: Start
+    group: fuel_cell
+    ui:
+      icon: play-circle
+      quick_access: true
+  stop:
+    display_name: Stop
+    group: fuel_cell
+    ui:
+      icon: stop-circle
+      quick_access: true
+  power_on:
+    display_name: Power On
+    group: fuel_cell
+    ui:
+      icon: power-on
+      quick_access: true
+  power_off:
+    display_name: Power Off
+    group: fuel_cell
+    ui:
+      icon: power-off
+      quick_access: true
   write_configuration:
     populate_values_command: read_configuration
     display_name: Configure
@@ -124,7 +150,7 @@ commands:
     ui:
       icon: wrench-outline
     arguments:
-      index:
+      can_index:
         display_name: CAN Index
         description: CAN Index is pre-configured on a factory, you can obtain it from your device vendor.
         type: integer
@@ -133,6 +159,30 @@ commands:
         display_name: Troubleshooting Mode
         description: Save troubleshooting CAN messages (0x400) for further analysis by Intelligent Energy service team.
         type: boolean
+      can_ucm_id:
+        display_name: Generic CAN UCM ID
+        type: string
+        required: true
+      power_rl_ucm_id:
+        display_name: Power Relay UCM ID
+        description: Generic RL-6 UCM ID to which an FC power contact is connected.
+        type: string
+        required: true
+      power_rl_ch:
+        display_name: Power Relay Channel
+        description: The number of a relay channel to which an FC power contact is connected.
+        type: integer
+        required: true
+      start_rl_ucm_id:
+        display_name: Start Relay UCM ID
+        description: Generic RL-6 UCM ID to which an FC start contact is connected.
+        type: string
+        required: true
+      start_rl_ch:
+        display_name: Start Relay Channel
+        description: The number of a relay channel to which an FC start contact is connected.
+        type: integer
+        required: true
   read_configuration:
     display_name: Read Configuration
     group: config
@@ -144,6 +194,11 @@ alerts:
     severity: info
     display_name: Not Configured
     description: Use "Configure" command to setup.
+  cannot_read_telemetry:
+    severity: error
+    display_name: Cannot Read Telemetry
+    description: Cannot read telemetry, communication or module might be broken.
+    grace_period: 15s
   AnodeOverPressure:
     display_name: Anode Over Pressure
     severity: error
@@ -559,6 +614,8 @@ alerts:
   mobile_telemetry:
     - watt
     - volt
+    - powered
+    - started
   mobile_charts:
     - watt
     - volt

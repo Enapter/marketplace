@@ -1,0 +1,325 @@
+blueprint_spec: device/1.0
+
+display_name: Deye / Sunsync Inverter (via Solarman API)
+description: Three phase hybrid inverter with low battery voltage 48V.
+icon: enapter-solar-inverter
+license: MIT
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+verification_level: verified
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    dir: fw
+    dependencies:
+      - enapter-ucm
+      - net-url ~> 1.1-1
+      - lua-hashings ~> scm-1
+    allow_dev_dependencies: true
+
+properties:
+  serial_number:
+    type: string
+    display_name: Serial number
+
+telemetry:
+  status:
+    type: string
+    display_name: State
+    enum:
+      - ok
+      - warning
+  ST_PG1:
+    type: string
+    display_name: Grid Status
+    enum:
+      - Static
+      - Purchasing energy
+  B_ST1:
+    type: string
+    display_name: Battery Status
+    enum:
+      - Discharging
+      - Charging
+  GRID_RELAY_ST1:
+    type: string
+    display_name: Grid Relay Status
+    enum:
+      - Pull-in
+      - Pull-out
+  Etdy_use1:
+    type: float
+    display_name: Daily Consumption
+    unit: kWh
+  Etdy_ge1:
+    type: float
+    display_name: Daily Production (Active)
+    unit: kWh
+  Etdy_dcg1:
+    type: float
+    display_name: Daily Discharging Energy
+    unit: kWh
+  DV1:
+    type: float
+    unit: V
+    display_name: DC Voltage PV1
+  DV2:
+    type: float
+    unit: V
+    display_name: DC Voltage PV2
+  DC1:
+    type: float
+    unit: A
+    display_name: DC Current PV1
+  DC2:
+    type: float
+    unit: A
+    display_name: DC Current PV2
+  DP1:
+    type: float
+    unit: W
+    display_name: DC Power PV1
+  DP2:
+    type: float
+    unit: W
+    display_name: DC Power PV2
+  S_P_T:
+    type: float
+    unit: W
+    display_name: Total Solar Power
+  G_V_L1:
+    type: float
+    unit: V
+    display_name: Grid Voltage L1
+  G_V_L2:
+    type: float
+    unit: V
+    display_name: Grid Voltage L2
+  G_V_L3:
+    type: float
+    unit: V
+    display_name: Grid Voltage L3
+  G_C_L1:
+    type: float
+    unit: A
+    display_name: Grid Current L1
+  G_C_L2:
+    type: float
+    unit: A
+    display_name: Grid Current L2
+  G_C_L3:
+    type: float
+    unit: A
+    display_name: Grid Current L3
+  G_P_L1:
+    type: float
+    unit: W
+    display_name: Grid Power L1
+  G_P_L2:
+    type: float
+    unit: W
+    display_name: Grid Power L2
+  G_P_L3:
+    type: float
+    unit: W
+    display_name: Grid Power L3
+  PG_F1:
+    type: float
+    unit: Hz
+    display_name: Grid Frequency
+  PG_Pt1:
+    type: float
+    unit: W
+    display_name: Total Grid Power
+  CT1_P_E:
+    type: float
+    unit: W
+    display_name: External CT1 Power
+  CT2_P_E:
+    type: float
+    unit: W
+    display_name: External CT2 Power
+  CT3_P_E:
+    type: float
+    unit: W
+    display_name: External CT3 Power
+  CT_T_E:
+    type: float
+    unit: W
+    display_name: Total External CT Power
+  L_F:
+    type: float
+    unit: Hz
+    display_name: Load Frequency
+  LPP_A:
+    type: float
+    unit: W
+    display_name: Load phase power A
+  LPP_B:
+    type: float
+    unit: W
+    display_name: Load phase power B
+  LPP_C:
+    type: float
+    unit: W
+    display_name: Load phase power C
+  E_Puse_t1:
+    type: float
+    unit: W
+    display_name: Total Consumption Power
+  B_V1:
+    type: float
+    unit: V
+    display_name: Battery Voltage
+  B_C1:
+    type: float
+    unit: A
+    display_name: Battery Current
+  B_P1:
+    type: float
+    unit: W
+    display_name: Battery Power
+  B_left_cap1:
+    type: float
+    unit: '%'
+    display_name: SoC
+
+alerts:
+  no_data:
+    severity: warning
+    display_name: No data from device
+    description: >
+      Can't read data from device.
+      Please check Solarman connection parameters.
+  connection_error:
+    severity: warning
+    display_name: Connection Error
+    description: >
+      Please use "Set Up Connection" command to set up your
+      Solarman account configuration.
+  not_configured:
+    severity: info
+    display_name: Solarman account parameters are absent.
+    description: >
+      Please use "Set Up Connection" command to set up your
+      Solarman account parameters.
+  invalid_request:
+    severity: warning
+    display_name: Invalid request
+    description: Invalid API request.
+  no_response:
+    severity: warning
+    display_name: No response from device
+    description: Please check `get_realtime_data` request.
+
+command_groups:
+  connection:
+    display_name: Connection
+
+commands:
+  # TODO: mark commands containing secrets
+  write_configuration:
+    display_name: Set Up Connection
+    description: Set your Solarman account parameters to access OpenAPI.
+    group: connection
+    populate_values_command: read_configuration
+    ui:
+      icon: file-document-edit-outline
+    arguments:
+      app_id:
+        display_name: Solarman App ID
+        type: string
+        required: true
+      app_secret:
+        display_name: Solarman App Secret
+        type: string
+        required: true
+      device_sn:
+        display_name: Solarman Device Serial Number
+        type: string
+        required: true
+      email:
+        display_name: Solarman account email
+        type: string
+        required: true
+      password:
+        display_name: Solarman account password
+        type: string
+        required: true
+      org_name:
+        display_name: Solarman organization name
+        type: string
+        required: true
+      username:
+        display_name: Solarman account username
+        description: Set this instead of email
+        type: string
+        required: false
+      mobile:
+        display_name: Solarman account mobile number
+        description: Set this instead of email or username
+        type: string
+        required: false
+      country_code:
+        display_name: Solarman account country code
+        description: Set this along with mobile number
+        type: integer
+        required: false
+  read_configuration:
+    display_name: Read Connection Parameters
+    group: connection
+    ui:
+      icon: file-check-outline
+
+.cloud:
+  category: batteries
+  mobile_main_chart: E_Puse_t1
+  mobile_charts:
+    - DV1
+    - DV2
+    - DC1
+    - DC2
+    - DP1
+    - DP2
+    - G_V_L1
+    - G_V_L2
+    - G_V_L3
+    - G_C_L1
+    - G_C_L2
+    - G_C_L3
+    - G_P_L1
+    - G_P_L2
+    - G_P_L3
+    - PG_F1
+    - PG_Pt1
+    - CT1_P_E
+    - CT2_P_E
+    - CT3_P_E
+    - L_F
+    - LPP_A
+    - LPP_B
+    - LPP_C
+    - B_V1
+    - B_C1
+    - B_P1
+    - E_Puse_t1
+    - B_left_cap1
+    - Etdy_use1
+    - Etdy_dcg1
+    - Etdy_ge1
+  mobile_telemetry:
+    - S_P_T
+    - B_V1
+    - B_ST1
+    - E_Puse_t1
+    - PG_Pt1
+    - B_P1
+    - B_left_cap1
+    - Etdy_dcg1
+    - Etdy_ge1
+    - Etdy_use1

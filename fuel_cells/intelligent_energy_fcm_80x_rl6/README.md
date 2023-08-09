@@ -2,7 +2,7 @@
 
 This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **control relay for Intelligent Energy FCM 800 series** via the [Enapter rl6 library](https://go.enapter.com/developers-enapter-rl6).
 
-This blueprint controls the fuel cell, while the [`intelligent_energy_fcm_801`](../intelligent_energy_fcm_801) or [`intelligent_energy_fcm_804`](../intelligent_energy_fcm_804) blueprint collects the fuel cell telemetry.
+This blueprint controls the fuel cell, while the [`intelligent_energy_fcm_801_can`](../intelligent_energy_fcm_801_can) or [`intelligent_energy_fcm_804_can`](../intelligent_energy_fcm_804_can) blueprint collects the fuel cell telemetry.
 
 ## Connect to Enapter
 

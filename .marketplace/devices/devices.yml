@@ -1,0 +1,630 @@
+- id: alarm-with-sonoff-433-rf-bridge
+  display_name: Alarm sensor connected to Sonoff 433 RF Bridge
+  description: Alarm sensor connected to Sonoff 433 RF Bridge via eWelink REST API Server.
+  icon: enapter-alarm-sensor
+  vendor: sonoff
+  category: alarms
+  blueprint_options:
+    - blueprint: alarms/alarm_with_sonoff_433_rf_bridge
+      verification_level: verified
+
+- id: pressure-sensor
+  display_name: Pressure Sensor
+  description: Any analog pressure sensor integrated using voltage-based analog input interface.
+  icon: enapter-gauge
+  category: analog_io_modules
+  blueprint_options:
+    - blueprint: analog_io_modules/pressure_sensor
+      verification_level: verified
+
+- id: sfere-ucv-4001
+  display_name: Sfere uCv 4001
+  description: Programmable signal conditioner.
+  icon: enapter-module-din-1
+  vendor: ardetem-sfere
+  category: analog_io_modules
+  blueprint_options:
+    - blueprint: analog_io_modules/sfere_ucv_4001
+      verification_level: verified
+
+- id: sinexcel-pws2-30k
+  display_name: Sinexcel Inverter
+  description: The Sinexcel power converting module.
+  icon: enapter-inverter-battery
+  vendor: sinexcel
+  category: battery_inverters
+  blueprint_options:
+    - blueprint: battery_inverters/sinexcel_pws2_30k
+      verification_level: ready_for_testing
+
+- id: sma-sunny-island
+  display_name: SMA Sunny Island
+  description: SMA Sunny Island battery inverter.
+  icon: enapter-inverter-battery
+  vendor: sma
+  category: battery_inverters
+  blueprint_options:
+    - blueprint: battery_inverters/sma_sunny_island
+      verification_level: verified
+
+- id: tesla-powerwall
+  display_name: Tesla Powerwall
+  description: Rechargeable home battery system.
+  icon: enapter-wall-battery-storage
+  vendor: tesla
+  category: battery_inverters
+  blueprint_options:
+    - blueprint: battery_inverters/tesla_powerwall
+      verification_level: verified
+
+- id: lg-resu-prime
+  display_name: LG RESU Prime
+  description: LG RESU 10h and LG RESU 16h Prime lithium battery control and monitoring.
+  icon: enapter-battery-storage
+  vendor: lg
+  category: battery_management_systems
+  blueprint_options:
+    - blueprint: battery_management_systems/lg_resu_prime_http
+      verification_level: verified
+
+- id: pylontech-us2000
+  display_name: Pylontech Battery US2000
+  description: Pylontech US2000 lithium battery control and monitoring.
+  icon: enapter-battery-storage
+  vendor: pylontech
+  category: battery_management_systems
+  blueprint_options:
+    - blueprint: battery_management_systems/pylontech_us2000_can
+      display_name: ENP-CAN
+      description: |
+        Use RS485 port for communication with monitoring system.
+        RS485 port availability depends on factory configuration.
+      verification_level: verified
+    - blueprint: battery_management_systems/pylontech_us2000_rs485
+      display_name: ENP-RS485
+      description: |
+        Use CAN port for communication with monitoring system.
+        CAN port availability depends on factory configuration.
+      verification_level: verified
+
+- id: bosch-gas-boiler
+  display_name: Bosch Gas Boiler
+  description: Bosch Gas Boiler control and monitoring.
+  icon: enapter-gas-boiler
+  vendor: bosch
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+      verification_level: ready_for_testing
+
+- id: buderus-gas-boiler
+  display_name: Buderus Gas Boiler
+  description: Buderus Gas Boiler control and monitoring.
+  icon: enapter-gas-boiler
+  vendor: buderus
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+      verification_level: verified
+
+- id: nefit-gas-boiler
+  display_name: Nefit Gas Boiler
+  description: Nefit Gas Boiler control and monitoring.
+  icon: enapter-gas-boiler
+  vendor: nefit
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+      verification_level: ready_for_testing
+
+- id: junkers-gas-boiler
+  display_name: Junkers Gas Boiler
+  description: Junkers Gas Boiler control and monitoring.
+  icon: enapter-gas-boiler
+  vendor: junkers
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+      verification_level: ready_for_testing
+
+- id: worcester-gas-boiler
+  display_name: Worcester Gas Boiler
+  description: Worcester GasGas Boiler control and monitoring.
+  icon: enapter-gas-boiler
+  vendor: worcester
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+      verification_level: ready_for_testing
+
+- id: sieger-gas-boiler
+  display_name: Sieger Gas Boiler
+  description: Sieger Gas Boiler control and monitoring.
+  icon: enapter-gas-boiler
+  vendor: sieger
+  category: boilers
+  blueprint_options:
+    - blueprint: boilers/ems-esp
+      verification_level: ready_for_testing
+
+- id: kilowatt-labs-centauri-energy-server
+  display_name: Kilowatt Labs Centauri Energy Server
+  description: |
+    Power electronics hardware and software platform that delivers utility grade power
+    from any combination of DC or AC sources, including 100% renewable generation and storage.
+  icon: enapter-power-supply-unit
+  vendor: kilowatt-labs
+  category: energy_storages
+  blueprint_options:
+    - blueprint: energy_storages/kilowatt_labs_centauri_energy_server
+      verification_level: verified
+
+- id: enel-juicebox-32
+  display_name: Enel JuiceBox 32
+  description: Wi-fi enabled smart home EV charging station.
+  icon: enapter-car-charger
+  vendor: enel-x
+  category: ev_chargers
+  blueprint_options:
+    - blueprint: ev_chargers/enel_juicebox_32
+      verification_level: verified
+
+- id: alicat-scientific-m10slpm-d485
+  display_name: Alicat scientific Mass Flow Meter M-10SLPM-D-485
+  description: Mass flow meter which monitors mixed gases in changing process conditions.
+  icon: enapter-module-din-1
+  vendor: alicat
+  category: flow_meters
+  blueprint_options:
+    - blueprint: flow_meters/alicat_scientific_m10slpm_d485
+      verification_level: verified
+
+- id: bronkhorst-f111b
+  display_name: Flow meter F-111B
+  description: Digital thermal mass flow meter for gases
+  icon: enapter-gas-flow-meter
+  vendor: bronkhorst
+  category: flow_meters
+  blueprint_options:
+    - blueprint: flow_meters/bronkhorst_f111b
+      verification_level: verified
+
+- id: h2sys-acs-1000
+  display_name: H2Sys ACS 1000
+  description: Air cooled hydrogen fuel cell system
+  icon: enapter-fuel-cell
+  vendor: h2sys
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/h2sys_acs_1000
+      verification_level: verified
+
+- id: hydrogenics-hypm-hd-8
+  display_name: Hydrogenics HyPM HD 8
+  description: Hydrogen fuel cell module.
+  icon: enapter-fuel-cell
+  vendor: hydrogenics
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/hydrogenics_hypm_hd_8
+      verification_level: verified
+
+- id: intelligent-energy-fcm-801
+  display_name: Intelligent Energy FCM 801
+  description: Hydrogen fuel cell module.
+  icon: enapter-fuel-cell
+  vendor: intelligent-energy
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/intelligent_energy_fcm_801_can
+      display_name: ENP-CAN Telemetry Only
+      description: Use ENP-CAN to monitor your fuel cell. It does not include control functions.
+      verification_level: verified
+    - blueprint: fuel_cells/intelligent_energy_fcm_80x_rl6
+      display_name: ENP-RL6 Remote Control
+      description: Use ENP-RL6 to control your fuel cell. It does not include monitoring functions.
+      verification_level: verified
+
+- id: intelligent-energy-fcm-804
+  display_name: Intelligent Energy FCM 804
+  description: Hydrogen fuel cell module
+  icon: enapter-fuel-cell
+  vendor: intelligent-energy
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/intelligent_energy_fcm_804_can
+      display_name: ENP-CAN Telemetry Only
+      description: Use ENP-CAN to monitor your fuel cell. It does not include control functions.
+      verification_level: verified
+    - blueprint: fuel_cells/intelligent_energy_fcm_80x_rl6
+      display_name: ENP-RL6 Remote Control
+      description: Use ENP-RL6 to control your fuel cell. It does not include monitoring functions.
+      verification_level: verified
+    - blueprint: fuel_cells/intelligent_energy_fcm_804
+      display_name: Full Integration with Gateway
+      description: Use Enapter Gateway and Generic IO to integrate fuel cell as a single devices.
+      verification_level: verified
+
+- id: m-field-energy-fuel-cell
+  display_name: M-Field Fuel Cell
+  description: Energy storage & fuel cell power generator.
+  icon: enapter-fuel-cell
+  vendor: m-field
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/m-field_energy_fuel_cell
+      verification_level: verified
+
+- id: powercell-ps5
+  display_name: Powercell PS-5
+  description: Power generation system based on PowerCellution V Stack.
+  icon: enapter-fuel-cell
+  vendor: powercell-group
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/powercell_ps5
+      verification_level: ready_for_testing
+
+- id: crowcon-xgard-bright
+  display_name: Crowcon Xgard Bright
+  description: Versatile platform offering flammable and toxic gas detection and oxygen monitoring.
+  icon: enapter-gas-sensor
+  vendor: crowcon
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/crowcon_xgard_bright
+      verification_level: verified
+
+- id: crowcon-xgardiq
+  display_name: Crowcon XgardIQ
+  description: Fixed-point gas detector.
+  icon: enapter-module-din-1
+  vendor: crowcon
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/crowcon_xgardiq
+      verification_level: verified
+
+- id: cs-instruments-fa-510
+  display_name: CS Instruments FA 510
+  description: Dew point sensor for refrigeration dryers.
+  icon: enapter-module-din-1
+  vendor: cs-instruments
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/cs_instruments_fa_510
+      verification_level: verified
+
+- id: generic-can
+  display_name: Generic IO for ENP-CAN
+  description: Enapter ENP-CAN generic IO module.
+  icon: enapter-module-din-2
+  vendor: enapter
+  category: generic_io
+  blueprint_options:
+    - blueprint: generic_io/can
+      verification_level: verified
+
+- id: generic-di7
+  display_name: Generic DI for ENP-DI7
+  description: Enapter ENP-DI7 generic IO module.
+  icon: enapter-module-din-2
+  vendor: enapter
+  category: generic_io
+  blueprint_options:
+    - blueprint: generic_io/di7
+      verification_level: verified
+
+- id: generic-rl6
+  display_name: Generic IO for ENP-RL6
+  description: Enapter ENP-RL6 generic IO module.
+  icon: enapter-module-din-2
+  vendor: enapter
+  category: generic_io
+  blueprint_options:
+    - blueprint: generic_io/rl6
+      verification_level: verified
+
+- id: generic-rs485
+  display_name: Generic IO for ENP-RS485
+  description: Enapter ENP-RS485 generic IO module.
+  icon: enapter-module-din-2
+  vendor: enapter
+  category: generic_io
+  blueprint_options:
+    - blueprint: generic_io/rs485
+      verification_level: verified
+
+- id: komfovent-ping2
+  display_name: Komfovent AHU Ping2
+  description: Air Handling Unit with rotary heat recovery using PING 2 communication module.
+  icon: enapter-vent-recuperator
+  vendor: komfovent
+  category: hvac
+  blueprint_options:
+    - blueprint: hvac/komfovent_ping2
+      verification_level: verified
+
+- id: mebay-generator-controller
+  display_name: Mebay DC6xD
+  description: Diesel, Gasoline, Gas generators controller.
+  icon: enapter-module-din-1
+  vendor: mebay
+  category: hvac
+  blueprint_options:
+    - blueprint: hvac/mebay_generator_controller
+      verification_level: ready_for_testing
+
+- id: imt-solar-si-rS485tc-2t
+  display_name: IMT Solar Irradiance Sensor Si-RS485TC-2T
+  description: Irradiance sensor.
+  icon: enapter-solar-panel
+  vendor: imt
+  category: irradiance_sensors
+  blueprint_options:
+    - blueprint: irradiance_sensors/imt_solar_si-rS485tc-2t
+      verification_level: verified
+
+- id: eastron-sdm120ct
+  display_name: Eastron SDM120CT
+  description: Single phase 5A CT operated MID.
+  icon: enapter-power-meter
+  vendor: eastron
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/eastron_sdm120ct
+      verification_level: verified
+
+- id: edmi-mk10a
+  display_name: EDMI Mk10A
+  description: Three phase CT/WC smart meter
+  icon: enapter-power-meter
+  vendor: edmi
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/edmi_mk10a
+      verification_level: verified
+
+- id: mercury-230
+  display_name: Mercury 230 Power Meter
+  description: |
+    Electricity meter designed for unidirectional multi-tariff measurement of active
+    and reactive electric energy and power.
+  icon: enapter-power-meter
+  vendor: incotex
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/mercury_230
+      verification_level: verified
+
+- id: schneider-electric-pm2100
+  display_name: Schneider Electric PM2100 series
+  description: Multifunction energy and power meters.
+  icon: enapter-power-meter
+  vendor: schneider-electric
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/schneider_electric_pm2100
+      verification_level: verified
+
+- id: seneca-s203t
+  display_name: Seneca S203T
+  description: Three phase network analyzer.
+  icon: enapter-power-meter
+  vendor: seneca
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/seneca_s203t
+      verification_level: verified
+
+- id: bart-lab-dmm2
+  display_name: Bart LAB-DM2
+  description: Digital pressure gauge.
+  icon: enapter-gauge
+  vendor: bart
+  category: pressure_sensors
+  blueprint_options:
+    - blueprint: pressure_sensors/bart_lab_dmm2
+      verification_level: verified
+
+- id: enp-di7-mobile-notifier
+  display_name: ENP-DI7 Mobile Notifier
+  description: Track digital inputs' states with mobile alerts
+  icon: enapter-module-din-2
+  vendor: enapter
+  category: relays
+  blueprint_options:
+    - blueprint: relays/di7_alerts
+      verification_level: verified
+
+- id: impulse-push-button
+  display_name: Impulse Push Button
+  description: Impulse Push Button functionality.
+  icon: enapter-load
+  vendor: enapter
+  category: relays
+  blueprint_options:
+    - blueprint: relays/impulse_push_button
+      display_name: ENP-RL6
+      description: Integrates impulse push button functionality based on Enapter ENP-RL6.
+      verification_level: verified
+    - blueprint: relays/ucm_kit_rl1_impulse_push_button
+      display_name: ENP-KIT-RL1
+      description: Integrates impulse push button functionality based on Enapter UCM Kit RL1.
+      verification_level: verified
+
+- id: nc-contactor
+  display_name: NC Contactor Management
+  description: Normally closed contactor.
+  icon: enapter-load
+  vendor: enapter
+  category: relays
+  blueprint_options:
+    - blueprint: relays/nc_contactor
+      verification_level: verified
+
+- id: no-contactor
+  display_name: NO Contactor Management
+  description: Normally opened contactor.
+  icon: enapter-load
+  vendor: enapter
+  category: relays
+  blueprint_options:
+    - blueprint: relays/no_contactor
+      verification_level: verified
+
+- id: sonoff-4ch-ewelink
+  display_name: Sonoff 4CH
+  description: Four channel relay.
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_4ch_ewelink
+      verification_level: verified
+
+- id: sonoff-basic-r2-ewelink
+  display_name: Sonoff Basic R2
+  description: One channel relay.
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_basic_r2_ewelink
+      verification_level: verified
+
+- id: sonoff-dual-r3-ewelink
+  display_name: Sonoff Dual R3
+  description: Dual Relay Wi-Fi Smart Switch with Power Metering
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_dual_r3_ewelink
+      verification_level: verified
+
+- id: sonoff-mini-r2
+  display_name: Sonoff MINI R2
+  description: Wi-Fi DIY smart switch
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_mini_r2
+      verification_level: verified
+
+- id: sonoff-pow-r2-ewelink
+  display_name: Sonoff POWR2
+  description: Smart Power Meter Switch.
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_pow_r2_ewelink
+      verification_level: verified
+
+- id: sonoff-th10-th16-ewelink
+  display_name: Sonoff TH10/TH16
+  description: Smart Switch one channel relay with humidity and temperature sensors.
+  icon: enapter-light-switch
+  vendor: sonoff
+  category: relays
+  blueprint_options:
+    - blueprint: relays/sonoff_th10_th16_ewelink
+      verification_level: verified
+
+- id: srne-ml-2440
+  display_name: SRNE ML-2440
+  description: Solar Panel Regulator Charge Controller.
+  icon: enapter-inverter-solar
+  vendor: srne
+  category: solar_charge_controllers
+  blueprint_options:
+    - blueprint: solar_charge_controllers/srne_ml-2440
+      verification_level: verified
+
+- id: mpp-solar
+  display_name: MPP Solar Inverter
+  description: MPP Solar Inverters.
+  icon: enapter-inverter-battery
+  vendor: mpp-solar
+  category: solar_inverters
+  blueprint_options:
+    - blueprint: solar_inverters/mpp_solar
+      display_name: ENP-RS232 Single Mode
+      description: Monitoring of inverter in single mode.
+      verification_level: verified
+    - blueprint: solar_inverters/mpp_solar_parallel
+      display_name: ENP-RS232 Parallel Mode
+      description: Monitoring of inverter in parallel mode.
+      verification_level: verified
+
+- id: sma-sunny-boy
+  display_name: SMA Sunny Boy
+  description: SMA Sunny Boy solar inverter
+  icon: enapter-inverter-solar
+  vendor: sma
+  category: solar_inverters
+  blueprint_options:
+    - blueprint: solar_inverters/sma_sunny_boy
+      verification_level: verified
+
+- id: sma-sunny-tripower
+  display_name: SMA Sunny Tripower
+  description: SMA Sunny Tripower solar inverters.
+  icon: enapter-inverter-solar
+  vendor: sma
+  category: solar_inverters
+  blueprint_options:
+    - blueprint: solar_inverters/sma_sunny_tripower
+      verification_level: verified
+
+- id: bwt-thero-120-h2-mb
+  display_name: BWT Thero 120 H2 MB
+  description: Ultra compact reverse osmosis cartridge system.
+  icon: enapter-water-filter
+  vendor: bwt
+  category: water_purification_systems
+  blueprint_options:
+    - blueprint: water_purification_systems/bwt_thero_120_h2_mb
+      verification_level: verified
+
+- id: vitobloc
+  display_name: Viessmann Vitobloc 200/300
+  description: Combined heat and power unit for natural gas and LPG operation.
+  icon: enapter-power-supply-unit
+  vendor: viessmann
+  category: hvac
+  blueprint_options:
+    - blueprint: hvac/vitobloc
+      verification_level: ready_for_testing
+
+- id: igd_toc_635
+  display_name: IGD TOC 635
+  description: Addressable gas-detector control panel.
+  icon: enapter-gas-sensor
+  vendor: igd
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/igd_toc_635
+      verification_level: verified
+
+- id: deye-3-phase-hybrid-inverter
+  display_name: Deye Three-Phase Hybrid Inverter
+  description: Three-phase hybrid inverter models Deye SUN-4/5/6/7/8/10/12/15K-G06P3-EU-AM2.
+  icon: enapter-inverter-solar
+  vendor: deye
+  category: solar_inverters
+  blueprint_options:
+    - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
+      verification_level: verified
+
+- id: sunsync-3-phase-hybrid-inverter
+  display_name: Sunsync Three-Phase Hybrid Inverter
+  description: Three-phase hybrid inverter models Sunsync SYNK-8K-SG04LP3 / SYNK-10K-SG04LP3 / SYNK-12K-SG04LP3.
+  icon: enapter-inverter-solar
+  vendor: sunsync
+  category: solar_inverters
+  blueprint_options:
+    - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
+      verification_level: ready_for_testing
