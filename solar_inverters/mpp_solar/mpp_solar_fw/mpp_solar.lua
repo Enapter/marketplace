@@ -4,7 +4,7 @@ mpp_solar.baudrate = 2400
 mpp_solar.data_bits = 8
 mpp_solar.parity = 'N'
 mpp_solar.stop_bits = 1
-mpp_solar.no_qpgs = {'VM-3000', 'MKS2-5000'}
+mpp_solar.no_qpgs = { 'VM-3000', 'MKS2-5000' }
 
 function mpp_solar:run_with_cache(name)
   if mpp_solar:is_in_cache(name) then
