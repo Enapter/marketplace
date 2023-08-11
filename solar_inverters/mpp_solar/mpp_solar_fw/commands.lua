@@ -41,6 +41,9 @@ local commands = {
   device_protocol = {
     command = 'QPI',
   },
+  device_model = {
+    command = 'QMN',
+  },
   general_parameters = {
     command = 'QPIGS',
     data = {
