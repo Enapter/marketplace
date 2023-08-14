@@ -64,6 +64,10 @@ telemetry:
     display_name: PV Input Power
     type: float
     unit: watt
+  pv_charging_power:
+    display_name: PV Charging Power
+    type: float
+    unit: watt
   ac_out_active_power:
     display_name: AC Output Active Power
     type: float
