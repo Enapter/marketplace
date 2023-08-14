@@ -66,7 +66,7 @@ local commands = {
       -- device_status = 17,
       -- fans_battery_voltage_offset = 18,
       -- eeprom_version = 19,
-      -- pv_charging_power = 20,
+      pv_charging_power = 20,
       -- device_status1 = 21
     },
   },
