@@ -1,10 +1,10 @@
 -- RS485 communication interface parameters
 
 function main()
---  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
---  if result ~= 0 then
---    enapter.log('RS-485 failed: ' .. result .. ' ' .. rs485.err_to_str(result), 'error', true)
---  end
+  --  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
+  --  if result ~= 0 then
+  --    enapter.log('RS-485 failed: ' .. result .. ' ' .. rs485.err_to_str(result), 'error', true)
+  --  end
 
   local inveor, err = connect_inveor()
   if not inveor then
