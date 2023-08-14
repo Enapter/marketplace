@@ -1,8 +1,4 @@
 -- RS485 communication interface parameters
--- BAUD_RATE = 9600
--- DATA_BITS = 8
--- PARITY = 'N'
--- STOP_BITS = 1
 
 function main()
 --  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
@@ -37,7 +33,6 @@ function send_properties()
 end
 
 function send_telemetry()
---  local ADDRESS = 1
   local telemetry = {}
   local status = 'ok'
 
