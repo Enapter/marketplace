@@ -1,4 +1,11 @@
--- RS485 communication interface parameters
+local config = require('enapter.ucm.config')
+inveor = nil
+
+ADDRESS_CONFIG = 'address'
+BAUDRATE_CONFIG = 'baudrate'
+DATA_BITS_CONFIG = 'data_bits'
+STOP_BITS_CONFIG = 'stop_bits'
+PARITY_CONFIG = 'parity_bits'
 
 function main()
   --  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)

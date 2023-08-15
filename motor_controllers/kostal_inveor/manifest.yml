@@ -16,7 +16,10 @@ verification_level: ready_for_testing
 
 communication_module:
   product: ENP-RS485
-  lua_file: firmware.lua
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
 
 properties:
   vendor:
