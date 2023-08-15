@@ -7,7 +7,6 @@ STOP_BITS_CONFIG = 'stop_bits'
 PARITY_CONFIG = 'parity_bits'
 
 function main()
-
   config.init({
     [ADDRESS_CONFIG] = { type = 'number', required = true, default = 1 },
     [BAUDRATE_CONFIG] = { type = 'number', required = true, default = 9600 },
@@ -17,9 +16,9 @@ function main()
   })
 
   local result = rs485.init(BAUDRATE_CONFIG, DATA_BITS_CONFIG, PARITY_CONFIG, STOP_BITS_CONFIG)
-    if result ~= 0 then
-      enapter.log('RS-485 failed: ' .. result .. ' ' .. rs485.err_to_str(result), 'error', true)
-    end
+  if result ~= 0 then
+    enapter.log('RS-485 failed: ' .. result .. ' ' .. rs485.err_to_str(result), 'error', true)
+  end
 
   scheduler.add(30000, send_properties)
   scheduler.add(1000, send_telemetry)
