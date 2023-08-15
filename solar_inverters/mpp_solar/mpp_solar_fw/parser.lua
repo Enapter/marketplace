@@ -53,8 +53,8 @@ function parser:get_device_general_status_params()
     end
 
     telemetry['battery_volt'] = parser:get_battery_voltage(telemetry['battery_volt'])
-    telemetry['pv_input_power'] = tonumber(data[general_parameters.data.pv_input_amp])
-      * tonumber(data[general_parameters.data.pv_input_volt])
+    -- telemetry['pv_input_power'] = tonumber(data[general_parameters.data.pv_input_amp])
+    --   * tonumber(data[general_parameters.data.pv_input_volt])
     return telemetry, nil
   else
     return nil, 'no_data'
