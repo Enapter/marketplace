@@ -1,5 +1,4 @@
 local config = require('enapter.ucm.config')
-inveor = nil
 
 ADDRESS_CONFIG = 'address'
 BAUDRATE_CONFIG = 'baudrate'
@@ -8,23 +7,6 @@ STOP_BITS_CONFIG = 'stop_bits'
 PARITY_CONFIG = 'parity_bits'
 
 function main()
-  --  local result = rs485.init(BAUD_RATE, DATA_BITS, PARITY, STOP_BITS)
-  --  if result ~= 0 then
-  --    enapter.log('RS-485 failed: ' .. result .. ' ' .. rs485.err_to_str(result), 'error', true)
-  --  end
-
-  local inveor, err = connect_inveor()
-  if not inveor then
-    if err == 'cannot_read_config' then
-      enapter.send_telemetry({ status = 'communication_error', alerts = { 'cannot_read_config' } })
-    elseif err == 'not_configured' then
-      enapter.send_telemetry({ status = 'ok', alerts = { 'not_configured' } })
-    end
-    return
-  end
-
-  scheduler.add(30000, send_properties)
-  scheduler.add(1000, send_telemetry)
 
   config.init({
     [ADDRESS_CONFIG] = { type = 'number', required = true, default = 1 },
@@ -33,6 +15,14 @@ function main()
     [STOP_BITS_CONFIG] = { type = 'number', required = true, default = 1 },
     [PARITY_CONFIG] = { type = 'string', required = true, default = 'N' },
   })
+
+  local result = rs485.init(BAUDRATE_CONFIG, DATA_BITS_CONFIG, PARITY_CONFIG, STOP_BITS_CONFIG)
+    if result ~= 0 then
+      enapter.log('RS-485 failed: ' .. result .. ' ' .. rs485.err_to_str(result), 'error', true)
+    end
+
+  scheduler.add(30000, send_properties)
+  scheduler.add(1000, send_telemetry)
 end
 
 function send_properties()
@@ -99,36 +89,6 @@ function tofloat(register)
   local raw_str =
     string.pack('BBBB', register[1] >> 8, register[1] & 0xff, register[2] >> 8, register[2] & 0xff)
   return string.unpack('>f', raw_str)
-end
-
-function connect_inveor()
-  if inveor then
-    return inveor, nil
-  end
-
-  local values, err = config.read_all()
-  if err then
-    enapter.log('cannot read config: ' .. tostring(err), 'error')
-    return nil, 'cannot_read_config'
-  else
-    for _, value in pairs(values) do
-      if not value then
-        return nil, 'not_configured'
-      end
-    end
-
-    inveor = inveor_modbus.new(
-      tonumber(values[ADDRESS_CONFIG]),
-      tonumber(values[BAUDRATE_CONFIG]),
-      tonumber(values[DATA_BITS_CONFIG]),
-      values[PARITY_CONFIG],
-      tonumber(values[STOP_BITS_CONFIG])
-    )
-
-    -- Declare global variable to reuse connection between function calls
-    inveor:connect()
-    return inveor, nil
-  end
 end
 
 main()
