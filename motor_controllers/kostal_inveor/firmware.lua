@@ -7,6 +7,9 @@ STOP_BITS_CONFIG = 'stop_bits'
 PARITY_CONFIG = 'parity_bits'
 
 function main()
+
+  enapter.log("DEBUG MAIN")
+
   config.init({
     [ADDRESS_CONFIG] = { type = 'number', required = true, default = 1 },
     [BAUDRATE_CONFIG] = { type = 'number', required = true, default = 9600 },
@@ -15,12 +18,29 @@ function main()
     [PARITY_CONFIG] = { type = 'string', required = true, default = 'N' },
   })
 
-  local result = rs485.init(BAUDRATE_CONFIG, DATA_BITS_CONFIG, PARITY_CONFIG, STOP_BITS_CONFIG)
-  if result ~= 0 then
-    enapter.log('RS-485 failed: ' .. result .. ' ' .. rs485.err_to_str(result), 'error', true)
+  local values, err = config.read_all()
+  if err then
+    enapter.log('cannot read config: ' .. tostring(err), 'error')
+    return nil, 'cannot_read_config'
+  else
+    for _, value in pairs(values) do
+      if not value then
+        return nil, 'not_configured'
+      end
+    end
+
+    local baudrate = values[BAUDRATE_CONFIG]
+    local data_bits = values[DATA_BITS_CONFIG]
+    local parity = values[PARITY_CONFIG]
+    local stop_bits = values[STOP_BITS_CONFIG]
   end
 
-  scheduler.add(30000, send_properties)
+  local result = rs485.init(baudrate, data_bits, PARITY_CONFIG, STOP_BITS_CONFIG)
+    if result ~= 0 then
+      enapter.log('RS-485 failed: ' .. result .. ' ' .. rs485.err_to_str(result), 'error', true)
+    end
+
+  scheduler.add(3000, send_properties)
   scheduler.add(1000, send_telemetry)
 end
 
