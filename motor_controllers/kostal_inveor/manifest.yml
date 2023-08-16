@@ -89,9 +89,9 @@ commands:
         display_name: None
         type: string
         enum:
-          - 'N'
-          - 'O'
-          - 'E'
+          - N
+          - O
+          - E
         required: true
       stop_bits:
         display_name: Stop bits
