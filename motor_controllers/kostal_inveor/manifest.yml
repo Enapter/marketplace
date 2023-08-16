@@ -85,13 +85,13 @@ commands:
         display_name: Data bits
         type: integer
         required: true
-      parity:
+      parity_bits:
         display_name: None
         type: string
         enum:
-          - N
-          - O
-          - E
+          - 'N'
+          - 'O'
+          - 'E'
         required: true
       stop_bits:
         display_name: Stop bits

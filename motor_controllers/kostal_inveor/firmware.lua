@@ -31,10 +31,10 @@ function main()
 
   local baudrate = values[BAUDRATE_CONFIG]
   local data_bits = values[DATA_BITS_CONFIG]
-  local parity = values[PARITY_CONFIG]
+  local parity_bits = values[PARITY_CONFIG]
   local stop_bits = values[STOP_BITS_CONFIG]
 
-  local result = rs485.init(baudrate, data_bits, parity, stop_bits)
+  local result = rs485.init(baudrate, data_bits, parity_bits, stop_bits)
   if result ~= 0 then
     enapter.log('RS-485 failed: ' .. result .. ' ' .. rs485.err_to_str(result), 'error', true)
   end
