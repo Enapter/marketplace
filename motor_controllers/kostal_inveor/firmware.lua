@@ -7,8 +7,7 @@ STOP_BITS_CONFIG = 'stop_bits'
 PARITY_CONFIG = 'parity_bits'
 
 function main()
-
-  enapter.log("DEBUG MAIN")
+  enapter.log('DEBUG MAIN')
 
   config.init({
     [ADDRESS_CONFIG] = { type = 'number', required = true, default = 1 },
@@ -28,19 +27,19 @@ function main()
         return nil, 'not_configured'
       end
     end
-
-    local baudrate = values[BAUDRATE_CONFIG]
-    local data_bits = values[DATA_BITS_CONFIG]
-    local parity = values[PARITY_CONFIG]
-    local stop_bits = values[STOP_BITS_CONFIG]
   end
 
-  local result = rs485.init(baudrate, data_bits, PARITY_CONFIG, STOP_BITS_CONFIG)
-    if result ~= 0 then
-      enapter.log('RS-485 failed: ' .. result .. ' ' .. rs485.err_to_str(result), 'error', true)
-    end
+  local baudrate = values[BAUDRATE_CONFIG]
+  local data_bits = values[DATA_BITS_CONFIG]
+  local parity = values[PARITY_CONFIG]
+  local stop_bits = values[STOP_BITS_CONFIG]
 
-  scheduler.add(3000, send_properties)
+  local result = rs485.init(baudrate, data_bits, parity, stop_bits)
+  if result ~= 0 then
+    enapter.log('RS-485 failed: ' .. result .. ' ' .. rs485.err_to_str(result), 'error', true)
+  end
+
+  scheduler.add(30000, send_properties)
   scheduler.add(1000, send_telemetry)
 end
 
@@ -52,7 +51,21 @@ function send_telemetry()
   local telemetry = {}
   local status = 'ok'
 
-  local data, result = modbus.read_inputs(ADDRESS_CONFIG, 999, 1, 1000)
+  local values, err = config.read_all()
+  if err then
+    enapter.log('cannot read config: ' .. tostring(err), 'error')
+    return nil, 'cannot_read_config'
+  else
+    for _, value in pairs(values) do
+      if not value then
+        return nil, 'not_configured'
+      end
+    end
+  end
+
+  local address = values[ADDRESS_CONFIG]
+
+  local data, result = modbus.read_inputs(address, 999, 1, 1000)
   if data then
     telemetry['actual_freq'] = tofloat(data)
   else
@@ -60,7 +73,7 @@ function send_telemetry()
     status = 'read_error'
   end
 
-  local data, result = modbus.read_inputs(ADDRESS_CONFIG, 1000, 1, 1000)
+  local data, result = modbus.read_inputs(address, 1000, 1, 1000)
   if data then
     telemetry['output_volt'] = tofloat(data)
   else
@@ -68,7 +81,7 @@ function send_telemetry()
     status = 'read_error'
   end
 
-  local data, result = modbus.read_inputs(ADDRESS_CONFIG, 1001, 1, 1000)
+  local data, result = modbus.read_inputs(address, 1001, 1, 1000)
   if data then
     telemetry['motor_curr'] = tofloat(data) * telemetry['volt_l1n']
   else
@@ -76,7 +89,7 @@ function send_telemetry()
     status = 'read_error'
   end
 
-  local data, result = modbus.read_inputs(ADDRESS_CONFIG, 1007, 1, 1000)
+  local data, result = modbus.read_inputs(address, 1007, 1, 1000)
   if data then
     telemetry['igbt_temp'] = tofloat(data)
   else
@@ -84,7 +97,7 @@ function send_telemetry()
     status = 'read_error'
   end
 
-  local data, result = modbus.read_inputs(ADDRESS_CONFIG, 1004, 1, 1000)
+  local data, result = modbus.read_inputs(address, 1004, 1, 1000)
   if data then
     telemetry['target_freq'] = tofloat(data)
   else
@@ -92,7 +105,7 @@ function send_telemetry()
     status = 'read_error'
   end
 
-  local data, result = modbus.read_inputs(ADDRESS_CONFIG, 1002, 1, 1000)
+  local data, result = modbus.read_inputs(address, 1002, 1, 1000)
   if data then
     telemetry['inner_temp'] = tofloat(data)
   else
