@@ -100,6 +100,22 @@ commands:
     ui:
       icon: electric-switch
       quick_access: true
+  impulse_on_channel:
+    display_name: Impulse on Channel
+    group: relays
+    ui:
+      icon: electric-switch
+    arguments:
+      channel:
+        display_name: Channel Number
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
   is_channel_closed:
     display_name: Channel State
     group: relays

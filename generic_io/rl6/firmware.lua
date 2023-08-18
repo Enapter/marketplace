@@ -10,6 +10,7 @@ function main()
   enapter.register_command_handler('close_all_channels', command_close_all_channels)
   enapter.register_command_handler('open_channel', command_open_channel)
   enapter.register_command_handler('open_all_channels', command_open_all_channels)
+  enapter.register_command_handler('impulse_on_channel', command_impulse_on_channel)
   enapter.register_command_handler('is_channel_closed', command_is_channel_closed)
   enapter.register_command_handler('all_channels_state', command_all_channels_state)
 end
@@ -57,6 +58,13 @@ end
 
 function command_open_all_channels(_ctx, _args)
   rl6.open_all()
+end
+
+function command_impulse_on_channel(ctx, args)
+  if not args.channel or type(args.channel) ~= 'number' then
+    ctx.error(channel_arg_required_errmsg)
+  end
+  rl6.impulse(math.floor(args.channel))
 end
 
 function command_is_channel_closed(ctx, args)
