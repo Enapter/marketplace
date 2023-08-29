@@ -64,7 +64,10 @@ function command_impulse_on_channel(ctx, args)
   if not args.channel or type(args.channel) ~= 'number' then
     ctx.error(channel_arg_required_errmsg)
   end
-  rl6.impulse(math.floor(args.channel))
+  if not args.duration or type(args.duration) ~= 'number' then
+    ctx.error(channel_arg_required_errmsg)
+  end
+  rl6.impulse(math.floor(args.channel), math.floor(args.duration))
 end
 
 function command_is_channel_closed(ctx, args)

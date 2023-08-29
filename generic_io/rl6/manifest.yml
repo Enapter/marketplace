@@ -116,6 +116,10 @@ commands:
           - 4
           - 5
           - 6
+      duration:
+        display_name: Impulse duration
+        type: integer
+        unit: ms
   is_channel_closed:
     display_name: Channel State
     group: relays
