@@ -61,7 +61,7 @@ commands:
         description: "`k` in calibration line equation `Pressure = k * Voltage + b`"
         type: float
         required: true
-      unit_id:
+      calib_intercept:
         display_name: Calibration Intercept
         description: "`b` in calibration line equation `Pressure = k * Voltage + b`"
         type: float
