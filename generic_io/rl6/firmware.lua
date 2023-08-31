@@ -10,19 +10,19 @@ function set_default_state()
   else
     local state = {}
     for i = 1, CHANNELS_NUMBER, 1 do
-      if values['ch' .. i ..'_def'] ~= nil then
+      if values['ch' .. i .. '_def'] ~= nil then
         state[i] = values['ch' .. i .. '_def']
-        enapter.log("Channel " .. i .. " set to "..tostring(state[i]))
+        enapter.log("Channel " .. i .. " set to " .. tostring(state[i]))
       else
-        enapter.log("Channel " .. i .. " set to "..tostring(false))
+        enapter.log("Channel " .. i .. " set to " .. tostring(false))
         state[i] = false
       end
     end
     result = rl6.set_all(state[1], state[2], state[3], state[4], state[5], state[6])
     if result ~= 0 then
       enapter.log(
-        "Changing relay statuses failed: " .. result .. "  " .. rl6.err_to_str(result),
-        "error",
+        'Changing relay statuses failed: ' .. result .. ' ' .. rl6.err_to_str(result),
+        'error',
         true
       )
     else
@@ -35,7 +35,10 @@ function connection_status_handler(status)
   if not status then
     local values, err = config.read_all()
     if err then
-      enapter.log('cannot read config: ' .. tostring(err), 'error. Respecting current channels state')
+      enapter.log(
+        'cannot read config: ' .. tostring(err),
+        'error. Respecting current channels state'
+      )
     else
       if values['on_disconnect'] then
         set_default_state()
@@ -241,7 +244,7 @@ function config.serialize(_, value)
   if value then
     return tostring(value)
   else
-    return ""
+    return ''
   end
 end
 
@@ -273,7 +276,9 @@ function config.build_write_configuration_command(options)
       end
 
       local err = config.write(name, args[name])
-      if err then ctx.error('cannot write `' .. name .. '`: ' .. err) end
+      if err then
+        ctx.error('cannot write `' .. name .. '`: ' .. err)
+      end
     end
   end
 end
