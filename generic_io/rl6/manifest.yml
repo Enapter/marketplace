@@ -58,6 +58,9 @@ command_groups:
 commands:
   close_channel:
     display_name: Close Channel
+    description: Close Selected Relay Channel
+    min: 1
+    max: 6
     group: relays
     ui:
       icon: electric-switch-closed
@@ -81,6 +84,9 @@ commands:
       quick_access: true
   open_channel:
     display_name: Open Channel
+    description: Open Selected Relay Channel
+    min: 1
+    max: 6
     group: relays
     ui:
       icon: electric-switch

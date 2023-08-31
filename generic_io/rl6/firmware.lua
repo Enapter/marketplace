@@ -5,22 +5,26 @@ local channel_arg_required_errmsg = 'channel arg is required and must be a numbe
 function set_default_state()
   local values, err = config.read_all()
   if err then
-    enapter.log('cannot read config: '..tostring(err), 'error. Opening all channels.')
+    enapter.log('cannot read config: ' .. tostring(err), 'error. Opening all channels.')
     rl6.open_all()
   else
     local state = {}
     for i = 1, CHANNELS_NUMBER, 1 do
-      if values['ch'..i..'_def'] ~= nil then
-        state[i] = values['ch'..i..'_def']
-        enapter.log("Channel "..i.." set to "..tostring(state[i]))
+      if values['ch' .. i ..'_def'] ~= nil then
+        state[i] = values['ch' .. i .. '_def']
+        enapter.log("Channel " .. i .. " set to "..tostring(state[i]))
       else
-        enapter.log("Channel "..i.." set to "..tostring(false))
+        enapter.log("Channel " .. i .. " set to "..tostring(false))
         state[i] = false
       end
     end
     result = rl6.set_all(state[1], state[2], state[3], state[4], state[5], state[6])
     if result ~= 0 then
-      enapter.log("Changing relay statuses failed: "..result.."  "..rl6.err_to_str(result), "error", true)
+      enapter.log(
+        "Changing relay statuses failed: " .. result .. "  " .. rl6.err_to_str(result),
+        "error",
+        true
+      )
     else
       enapter.log("Changing default relay status successfully")
     end
@@ -31,7 +35,7 @@ function connection_status_handler(status)
   if not status then
     local values, err = config.read_all()
     if err then
-      enapter.log('cannot read config: '..tostring(err), 'error. Respecting current channels state')
+      enapter.log('cannot read config: ' .. tostring(err), 'error. Respecting current channels state')
     else
       if values['on_disconnect'] then
         set_default_state()
@@ -41,7 +45,6 @@ function connection_status_handler(status)
 end
 
 function main()
-
   -- Init config & register config management commands
   config.init({
     ['ch1_def'] = { type = 'boolean', required = false, default = false },
@@ -50,7 +53,7 @@ function main()
     ['ch4_def'] = { type = 'boolean', required = false, default = false },
     ['ch5_def'] = { type = 'boolean', required = false, default = false },
     ['ch6_def'] = { type = 'boolean', required = false, default = false },
-    ['on_disconnect'] = { type = 'boolean', required = false, default = false }
+    ['on_disconnect'] = { type = 'boolean', required = false, default = false },
   })
 
   set_default_state()
@@ -162,11 +165,17 @@ function config.init(options)
   assert(not config.initialized, 'config can be initialized only once')
   for name, params in pairs(options) do
     local type_ok = params.type == 'string' or params.type == 'number' or params.type == 'boolean'
-    assert(type_ok, 'type of `'..name..'` option should be either string or number or boolean')
+    assert(type_ok, 'type of `' .. name .. '` option should be either string or number or boolean')
   end
 
-  enapter.register_command_handler('write_configuration', config.build_write_configuration_command(options))
-  enapter.register_command_handler('read_configuration', config.build_read_configuration_command(options))
+  enapter.register_command_handler(
+    'write_configuration',
+    config.build_write_configuration_command(options)
+  )
+  enapter.register_command_handler(
+    'read_configuration',
+    config.build_read_configuration_command(options)
+  )
 
   config.options = options
   config.initialized = true
@@ -181,7 +190,7 @@ function config.read_all()
   for name, _ in pairs(config.options) do
     local value, err = config.read(name)
     if err then
-      return nil, 'cannot read `'..name..'`: '..err
+      return nil, 'cannot read `' .. name .. '`: ' .. err
     else
       result[name] = value
     end
@@ -195,16 +204,16 @@ end
 -- @return nil|error
 function config.read(name)
   local params = config.options[name]
-  assert(params, 'undeclared config option: `'..name..'`, declare with config.init')
+  assert(params, 'undeclared config option: `' .. name .. '`, declare with config.init')
 
   local ok, value, ret = pcall(function()
     return storage.read(name)
   end)
 
   if not ok then
-    return nil, 'error reading from storage: '..tostring(value)
+    return nil, 'error reading from storage: ' .. tostring(value)
   elseif ret and ret ~= 0 then
-    return nil, 'error reading from storage: '..storage.err_to_str(ret)
+    return nil, 'error reading from storage: ' .. storage.err_to_str(ret)
   elseif value then
     return config.deserialize(name, value), nil
   else
@@ -221,9 +230,9 @@ function config.write(name, val)
   end)
 
   if not ok then
-    return 'error writing to storage: '..tostring(ret)
+    return 'error writing to storage: ' .. tostring(ret)
   elseif ret and ret ~= 0 then
-    return 'error writing to storage: '..storage.err_to_str(ret)
+    return 'error writing to storage: ' .. storage.err_to_str(ret)
   end
 end
 
@@ -239,7 +248,7 @@ end
 -- Deserializes value from stored string
 function config.deserialize(name, value)
   local params = config.options[name]
-  assert(params, 'undeclared config option: `'..name..'`, declare with config.init')
+  assert(params, 'undeclared config option: `' .. name .. '`, declare with config.init')
 
   if params.type == 'number' then
     return tonumber(value)
@@ -260,11 +269,11 @@ function config.build_write_configuration_command(options)
   return function(ctx, args)
     for name, params in pairs(options) do
       if params.required then
-        assert(args[name], '`'..name..'` argument required')
+        assert(args[name], '`' .. name .. '` argument required')
       end
 
       local err = config.write(name, args[name])
-      if err then ctx.error('cannot write `'..name..'`: '..err) end
+      if err then ctx.error('cannot write `' .. name .. '`: ' .. err) end
     end
   end
 end
