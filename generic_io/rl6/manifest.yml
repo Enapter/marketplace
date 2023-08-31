@@ -51,6 +51,8 @@ telemetry:
     display_name: Channel 6 Closed
 
 command_groups:
+  config:
+    display_name: Configuration
   relays:
     display_name: Relays
 commands:
@@ -141,6 +143,60 @@ commands:
     group: relays
     ui:
       icon: dip-switch
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      on_disconnect:
+        display_name: Set default channels state on disconnect
+        description: Set default channels state on disconnect from Gateway or Cloud
+        type: boolean
+        required: false
+        default: "false"
+      ch1_def:
+        display_name: Channel 1 Default State
+        description: Channel 1 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+      ch2_def:
+        display_name: Channel 2 Default State
+        description: Channel 2 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+      ch3_def:
+        display_name: Channel 3 Default State
+        description: Channel 3 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+      ch4_def:
+        display_name: Channel 4 Default State
+        description: Channel 4 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+      ch5_def:
+        display_name: Channel 5 Default State
+        description: Channel 5 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+      ch6_def:
+        display_name: Channel 6 Default State
+        description: Channel 6 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
 
 alerts:
   cannot_read_channel_state:
