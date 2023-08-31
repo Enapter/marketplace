@@ -12,9 +12,9 @@ function set_default_state()
     for i = 1, CHANNELS_NUMBER, 1 do
       if values['ch' .. i .. '_def'] ~= nil then
         state[i] = values['ch' .. i .. '_def']
-        enapter.log("Channel " .. i .. " set to " .. tostring(state[i]))
+        enapter.log('Channel ' .. i .. ' set to ' .. tostring(state[i]))
       else
-        enapter.log("Channel " .. i .. " set to " .. tostring(false))
+        enapter.log('Channel ' .. i .. ' set to ' .. tostring(false))
         state[i] = false
       end
     end
@@ -26,7 +26,7 @@ function set_default_state()
         true
       )
     else
-      enapter.log("Changing default relay status successfully")
+      enapter.log('Changing default relay status successfully')
     end
   end
 end
