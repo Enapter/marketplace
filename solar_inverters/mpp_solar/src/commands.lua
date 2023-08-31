@@ -72,7 +72,13 @@ local commands = {
   },
   output_mode = {
     command = 'QOPM',
-    values = {},
+    values = {
+      ['0'] = 'Single',
+      ['1'] = 'Parallel',
+      ['2'] = 'Phase 1',
+      ['3'] = 'Phase 2',
+      ['4'] = 'Phase 3',
+    },
   },
   default_settings_info = {
     command = 'QDI',
@@ -145,11 +151,20 @@ local commands = {
   set_priorities = {
     charger = {
       cmd = 'PCP0',
-      values = {},
+      values = {
+        ['Utility first'] = 0,
+        ['Solar first'] = 1,
+        ['Solar and utility'] = 2,
+        ['Only solar'] = 3,
+      },
     },
     output = {
       cmd = 'POP0',
-      values = {},
+      values = {
+        ['Utility first'] = 0,
+        ['Solar first'] = 1,
+        ['SBU'] = 2,
+      },
     },
   },
   parallel_info = {
@@ -161,20 +176,5 @@ local commands = {
     },
   },
 }
-
-commands.output_mode.values['0'] = 'Single'
-commands.output_mode.values['1'] = 'Parallel'
-commands.output_mode.values['2'] = 'Phase 1'
-commands.output_mode.values['3'] = 'Phase 2'
-commands.output_mode.values['4'] = 'Phase 3'
-
-commands.set_priorities.output.values['Utility first'] = 0
-commands.set_priorities.output.values['Solar first'] = 1
-commands.set_priorities.output.values['SBU'] = 2
-
-commands.set_priorities.charger.values['Utility first'] = 0
-commands.set_priorities.charger.values['Solar first'] = 1
-commands.set_priorities.charger.values['Solar and utility'] = 2
-commands.set_priorities.charger.values['Only solar'] = 3
 
 return commands
