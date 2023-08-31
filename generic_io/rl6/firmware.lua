@@ -5,7 +5,7 @@ local channel_arg_required_errmsg = 'channel arg is required and must be a numbe
 function set_default_state()
   local values, err = config.read_all()
   if err then
-    enapter.log('cannot read config: ' .. tostring(err).. '. Opening all channels.', 'error')
+    enapter.log('cannot read config: ' .. tostring(err) .. '. Opening all channels.', 'error')
     rl6.open_all()
   else
     local state = {}
