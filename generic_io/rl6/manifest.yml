@@ -157,11 +157,14 @@ commands:
       icon: wrench-outline
     arguments:
       on_disconnect:
-        display_name: Set default channels state on disconnect
-        description: Set default channels state on disconnect from Gateway or Cloud
-        type: boolean
+        display_name: Channels state on disconnect
+        description: Which channels state to use on disconnect from Gateway or Cloud. Respect Current or switch to Default.
+        type: string
         required: false
-        default: "false"
+        default: "Respect"
+        enum:
+          - "Respect"
+          - "Set Default"
       ch1_def:
         display_name: Channel 1 Default State
         description: Channel 1 Default State on Boot and on Connection Loss

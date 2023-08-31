@@ -5,7 +5,10 @@ local channel_arg_required_errmsg = 'channel arg is required and must be a numbe
 function set_default_state()
   local values, err = config.read_all()
   if err then
-    enapter.log('cannot read config: ' .. tostring(err), 'error. Opening all channels.')
+    enapter.log(
+      'cannot read config: ' .. tostring(err).. '. Opening all channels.',
+      'error'
+    )
     rl6.open_all()
   else
     local state = {}
@@ -40,7 +43,7 @@ function connection_status_handler(status)
         'error. Respecting current channels state'
       )
     else
-      if values['on_disconnect'] then
+      if values['on_disconnect'] == "Set Default" then
         set_default_state()
       end
     end
@@ -56,7 +59,7 @@ function main()
     ['ch4_def'] = { type = 'boolean', required = false, default = false },
     ['ch5_def'] = { type = 'boolean', required = false, default = false },
     ['ch6_def'] = { type = 'boolean', required = false, default = false },
-    ['on_disconnect'] = { type = 'boolean', required = false, default = false },
+    ['on_disconnect'] = { type = 'string', required = false, default = 'Respect' },
   })
 
   set_default_state()
