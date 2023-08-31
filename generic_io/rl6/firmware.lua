@@ -18,7 +18,7 @@ function set_default_state()
         state[i] = false
       end
     end
-    result = rl6.set_all(state[1], state[2], state[3], state[4], state[5], state[6])
+    local result = rl6.set_all(state[1], state[2], state[3], state[4], state[5], state[6])
     if result ~= 0 then
       enapter.log(
         'Changing relay statuses failed: ' .. result .. ' ' .. rl6.err_to_str(result),
