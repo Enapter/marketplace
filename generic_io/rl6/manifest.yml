@@ -158,13 +158,13 @@ commands:
     arguments:
       on_disconnect:
         display_name: Channels state on disconnect
-        description: Which channels state to use on disconnect from Gateway or Cloud. Respect Current or switch to Default.
+        description: Channels state to use on disconnect from Gateway or Cloud. Respect Current or switch to Default.
         type: string
         required: false
-        default: "Respect"
+        default: Respect
         enum:
-          - "Respect"
-          - "Set Default"
+          - Respect
+          - Set Default
       ch1_def:
         display_name: Channel 1 Default State
         description: Channel 1 Default State on Boot and on Connection Loss
