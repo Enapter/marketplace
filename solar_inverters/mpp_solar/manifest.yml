@@ -12,7 +12,7 @@ support:
 communication_module:
   product: ENP-RS232
   lua:
-    dir: mpp_solar_fw
+    dir: src
     amalg_mode: nodebug
 
 properties:
