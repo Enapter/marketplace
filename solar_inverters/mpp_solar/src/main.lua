@@ -112,40 +112,29 @@ function send_telemetry()
   collectgarbage()
 end
 
-local priorities = commands.set_priorities
-
 function command_set_charger_priority(ctx, args)
-  local values = priorities.charger.values
-
-  if args['priority'] then
-    local result, err = set_charger_priority(values[args['priority']])
-    if not result then
-      ctx.error(err)
-    end
-  else
-    ctx.error('No arguments')
-  end
+  command_set_priority(ctx, args, commands.set_priorities.charger)
 end
 
 function command_set_output_priority(ctx, args)
-  local values = priorities.output.values
+  command_set_priority(ctx, args, commands.set_priorities.output)
+end
 
-  if args['priority'] then
-    local result, err = set_output_priority(values[args['priority']])
-    if not result then
-      ctx.error(err)
-    end
-  else
-    ctx.error('No arguments')
+function command_set_priority(ctx, args, priorities)
+  local args_priority = args['priority']
+  if not args_priority then
+    ctx.error("missed required argument 'priority'")
   end
-end
 
-function set_charger_priority(priority)
-  return mpp_solar:set_value(priorities.charger.cmd .. priority)
-end
+  local priority_value = priorities.values[args_priority]
+  if not priority_value then
+    ctx.error('unsupported priority value: ' .. args_priority)
+  end
 
-function set_output_priority(priority)
-  return mpp_solar:set_value(priorities.output.cmd .. priority)
+  local result, err = mpp_solar:set_value(priorities.cmd .. priority_value)
+  if not result then
+    ctx.error(err)
+  end
 end
 
 function merge_tables(t1, t2)
