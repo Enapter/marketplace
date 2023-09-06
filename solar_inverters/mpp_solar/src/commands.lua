@@ -152,18 +152,18 @@ local commands = {
     charger = {
       cmd = 'PCP0',
       values = {
-        ['Utility first'] = 0,
-        ['Solar first'] = 1,
-        ['Solar and utility'] = 2,
-        ['Only solar'] = 3,
+        ['utility_first'] = 0,
+        ['solar_first'] = 1,
+        ['solar_and_utility'] = 2,
+        ['only_solar'] = 3,
       },
     },
     output = {
       cmd = 'POP0',
       values = {
-        ['Utility first'] = 0,
-        ['Solar first'] = 1,
-        ['SBU'] = 2,
+        ['utility_first'] = 0,
+        ['solar_first'] = 1,
+        ['sbu_first'] = 2,
       },
     },
   },

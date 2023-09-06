@@ -49,17 +49,24 @@ telemetry:
     display_name: Output Source Priority
     type: string
     enum:
-      - Utility first
-      - Solar first
-      - SBU
+      utility_first:
+        display_name: Utility first
+      solar_first:
+        display_name: Solar first
+      sbu_first:
+        display_name: Solar-Battery-Utility
   charger_source_priority:
     display_name: Charger Source Priority
     type: string
     enum:
-      - Utility first
-      - Solar first
-      - Solar and utility
-      - Only solar
+      utility_first:
+        display_name: Utility first
+      solar_first:
+        display_name: Solar first
+      solar_and_utility:
+        display_name: Solar and utility
+      only_solar:
+        display_name: Only solar
   pv_charging_power:
     display_name: PV Power
     type: float
@@ -125,10 +132,14 @@ commands:
         type: string
         required: true
         enum:
-          - Utility first
-          - Solar first
-          - Solar and utility
-          - Only solar
+          utility_first:
+            display_name: Utility first
+          solar_first:
+            display_name: Solar first
+          solar_and_utility:
+            display_name: Solar and utility
+          only_solar:
+            display_name: Only solar
   set_output_priority:
     display_name: Set Output Priority
     group: inverter
@@ -141,9 +152,12 @@ commands:
         type: string
         required: true
         enum:
-          - Utility first
-          - Solar first
-          - SBU
+          utility_first:
+            display_name: Utility first
+          solar_first:
+            display_name: Solar first
+          sbu_first:
+            display_name: Solar-Battery-Utility
 
 alerts:
   no_data:
@@ -253,6 +267,7 @@ alerts:
 
 .cloud:
   category: renewable_energy_sources
+  mqtt_channel_id: wtcpwr
   mobile_main_chart: ac_out_active_power
   mobile_telemetry:
     - charger_source_priority
