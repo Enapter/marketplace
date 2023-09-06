@@ -270,8 +270,6 @@ alerts:
   mqtt_channel_id: wtcpwr
   mobile_main_chart: ac_out_active_power
   mobile_telemetry:
-    - charger_source_priority
-    - output_source_priority
     - ac_out_active_power
     - pv_input_power
     - pv_input_volt
