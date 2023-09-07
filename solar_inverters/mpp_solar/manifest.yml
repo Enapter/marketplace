@@ -45,6 +45,9 @@ telemetry:
       - power_saving
       - no_data
       - unknown
+  output_mode:
+    display_name: Output Mode
+    type: integer
   output_source_priority:
     display_name: Output Source Priority
     type: string
