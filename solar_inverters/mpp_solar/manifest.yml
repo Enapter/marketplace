@@ -13,6 +13,7 @@ communication_module:
   product: ENP-RS232
   lua:
     dir: src
+    rockspec: mpp-solar-dev-1.rockspec
     amalg_mode: nodebug
 
 properties:
