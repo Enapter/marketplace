@@ -18,7 +18,7 @@ local parser = {}
 function parser:get_device_model()
   local result, data = mpp_solar:run_with_cache(device_rating_info.command)
   if result then
-    return split(data)[device_rating_info.data.ac_out_apparent_power] .. 'VA', nil
+    return split(data)[device_rating_info.device_model_data] .. 'VA', nil
   else
     return nil, 'no_data'
   end
