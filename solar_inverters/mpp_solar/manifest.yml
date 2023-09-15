@@ -1,4 +1,5 @@
 blueprint_spec: device/1.0
+
 display_name: MPP Solar Inverter
 description: Solar inverter with monitoring and control via WatchPower protocol.
 icon: enapter-inverter-battery
@@ -270,6 +271,7 @@ alerts:
     display_name: Overload
 
 .cloud:
+  device_type: watchpower_inverter
   category: renewable_energy_sources
   mqtt_channel_id: wtcpwr
   mobile_main_chart: ac_out_active_power
