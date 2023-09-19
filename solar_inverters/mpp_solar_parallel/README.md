@@ -17,7 +17,7 @@ For physical RS-232 connection with the inverter you will need:
 
 - RS-232 communication module:
   - _Either_ Enapter [**ENP-RS232** communication module](https://handbook.enapter.com/modules/ENP-RS232/ENP-RS232.html),
-  - _Or_ [**ENP-KIT-232-485-CAN** module](/docs/tutorial/ucm-kit/enp-kit-232-485-can) (check out UCM Kit [introduction](/docs/tutorial/ucm-kit/introduction) and simple [JLPCB ordering guide](/docs/tutorial/ucm-kit/ordering)) + ESP-32 development board.
+  - _Or_ [**ENP-KIT-232-485-CAN** module](https://developers.enapter.com/docs/tutorial/ucm-kit/enp-kit-232-485-can) (check out UCM Kit [introduction](https://developers.enapter.com/docs/tutorial/ucm-kit/introduction) and simple [JLPCB ordering guide](https://developers.enapter.com/docs/tutorial/ucm-kit/ordering)) + ESP-32 development board.
 - Communication cable with RJ45 connector on one side and plain wires on another side. You can use _RJ45 breakout connector_ to assemble such cable.
 
 ### ENP-RS232 Connection Diagram
