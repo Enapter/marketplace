@@ -22,11 +22,11 @@ For physical RS-232 connection with the inverter you will need:
 
 ### ENP-RS232 Connection Diagram
 
-<p align="left"><img height="auto" width="800" src="assets/wiring-scheme-enp.png"></p>
+<p align="left"><img height="auto" width="800" src=".assets/wiring-scheme-enp.png"></p>
 
 ### ENP-KIT-232-485-CAN Connection Diagram
 
-<p align="left"><img height="auto" width="800" src="assets/wiring-scheme-kit.png"></p>
+<p align="left"><img height="auto" width="800" src=".assets/wiring-scheme-kit.png"></p>
 
 ## Troubleshooting
 
