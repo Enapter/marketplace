@@ -868,6 +868,7 @@ alerts:
     display_name: Parallel output setting different (inverter 8)
 
 .cloud:
+  device_type: watchpower_inverter
   category: renewable_energy_sources
   mobile_main_chart: total_ac_out_active_power
   mobile_telemetry:
@@ -877,7 +878,6 @@ alerts:
     - total_ac_out_apparent_power
     - battery_volt
     - battery_capacity
-
   mobile_charts:
     - total_ac_out_active_power
     - total_pv_input_power

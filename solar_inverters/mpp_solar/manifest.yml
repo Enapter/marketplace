@@ -273,7 +273,6 @@ alerts:
 .cloud:
   device_type: watchpower_inverter
   category: renewable_energy_sources
-  mqtt_channel_id: wtcpwr
   mobile_main_chart: ac_out_active_power
   mobile_telemetry:
     - ac_out_active_power
@@ -283,7 +282,6 @@ alerts:
     - battery_volt
     - battery_charge_amp
     - battery_discharge_amp
-
   mobile_charts:
     - ac_out_volt
     - ac_out_freq
