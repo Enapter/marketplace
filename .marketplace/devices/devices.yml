@@ -607,6 +607,12 @@
   category: gas_sensors
   blueprint_options:
     - blueprint: gas_sensors/igd_toc_635
+      display_name: Single sensor
+      description: Connection scheme with one sensor connected to the gas detector control panel.
+      verification_level: verified
+    - blueprint: gas_sensors/igd_toc_635_2sen
+      display_name: Two sensors
+      description: Connection scheme with two sensors connected to the gas detector control panel.
       verification_level: verified
 
 - id: deye-3-phase-hybrid-inverter
