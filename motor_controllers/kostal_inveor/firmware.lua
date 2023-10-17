@@ -110,8 +110,7 @@ function send_telemetry()
 end
 
 function tofloat(register)
-  local raw_str =
-    string.pack('BBBB', register[1] >> 8, register[1] & 0xff, register[2] >> 8, register[2] & 0xff)
+  local raw_str = string.pack('BBBB', register[1] >> 8, register[1] & 0xff, register[2] >> 8, register[2] & 0xff)
   return string.unpack('>f', raw_str)
 end
 
