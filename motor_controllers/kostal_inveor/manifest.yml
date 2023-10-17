@@ -52,10 +52,6 @@ telemetry:
     type: float
     unit: A
     display_name: Motor Current
-  igbt_temp:
-    type: float
-    unit: °C
-    display_name: IGBT Temperature
   inner_temp:
     type: float
     unit: °C
@@ -110,5 +106,4 @@ commands:
     - actual_freq
     - output_volt
     - motor_curr
-    - igbt_temp
     - inner_temp

@@ -65,51 +65,43 @@ function send_telemetry()
 
   local address = values[ADDRESS_CONFIG]
 
-  local data, result = modbus.read_inputs(address, 999, 1, 1000)
+  local data, result = modbus.read_inputs(address, 1999, 2, 1000) -- REAL
   if data then
     telemetry['actual_freq'] = tofloat(data)
   else
-    enapter.log('Register 999 reading failed: ' .. modbus.err_to_str(result))
+    enapter.log('Register 1999 reading failed: ' .. modbus.err_to_str(result))
     status = 'read_error'
   end
 
-  local data, result = modbus.read_inputs(address, 1000, 1, 1000)
+  local data, result = modbus.read_inputs(address, 2001, 2, 1000) -- REAL
   if data then
     telemetry['output_volt'] = tofloat(data)
   else
-    enapter.log('Register 1000 reading failed: ' .. modbus.err_to_str(result))
+    enapter.log('Register 2001 reading failed: ' .. modbus.err_to_str(result))
     status = 'read_error'
   end
 
-  local data, result = modbus.read_inputs(address, 1001, 1, 1000)
+  local data, result = modbus.read_inputs(address, 2003, 2, 1000) -- REAL
   if data then
     telemetry['motor_curr'] = tofloat(data) * telemetry['volt_l1n']
   else
-    enapter.log('Register 1001 reading failed: ' .. modbus.err_to_str(result))
+    enapter.log('Register 2003 reading failed: ' .. modbus.err_to_str(result))
     status = 'read_error'
   end
 
-  local data, result = modbus.read_inputs(address, 1007, 1, 1000)
-  if data then
-    telemetry['igbt_temp'] = tofloat(data)
-  else
-    enapter.log('Register 1007 reading failed: ' .. modbus.err_to_str(result))
-    status = 'read_error'
-  end
-
-  local data, result = modbus.read_inputs(address, 1004, 1, 1000)
+  local data, result = modbus.read_inputs(address, 2009, 2, 1000) -- REAL
   if data then
     telemetry['target_freq'] = tofloat(data)
   else
-    enapter.log('Register 1004 reading failed: ' .. modbus.err_to_str(result))
+    enapter.log('Register 2009 reading failed: ' .. modbus.err_to_str(result))
     status = 'read_error'
   end
 
-  local data, result = modbus.read_inputs(address, 1002, 1, 1000)
+  local data, result = modbus.read_inputs(address, 2015, 2, 1000) -- REAL
   if data then
     telemetry['inner_temp'] = tofloat(data)
   else
-    enapter.log('Register 1002 reading failed: ' .. modbus.err_to_str(result))
+    enapter.log('Register 2015 reading failed: ' .. modbus.err_to_str(result))
     status = 'read_error'
   end
 
