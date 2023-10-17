@@ -2,6 +2,8 @@
 
 This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **International Gas Detectors TOC 635** - an addressable gas detector control panel [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) over [RS-485 communication interface](https://go.enapter.com/developers-enapter-rs485).
 
+The blueprint supports a **single** gas sensor connected to the panel.
+
 ## Connect to Enapter
 
 - Sign up to the Enapter Cloud using the [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).

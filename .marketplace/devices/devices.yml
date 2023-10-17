@@ -617,4 +617,30 @@
   category: gas_sensors
   blueprint_options:
     - blueprint: gas_sensors/igd_toc_635
+      display_name: Single sensor
+      description: Connection scheme with one sensor connected to the gas detector control panel.
       verification_level: verified
+    - blueprint: gas_sensors/igd_toc_635_2sen
+      display_name: Two sensors
+      description: Connection scheme with two sensors connected to the gas detector control panel.
+      verification_level: verified
+
+- id: deye-3-phase-hybrid-inverter
+  display_name: Deye Three-Phase Hybrid Inverter
+  description: Three-phase hybrid inverter models Deye SUN-4/5/6/7/8/10/12/15K-G06P3-EU-AM2.
+  icon: enapter-inverter-solar
+  vendor: deye
+  category: solar_inverters
+  blueprint_options:
+    - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
+      verification_level: verified
+
+- id: sunsync-3-phase-hybrid-inverter
+  display_name: Sunsync Three-Phase Hybrid Inverter
+  description: Three-phase hybrid inverter models Sunsync SYNK-8K-SG04LP3 / SYNK-10K-SG04LP3 / SYNK-12K-SG04LP3.
+  icon: enapter-inverter-solar
+  vendor: sunsync
+  category: solar_inverters
+  blueprint_options:
+    - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
+      verification_level: ready_for_testing

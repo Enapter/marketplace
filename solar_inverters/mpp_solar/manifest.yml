@@ -1,4 +1,5 @@
 blueprint_spec: device/1.0
+
 display_name: MPP Solar Inverter
 description: Solar inverter with monitoring and control via WatchPower protocol.
 icon: enapter-inverter-battery
@@ -8,12 +9,12 @@ author: enapter
 support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
-verification_level: verified
 
 communication_module:
   product: ENP-RS232
   lua:
-    dir: mpp_solar_fw
+    dir: src
+    rockspec: mpp-solar-dev-1.rockspec
     amalg_mode: nodebug
 
 properties:
@@ -46,23 +47,33 @@ telemetry:
       - power_saving
       - no_data
       - unknown
+  output_mode:
+    display_name: Output Mode
+    type: integer
   output_source_priority:
     display_name: Output Source Priority
     type: string
     enum:
-      - Utility first
-      - Solar first
-      - SBU
+      utility_first:
+        display_name: Utility first
+      solar_first:
+        display_name: Solar first
+      sbu_first:
+        display_name: Solar-Battery-Utility
   charger_source_priority:
     display_name: Charger Source Priority
     type: string
     enum:
-      - Utility first
-      - Solar first
-      - Solar and utility
-      - Only solar
-  pv_input_power:
-    display_name: PV Input Power
+      utility_first:
+        display_name: Utility first
+      solar_first:
+        display_name: Solar first
+      solar_and_utility:
+        display_name: Solar and utility
+      only_solar:
+        display_name: Only solar
+  pv_charging_power:
+    display_name: PV Power
     type: float
     unit: watt
   ac_out_active_power:
@@ -73,10 +84,6 @@ telemetry:
     display_name: Battery Voltage
     type: float
     unit: volt
-  pv_input_amp:
-    display_name: PV Input Current
-    type: float
-    unit: amp
   pv_input_volt:
     display_name: PV Input Voltage
     type: float
@@ -130,10 +137,14 @@ commands:
         type: string
         required: true
         enum:
-          - Utility first
-          - Solar first
-          - Solar and utility
-          - Only solar
+          utility_first:
+            display_name: Utility first
+          solar_first:
+            display_name: Solar first
+          solar_and_utility:
+            display_name: Solar and utility
+          only_solar:
+            display_name: Only solar
   set_output_priority:
     display_name: Set Output Priority
     group: inverter
@@ -146,9 +157,12 @@ commands:
         type: string
         required: true
         enum:
-          - Utility first
-          - Solar first
-          - SBU
+          utility_first:
+            display_name: Utility first
+          solar_first:
+            display_name: Solar first
+          sbu_first:
+            display_name: Solar-Battery-Utility
 
 alerts:
   no_data:
@@ -257,11 +271,10 @@ alerts:
     display_name: Overload
 
 .cloud:
+  device_type: watchpower_inverter
   category: renewable_energy_sources
   mobile_main_chart: ac_out_active_power
   mobile_telemetry:
-    - charger_source_priority
-    - output_source_priority
     - ac_out_active_power
     - pv_input_power
     - pv_input_volt
@@ -269,7 +282,6 @@ alerts:
     - battery_volt
     - battery_charge_amp
     - battery_discharge_amp
-
   mobile_charts:
     - ac_out_volt
     - ac_out_freq

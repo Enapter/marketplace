@@ -7,7 +7,6 @@ author: muenchris
 support:
   email: cmuench@enapter.com
 license: MIT
-verification_level: verified
 
 communication_module:
   product: ENP-VIRTUAL

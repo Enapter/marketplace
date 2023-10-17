@@ -11,13 +11,14 @@ local output_mode = commands.output_mode
 local device_warning_status = commands.device_warning_status
 local serial_number = commands.serial_number
 local priorities = commands.set_priorities
+local device_model = commands.device_model
 
 local parser = {}
 
 function parser:get_device_model()
   local result, data = mpp_solar:run_with_cache(device_rating_info.command)
   if result then
-    return split(data)[device_rating_info.data.ac_out_apparent_power] .. 'VA', nil
+    return split(data)[device_rating_info.device_model_data] .. 'VA', nil
   else
     return nil, 'no_data'
   end
@@ -52,8 +53,8 @@ function parser:get_device_general_status_params()
     end
 
     telemetry['battery_volt'] = parser:get_battery_voltage(telemetry['battery_volt'])
-    telemetry['pv_input_power'] = tonumber(data[general_parameters.data.pv_input_amp])
-      * tonumber(data[general_parameters.data.pv_input_volt])
+    -- telemetry['pv_input_power'] = tonumber(data[general_parameters.data.pv_input_amp])
+    --   * tonumber(data[general_parameters.data.pv_input_volt])
     return telemetry, nil
   else
     return nil, 'no_data'
@@ -173,14 +174,20 @@ function parser:get_connection_scheme(max_parallel_number)
 end
 
 function parser:get_max_parallel_number()
-  local result, data = mpp_solar:run_with_cache(device_rating_info.command)
-  if result then
-    -- enapter.log('device rating info: '..tostring(data))
-    local max_parallel_number = split(data)[device_rating_info.data.parallel_max_num]
-    if max_parallel_number == '-' then
-      return 0
-    else
-      return tonumber(max_parallel_number)
+  local result, data = mpp_solar:run_with_cache(device_model.command)
+  if result and has_value(mpp_solar.no_qpgs, data) then
+    enapter.log("Inverter doesn't support parallel mode")
+    return 0
+  else
+    local result, data = mpp_solar:run_with_cache(device_rating_info.command)
+    if result then
+      -- enapter.log('device rating info: '..tostring(data))
+      local max_parallel_number = split(data)[device_rating_info.data.parallel_max_num]
+      if max_parallel_number == '-' then
+        return 0
+      else
+        return tonumber(max_parallel_number)
+      end
     end
   end
 end
@@ -196,6 +203,16 @@ function split(str, sep)
   end
 
   return t
+end
+
+function has_value(tab, val)
+  for _, value in ipairs(tab) do
+    if value == val then
+      return true
+    end
+  end
+
+  return false
 end
 
 return parser

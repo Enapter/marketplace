@@ -4,15 +4,16 @@
 local commands = {
   device_rating_info = {
     command = 'QPIRI',
+    device_model_data = 6,
     data = {
       -- grid_rating_voltage = 1,
       -- grid_rating_current = 2,
       -- ac_out_volt = 3,
       -- ac_out_freq = 4,
       -- ac_out_current = 5,
-      ac_out_apparent_power = 6,
-      -- ac_out_active_power = 7,
-      battery_volt = 8,
+      -- ac_out_apparent_power = 6,
+      ac_out_active_power = 7,
+      -- battery_volt_rate = 8,
       -- battery_recharge_voltage = 9,
       -- battery_under_voltage = 10,
       -- battery_bulk_voltage = 11,
@@ -41,6 +42,9 @@ local commands = {
   device_protocol = {
     command = 'QPI',
   },
+  device_model = {
+    command = 'QMN',
+  },
   general_parameters = {
     command = 'QPIGS',
     data = {
@@ -48,7 +52,7 @@ local commands = {
       grid_freq = 2,
       ac_out_volt = 3,
       ac_out_freq = 4,
-      ac_out_apparent_power = 5,
+      -- ac_out_apparent_power = 5,
       ac_out_active_power = 6,
       ac_out_load_percent = 7,
       -- dc_bus_volt = 8,
@@ -56,20 +60,26 @@ local commands = {
       battery_charge_amp = 10,
       battery_capacity = 11,
       -- heat_sink_temperature = 12,
-      pv_input_amp = 13,
+      -- pv_input_amp = 13,
       pv_input_volt = 14,
       -- battery_volt_scc = 15,
       battery_discharge_amp = 16,
       -- device_status = 17,
       -- fans_battery_voltage_offset = 18,
       -- eeprom_version = 19,
-      -- pv_charging_power = 20,
+      pv_charging_power = 20,
       -- device_status1 = 21
     },
   },
   output_mode = {
     command = 'QOPM',
-    values = {},
+    values = {
+      ['0'] = 'Single',
+      ['1'] = 'Parallel',
+      ['2'] = 'Phase 1',
+      ['3'] = 'Phase 2',
+      ['4'] = 'Phase 3',
+    },
   },
   default_settings_info = {
     command = 'QDI',
@@ -142,11 +152,20 @@ local commands = {
   set_priorities = {
     charger = {
       cmd = 'PCP0',
-      values = {},
+      values = {
+        ['utility_first'] = 0,
+        ['solar_first'] = 1,
+        ['solar_and_utility'] = 2,
+        ['only_solar'] = 3,
+      },
     },
     output = {
       cmd = 'POP0',
-      values = {},
+      values = {
+        ['utility_first'] = 0,
+        ['solar_first'] = 1,
+        ['sbu_first'] = 2,
+      },
     },
   },
   parallel_info = {
@@ -158,20 +177,5 @@ local commands = {
     },
   },
 }
-
-commands.output_mode.values['0'] = 'Single'
-commands.output_mode.values['1'] = 'Parallel'
-commands.output_mode.values['2'] = 'Phase 1'
-commands.output_mode.values['3'] = 'Phase 2'
-commands.output_mode.values['4'] = 'Phase 3'
-
-commands.set_priorities.output.values['Utility first'] = 0
-commands.set_priorities.output.values['Solar first'] = 1
-commands.set_priorities.output.values['SBU'] = 2
-
-commands.set_priorities.charger.values['Utility first'] = 0
-commands.set_priorities.charger.values['Solar first'] = 1
-commands.set_priorities.charger.values['Solar and utility'] = 2
-commands.set_priorities.charger.values['Only solar'] = 3
 
 return commands

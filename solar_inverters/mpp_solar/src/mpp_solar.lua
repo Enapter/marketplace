@@ -4,6 +4,7 @@ mpp_solar.baudrate = 2400
 mpp_solar.data_bits = 8
 mpp_solar.parity = 'N'
 mpp_solar.stop_bits = 1
+mpp_solar.no_qpgs = { 'VM-3000', 'MKS2-5000' }
 
 function mpp_solar:run_with_cache(name)
   if mpp_solar:is_in_cache(name) then
@@ -138,6 +139,66 @@ function mpp_solar:crc16(pck)
   crc = crc + b_crc_low
 
   return crc
+end
+
+MA_VOLTAGE_PERIOD = 10
+MA_VOLTAGE_TABLE = {}
+
+function mpp_solar:get_battery_voltage()
+  local voltage, err = mpp_solar:run_qpigs_command(9)
+  if err then
+    MA_VOLTAGE_TABLE = {}
+    return nil, err
+  end
+
+  mpp_solar:add_voltage_to_table(tonumber(voltage))
+  return mpp_solar:get_ma_voltage()
+end
+
+function mpp_solar:add_voltage_to_table(voltage)
+  if #MA_VOLTAGE_TABLE == MA_VOLTAGE_PERIOD then
+    table.remove(MA_VOLTAGE_TABLE, 1)
+  end
+  MA_VOLTAGE_TABLE[#MA_VOLTAGE_TABLE + 1] = voltage
+end
+
+function mpp_solar:get_ma_voltage()
+  local function sum(a, ...)
+    if a then
+      return a + sum(...)
+    else
+      return 0
+    end
+  end
+  return sum(table.unpack(MA_VOLTAGE_TABLE)) / #MA_VOLTAGE_TABLE
+end
+
+function mpp_solar:run_qpigs_command(index)
+  local qpigs_data_len = 17
+  if not (0 < index and index < qpigs_data_len + 1) then
+    return nil, 'QPIGS wrong index ' .. index
+  end
+
+  local data = mpp_solar:run_command('QPIGS')
+  if not data then
+    return nil, 'QPIGS command was not successful'
+  end
+
+  local qpigs_list = split(data, ' ')
+  return qpigs_list[index]
+end
+
+function split(str, sep)
+  if sep == nil then
+    sep = '%s'
+  end
+
+  local t = {}
+  for part in string.gmatch(str, '([^' .. sep .. ']+)') do
+    table.insert(t, part)
+  end
+
+  return t
 end
 
 return mpp_solar
