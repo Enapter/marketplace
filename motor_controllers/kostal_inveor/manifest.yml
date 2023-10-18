@@ -19,7 +19,7 @@ communication_module:
   lua:
     file: firmware.lua
     dependencies:
-      - enapter-ucm
+      - enapter-ucm ~> 0.3.2-1
 
 properties:
   vendor:
@@ -72,15 +72,27 @@ commands:
         display_name: Modbus address
         description: 1-247
         type: integer
+        min: 1
+        max: 247
         required: true
       baudrate:
         display_name: Baudrate
         type: integer
         required: true
+        enum:
+          - 9600
+          - 19200
+          - 38400
+          - 57600
+          - 115200
+          - 2400
+          - 4800
       data_bits:
         display_name: Data bits
         type: integer
         required: true
+        enum:
+          - 8
       parity_bits:
         display_name: None
         type: string
@@ -93,6 +105,9 @@ commands:
         display_name: Stop bits
         type: integer
         required: true
+        enum:
+          - 1
+          - 2
   read_configuration:
     display_name: Read Configuration
     group: config

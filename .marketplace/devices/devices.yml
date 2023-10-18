@@ -602,7 +602,7 @@
 - id: inveor
   display_name: KOSTAL INVEOR MP/MP Modular/MPP/M
   description: Variable frequency drive.
-  icon: enapter-power-meter
+  icon: enapter-motor-controller
   vendor: kostal
   category: motor_controllers
   blueprint_options:
