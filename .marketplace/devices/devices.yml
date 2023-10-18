@@ -599,6 +599,16 @@
     - blueprint: hvac/vitobloc
       verification_level: ready_for_testing
 
+- id: inveor
+  display_name: KOSTAL INVEOR MP/MP Modular/MPP/M
+  description: Variable frequency drive.
+  icon: enapter-motor-controller
+  vendor: kostal
+  category: motor_controllers
+  blueprint_options:
+    - blueprint: motor_controllers/kostal_inveor
+      verification_level: ready_for_testing
+
 - id: igd_toc_635
   display_name: IGD TOC 635
   description: Addressable gas-detector control panel.
