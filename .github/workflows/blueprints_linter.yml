@@ -29,8 +29,8 @@ jobs:
           exit 1
           fi
           fi
-      - name: Check Category Icon
-        run: ./.scripts/category_icon_checker.sh
+      - name: Check Category
+        run: ./.scripts/category_checker.sh
       - name: Check Vendors
         env:
           BRANCH: ${{ github.event.pull_request.head.ref }}
