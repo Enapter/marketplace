@@ -635,11 +635,11 @@
     - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
       verification_level: verified
 
-- id: sunsync-3-phase-hybrid-inverter
-  display_name: Sunsync Three-Phase Hybrid Inverter
-  description: Three-phase hybrid inverter models Sunsync SYNK-8K-SG04LP3 / SYNK-10K-SG04LP3 / SYNK-12K-SG04LP3.
+- id: sunsynk-3-phase-hybrid-inverter
+  display_name: Sunsynk Three-Phase Hybrid Inverter
+  description: Three-phase hybrid inverter models Sunsynk SYNK-8K-SG04LP3 / SYNK-10K-SG04LP3 / SYNK-12K-SG04LP3.
   icon: enapter-inverter-solar
-  vendor: sunsync
+  vendor: sunsynk
   category: solar_inverters
   blueprint_options:
     - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
