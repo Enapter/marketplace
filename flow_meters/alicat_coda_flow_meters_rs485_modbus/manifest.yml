@@ -1,0 +1,125 @@
+blueprint_spec: device/1.0
+
+display_name: Alicat scientific Mass Flow Meter
+description: Versatile mass flow meter.
+icon: enapter-module-din-1
+vendor: alicat
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-RS485
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
+    allow_dev_dependencies: true
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      - ok
+      - warning
+      - read_error
+  mass_flow:
+    type: float
+    unit: NL/h
+    display_name: Mass Flow
+  volumetric_flow:
+    type: float
+    unit: litreh
+    display_name: Volumetric Flow
+  flow_temp:
+    type: float
+    unit: celsius
+    display_name: Flow temperature
+  proportional_gain:
+    type: float
+    display_name: Proportional gain
+  integral_gain:
+    type: float
+    display_name: Integral gain
+  derivative_gain:
+    type: float
+    display_name: Derivative gain
+
+alerts:
+  no_model:
+    display_name: Device model is not set
+    description: Please set device's model via 'Configure' command
+    severity: info
+  config_read_error:
+    display_name: Configuration read error
+    severity: warning
+  rs485_error:
+    display_name: RS-485 initialization error
+    description: Please check RS-485 config.
+    severity: warning
+
+command_groups:
+  config:
+    display_name: Configuration
+
+commands:
+  write_configuration:
+    display_name: Configure
+    group: config
+    populate_values_command: read_configuration
+    ui:
+      icon: file-document-edit-outline
+    arguments:
+      address:
+        display_name: Modbus address
+        type: integer
+        required: true
+      baudrate:
+        display_name: Modbus baudrate
+        type: integer
+        required: true
+        enum:
+          - 9600
+          - 19200
+          - 38400
+          - 57600
+          - 115200
+      parity:
+        display_name: Parity
+        type: string
+        required: true
+        enum:
+          - N
+          - O
+          - E
+      stop_bits:
+        display_name: Modbus stop bits
+        type: integer
+        required: true
+        enum:
+          - 1
+          - 2
+  read_configuration:
+    display_name: Read config Parameters
+    group: config
+    ui:
+      icon: file-check-outline
+
+
+.cloud:
+  category: sensors
+  mobile_main_chart: mass_flow
+  mobile_telemetry:
+    - mass_flow
+    - volumetric_flow
+    - flow_temp

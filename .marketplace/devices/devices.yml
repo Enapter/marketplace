@@ -169,14 +169,25 @@
     - blueprint: ev_chargers/enel_juicebox_32
       verification_level: verified
 
-- id: alicat-scientific-m10slpm-d485
-  display_name: Alicat scientific Mass Flow Meter M-10SLPM-D-485
+- id: alicat-scientific-mass-flow-meter
+  display_name: Alicat scientific Mass Flow Meter
   description: Mass flow meter which monitors mixed gases in changing process conditions.
   icon: enapter-module-din-1
   vendor: alicat
   category: flow_meters
   blueprint_options:
-    - blueprint: flow_meters/alicat_scientific_m10slpm_d485
+    - blueprint: flow_meters/alicat_flow_meters_rs485_modbus
+      verification_level: verified
+
+- id: alicat-scientific-coda-mass-flow-meter
+  display_name: Alicat scientific CODA Mass Flow Meter
+  description: >
+    Coriolis mass flow device which measures gas or liquid flows even when the fluid composition is changing or unknown
+  icon: enapter-module-din-1
+  vendor: alicat
+  category: flow_meters
+  blueprint_options:
+    - blueprint: flow_meters/alicat_coda_flow_meters_rs485_modbus
       verification_level: verified
 
 - id: bronkhorst-f111b

@@ -1,6 +1,15 @@
-# Alicat Scientific Mass Flow Meter
+# Alicat Scientific Mass Flow Meters Series M · MC · P · PC · L · LC
 
-This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Alicat Scientific M-10SLPM-D-485** - mass flow meter which monitors mixed gases in changing process conditions via [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) over [RS-485](https://go.enapter.com/developers-enapter-rs485). The device also supports [RS-232 communication interface](https://go.enapter.com/developers-enapter-rs232).
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates series of **Alicat Scientific Flow Meters** - mass flow meters which monitor mixed gases in changing process conditions via [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) over [RS-485](https://go.enapter.com/developers-enapter-rs485). The device also supports [RS-232 communication interface](https://go.enapter.com/developers-enapter-rs232).
+
+## Supported models
+
+- M-Series;
+- MC-Series;
+- P-Series;
+- PC-Series;
+- L-Series;
+- LC-Series;
 
 ## Connect to Enapter
 
@@ -11,5 +20,5 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integ
 
 ## References
 
-- [Operating manual for mass flow meters](https://go.enapter.com/alicat-sci-10slpm-d485-manual);
+- [Operating manual for mass flow meters](https://go.enapter.com/alicat-mass-flow-meters-manual);
 - [Modbus RTU/TCP manual](https://go.enapter.com/alicat-sci-flowmeter-modbus).
