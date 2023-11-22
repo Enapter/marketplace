@@ -212,3 +212,8 @@
   display_name: Sunsynk
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sunsynk.png
   website: https://www.sunsynk.org
+
+- id: infrasensing
+  display_name: InfraSensing
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/infrasensing.jpg
+  website: https://infrasensing.com/

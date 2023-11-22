@@ -655,3 +655,13 @@
   blueprint_options:
     - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
       verification_level: ready_for_testing
+
+- id: infrasensing_env-thum
+  display_name: InfraSensing ENV-THUM
+  description: Temperature & Humidity Sensor
+  icon: enapter-module-din-1
+  vendor: infrasensing
+  category: analog_io_modules
+  blueprint_options:
+    - blueprint: analog_io_modules/infrasensing_env-thum
+      verification_level: ready_for_testing
