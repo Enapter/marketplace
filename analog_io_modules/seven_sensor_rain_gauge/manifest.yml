@@ -1,0 +1,118 @@
+blueprint_spec: device/1.0
+
+display_name: Rain Gauge 3S-RG
+description: Seven Sensors Rain Gauge 3S-RG.
+icon: enapter-module-din-1
+vendor: infrasensing
+author: enapter
+contributors:
+  - anataty
+  - Rina-an
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+## I don't know??
+communication_module:
+  product: idk
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.2.1
+
+properties:
+  vendor:
+    display_name: Vendor
+    type: string
+  model:
+    display_name: Model
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - error
+  device_model:
+    display_name: Rain sensor model
+    type: string
+  serial_number:
+    display_name: Rain sensor serial number
+    type: string
+  rain_hour:
+    display_name: Rain gauge Hour
+    type: integer
+    unit: mm/h
+  rain_min:
+    display_name: Rain gauge Min
+    type: integer
+    unit: mm
+  rain_sec:
+    display_name: Rain gauge Sec
+    type: integer
+    unit: mm/sec
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: Modbus TCP Connection Not Configured
+    description: Use "Configure" command to setup Modbus TCP connection.
+
+
+commands:
+  # Connection Config
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure Connection
+    group: connection
+    ui:
+      icon: wrench-outline
+    arguments:
+      address:
+        display_name: Address
+        description: Rain Gauge sensor's address (default)
+        type: string
+        required: true
+      baudrate:
+        display_name: Baudrate
+        description: Rain Gauge baudrate (default)
+        type: integer
+        required: true
+      stop_bits:
+        display_name: Stop bits
+        description: Rain Gauge stop bits (default)
+        type: integer
+        required: true
+      parity:
+        display_name: Parity
+        description: Rain Gauge parity (default)
+        type: string
+        required: true
+      data_bits:
+        display_name: Data bits
+        description: Rain Gauge data bits (default)
+        type: integer
+        required: true
+      serial_port:
+        display_name: Serial port
+        description: Rain Gauge serial port
+        type: string
+        required: true
+
+  read_configuration:
+    display_name: Read Configuration
+    group: connection
+    ui:
+      icon: wrench-outline
+      mobile_quick_access: true
+
+
+.cloud:
+  category: analog_io_modules
