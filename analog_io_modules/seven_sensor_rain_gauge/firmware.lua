@@ -155,11 +155,12 @@ function RainGaugeModbusRtu:connect()
   self.modbus = modbusrtu.new(self.serial_port, self.connection)
 end
 
-function RainGaugeModbusRtu:read_inputs(address, number)
+function RainGaugeModbusRtu:read_inputs(address, number, registers_count)
   assert(type(address) == 'number', 'address (arg #1) must be number, given: ' .. inspect(address))
   assert(type(number) == 'number', 'number (arg #2) must be number, given: ' .. inspect(number))
+  assert(type(registers_count) == 'number', 'registers_count (arg #3) must be number, given: ' .. inspect(registers_count))
 
-  local registers, err = self.modbus:read_inputs(self.address, number, 1000)
+  local registers, err = self.modbus:read_inputs(self.address, number,registers_count, 1000)
   if err and err ~= 0 then
     enapter.log('Register ' .. tostring(address) .. ' read error: ' .. err, 'error')
     if err == 1 then
@@ -174,11 +175,12 @@ function RainGaugeModbusRtu:read_inputs(address, number)
 end
 
 
-function RainGaugeModbusRtu:read_holdings(address, number)
+function RainGaugeModbusRtu:read_holdings(address, number, registers_count)
   assert(type(address) == 'number', 'address (arg #1) must be number, given: ' .. inspect(address))
   assert(type(number) == 'number', 'number (arg #2) must be number, given: ' .. inspect(number))
+  assert(type(registers_count) == 'number', 'registers_count (arg #3) must be number, given: ' .. inspect(registers_count))
 
-  local registers, err = self.modbus:read_inputs(self.address, number, 1000)
+  local registers, err = self.modbus:read_holdings(self.address, number, registers_count, 1000)
   if err and err ~= 0 then
     enapter.log('Register ' .. tostring(address) .. ' read error: ' .. err, 'error')
     if err == 1 then
