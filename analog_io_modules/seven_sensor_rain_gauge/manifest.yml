@@ -47,7 +47,7 @@ telemetry:
   rain_min:
     display_name: Rain gauge Min
     type: integer
-    unit: mm
+    unit: mm/min
   rain_sec:
     display_name: Rain gauge Sec
     type: integer
