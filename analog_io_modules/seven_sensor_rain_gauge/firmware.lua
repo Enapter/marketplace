@@ -115,8 +115,15 @@ function connect_device()
     else
       -- Declare global variable to reuse connection between function calls
     --'/dev/ttyS0', {baud_rate=9600,parity="N",stop_bits=1,data_bits=8,read_timeout=1000}
-     device = RainGaugeModbusRtu.new(address,tonumber(baudrate), tostring(parity), tonumber(stop_bits), tonumber(data_bits), tostring(serial_port))
-     device:connect()
+    local conn = {
+      baud_rate = tonumber(baudrate),
+      parity = parity,
+      stop_bits = tonumber(stop_bits),
+      data_bits = 8,
+      read_timeout = 1000
+   }
+    device = RainGaugeModbusRtu.new(serial_port, address, conn)
+    device:connect()
       return device, nil
     end
   end
@@ -130,25 +137,22 @@ RainGaugeModbusRtu = {}
 
 --"/dev/ttyS0", {baud_rate=9600,parity="E",stop_bits=1,data_bits=8,read_timeout=1000}
 
-function RainGaugeModbusRtu.new(addr, baudrate, parity, stop_bits, data_bits, serial_port)
-  assert(type(addr) == 'string', 'addr (arg #1) must be string, given: ' .. inspect(addr))
-  assert(type(baudrate) == 'number', 'baudrate (arg #2) must be number, given: ' .. inspect(baudrate))
-  assert(type(parity) == 'string', 'parity (arg #3) must be string, given: ' .. inspect(parity))
-  assert(type(stop_bits) == 'number', 'stop_bits (arg #4) must be number, given: ' .. inspect(stop_bits))
-  assert(type(data_bits) == 'number', 'data_bits (arg #5) must be number, given: ' .. inspect(data_bits))
-  assert(type(serial_port) == 'string', 'serial_port (arg #6) must be string, given: ' .. inspect(serial_port))
+function RainGaugeModbusRtu.new(serial_port, conn)
+  assert(type(serial_port) == 'string', 'serial_port (arg #1) must be string, given: ' .. inspect(serial_port))
+  assert(type(conn.baudrate) == 'number', 'baudrate must be number, given: ' .. inspect(conn.baudrate))
+  assert(type(conn.parity) == 'string', 'parity must be string, given: ' .. inspect(conn.parity))
+  assert(type(conn.data_bits) == 'number', 'data_bits must be number, given: ' .. inspect(conn.data_bits))
+  assert(type(conn.stop_bits) == 'number', 'stop_bits must be number, given: ' .. inspect(conn.stop_bits))
+   assert(type(conn.read_timeout) == 'number', 'read_timeout must be number, given: ' .. inspect(conn.read_timeout))
+
   local self = setmetatable({}, { __index = RainGaugeModbusRtu })
-  self.addr = addr
-  self.baudrate = baudrate
-  self.parity = parity
-  self.stop_bits = stop_bits
-  self.data_bits = data_bits
   self.serial_port = serial_port
+  self.conn = conn
   return self
 end
 
 function RainGaugeModbusRtu:connect()
-  self.modbus = modbusrtu.new(self.addr)
+  self.modbus = modbusrtu.new(self.serial_port, self.connection)
 end
 
 function RainGaugeModbusRtu:read_inputs(address, number)

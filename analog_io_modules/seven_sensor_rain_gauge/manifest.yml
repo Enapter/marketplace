@@ -13,9 +13,9 @@ support:
   email: support@enapter.com
 license: MIT
 
-## I don't know??
+
 communication_module:
-  product: idk
+  product: ENP-VIRTUAL
   lua:
     file: firmware.lua
     dependencies:
@@ -28,6 +28,9 @@ properties:
   model:
     display_name: Model
     type: string
+  serial_number:
+    display_name: Rain sensor serial number
+    type: string
 
 telemetry:
   status:
@@ -36,12 +39,7 @@ telemetry:
     enum:
       - ok
       - error
-  device_model:
-    display_name: Rain sensor model
-    type: string
-  serial_number:
-    display_name: Rain sensor serial number
-    type: string
+      - read_error
   rain_hour:
     display_name: Rain gauge Hour
     type: integer
@@ -62,8 +60,8 @@ alerts:
     description: Cannot read configuration from flash storage. Check the logs.
   not_configured:
     severity: info
-    display_name: Modbus TCP Connection Not Configured
-    description: Use "Configure" command to setup Modbus TCP connection.
+    display_name: Modbus RTU Connection Not Configured
+    description: Use "Configure" command to setup Modbus RTU connection.
 
 
 commands:
@@ -77,7 +75,7 @@ commands:
     arguments:
       address:
         display_name: Address
-        description: Rain Gauge sensor's address (default)
+        description: Rain Gauge sensor's Modbus address (default)
         type: string
         required: true
       baudrate:
@@ -94,11 +92,6 @@ commands:
         display_name: Parity
         description: Rain Gauge parity (default)
         type: string
-        required: true
-      data_bits:
-        display_name: Data bits
-        description: Rain Gauge data bits (default)
-        type: integer
         required: true
       serial_port:
         display_name: Serial port
