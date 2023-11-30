@@ -64,7 +64,7 @@ function send_telemetry()
 
   local data, result = device:read_holdings(address, 40052, 16, 1000)
     if data then
-      telemetry['serial number'] = toSunSpecStr(data)
+      telemetry['serial_number'] = toSunSpecStr(data)
     else
       enapter.log('Register 40052 reading failed: ' .. modbus.err_to_str(result), 'error')
       status = 'read_error'
@@ -72,7 +72,7 @@ function send_telemetry()
 
   local data, err = device:read_inputs(address, 30022, 1, 1000)
   if data then
-    telemetry['Rain Gauge(Hour)']= table.unpack(data) / 10.0
+    telemetry['rain_gauge_h']= table.unpack(data) / 10.0
   else
     enapter.log('Register 30022 reading failed: no data'.. modbus.err_to_str(err), 'error')
     status = 'read_error'
@@ -80,7 +80,7 @@ function send_telemetry()
 
   local data, err = device:read_inputs(address, 30028, 1, 1000)
   if data then
-    telemetry['Rain Gauge(Min)']= table.unpack(data) / 10.0
+    telemetry['rain_gauge_m']= table.unpack(data) / 10.0
   else
     enapter.log('Register 30022 reading failed: no data'.. modbus.err_to_str(err), 'error')
     status = 'read_error'
@@ -88,7 +88,7 @@ function send_telemetry()
 
   local data, err = device:read_inputs(address, 30029, 1, 1000)
   if data then
-    telemetry['Rain Gauge(Sec)']= table.unpack(data) / 10.0
+    telemetry['rain_gauge_s']= table.unpack(data) / 10.0
   else
     enapter.log('Register 30022 reading failed: no data'.. modbus.err_to_str(err), 'error')
     status = 'read_error'
@@ -123,7 +123,7 @@ function connect_device()
     enapter.log('cannot read config: ' .. tostring(err), 'error')
     return nil, 'cannot_read_config'
   else
-    local address, baudrate, parity, stop_bits, serial_port = values[ADDRESS], values[BAUDRATE], values[STOP_BITS], values[PARITY], values[SERIAL_PORT]
+    local address, baudrate, parity, stop_bits, serial_port = values[ADDRESS], values[BAUDRATE], values[PARITY], values[STOP_BITS], values[SERIAL_PORT]
     if not address or not baudrate or not parity or not stop_bits or not serial_port then
       return nil, 'not_configured'
     else
@@ -135,7 +135,7 @@ function connect_device()
       data_bits = 8,
       read_timeout = 1000
       }
-    device = RainGaugeModbusRtu.new(serial_port, address, conn)
+    device = RainGaugeModbusRtu.new(serial_port, conn)
     device:connect()
       return device, nil
     end
@@ -167,12 +167,12 @@ function RainGaugeModbusRtu:connect()
 end
 
 function RainGaugeModbusRtu:read_inputs(start, count)
-  assert(type(start) == 'start', 'start (arg #2) must be number, given: ' .. inspect(start))
-  assert(type(count) == 'number', 'count (arg #3) must be number, given: ' .. inspect(count))
+  assert(type(start) == 'start', 'start (arg #1) must be number, given: ' .. inspect(start))
+  assert(type(count) == 'number', 'count (arg #2) must be number, given: ' .. inspect(count))
 
   local registers, err = self.modbus:read_inputs(self.address, start, count, 1000)
   if err and err ~= 0 then
-    enapter.log('Register ' .. tostring(self.address) .. ' read error: ' .. err, 'error')
+    enapter.log('Register ' .. tostring(start) .. ' read error: ' .. err, 'error')
     if err == 1 then
       -- Sometimes timeout happens and it may break underlying Modbus client,
       -- this is a temporary workaround which manually reconnects.
@@ -186,12 +186,12 @@ end
 
 
 function RainGaugeModbusRtu:read_holdings(start, count)
-  assert(type(start) == 'start', 'start (arg #2) must be number, given: ' .. inspect(start))
-  assert(type(count) == 'number', 'count (arg #3) must be number, given: ' .. inspect(count))
+  assert(type(start) == 'start', 'start (arg #1) must be number, given: ' .. inspect(start))
+  assert(type(count) == 'number', 'count (arg #2) must be number, given: ' .. inspect(count))
 
   local registers, err = self.modbus:read_holdings(self.address, start, count, 1000)
   if err and err ~= 0 then
-    enapter.log('Register ' .. tostring(self.address) .. ' read error: ' .. err, 'error')
+    enapter.log('Register ' .. tostring(start) .. ' read error: ' .. err, 'error')
     if err == 1 then
       -- Sometimes timeout happens and it may break underlying Modbus client,
       -- this is a temporary workaround which manually reconnects.

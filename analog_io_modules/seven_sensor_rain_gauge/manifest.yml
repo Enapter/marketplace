@@ -40,15 +40,15 @@ telemetry:
       - ok
       - error
       - read_error
-  rain_hour:
+  rain_gauge_h:
     display_name: Rain gauge Hour
     type: integer
     unit: mm/h
-  rain_min:
+  rain_gauge_m:
     display_name: Rain gauge Min
     type: integer
     unit: mm/min
-  rain_sec:
+  rain_gauge_s:
     display_name: Rain gauge Sec
     type: integer
     unit: mm/sec
