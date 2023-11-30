@@ -10,7 +10,6 @@ ADDRESS = 'address'
 BAUDRATE = 'baudrate'
 STOP_BITS = 'stop_bits'
 PARITY = 'parity'
-DATA_BITS = 'data_bits'
 SERIAL_PORT = 'serial_port'
 
 
@@ -110,7 +109,6 @@ function toSunSpecStr(registers)
 end
 
 -- Holds global device connection
-
 local device
 
 function connect_device()
@@ -170,7 +168,7 @@ function RainGaugeModbusRtu:read_inputs(start, count)
   assert(type(start) == 'start', 'start (arg #1) must be number, given: ' .. inspect(start))
   assert(type(count) == 'number', 'count (arg #2) must be number, given: ' .. inspect(count))
 
-  local registers, err = self.modbus:read_inputs(self.address, start, count, 1000)
+  local registers, err = self.modbus:read_inputs(address, start, count, 1000)
   if err and err ~= 0 then
     enapter.log('Register ' .. tostring(start) .. ' read error: ' .. err, 'error')
     if err == 1 then
@@ -189,7 +187,7 @@ function RainGaugeModbusRtu:read_holdings(start, count)
   assert(type(start) == 'start', 'start (arg #1) must be number, given: ' .. inspect(start))
   assert(type(count) == 'number', 'count (arg #2) must be number, given: ' .. inspect(count))
 
-  local registers, err = self.modbus:read_holdings(self.address, start, count, 1000)
+  local registers, err = self.modbus:read_holdings(address, start, count, 1000)
   if err and err ~= 0 then
     enapter.log('Register ' .. tostring(start) .. ' read error: ' .. err, 'error')
     if err == 1 then

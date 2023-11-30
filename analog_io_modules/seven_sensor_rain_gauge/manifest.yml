@@ -124,6 +124,6 @@ commands:
 .cloud:
   category: analog_io_modules
   mobile_charts:
-    - rain_hour
-    - rain_min
-    - rain_sec
+    - rain_gauge_h
+    - rain_gauge_m
+    - rrain_gauge_s
