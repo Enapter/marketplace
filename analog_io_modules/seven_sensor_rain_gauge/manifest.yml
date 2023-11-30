@@ -100,7 +100,7 @@ commands:
           - 2
       parity:
         display_name: Parity
-        description: Rain Gauge parity (default)
+        description: Rain Gauge parity
         type: string
         required: true
         enum:
