@@ -123,6 +123,10 @@ commands:
 
 .cloud:
   category: analog_io_modules
+  mobile_telemetry:
+    - rain_gauge_h
+    - rain_gauge_m
+    - rrain_gauge_s
   mobile_charts:
     - rain_gauge_h
     - rain_gauge_m
