@@ -34,6 +34,22 @@ function send_properties()
   properties.vendor = VENDOR
   properties.model = MODEL
 
+  local data, result = device:read_holdings(address, 40020, 16, 1000)
+  if data then
+    telemetry['model'] = toSunSpecStr(data)
+  else
+    enapter.log('Register 40020 reading failed: ' .. modbus.err_to_str(result), 'error')
+    status = 'read_error'
+  end
+
+  local data, result = device:read_holdings(address, 40052, 16, 1000)
+  if data then
+    telemetry['serial_number'] = toSunSpecStr(data)
+  else
+    enapter.log('Register 40052 reading failed: ' .. modbus.err_to_str(result), 'error')
+    status = 'read_error'
+  end
+
   enapter.send_properties(properties)
 end
 
@@ -52,22 +68,6 @@ function send_telemetry()
   local telemetry = {}
   local alerts = {}
   local status = 'ok'
-
-  local data, result = device:read_holdings(address, 40020, 16, 1000)
-    if data then
-      telemetry['model'] = toSunSpecStr(data)
-    else
-      enapter.log('Register 40020 reading failed: ' .. modbus.err_to_str(result), 'error')
-      status = 'read_error'
-    end
-
-  local data, result = device:read_holdings(address, 40052, 16, 1000)
-    if data then
-      telemetry['serial_number'] = toSunSpecStr(data)
-    else
-      enapter.log('Register 40052 reading failed: ' .. modbus.err_to_str(result), 'error')
-      status = 'read_error'
-  end
 
   local data, err = device:read_inputs(address, 30022, 1, 1000)
   if data then
