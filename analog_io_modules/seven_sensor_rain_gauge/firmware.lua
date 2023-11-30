@@ -13,13 +13,6 @@ PARITY = 'parity'
 DATA_BITS = 'data_bits'
 SERIAL_PORT = 'serial_port'
 
--- конфиг будет содержать в себе не IP address and unit ID, а
--- baud_rate ✅
--- parity ✅
--- stop_bits ✅
--- data_bits 8
--- serial port = "/dev/ttyS0"
-
 
 -- Initiate device firmware. Called at the end of the file.
 
@@ -61,32 +54,44 @@ function send_telemetry()
   local alerts = {}
   local status = 'ok'
 
-
-  -- Model 40020-40035 - String(32)
-  -- Serial number 40052-40067, string(32)
-
-  -- parsing an array to get a string with model and serial number
   local data, result = device:read_holdings(address, 40020, 16, 1000)
     if data then
-      telemetry['model'] = tostring(data)
+      telemetry['model'] = toSunSpecStr(data)
     else
       enapter.log('Register 40020 reading failed: ' .. modbus.err_to_str(result), 'error')
       status = 'read_error'
     end
 
--- Raing gauge hour - ID HEX 0x16, ID DEC 30022, resolution 0.1 mm
--- Raining gauge min ID HEX 0x1C, ID DEc 30028, resolution 0.1 mm
--- Raining gauge sec ID HEX 0x1D, ID DEC 30029, resolution 0.1 mm
-
-
---parsing hex values to get rain gauge hour/min/sec
-  function device:read_inputs(address, 30022, 1, 1000)
+  local data, result = device:read_holdings(address, 40052, 16, 1000)
     if data then
-      telemetry['Rain Gauge(Hour)']= tostring(data)
+      telemetry['serial number'] = toSunSpecStr(data)
     else
-      enapter.log('Register 40020 reading failed: ' .. modbus.err_to_str(result), 'error')
+      enapter.log('Register 40052 reading failed: ' .. modbus.err_to_str(result), 'error')
       status = 'read_error'
-    end
+  end
+
+  local data, err = device:read_inputs(address, 30022, 1, 1000)
+  if data then
+    telemetry['Rain Gauge(Hour)']= table.unpack(data) / 10.0
+  else
+    enapter.log('Register 30022 reading failed: no data'.. modbus.err_to_str(err), 'error')
+    status = 'read_error'
+  end
+
+  local data, err = device:read_inputs(address, 30028, 1, 1000)
+  if data then
+    telemetry['Rain Gauge(Min)']= table.unpack(data) / 10.0
+  else
+    enapter.log('Register 30022 reading failed: no data'.. modbus.err_to_str(err), 'error')
+    status = 'read_error'
+  end
+
+  local data, err = device:read_inputs(address, 30029, 1, 1000)
+  if data then
+    telemetry['Rain Gauge(Sec)']= table.unpack(data) / 10.0
+  else
+    enapter.log('Register 30022 reading failed: no data'.. modbus.err_to_str(err), 'error')
+    status = 'read_error'
   end
 
   telemetry.alerts = alerts
@@ -94,8 +99,17 @@ function send_telemetry()
   enapter.send_telemetry(telemetry)
 end
 
--- Holds global device connection
+function toSunSpecStr(registers)
+  local str = ''
+  for _, reg in pairs(registers) do
+    local msb = reg >> 8
+    local lsb = reg & 0xFF
+    str = str .. string.char(lsb) .. string.char(msb)
+  end
+  return str
+end
 
+-- Holds global device connection
 
 local device
 
@@ -109,19 +123,18 @@ function connect_device()
     enapter.log('cannot read config: ' .. tostring(err), 'error')
     return nil, 'cannot_read_config'
   else
-    local address, baudrate, parity, stop_bits, data_bits, serial_port = values[ADDRESS], values[BAUDRATE], values[STOP_BITS], values[PARITY], values[DATA_BITS], values[SERIAL_PORT]
-    if not address or not baudrate or not parity or not stop_bits or not data_bits or not serial_port then
+    local address, baudrate, parity, stop_bits, serial_port = values[ADDRESS], values[BAUDRATE], values[STOP_BITS], values[PARITY], values[SERIAL_PORT]
+    if not address or not baudrate or not parity or not stop_bits or not serial_port then
       return nil, 'not_configured'
     else
       -- Declare global variable to reuse connection between function calls
-    --'/dev/ttyS0', {baud_rate=9600,parity="N",stop_bits=1,data_bits=8,read_timeout=1000}
     local conn = {
       baud_rate = tonumber(baudrate),
       parity = parity,
       stop_bits = tonumber(stop_bits),
       data_bits = 8,
       read_timeout = 1000
-   }
+      }
     device = RainGaugeModbusRtu.new(serial_port, address, conn)
     device:connect()
       return device, nil
@@ -134,8 +147,6 @@ end
 -------------------------------------------
 
 RainGaugeModbusRtu = {}
-
---"/dev/ttyS0", {baud_rate=9600,parity="E",stop_bits=1,data_bits=8,read_timeout=1000}
 
 function RainGaugeModbusRtu.new(serial_port, conn)
   assert(type(serial_port) == 'string', 'serial_port (arg #1) must be string, given: ' .. inspect(serial_port))
@@ -155,14 +166,13 @@ function RainGaugeModbusRtu:connect()
   self.modbus = modbusrtu.new(self.serial_port, self.connection)
 end
 
-function RainGaugeModbusRtu:read_inputs(address, number, registers_count)
-  assert(type(address) == 'number', 'address (arg #1) must be number, given: ' .. inspect(address))
-  assert(type(number) == 'number', 'number (arg #2) must be number, given: ' .. inspect(number))
-  assert(type(registers_count) == 'number', 'registers_count (arg #3) must be number, given: ' .. inspect(registers_count))
+function RainGaugeModbusRtu:read_inputs(start, count)
+  assert(type(start) == 'start', 'start (arg #2) must be number, given: ' .. inspect(start))
+  assert(type(count) == 'number', 'count (arg #3) must be number, given: ' .. inspect(count))
 
-  local registers, err = self.modbus:read_inputs(self.address, number,registers_count, 1000)
+  local registers, err = self.modbus:read_inputs(self.address, start, count, 1000)
   if err and err ~= 0 then
-    enapter.log('Register ' .. tostring(address) .. ' read error: ' .. err, 'error')
+    enapter.log('Register ' .. tostring(self.address) .. ' read error: ' .. err, 'error')
     if err == 1 then
       -- Sometimes timeout happens and it may break underlying Modbus client,
       -- this is a temporary workaround which manually reconnects.
@@ -175,14 +185,13 @@ function RainGaugeModbusRtu:read_inputs(address, number, registers_count)
 end
 
 
-function RainGaugeModbusRtu:read_holdings(address, number, registers_count)
-  assert(type(address) == 'number', 'address (arg #1) must be number, given: ' .. inspect(address))
-  assert(type(number) == 'number', 'number (arg #2) must be number, given: ' .. inspect(number))
-  assert(type(registers_count) == 'number', 'registers_count (arg #3) must be number, given: ' .. inspect(registers_count))
+function RainGaugeModbusRtu:read_holdings(start, count)
+  assert(type(start) == 'start', 'start (arg #2) must be number, given: ' .. inspect(start))
+  assert(type(count) == 'number', 'count (arg #3) must be number, given: ' .. inspect(count))
 
-  local registers, err = self.modbus:read_holdings(self.address, number, registers_count, 1000)
+  local registers, err = self.modbus:read_holdings(self.address, start, count, 1000)
   if err and err ~= 0 then
-    enapter.log('Register ' .. tostring(address) .. ' read error: ' .. err, 'error')
+    enapter.log('Register ' .. tostring(self.address) .. ' read error: ' .. err, 'error')
     if err == 1 then
       -- Sometimes timeout happens and it may break underlying Modbus client,
       -- this is a temporary workaround which manually reconnects.

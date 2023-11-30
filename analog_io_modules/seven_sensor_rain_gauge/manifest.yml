@@ -75,24 +75,38 @@ commands:
     arguments:
       address:
         display_name: Address
-        description: Rain Gauge sensor's Modbus address (default)
-        type: string
+        description: Rain Gauge sensor's Modbus address
+        type: integer
         required: true
+        min: 1
+        max: 247
       baudrate:
         display_name: Baudrate
-        description: Rain Gauge baudrate (default)
+        description: Rain Gauge baudrate
         type: integer
         required: true
+        enum:
+          - 4800
+          - 9600
+          - 19200
+          - 38400
       stop_bits:
         display_name: Stop bits
-        description: Rain Gauge stop bits (default)
+        description: Rain Gauge stop bits (only at None parity)
         type: integer
         required: true
+        enum:
+          - 1
+          - 2
       parity:
         display_name: Parity
         description: Rain Gauge parity (default)
         type: string
         required: true
+        enum:
+          - N
+          - E
+          - O
       serial_port:
         display_name: Serial port
         description: Rain Gauge serial port
@@ -109,3 +123,7 @@ commands:
 
 .cloud:
   category: analog_io_modules
+  mobile_charts:
+    - rain_hour
+    - rain_min
+    - rain_sec
