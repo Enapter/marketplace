@@ -1,6 +1,6 @@
 # Rain Gauge 3S-RG by Seven Sensor Solutions
 
-This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Rain Gauge sensor** - meteorological senso created to accurately measure the rainfall - via [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) implemented on [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm).
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Rain Gauge sensor** - meteorological sensor created to accurately measure the rainfall - via [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) implemented on [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm).
 
 ## Connect to Enapter
 
