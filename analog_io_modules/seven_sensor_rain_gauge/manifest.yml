@@ -92,7 +92,7 @@ commands:
           - 38400
       stop_bits:
         display_name: Stop bits
-        description: Rain Gauge stop bits (only at None parity)
+        description: Rain Gauge stop bits
         type: integer
         required: true
         enum:
@@ -126,8 +126,8 @@ commands:
   mobile_telemetry:
     - rain_gauge_h
     - rain_gauge_m
-    - rrain_gauge_s
+    - rain_gauge_s
   mobile_charts:
     - rain_gauge_h
     - rain_gauge_m
-    - rrain_gauge_s
+    - rain_gauge_s
