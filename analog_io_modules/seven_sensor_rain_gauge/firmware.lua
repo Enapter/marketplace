@@ -20,7 +20,7 @@ function main()
     [STOP_BITS] = { type = 'number', required = true, default = 1 },
     [PARITY] = { type = 'string', required = true, default = 'N' },
     [ADDRESS] = { type = 'number', required = true, default = 1 },
-    [SERIAL_PORT]= {type = 'string', required = true, default = '/dev/ttyS0' }
+    [SERIAL_PORT] = {type = 'string', required = true, default = '/dev/ttyS0' }
   })
   scheduler.add(30000, send_properties)
   scheduler.add(1000, send_telemetry)
@@ -74,7 +74,7 @@ function send_telemetry()
   if data then
     telemetry['rain_gauge_h'] = table.unpack(data) / 10.0
   else
-    enapter.log('Register 30022 reading failed: '.. err, 'error')
+    enapter.log('Register 30022 reading failed: ' .. err, 'error')
     status = 'read_error'
   end
 
@@ -134,13 +134,13 @@ function connect_device()
       return nil, 'not_configured'
     else
       -- Declare global variable to reuse connection between function calls
-    local conn = {
-      baudrate = tonumber(baudrate),
-      parity = parity,
-      stop_bits = tonumber(stop_bits),
-      data_bits = 8,
-      read_timeout = 1000
-    }
+      local conn = {
+        baudrate = tonumber(baudrate),
+        parity = parity,
+        stop_bits = tonumber(stop_bits),
+        data_bits = 8,
+        read_timeout = 1000
+      }
       device = RainGaugeModbusRtu.new(serial_port, conn, address)
       device:connect()
       return device, nil
