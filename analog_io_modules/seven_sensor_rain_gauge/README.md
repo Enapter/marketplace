@@ -20,7 +20,7 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integ
     |-----------|------|
     | Address   | 1    |
     | Baudrate  | 9600 |
-    | Stop bits | 1,2  |
+    | Stop bits | 1    |
     | Parity    | N    |
 
 ## References
