@@ -63,13 +63,16 @@ alerts:
     display_name: Modbus RTU Connection Not Configured
     description: Use "Configure" command to setup Modbus RTU connection.
 
+command_groups:
+  config:
+    display_name: Configuration
 
 commands:
   # Connection Config
   write_configuration:
     populate_values_command: read_configuration
     display_name: Configure Connection
-    group: connection
+    group: config
     ui:
       icon: wrench-outline
     arguments:
@@ -112,10 +115,9 @@ commands:
         description: Rain Gauge serial port
         type: string
         required: true
-
   read_configuration:
     display_name: Read Configuration
-    group: connection
+    group: config
     ui:
       icon: wrench-outline
       mobile_quick_access: true

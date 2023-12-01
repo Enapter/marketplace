@@ -72,19 +72,19 @@ function send_telemetry()
     return
   end
 
-  local data, err = device:read_inputs( 30022, 1)
+  local data, err = device:read_inputs(30022, 1)
   if data then
     telemetry['rain_gauge_h']= table.unpack(data) / 10.0
   else
-    enapter.log('Register 30022 reading failed: no data'.. device.err_to_str(err), 'error')
+    enapter.log('Register 30022 reading failed: '.. err, 'error')
     status = 'read_error'
   end
 
-  local data, err = device:read_inputs( 30028, 1)
+  local data, err = device:read_inputs(30028, 1)
   if data then
     telemetry['rain_gauge_m']= table.unpack(data) / 10.0
   else
-    enapter.log('Register 30022 reading failed: no data'.. device.err_to_str(err), 'error')
+    enapter.log('Register 30022 reading failed: '.. err, 'error')
     status = 'read_error'
   end
 
@@ -92,7 +92,7 @@ function send_telemetry()
   if data then
     telemetry['rain_gauge_s']= table.unpack(data) / 10.0
   else
-    enapter.log('Register 30022 reading failed: no data'.. device.err_to_str(err), 'error')
+    enapter.log('Register 30022 reading failed: '.. err, 'error')
     status = 'read_error'
   end
 
@@ -137,13 +137,13 @@ function connect_device()
     else
       -- Declare global variable to reuse connection between function calls
     local conn = {
-      baud_rate = tonumber(baudrate),
+      baudrate = tonumber(baudrate),
       parity = parity,
       stop_bits = tonumber(stop_bits),
       data_bits = 8,
       read_timeout = 1000
       }
-    device = RainGaugeModbusRtu.new(serial_port, conn)
+    device = RainGaugeModbusRtu.new(serial_port, conn, address)
     device:connect()
       return device, nil
     end
@@ -156,19 +156,19 @@ end
 
 RainGaugeModbusRtu = {}
 
-function RainGaugeModbusRtu.new(serial_port, conn, addr)
+function RainGaugeModbusRtu.new(serial_port, conn, address)
   assert(type(serial_port) == 'string', 'serial_port (arg #1) must be string, given: ' .. inspect(serial_port))
   assert(type(conn.baudrate) == 'number', 'baudrate must be number, given: ' .. inspect(conn.baudrate))
   assert(type(conn.parity) == 'string', 'parity must be string, given: ' .. inspect(conn.parity))
   assert(type(conn.data_bits) == 'number', 'data_bits must be number, given: ' .. inspect(conn.data_bits))
   assert(type(conn.stop_bits) == 'number', 'stop_bits must be number, given: ' .. inspect(conn.stop_bits))
   assert(type(conn.read_timeout) == 'number', 'read_timeout must be number, given: ' .. inspect(conn.read_timeout))
-  assert(type(addr) == 'number', 'address must be number, given: ' .. inspect(addr))
+  assert(type(address) == 'number', 'address must be number, given: ' .. inspect(address))
 
   local self = setmetatable({}, { __index = RainGaugeModbusRtu })
   self.serial_port = serial_port
   self.conn = conn
-  self.address = addr
+  self.address = address
   return self
 end
 
@@ -177,7 +177,7 @@ function RainGaugeModbusRtu:connect()
 end
 
 function RainGaugeModbusRtu:read_inputs(start, count)
-  assert(type(start) == 'start', 'start (arg #1) must be number, given: ' .. inspect(start))
+  assert(type(start) == 'number', 'start (arg #1) must be number, given: ' .. inspect(start))
   assert(type(count) == 'number', 'count (arg #2) must be number, given: ' .. inspect(count))
 
   local registers, err = self.modbus:read_inputs(self.address, start, count, 1000)
@@ -196,7 +196,7 @@ end
 
 
 function RainGaugeModbusRtu:read_holdings(start, count)
-  assert(type(start) == 'start', 'start (arg #1) must be number, given: ' .. inspect(start))
+  assert(type(start) == 'number', 'start (arg #1) must be number, given: ' .. inspect(start))
   assert(type(count) == 'number', 'count (arg #2) must be number, given: ' .. inspect(count))
 
   local registers, err = self.modbus:read_holdings(self.address, start, count, 1000)
