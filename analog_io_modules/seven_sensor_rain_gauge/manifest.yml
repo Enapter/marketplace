@@ -2,8 +2,8 @@ blueprint_spec: device/1.0
 
 display_name: Rain Gauge 3S-RG
 description: Seven Sensors Rain Gauge 3S-RG.
-icon: enapter-module-din-1
-vendor: infrasensing
+icon: enapter-gauge
+vendor: Seven Sensors
 author: enapter
 contributors:
   - anataty
@@ -12,6 +12,7 @@ support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
 license: MIT
+verification_level: ready_for_testing
 
 
 communication_module:
