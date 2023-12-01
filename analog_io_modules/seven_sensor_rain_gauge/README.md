@@ -16,10 +16,12 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integ
   - Serial port
 
 - Default values as stated by the manufacturer:
-  - Address - 1
-  - Baudrate - 9600
-  - Stop bits - 1,2 (only at None parity)
-  - Parity - N
+    | Metric    |Value | 
+    |-----------|------|
+    | Address   | 1    |
+    | Baudrate  | 9600 |
+    | Stop bits | 1,2  |
+    | Parity    | N    |
 
 ## References
 
