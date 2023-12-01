@@ -12,7 +12,6 @@ STOP_BITS = 'stop_bits'
 PARITY = 'parity'
 SERIAL_PORT = 'serial_port'
 
-
 -- Initiate device firmware. Called at the end of the file.
 
 function main()
@@ -21,7 +20,7 @@ function main()
     [STOP_BITS] = { type = 'number', required = true, default = 1 },
     [PARITY] = { type = 'string', required = true, default = 'N' },
     [ADDRESS] = { type = 'number', required = true, default = 1 },
-    [SERIAL_PORT]= {type = 'string', required = true, default = '/dev/ttyS0'}
+    [SERIAL_PORT]= {type = 'string', required = true, default = '/dev/ttyS0' }
   })
   scheduler.add(30000, send_properties)
   scheduler.add(1000, send_telemetry)
@@ -43,12 +42,12 @@ function send_properties()
     return
   end
 
-  local data = device:read_holdings( 40020, 16)
+  local data = device:read_holdings(40020, 16)
   if data then
     telemetry['model'] = toSunSpecStr(data)
   end
 
-  local data = device:read_holdings( 40052, 16)
+  local data = device:read_holdings(40052, 16)
   if data then
     telemetry['serial_number'] = toSunSpecStr(data)
   end
@@ -57,7 +56,6 @@ function send_properties()
 end
 
 function send_telemetry()
-
   local telemetry = {}
   local alerts = {}
   local status = 'ok'
@@ -74,7 +72,7 @@ function send_telemetry()
 
   local data, err = device:read_inputs(30022, 1)
   if data then
-    telemetry['rain_gauge_h']= table.unpack(data) / 10.0
+    telemetry['rain_gauge_h'] = table.unpack(data) / 10.0
   else
     enapter.log('Register 30022 reading failed: '.. err, 'error')
     status = 'read_error'
@@ -82,17 +80,17 @@ function send_telemetry()
 
   local data, err = device:read_inputs(30028, 1)
   if data then
-    telemetry['rain_gauge_m']= table.unpack(data) / 10.0
+    telemetry['rain_gauge_m'] = table.unpack(data) / 10.0
   else
-    enapter.log('Register 30022 reading failed: '.. err, 'error')
+    enapter.log('Register 30022 reading failed: ' .. err, 'error')
     status = 'read_error'
   end
 
   local data, err = device:read_inputs(30029, 1)
   if data then
-    telemetry['rain_gauge_s']= table.unpack(data) / 10.0
+    telemetry['rain_gauge_s'] = table.unpack(data) / 10.0
   else
-    enapter.log('Register 30022 reading failed: '.. err, 'error')
+    enapter.log('Register 30022 reading failed: ' .. err, 'error')
     status = 'read_error'
   end
 
@@ -130,8 +128,8 @@ function connect_device()
     enapter.log('cannot read config: ' .. tostring(err), 'error')
     return nil, 'cannot_read_config'
   else
-    local address, baudrate, parity, stop_bits, serial_port = values[ADDRESS], values[BAUDRATE], values[PARITY],
-    values[STOP_BITS], values[SERIAL_PORT]
+    local address, baudrate, parity, stop_bits, serial_port =
+     values[ADDRESS], values[BAUDRATE], values[PARITY], values[STOP_BITS], values[SERIAL_PORT]
     if not address or not baudrate or not parity or not stop_bits or not serial_port then
       return nil, 'not_configured'
     else
@@ -142,9 +140,9 @@ function connect_device()
       stop_bits = tonumber(stop_bits),
       data_bits = 8,
       read_timeout = 1000
-      }
-    device = RainGaugeModbusRtu.new(serial_port, conn, address)
-    device:connect()
+    }
+      device = RainGaugeModbusRtu.new(serial_port, conn, address)
+      device:connect()
       return device, nil
     end
   end
@@ -193,7 +191,6 @@ function RainGaugeModbusRtu:read_inputs(start, count)
 
   return registers
 end
-
 
 function RainGaugeModbusRtu:read_holdings(start, count)
   assert(type(start) == 'number', 'start (arg #1) must be number, given: ' .. inspect(start))
