@@ -89,7 +89,7 @@ function send_telemetry()
 end
 
 function toSunSpecStr(registers)
-  local str = '
+  local str = ''
   local ok, err = pcall(function()
     for _, reg in pairs(registers) do
       local msb = reg >> 8
