@@ -1,6 +1,6 @@
 local config = require('enapter.ucm.config')
 
-VENDOR = 'seven_sensor_solutions'
+VENDOR = 'Seven Sensor Solutions'
 
 -- Configuration variables must be also defined
 -- in `write_configuration` command arguments in manifest.yml

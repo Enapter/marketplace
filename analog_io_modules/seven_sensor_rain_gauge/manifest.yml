@@ -3,7 +3,7 @@ blueprint_spec: device/1.0
 display_name: Rain Gauge 3S-RG
 description: Seven Sensors Rain Gauge 3S-RG.
 icon: enapter-gauge
-vendor: Seven Sensor Solutions
+vendor: seven_sensor_solutions
 author: enapter
 contributors:
   - anataty
