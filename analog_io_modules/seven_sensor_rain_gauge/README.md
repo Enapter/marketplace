@@ -12,11 +12,11 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integ
   - Address;
   - Baudrate;
   - Stop bits;
-  - Parity; 
+  - Parity;
   - Serial port
 
 - Default values as stated by the manufacturer:
-    | Metric    |Value | 
+    | Metric    |Value |
     |-----------|------|
     | Address   | 1    |
     | Baudrate  | 9600 |
