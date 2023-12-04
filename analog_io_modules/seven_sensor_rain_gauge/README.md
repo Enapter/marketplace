@@ -15,7 +15,7 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integ
   - Parity;
   - Serial port
 
-### Default values as stated by the manufacturer:
+### Default values as stated by the manufacturer
 
     | Metric    |Value |
     |-----------|------|
