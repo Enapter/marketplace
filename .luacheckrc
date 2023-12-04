@@ -93,6 +93,9 @@ stds.vucm = {
     http = {
       fields = { 'get', 'post', 'post_form', 'client', 'request' },
     },
+    modbusrtu = {
+      fields = { 'new', 'err_to_str' },
+    },
   },
 }
 

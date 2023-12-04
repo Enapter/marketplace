@@ -665,3 +665,13 @@
   blueprint_options:
     - blueprint: analog_io_modules/infrasensing_env-thum
       verification_level: ready_for_testing
+
+- id: seven_sensor_rain_gauge
+  display_name: Seven Sensor Solutions Rain Gauge 3S-RG
+  description: Meteorological sensor
+  icon: enapter-gauge
+  vendor: seven_sensor_solutions
+  category: analog_io_modules
+  blueprint_options:
+    - blueprint: analog_io_modules/seven_sensor_rain_gauge
+      verification_level: ready_for_testing

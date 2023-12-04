@@ -217,3 +217,8 @@
   display_name: InfraSensing
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/infrasensing.jpg
   website: https://infrasensing.com/
+
+- id: seven_sensor_solutions
+  display_name: Seven Sensor Solutions
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sevensensor.png
+  website: https://www.sevensensor.com/
