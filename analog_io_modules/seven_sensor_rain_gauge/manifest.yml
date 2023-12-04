@@ -30,7 +30,7 @@ properties:
     display_name: Model
     type: string
   serial_number:
-    display_name: Rain sensor serial number
+    display_name: Serial number
     type: string
 
 telemetry:
