@@ -13,7 +13,7 @@ support:
 license: MIT
 
 communication_module:
-  product: ENP-AI4-50V
+  product: ENP-AI4
   lua:
     file: firmware.lua
     dependencies:
@@ -77,6 +77,7 @@ commands:
   mobile_main_chart: pressure
   mobile_telemetry:
     - pressure
+    - adc_voltage
   mobile_charts:
     - pressure
-    - voltage
+    - adc_voltage
