@@ -103,7 +103,7 @@ function get_alerts_and_status(telemetry)
     local temperature_warning_low = values[TEMP_WARN_LOW]
     local temperature_critical_low = values[TEMP_CRIT_LOW]
     local temperature_warning_high = values[TEMP_WARN_HIGH]
-    local temperature_critical_high= values[TEMP_CRIT_HIGH]
+    local temperature_critical_high = values[TEMP_CRIT_HIGH]
     local humidity_warning_low = values[HUM_WARN_LOW]
     local humidity_critical_low = values[HUM_CRIT_LOW]
     local humidity_warning_high = values[HUM_WARN_HIGH]
@@ -175,12 +175,12 @@ function get_alerts_and_status(telemetry)
         table.insert(alerts, 'humidity_critical_high')
         critical_present = true
       elseif telemetry.humidity >= humidity_warning_high then
-        table.insert(alerts,'humidity_warning_high')
+        table.insert(alerts, 'humidity_warning_high')
         warning_present = true
       end
     elseif humidity_warning_high then
       if telemetry.humidity >= humidity_warning_high then
-        table.insert(alerts,'humidity_warning_high')
+        table.insert(alerts, 'humidity_warning_high')
         warning_present = true
       end
     elseif humidity_critical_high then
@@ -339,7 +339,7 @@ function config.serialize(_, value)
   if value then
     return tostring(value)
   else
-    return ""
+    return ''
   end
 end
 
@@ -371,7 +371,9 @@ function config.build_write_configuration_command(options)
       end
 
       local err = config.write(name, args[name])
-      if err then ctx.error('cannot write `' .. name .. '`: ' .. err) end
+      if err then
+        ctx.error('cannot write `' .. name .. '`: ' .. err)
+      end
     end
   end
 end
