@@ -19,12 +19,11 @@ BAT_WARN = 'battery_voltage_threshold'
 active_alerts = {}
 
 -- load additional libraries
-json = require("json")
+json = require('json')
 
 -- main() sets up scheduled functions and command handlers,
 -- it's called explicitly at the end of the file
 function main()
-
   -- Init config & register config management commands
   config.init({
     [ADDRESS_CONFIG] = { type = 'string', required = true },
@@ -50,7 +49,7 @@ end
 function send_properties()
   enapter.send_properties({
     vendor = 'SONOFF',
-    model = 'SNZB-02D'
+    model = 'SNZB-02D',
   })
 end
 
@@ -58,17 +57,16 @@ local function urlencode(url)
   if url == nil then
     return
   end
-  url = url:gsub(" ", "+")
+  url = url:gsub(' ', '+')
   return url
 end
 
 function get_sensor_data()
-
   local values, err = config.read_all()
   local warning = nil
 
   if err then
-    enapter.log('cannot read config: '..tostring(err), 'error')
+    enapter.log('cannot read config: ' .. tostring(err), 'error')
     return nil, 'cannot_read_config'
   else
     local address, device_name = values[ADDRESS_CONFIG], values[DEVICE_NAME_CONFIG]
@@ -76,14 +74,14 @@ function get_sensor_data()
       return nil, 'not_configured'
     end
 
-    local client = http.client({timeout = 10})
-    local response, err = client:get(urlencode(address..'?device='..device_name))
+    local client = http.client({ timeout = 10 })
+    local response, err = client:get(urlencode(address .. '?device=' .. device_name))
 
     if err then
-      enapter.log('Cannot do request: '..err, 'error')
+      enapter.log('Cannot do request: ' .. err, 'error')
       return nil, 'no_connection'
     elseif response.code ~= 200 then
-      enapter.log('Request returned non-OK code: '..response.code, 'error')
+      enapter.log('Request returned non-OK code: ' .. response.code, 'error')
       return nil, 'wrong_request'
     else
       return json.decode(response.body), warning
@@ -92,15 +90,14 @@ function get_sensor_data()
 end
 
 function get_alerts_and_status(telemetry)
-
   local values, err = config.read_all()
   local alerts = {}
   local critical_present = false
   local warning_present = false
 
   if err then
-    enapter.log('cannot read config: '..tostring(err), 'error')
-    table.insert(alerts, "cannot_read_config")
+    enapter.log('cannot read config: ' .. tostring(err), 'error')
+    table.insert(alerts, 'cannot_read_config')
     critical_present = true
   else
     local temperature_warning_low = values[TEMP_WARN_LOW]
@@ -115,92 +112,92 @@ function get_alerts_and_status(telemetry)
 
     if temperature_warning_low and temperature_critical_low then
       if telemetry.temperature <= temperature_critical_low then
-        table.insert(alerts,"temperature_critical_low")
+        table.insert(alerts, 'temperature_critical_low')
         critical_present = true
       elseif telemetry.temperature <= temperature_warning_low then
-        table.insert(alerts,"temperature_warning_low")
+        table.insert(alerts, 'temperature_warning_low')
         warning_present = true
       end
     elseif temperature_warning_low then
       if telemetry.temperature <= temperature_warning_low then
-        table.insert(alerts,"temperature_warning_low")
+        table.insert(alerts, 'temperature_warning_low')
         warning_present = true
       end
     elseif temperature_critical_low then
       if telemetry.temperature <= temperature_critical_low then
-        table.insert(alerts,"temperature_critical_low")
+        table.insert(alerts, 'temperature_critical_low')
         critical_present = true
       end
     end
 
     if temperature_warning_high and temperature_critical_high then
       if telemetry.temperature >= temperature_critical_high then
-        table.insert(alerts,"temperature_critical_high")
+        table.insert(alerts, 'temperature_critical_high')
         critical_present = true
       elseif telemetry.temperature >= temperature_warning_high then
-        table.insert(alerts,"temperature_warning_high")
+        table.insert(alerts, 'temperature_warning_high')
         warning_present = true
       end
     elseif temperature_warning_high then
       if telemetry.temperature >= temperature_warning_high then
-        table.insert(alerts,"temperature_warning_high")
+        table.insert(alerts, 'temperature_warning_high')
         warning_present = true
       end
     elseif temperature_critical_high then
       if telemetry.temperature >= temperature_critical_high then
-        table.insert(alerts,"temperature_critical_high")
+        table.insert(alerts, 'temperature_critical_high')
         critical_present = true
       end
     end
 
     if humidity_warning_low and humidity_critical_low then
       if telemetry.humidity <= humidity_critical_low then
-        table.insert(alerts,"humidity_critical_low")
+        table.insert(alerts, 'humidity_critical_low')
         critical_present = true
       elseif telemetry.humidity <= humidity_warning_low then
-        table.insert(alerts,"humidity_warning_low")
+        table.insert(alerts, 'humidity_warning_low')
         warning_present = true
       end
     elseif humidity_warning_low then
       if telemetry.humidity <= humidity_warning_low then
-        table.insert(alerts,"humidity_warning_low")
+        table.insert(alerts, 'humidity_warning_low')
         warning_present = true
       end
     elseif humidity_critical_low then
       if telemetry.humidity <= humidity_critical_low then
-        table.insert(alerts,"humidity_critical_low")
+        table.insert(alerts, 'humidity_critical_low')
         critical_present = true
       end
     end
 
     if humidity_warning_high and humidity_critical_high then
       if telemetry.humidity >= humidity_critical_high then
-        table.insert(alerts,"humidity_critical_high")
+        table.insert(alerts, 'humidity_critical_high')
         critical_present = true
       elseif telemetry.humidity >= humidity_warning_high then
-        table.insert(alerts,"humidity_warning_high")
+        table.insert(alerts,'humidity_warning_high')
         warning_present = true
       end
     elseif humidity_warning_high then
       if telemetry.humidity >= humidity_warning_high then
-        table.insert(alerts,"humidity_warning_high")
+        table.insert(alerts,'humidity_warning_high')
         warning_present = true
       end
     elseif humidity_critical_high then
       if telemetry.humidity >= humidity_critical_high then
-        table.insert(alerts,"humidity_critical_high")
+        table.insert(alerts, 'humidity_critical_high')
         critical_present = true
       end
     end
 
     if battery_voltage_threshold then
       if telemetry.battery <= battery_voltage_threshold then
-        table.insert(alerts,"battery_voltage_low")
+        table.insert(alerts, 'battery_voltage_low')
         warning_present = true
       end
     else
       if telemetry.battery <= 20 then
-        table.insert(alerts,"battery_voltage_low")
+        table.insert(alerts, 'battery_voltage_low')
         warning_present = true
       end
     end
@@ -215,7 +212,6 @@ function get_alerts_and_status(telemetry)
   end
 
   return alerts, status
-
 end
 
 function send_telemetry()
@@ -225,7 +221,7 @@ function send_telemetry()
 
   if not sensor and err then
     active_alerts = { err }
-    status = "crit"
+    status = 'crit'
   else
     active_alerts = { err }
     telemetry.temperature = sensor['temperature']
@@ -236,15 +232,15 @@ function send_telemetry()
     local data_alerts, data_status = get_alerts_and_status(telemetry)
 
     if data_status == nil then
-      status = "okay"
+      status = 'okay'
     else
       for _, v in ipairs(data_alerts) do
         table.insert(active_alerts, v)
       end
       if data_status == true then
-        status = "crit"
+        status = 'crit'
       else
-        status = "warn"
+        status = 'warn'
       end
     end
   end
@@ -273,7 +269,7 @@ function config.init(options)
   assert(not config.initialized, 'config can be initialized only once')
   for name, params in pairs(options) do
     local type_ok = params.type == 'string' or params.type == 'number' or params.type == 'boolean'
-    assert(type_ok, 'type of `'..name..'` option should be either string or number or boolean')
+    assert(type_ok, 'type of `' .. name .. '` option should be either string or number or boolean')
   end
 
   enapter.register_command_handler('write_configuration', config.build_write_configuration_command(options))
@@ -292,7 +288,7 @@ function config.read_all()
   for name, _ in pairs(config.options) do
     local value, err = config.read(name)
     if err then
-      return nil, 'cannot read `'..name..'`: '..err
+      return nil, 'cannot read `' .. name .. '`: ' .. err
     else
       result[name] = value
     end
@@ -306,16 +302,16 @@ end
 -- @return nil|error
 function config.read(name)
   local params = config.options[name]
-  assert(params, 'undeclared config option: `'..name..'`, declare with config.init')
+  assert(params, 'undeclared config option: `' .. name .. '`, declare with config.init')
 
   local ok, value, ret = pcall(function()
     return storage.read(name)
   end)
 
   if not ok then
-    return nil, 'error reading from storage: '..tostring(value)
+    return nil, 'error reading from storage: ' .. tostring(value)
   elseif ret and ret ~= 0 then
-    return nil, 'error reading from storage: '..storage.err_to_str(ret)
+    return nil, 'error reading from storage: ' .. storage.err_to_str(ret)
   elseif value then
     return config.deserialize(name, value), nil
   else
@@ -332,9 +328,9 @@ function config.write(name, val)
   end)
 
   if not ok then
-    return 'error writing to storage: '..tostring(ret)
+    return 'error writing to storage: ' .. tostring(ret)
   elseif ret and ret ~= 0 then
-    return 'error writing to storage: '..storage.err_to_str(ret)
+    return 'error writing to storage: ' .. storage.err_to_str(ret)
   end
 end
 
@@ -350,7 +346,7 @@ end
 -- Deserializes value from stored string
 function config.deserialize(name, value)
   local params = config.options[name]
-  assert(params, 'undeclared config option: `'..name..'`, declare with config.init')
+  assert(params, 'undeclared config option: `' .. name .. '`, declare with config.init')
 
   if params.type == 'number' then
     return tonumber(value)
@@ -371,11 +367,11 @@ function config.build_write_configuration_command(options)
   return function(ctx, args)
     for name, params in pairs(options) do
       if params.required then
-        assert(args[name], '`'..name..'` argument required')
+        assert(args[name], '`' .. name .. '` argument required')
       end
 
       local err = config.write(name, args[name])
-      if err then ctx.error('cannot write `'..name..'`: '..err) end
+      if err then ctx.error('cannot write `' .. name .. '`: ' .. err) end
     end
   end
 end
