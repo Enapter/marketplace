@@ -35,19 +35,19 @@ telemetry:
     display_name: Status
     enum:
       okay:
-        display_name: 'Everything OK'
+        display_name: Everything OK
         color: '#00FF00'
       warn:
-        display_name: 'Warning'
+        display_name: Warning
         color: '#FFFF00'
       crit:
-        display_name: 'Critical'
+        display_name: Critical
         color: '#FF0000'
 
   temperature:
     display_name: Temperature
     type: float
-    unit: "°C"
+    unit: °C
   humidity:
     display_name: Humidity
     type: float
@@ -104,7 +104,7 @@ alerts:
   humidity_critical_low:
     severity: error
     display_name: Humidity is critically low
-    description:  Humidity is critically low. Immediate action is needed.
+    description: Humidity is critically low. Immediate action is needed.
   humidity_warning_high:
     severity: warning
     display_name: Humidity is going high.
@@ -141,22 +141,22 @@ commands:
         display_name: Low Temperature Warning
         description: Threshold to trigger warning alert for low temperature.
         type: float
-        unit: "°C"
+        unit: °C
       temperature_critical_low:
         display_name: Critically Low Temperature
         description: Threshold to trigger error alert for low temperature.
         type: float
-        unit: "°C"
+        unit: °C
       temperature_warning_high:
         display_name: High Temperature Warning
         description: Threshold to trigger warning allert for high temperature.
         type: float
-        unit: "°C"
+        unit: °C
       temperature_critical_high:
         display_name: Critically High Temperature
         description: Threshold to trigger error alert for high temperature.
         type: float
-        unit: "°C"
+        unit: °C
       humidity_warning_low:
         display_name: Low Humidity Warning
         description: Threshold to trigger warning alert for low humidity.

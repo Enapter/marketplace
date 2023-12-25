@@ -1,4 +1,4 @@
-# SONOFF Temperature and Humidity Zigbee Sensor
+# **SONOFF Temperature and Humidity Zigbee Sensor**
 
 This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates Zigbee temperature and humidity sensor from SONOFF using open-source solutions [Zigbe2MQTT](https://www.zigbee2mqtt.io/) and [Node-RED](https://nodered.org/) running on Enapter Gateway as Docker containers. The Blueprint is intended to run on [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm). This Blueprint allow to monitor your temperature and humidity as well as set the thersholds for receiving alerts over internet using mobile app.
 
