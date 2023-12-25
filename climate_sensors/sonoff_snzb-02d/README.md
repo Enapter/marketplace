@@ -1,6 +1,6 @@
 # **SONOFF Temperature and Humidity Zigbee Sensor**
 
-This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates Zigbee temperature and humidity sensor from SONOFF using open-source solutions [Zigbe2MQTT](https://www.zigbee2mqtt.io/) and [Node-RED](https://nodered.org/) running on Enapter Gateway as Docker containers. The Blueprint is intended to run on [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm). This Blueprint allow to monitor your temperature and humidity as well as set the thersholds for receiving alerts over internet using mobile app.
+This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) integrates Zigbee temperature and humidity sensor manufactured by SONOFF using open-source solutions [Zigbe2MQTT](https://www.zigbee2mqtt.io/) and [Node-RED](https://nodered.org/) running on Enapter Gateway as Docker containers. The Blueprint is intended to run on [Enapter Virtual UCM](https://handbook.enapter.com/software/software.html#%F0%9F%92%8E-virtual-ucm). This Blueprint allow to monitor your temperature and humidity as well as set the thersholds for receiving alerts over internet using mobile app.
 
 Please note that software is provided as is an neither Enapter or authors are responsible for any damage or risks caused by using of this software.
 
@@ -16,14 +16,17 @@ Main functionality:
 
 1. **Zigbee2MQTT Setup**
 
-    It is recommended to have **Zigbee2MQTT** installed on Enapter Gateway as Docker Container. For detailed guide have a look at the guide here.
+It is recommended to have **Zigbee2MQTT** installed on Enapter Gateway as Docker Container. For detailed guide have a look at the Enapter's guide here.
+
+More information can be found in the [official documentation](https://www.zigbee2mqtt.io/guide/installation/).
 
 3. **Node-RED Setup**
 
-    Virtual UCM can communicate using HTTP API, however Zigbe2MQTT solution provides only MQTT interface. In order to make conversion from MQTT to HTTP it is convinient to use **Node-RED** as it has this as built-in functionality for this. The convinience of the Node-RED is also in `No Code` approach which makes setup fast and easy. For detailed guide have a look at the guide here.
+Virtual UCM can communicate using HTTP API, however Zigbe2MQTT solution provides only MQTT interface. In order to make conversion from MQTT to HTTP it is convinient to use **Node-RED** as it has this as built-in functionality for this. The convinience of the Node-RED is also in `No Code` approach which makes setup fast and easy. For detailed guide have a look at the guide here.
 
 ## **Adding Sensor to Zigbee2MQTT**
 
+More information can be found in the [official documentation](https://www.zigbee2mqtt.io/guide/usage/pairing_devices.html).
 
 ## **Connect to Enapter**
 
