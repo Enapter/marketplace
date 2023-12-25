@@ -675,3 +675,13 @@
   blueprint_options:
     - blueprint: analog_io_modules/seven_sensor_rain_gauge
       verification_level: ready_for_testing
+
+- id: sonoff_snzb-02d
+  display_name: SONOFF Temperature and Humidity Zigbee Sensor with LCD model SNZB-02D
+  description: Temperature and Humidity Sensor
+  icon: home-thermometer-outline
+  vendor: sonoff
+  category: climate_sensors
+  blueprint_options:
+    - blueprint: climate_sensors/sonoff_snzb-02d
+      verification_level: verified
