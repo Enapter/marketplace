@@ -1,0 +1,206 @@
+# Manifest describes the core concepts of your device: properties,
+# telemetry, alerts, and commands.
+#
+# See https://developers.enapter.com/docs/reference
+
+blueprint_spec: device/1.0
+
+display_name: SONOFF Zigbee LCD Smart Temperature Humidity Sensor
+description: Zigbee Smart Temperature Humidity Sensor with LCD display.
+icon: home-thermometer-outline
+vendor: sonoff
+author: enapter
+contributors:
+  - nkrasko
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    display_name: Vendor
+    type: string
+  model:
+    display_name: Model
+    type: string
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      okay:
+        display_name: Everything OK
+        color: '#00FF00'
+      warn:
+        display_name: Warning
+        color: '#FFFF00'
+      crit:
+        display_name: Critical
+        color: '#FF0000'
+
+  temperature:
+    display_name: Temperature
+    type: float
+    unit: °C
+  humidity:
+    display_name: Humidity
+    type: float
+    unit: "%"
+  battery:
+    display_name: Battery Capacity
+    type: float
+    unit: "%"
+  linkquality:
+    display_name: Connection Link Quality
+    type: float
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: Zigbee2MQTT HTTP API Address Not Configured
+    description: Zigbee2MQTT HTTP API address not configured. Please set the correct address using "Configure" command.
+  no_connection:
+    severity: error
+    display_name: Cannot Connect to Zigbee2MQTT HTTP API
+    description: Cannot Connect to Zigbee2MQTT HTTP API. Check device is running.
+  wrong_request:
+    severity: error
+    display_name: Zigbee2MQTT HTTP API returned invalid response.
+    description: Zigbee2MQTT HTTP API returned invalid response.
+  battery_voltage_low:
+    severity: warning
+    display_name: Battery Voltage Is Low
+    description: Battery Voltage Is Below the Threshold. Replace bettery as soon as possible.
+  temperature_warning_low:
+    severity: warning
+    display_name: Temperature is going low.
+    description: Temperature is going low. If this continue the it will become critical.
+  temerature_critical_low:
+    severity: error
+    display_name: Temperature is critically low
+    description: Temperature is critically low. Immediate action is needed.
+  temperature_warning_high:
+    severity: warning
+    display_name: Temperature is going high.
+    description: Temperature is going high. If this continue, it will become critical.
+  temerature_critical_high:
+    severity: error
+    display_name: Temperature is critically high
+    description: Temperature is critically high. Immediate action is needed.
+  humidity_warning_low:
+    severity: warning
+    display_name: Humidity is going low.
+    description: Humidity is going low. If this continue, it will become critical.
+  humidity_critical_low:
+    severity: error
+    display_name: Humidity is critically low
+    description: Humidity is critically low. Immediate action is needed.
+  humidity_warning_high:
+    severity: warning
+    display_name: Humidity is going high.
+    description: Humidity is going high. If this continue, it will become critical.
+  humidity_critical_high:
+    severity: error
+    display_name: Humidity is critically high
+    description: Humidity is critically high. Immediate action is needed.
+
+command_groups:
+  config:
+    display_name: Configuration
+  info:
+    display_name: Information
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      address:
+        display_name: Zigbee2MQTT HTTP API Address URL
+        description: Hostname, e.g. http://10.88.0.1:1880/zigbee
+        type: string
+        required: true
+      device_name:
+        display_name: Zigbe2MQTT Device Name
+        description: The name of the device which seen in your Zigbe2MQTT Web Interface
+        type: string
+        required: true
+      temperature_warning_low:
+        display_name: Low Temperature Warning
+        description: Threshold to trigger warning alert for low temperature.
+        type: float
+        unit: °C
+      temperature_critical_low:
+        display_name: Critically Low Temperature
+        description: Threshold to trigger error alert for low temperature.
+        type: float
+        unit: °C
+      temperature_warning_high:
+        display_name: High Temperature Warning
+        description: Threshold to trigger warning allert for high temperature.
+        type: float
+        unit: °C
+      temperature_critical_high:
+        display_name: Critically High Temperature
+        description: Threshold to trigger error alert for high temperature.
+        type: float
+        unit: °C
+      humidity_warning_low:
+        display_name: Low Humidity Warning
+        description: Threshold to trigger warning alert for low humidity.
+        type: float
+        unit: "%"
+      humidity_critical_low:
+        display_name: Critically Low Humidity
+        description: Threshold to trigger error alert for low humidity.
+        type: float
+        unit: "%"
+      humidity_warning_high:
+        display_name: High Humidity Warning
+        description: Threshold to trigger warning allert for high humidity.
+        type: float
+        unit: "%"
+      humidity_critical_high:
+        display_name: Critically High Humidity
+        description: Threshold to trigger error alert for high humidity.
+        type: float
+        unit: "%"
+      battery_voltage_threshold:
+        display_name: Battery Charge Threshold
+        description: Threshold to trigger warning alert for low battery voltage.
+        type: integer
+        unit: "%"
+        min: 20
+        max: 100
+
+  read_configuration:
+    display_name: Read Configuration
+    group: info
+    ui:
+      icon: wrench-outline
+
+.cloud:
+  mobile_main_chart: temperature
+  mobile_telemetry:
+    - temperature
+    - humidity
+    - battery
+    - linkquality
+
+  mobile_charts:
+    - temperature
+    - humidity
+    - battery
+    - linkquality
