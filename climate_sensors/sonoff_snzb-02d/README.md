@@ -16,17 +16,13 @@ Main functionality:
 
 1. **Zigbee2MQTT Setup**
 
-It is recommended to have **Zigbee2MQTT** installed on Enapter Gateway as Docker Container. For detailed guide have a look at the Enapter's guide here.
+It is recommended to have **Zigbee2MQTT** installed on Enapter Gateway as Docker Container. For detailed guide have a look at the [Enapter's Zigbee2MQTT installation guide here](https://developers.enapter.com/docs/guides/connection/zigbee-enapter-gateway).
 
 More information can be found in the [official documentation](https://www.zigbee2mqtt.io/guide/installation/).
 
 3. **Node-RED Setup**
 
-Virtual UCM can communicate using HTTP API, however Zigbe2MQTT solution provides only MQTT interface. In order to make conversion from MQTT to HTTP it is convinient to use **Node-RED** as it has this as built-in functionality for this. The convinience of the Node-RED is also in `No Code` approach which makes setup fast and easy. For detailed guide have a look at the guide here.
-
-## Adding Sensor to Zigbee2MQTT
-
-More information can be found in the [official documentation](https://www.zigbee2mqtt.io/guide/usage/pairing_devices.html).
+Virtual UCM can communicate using HTTP API, however Zigbe2MQTT solution provides only MQTT interface. In order to make conversion from MQTT to HTTP it is convinient to use **Node-RED** as it has this as built-in functionality for this. The convinience of the Node-RED is also in `No Code` approach which makes setup fast and easy. For detailed guide have a look at the [Enapter's Node-RED installation guide here](https://developers.enaper.com/docs/guides/connection/enapter-gateway-node-red).
 
 ## Connect to Enapter
 
