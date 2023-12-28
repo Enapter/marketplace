@@ -22,7 +22,7 @@ More information can be found in the [official documentation](https://www.zigbee
 
 3. **Node-RED Setup**
 
-Virtual UCM can communicate using HTTP API, however Zigbe2MQTT solution provides only MQTT interface. In order to make conversion from MQTT to HTTP it is convinient to use **Node-RED** as it has this as built-in functionality for this. The convinience of the Node-RED is also in `No Code` approach which makes setup fast and easy. For detailed guide have a look at the [Enapter's Node-RED installation guide here](https://developers.enaper.com/docs/guides/connection/enapter-gateway-node-red).
+Virtual UCM can communicate using HTTP API, however Zigbe2MQTT solution provides only MQTT interface. In order to make conversion from MQTT to HTTP it is convinient to use **Node-RED** as it has this as built-in functionality for this. The convinience of the Node-RED is also in `No Code` approach which makes setup fast and easy. For detailed guide have a look at the [Enapter's Node-RED installation guide here](https://developers.enapter.com/docs/guides/connection/enapter-gateway-node-red).
 
 ## Connect to Enapter
 
@@ -36,15 +36,13 @@ Virtual UCM can communicate using HTTP API, however Zigbe2MQTT solution provides
 
 5. As soon as Blueprint will start the `Zigbee2MQTT HTTP API Address Not Configured` event will be triggered.
 
-6. Navigate to `Settings`.
+6. Click `Commands` on device screen.
 
-    <img src="./.assets/settings.jpg" alt="settings" width="25%" />
+    <img src="./.assets/commands.jpg" alt="commands" width="25%" />
 
-7. Click `Commands`.
+7. On the commands list screen click on `Main Configuration` command:
 
-8. In the  `Settings` section of the `Commands` screen click on `Main Configuration` command in the Enapter mobile or Web app to set main settings for your Virtual UCM:
-
-    <img src="./.assets/main_settings.jpg" alt="EMS-ESP main settings" width="25%" />
+    <img src="./.assets/configuration.jpg" alt="Zigbee2MQTT Configuration Settings" width="25%" />
 
     You need to set the following parameters:
 
