@@ -1,0 +1,131 @@
+# Manifest describes the core concepts of your device: properties,
+# telemetry, alerts, and commands.
+#
+# See https://developers.enapter.com/docs/reference
+
+blueprint_spec: device/1.0
+
+display_name: Xiaomi JT-BZ-01AQ/A Natural Gas Detector
+description: Aqara Smart Natural Gas Detector.
+icon: enapter-hydrogen-sensor
+vendor: xiaomi
+author: enapter
+contributors:
+  - nkrasko
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    display_name: Vendor
+    type: string
+  model:
+    display_name: Model
+    type: string
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      okay:
+        display_name: Everything OK
+        color: '#00FF00'
+      preparation:
+        display_name: Everything OK
+        color: '#00FF00'
+      warn:
+        display_name: Warning
+        color: '#FFFF00'
+      crit:
+        display_name: Critical
+        color: '#FF0000'
+  gas:
+    display_name: Gas Presense
+    type: boolean
+  gas_density:
+    display_name: Concentration
+    type: float
+    unit: "%LEL"
+  linkquality:
+    display_name: Connection Link Quality
+    type: float
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: Zigbee2MQTT HTTP API Address Not Configured
+    description: Zigbee2MQTT HTTP API address not configured. Please set the correct address using "Configure" command.
+  no_connection:
+    severity: error
+    display_name: Cannot Connect to Zigbee2MQTT HTTP API
+    description: Cannot Connect to Zigbee2MQTT HTTP API. Check device is running.
+  wrong_request:
+    severity: error
+    display_name: Zigbee2MQTT HTTP API returned invalid response.
+    description: Zigbee2MQTT HTTP API returned invalid response.
+  gas_warning:
+    severity: warning
+    display_name: Gas concentration is going up.
+    description: Gas concentration is going up! If this continue it will become critical.
+  gas_critical:
+    severity: error
+    display_name: Gas concentration is critical!
+    description: Gas concentration is critically high. Immediate action is needed.
+
+command_groups:
+  config:
+    display_name: Configuration
+  info:
+    display_name: Information
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      address:
+        display_name: Zigbee2MQTT HTTP API Address URL
+        description: Hostname, e.g. http://10.88.0.1:1880/zigbee
+        type: string
+        required: true
+      device_name:
+        display_name: Zigbe2MQTT Device Name
+        description: The name of the device which seen in your Zigbe2MQTT Web Interface
+        type: string
+        required: true
+      gas_warning_threshold:
+        display_name: Gas Warning
+        description: Threshold to trigger warning alert for gas concentration.
+        type: float
+        unit: "%LEL"
+
+  read_configuration:
+    display_name: Read Configuration
+    group: info
+    ui:
+      icon: wrench-outline
+
+.cloud:
+  mobile_main_chart: gas_density
+  mobile_telemetry:
+    - state
+    - gas
+    - gas_density
+    - linkquality
+
+  mobile_charts:
+    - gas_density
+    - linkquality
