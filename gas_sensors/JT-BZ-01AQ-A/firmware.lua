@@ -120,14 +120,13 @@ function send_telemetry()
     telemetry.gas_density = sensor['gas_density']
     telemetry.linkquality = sensor['linkquality']
 
-
     local data_alerts, data_status = get_alerts_and_status(telemetry)
 
     if data_status == nil then
       if sensor['state'] == true then
         status = 'preparation'
       else
-        status = "okay"
+        status = 'okay'
       end
     else
       for _, v in ipairs(data_alerts) do
