@@ -685,3 +685,23 @@
   blueprint_options:
     - blueprint: climate_sensors/sonoff_snzb-02d
       verification_level: verified
+
+- id: xiaomi-jt-bz-01aq-a
+  display_name: Xiaomi JT-BZ-01AQ/A
+  description: Zigbee Natural Gas Detector
+  icon: enapter-hydrogen-sensor
+  vendor: xiaomi
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/JT-BZ-01AQ-A
+      verification_level: verified
+
+- id: aqara-jt-bz-01aq-a
+  display_name: Aqara JT-BZ-01AQ/A
+  description: Zigbee Natural Gas Detector
+  icon: enapter-hydrogen-sensor
+  vendor: aqara
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/JT-BZ-01AQ-A
+      verification_level: verified

@@ -222,3 +222,13 @@
   display_name: Seven Sensor Solutions
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sevensensor.png
   website: https://www.sevensensor.com/
+
+- id: xiaomi
+  display_name: Xiaomi
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/xiaomi.png
+  website: https://www.xiaomi.com/
+
+- id: aqara
+  display_name: Aquara
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/aqara.png
+  website: https://www.aqara.com/
