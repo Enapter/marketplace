@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
       - name: Get changed Lua files
         id: changed-lua-files
-        uses: tj-actions/changed-files@v35
+        uses: tj-actions/changed-files@v41
         with:
           files: |
             **/*.lua
