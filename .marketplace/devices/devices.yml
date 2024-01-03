@@ -705,3 +705,23 @@
   blueprint_options:
     - blueprint: gas_sensors/JT-BZ-01AQ-A
       verification_level: verified
+
+- id: xiaomi-sjcgq12lm
+  display_name: Xiaomi SJCGQ12LM
+  description: Zigbee Water Leak Sensor
+  icon: pipe-leak
+  vendor: xiaomi
+  category: water_sensors
+  blueprint_options:
+    - blueprint: water_sensors/SJCGQ12LM
+      verification_level: verified
+
+- id: aqara-sjcgq12lm
+  display_name: Aqara T1
+  description: Zigbee Water Leak Sensor
+  icon: pipe-leak
+  vendor: aqara
+  category: water_sensors
+  blueprint_options:
+    - blueprint: water_sensors/SJCGQ12LM
+      verification_level: verified
