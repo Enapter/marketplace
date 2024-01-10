@@ -69,7 +69,7 @@ function parser:get_all_parallel_info(devices_number)
   for i = 0, devices_number do
     local data = parser:get_parallel_info(i)
     if data then
-      if not table_contains(sn, data['serial_number_' .. i]) and not (tonumber(data['serial_number_' .. i]) == 0) then
+      if not table_contains(sn, data['serial_number_' .. i]) and tonumber(data['serial_number_' .. i]) ~= 0 then
         -- enapter.log('telemetry_data '.. i .. ' : ' .. tostring(dump(data)))
         device_avail = device_avail + 1
         if data['fault_code_' .. i] then
@@ -106,7 +106,7 @@ end
 
 function parser:get_parallel_info(device_number)
   local parallel_model = false
-  local data, res = parser:get_device_model()
+  local data, _ = parser:get_device_model()
 
   if data and table_contains(mpp_solar.parallel_models, data) then
     parallel_model = true
