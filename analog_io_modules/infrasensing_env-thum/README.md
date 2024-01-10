@@ -1,6 +1,6 @@
 # InfraSensing Temperature & Humidity sensor ENV-THUM
 
-This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **InfraSensing ENV-THUM** - RH sensor created for monitoring temperature and humidity levels indoor - via [Modbus TCP](https://go.enapter.com/developers-modbustcp) implemented on [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm).
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates two **InfraSensing ENV-THUM** RH sensors connected to [InfraSensing SensorGateway](https://go.enapter.com/infrasensing-sensorgateway) using LAN port. They communicate with [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm) via [Modbus TCP](https://go.enapter.com/developers-modbustcp).
 
 ## Connect to Enapter
 
@@ -9,10 +9,11 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integ
 - Create [Enapter Virtual UCM](https://go.enapter.com/handbook-vucm).
 - [Upload](https://go.enapter.com/developers-upload-blueprint) this blueprint to Enapter Virtual UCM.
 - Use the `Configure` command in the Enapter mobile or Web app to set up the device communication parameters:
-  - IP address (use either static IP or DHCP reservation);
-  - Modbus Unit ID
+  - IP address (default - `192.168.11.160`)
+  - Modbus Unit ID (default - `1`)
 
 ## References
 
 - [Temperature & Humidity Sensor product page](https://go.enapter.com/infrasensing-env-thum)
+- [Infrasensing SensorGateway: How it works video](https://go.enapter.com/infrasensing-sensorgateway-video)
 - [Modbus TCP manual](https://go.enapter.com/infrasensing-modbus-manual)
