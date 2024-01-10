@@ -69,7 +69,8 @@ function parser:get_all_parallel_info(devices_number)
   for i = 0, devices_number do
     local data = parser:get_parallel_info(i)
     if data then
-      if not table_contains(sn, data['serial_number_' .. i]) then
+      if not table_contains(sn, data['serial_number_' .. i]) and not (tonumber(data['serial_number_' .. i]) == 0) then
+        -- enapter.log('telemetry_data '.. i .. ' : ' .. tostring(dump(data)))
         device_avail = device_avail + 1
         if data['fault_code_' .. i] then
           table.insert(alerts, data['fault_code_' .. i])
@@ -89,7 +90,7 @@ function parser:get_all_parallel_info(devices_number)
       end
     else
       non_existing_devices = non_existing_devices + 1
-      -- enapter.log("Ignoring not connected device: " .. non_existing_devices)
+      enapter.log("Ignoring not connected device: " .. non_existing_devices)
     end
   end
 
@@ -104,12 +105,18 @@ function parser:get_all_parallel_info(devices_number)
 end
 
 function parser:get_parallel_info(device_number)
-  local res, data = mpp_solar:run_with_cache(parallel_info.command .. device_number, 3)
+  local parallel_model = false
+  local data, res = parser:get_device_model()
 
+  if data and table_contains(mpp_solar.parallel_models, data) then
+     parallel_model = true
+  end
+
+  res, data = mpp_solar:run_with_cache(parallel_info.command .. device_number, 3)
   if res then
     enapter.log('RAW DATA ' .. device_number .. ': ' .. data)
     -- check if parallel data exists for the device
-    if string.sub(data, 1, 1) == '1' then
+    if string.sub(data, 1, 1) == '1' or parallel_model == true then
       data = split(data)
 
       local telemetry = {}

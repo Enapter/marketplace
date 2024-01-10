@@ -34,6 +34,10 @@ For physical RS-232 connection with the inverter you will need:
 - Check the wiring according to the diagram above.
 - Check communication with inverter using official [Watchpower/Solarpower software](https://www.mppsolar.com/v3/download/). If it works, then this blueprint should work as well.
 
+## Notes
+
+- Voltronic Axpert MAX 6.5KW and 7.2KW a are parallel models according to documentation. They can't use single mode Blueprint even there is only one inverter in the setup.
+
 ## References
 
 - [MPP Solar homepage](https://go.enapter.com/mpp-solar-website)
