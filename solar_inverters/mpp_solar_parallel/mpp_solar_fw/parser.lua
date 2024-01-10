@@ -112,7 +112,7 @@ function parser:get_parallel_info(device_number)
     parallel_model = true
   end
 
-  res, data = mpp_solar:run_with_cache(parallel_info.command .. device_number, 3)
+  local res, data = mpp_solar:run_with_cache(parallel_info.command .. device_number, 3)
   if res then
     enapter.log('RAW DATA ' .. device_number .. ': ' .. data)
     -- check if parallel data exists for the device
