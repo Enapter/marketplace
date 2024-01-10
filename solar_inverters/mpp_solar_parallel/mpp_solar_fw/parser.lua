@@ -90,7 +90,7 @@ function parser:get_all_parallel_info(devices_number)
       end
     else
       non_existing_devices = non_existing_devices + 1
-      enapter.log("Ignoring not connected device: " .. non_existing_devices)
+      enapter.log('Ignoring not connected device: ' .. non_existing_devices)
     end
   end
 
@@ -109,7 +109,7 @@ function parser:get_parallel_info(device_number)
   local data, res = parser:get_device_model()
 
   if data and table_contains(mpp_solar.parallel_models, data) then
-     parallel_model = true
+    parallel_model = true
   end
 
   res, data = mpp_solar:run_with_cache(parallel_info.command .. device_number, 3)
@@ -129,8 +129,7 @@ function parser:get_parallel_info(device_number)
         telemetry[name .. '_' .. device_number] = data[index]
       end
 
-      telemetry['output_mode_' .. device_number] =
-        parser:get_output_mode(telemetry['output_mode_' .. device_number])
+      telemetry['output_mode_' .. device_number] = parser:get_output_mode(telemetry['output_mode_' .. device_number])
 
       local pv_input_volt = telemetry['pv_input_volt_' .. device_number]
       local pv_input_amp = telemetry['pv_input_amp_' .. device_number]
@@ -139,15 +138,11 @@ function parser:get_parallel_info(device_number)
         telemetry['pv_input_power_' .. device_number] = pv_input_volt * pv_input_amp
       end
 
-      if
-        telemetry['pv2_input_volt_' .. device_number]
-        and telemetry['pv2_input_amp_' .. device_number]
-      then
+      if telemetry['pv2_input_volt_' .. device_number] and telemetry['pv2_input_amp_' .. device_number] then
         local pv2_input_volt = telemetry['pv2_input_volt_' .. device_number]
         local pv2_input_amp = telemetry['pv2_input_amp_' .. device_number]
 
-        telemetry['pv_input_power_' .. device_number] = pv_input_volt * pv_input_amp
-          + pv2_input_volt * pv2_input_amp
+        telemetry['pv_input_power_' .. device_number] = pv_input_volt * pv_input_amp + pv2_input_volt * pv2_input_amp
       end
 
       telemetry['fault_code_' .. device_number] =
