@@ -33,76 +33,91 @@ telemetry:
     type: string
     enum:
       - ok
-      - warning
-      - down
+      - no_data
+  type0:
+    display_name: Type Node 0
+    type: string
+    enum:
+      - Temperature
+      - Humidity
+      - Dewpoint
+  type1:
+    display_name: Type Node 1
+    type: string
+    enum:
+      - Temperature
+      - Humidity
+      - Dewpoint
+  type2:
+    display_name: Type Node 2
+    type: string
+    enum:
+      - Temperature
+      - Humidity
+      - Dewpoint
+  type3:
+    display_name: Type Node 3
+    type: string
+    enum:
+      - Temperature
+      - Humidity
+      - Dewpoint
+  type4:
+    display_name: Type Node 4
+    type: string
+    enum:
+      - Temperature
+      - Humidity
+      - Dewpoint
+  type5:
+    display_name: Type Node 5
+    type: string
+    enum:
+      - Temperature
+      - Humidity
+      - Dewpoint
+  type6:
+    display_name: Type Node 6
+    type: string
+    enum:
+      - Temperature
+      - Humidity
+      - Dewpoint
+  type7:
+    display_name: Type Node 7
+    type: string
+    enum:
+      - Temperature
+      - Humidity
+      - Dewpoint
   value0:
     display_name: SensorGateway Temperature
     type: float
     unit: celsius
-  value1:
-    display_name: Temperature
+  value2:
+    display_name: Temperature 1
     type: float
     unit: celsius
-  value2:
-    display_name: Humidity
+  value3:
+    display_name: Humidity 1
     type: float
     unit: percent
-  alarm_down0:
-    display_name: SensorGateway Alarm Down
-    type: integer
-  alarm_warn0:
-    display_name: SensorGateway Alarm Warning
-    type: integer
-  thr_high_down0:
-    display_name: SensorGateway Threshold High Down
+  value4:
+    display_name: Dew Point 1
     type: float
-  thr_high_warn0:
-    display_name: SensorGateway Threshold High Warn
+    unit: celsius
+  value5:
+    display_name: Temperature 2
     type: float
-  thr_low_down0:
-    display_name: SensorGateway Threshold Low Down
+    unit: celsius
+  value6:
+    display_name: Humidity 2
     type: float
-  thr_low_warn0:
-    display_name: SensorGateway Threshold Low Down
+    unit: percent
+  value7:
+    display_name: Dew Point 2
     type: float
-
-  alarm_down1:
-    display_name: Temprerature Sensor Alarm Down
-    type: integer
-  alarm_warn1:
-    display_name: Temperature Sensor Alarm Warning
-    type: integer
-  thr_high_down1:
-    display_name: Temperature Sensor Threshold High Down
-    type: float
-  thr_high_warn1:
-    display_name: Temperature Sensor Threshold High Warn
-    type: float
-  thr_low_down1:
-    display_name: Temperature Sensor Threshold Low Down
-    type: float
-  thr_low_warn1:
-    display_name: Temperature Sensor Threshold Low Down
-    type: float
-
-  alarm_down2:
-    display_name: Humidity Sensor Alarm Down
-    type: integer
-  alarm_warn2:
-    display_name: Humidity Sensor Alarm Warning
-    type: integer
-  thr_high_down2:
-    display_name: Humidity Sensor Threshold High Down
-    type: float
-  thr_high_warn2:
-    display_name: Humidity Sensor Threshold High Warn
-    type: float
-  thr_low_down2:
-    display_name: Humidity Sensor Threshold Low Down
-    type: float
-  thr_low_warn2:
-    display_name: Humidity Sensor Threshold Low Down
-    type: float
+    unit: celsius
 
 alerts:
   cannot_read_config:
@@ -113,34 +128,8 @@ alerts:
     severity: info
     display_name: Modbus TCP Connection Not Configured
     description: Use "Configure" command to setup Modbus TCP connection.
-  alarm_warn0:
-    severity: warning
-    display_name: SensorGateway Alarm Warning
-    description: SensorGateway Warning Threshold has been passed.
-  alarm_down0:
-    severity: error
-    display_name: SensorGateway Alarm Down
-    description: SensorGateway Down Threshold has been passed.
-  alarm_warn1:
-    severity: warning
-    display_name: Temperature Sensor Alarm Warning
-    description: Temperature Sensor Warning Threshold has been passed.
-  alarm_down1:
-    severity: error
-    display_name: Temperature Sensor Alarm Down
-    description: Temperature Sensor Down Threshold has been passed.
-  alarm_warn2:
-    severity: warning
-    display_name: Humidity Sensor Alarm Warning
-    description: Humidity Sensor Warning Threshold has been passed.
-  alarm_down2:
-    severity: error
-    display_name: Humidity Sensor Alarm Down
-    description: Humidity Sensor Down Threshold has been passed.
 
 command_groups:
-  thresholds:
-    display_name: Alarm Thresholds
   connection:
     display_name: Connection
 commands:
@@ -162,47 +151,40 @@ commands:
         description: Modbus Unit ID of SensorGateway
         type: integer
         required: true
+      modbus_port:
+        display_name: Modbus Port
+        description: Modbus port of SensorGateway
+        type: integer
+        required: true
+      node:
+        display_name: Node
+        description: Node number can be found in SensorGateway web interface.
+        type: integer
+        min: 2
+        max: 40
+        required: true
   read_configuration:
     display_name: Read Configuration
     group: connection
     ui:
       icon: wrench-outline
       mobile_quick_access: true
-  set_threshold:
-    display_name: Set Alarm Threshold
-    group: thresholds
-    ui:
-      icon: counter
-    arguments:
-      node:
-        display_name: Sensor
-        description: Number of node.
-        type: integer
-        min: 0
-        max: 40
-      threshold:
-        display_name: Threshold type
-        type: string
-        required: true
-        enum:
-          - High Down
-          - High Warn
-          - Low Down
-          - Low Warn
-      value:
-        display_name: Threshold value
-        description: Numeric value of corresponding threshold.
-        type: float
-        required: true
 
 .cloud:
   category: analog_io_modules
-  mobile_main_chart: value1
   mobile_telemetry:
     - value0
-    - value1
     - value2
+    - value3
+    - value4
+    - value5
+    - value6
+    - value7
   mobile_charts:
     - value0
-    - value1
     - value2
+    - value3
+    - value4
+    - value5
+    - value6
+    - value7
