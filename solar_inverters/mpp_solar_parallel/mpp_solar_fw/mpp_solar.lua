@@ -4,6 +4,7 @@ mpp_solar.baudrate = 2400
 mpp_solar.data_bits = 8
 mpp_solar.parity = 'N'
 mpp_solar.stop_bits = 1
+mpp_solar.parallel_models = { '7200VA', '6500VA' }
 
 function mpp_solar:run_with_cache(name, timeout)
   if mpp_solar:is_in_cache(name, timeout) then
@@ -48,10 +49,7 @@ function mpp_solar:run_command(name)
     if raw_data and string.byte(raw_data, #raw_data) == 0x0d then
       local data = string.sub(raw_data, 1, -4)
       local r_crc = mpp_solar:crc16(data)
-      if
-        (r_crc & 0xFF00) >> 8 == string.byte(raw_data, -3)
-        and r_crc & 0x00FF == string.byte(raw_data, -2)
-      then
+      if (r_crc & 0xFF00) >> 8 == string.byte(raw_data, -3) and r_crc & 0x00FF == string.byte(raw_data, -2) then
         local com_response = string.sub(data, 2)
         mpp_solar:add_to_cache(name, com_response, os.time())
         return com_response
