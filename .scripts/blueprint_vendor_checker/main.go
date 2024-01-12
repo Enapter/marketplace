@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"gopkg.in/yaml.v3"
 )
@@ -113,9 +114,16 @@ func parseBlueprint(path string) (Blueprint, error) {
 }
 
 func logVendorNotFound(filePath string, v yaml.Node) {
-	fmt.Fprintf(os.Stdout,
-		"::warning file=%s,line=%d,col=%d::vendor %s not found at "+
-			"https://github.com/Enapter/marketplace/blob/main/.marketplace/vendors/vendors.yml\n",
-		filePath, v.Line, v.Column, v.Value,
-	)
+	var builder strings.Builder
+
+	builder.WriteString(filePath)
+
+	if v.Line != 0 {
+		builder.WriteString(fmt.Sprintf(":%d", v.Line))
+	}
+
+	builder.WriteString(fmt.Sprintf(": vendor %s not found at "+
+		"https://github.com/Enapter/marketplace/blob/main/.marketplace/vendors/vendors.yml", v.Value))
+
+	fmt.Fprintf(os.Stdout, "::warning file=%s,line=%d,col=%d::%s\n", filePath, v.Line, v.Column, builder.String())
 }
