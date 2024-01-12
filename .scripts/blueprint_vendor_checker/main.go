@@ -27,7 +27,7 @@ func main() {
 	flag.Parse()
 	if err := run(*vendorsFilePath, flag.Args()); err != nil {
 		if !errors.Is(err, errLinterFailed) {
-			fmt.Printf("::error:: failed run blueprint vendor validation %s\n", err)
+			fmt.Fprintf(os.Stdout, "::error:: failed run blueprint vendor validation %s\n", err)
 		}
 		os.Exit(1)
 	}
@@ -113,7 +113,7 @@ func parseBlueprint(path string) (Blueprint, error) {
 }
 
 func logVendorNotFound(filePath string, v yaml.Node) {
-	fmt.Printf(
+	fmt.Fprintf(os.Stdout,
 		"::warning file=%s,line=%d,col=%d::vendor %s not found at "+
 			"https://github.com/Enapter/marketplace/blob/main/.marketplace/vendors/vendors.yml\n",
 		filePath, v.Line, v.Column, v.Value,
