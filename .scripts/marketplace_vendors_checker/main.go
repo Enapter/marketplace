@@ -29,6 +29,11 @@ type Vendor struct {
 	Website yaml.Node `yaml:"website"`
 }
 
+type Node struct {
+	yaml.Node
+	Root yaml.Node
+}
+
 func main() {
 	marketplacePath := flag.String("p", "./", "path to marketplace directory")
 	repo := flag.String("r", "", "repository")
@@ -107,11 +112,11 @@ func validateVendors(vendors []Vendor, repoPath string) error {
 	vendorIDs := make(map[string]struct{}, len(vendors))
 
 	for _, v := range vendors {
-		if ok := validateVendorWebsite(v.Website); !ok {
+		if ok := validateVendorWebsite(newNode(v.Website, v.ID)); !ok {
 			resOk = false
 		}
 
-		ok, err := validateVendorIconURL(v.IconURL, repoPath)
+		ok, err := validateVendorIconURL(newNode(v.IconURL, v.ID), repoPath)
 		if err != nil {
 			return fmt.Errorf("validate vendor icon: %w", err)
 		}
@@ -136,18 +141,18 @@ func validateVendors(vendors []Vendor, repoPath string) error {
 	return nil
 }
 
-func validateVendorWebsite(website yaml.Node) bool {
+func validateVendorWebsite(website Node) bool {
 	_, err := url.ParseRequestURI(website.Value)
 	if err != nil {
-		logVendorWarning(website.Line, website.Column, "does not look like url")
+		logVendorWarning(website.Line, website.Column, "invalid URL format")
 		return false
 	}
 	return true
 }
 
-func validateVendorIconURL(iconURL yaml.Node, repoPath string) (bool, error) {
+func validateVendorIconURL(iconURL Node, repoPath string) (bool, error) {
 	if !strings.HasPrefix(iconURL.Value, iconURLPrefix) {
-		logVendorWarning(iconURL.Line, iconURL.Column, "icon url should start from "+iconURLPrefix)
+		logVendorWarning(iconURL.Line, iconURL.Column, "icon_url should start with "+iconURLPrefix)
 		return false, nil
 	}
 
@@ -159,7 +164,7 @@ func validateVendorIconURL(iconURL yaml.Node, repoPath string) (bool, error) {
 	}
 
 	if !ok {
-		logVendorWarning(iconURL.Line, iconURL.Column, fmt.Sprintf("file not found at %s", fileURL))
+		logVendorWarning(iconURL.Line, iconURL.Column, fmt.Sprintf("file not found at the %s", fileURL))
 		return false, nil
 	}
 
@@ -176,6 +181,18 @@ func checkResourceExistsAtURL(url string) (bool, error) {
 	return r.StatusCode == http.StatusOK, nil
 }
 
+func newNode(node yaml.Node, root yaml.Node) Node {
+	return Node{Node: node, Root: root}
+}
+
 func logVendorWarning(line, column int, msg string) {
-	fmt.Fprintf(os.Stdout, "::warning file=%s,line=%d,col=%d::%s\n", vendorsFile, line, column, msg)
+	var builder strings.Builder
+
+	builder.WriteString(vendorsFile)
+	if line != 0 {
+		builder.WriteString(fmt.Sprintf(":%d", line))
+	}
+	builder.WriteString(": " + msg)
+
+	fmt.Fprintf(os.Stdout, "::warning file=%s,line=%d,col=%d::%s\n", vendorsFile, line, column, builder.String())
 }

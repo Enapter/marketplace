@@ -50,6 +50,11 @@ type BlueprintOption struct {
 	VerificationLevel yaml.Node `yaml:"verification_level"`
 }
 
+type Node struct {
+	yaml.Node
+	Root yaml.Node
+}
+
 func main() {
 	marketplacePath := flag.String("p", "./", "path to marketplace directory")
 	flag.Parse()
@@ -137,7 +142,7 @@ func validateDevices(devices []Device, vendorIDs map[vendorID]struct{}) error {
 	devicesIDs := make(map[string]struct{}, len(devices))
 
 	for _, d := range devices {
-		if !checkRequiredAndNotEmpty("id", d.ID) {
+		if !checkRequiredAndNotEmpty("id", newNode(d.ID, d.ID)) {
 			resOk = false
 		}
 
@@ -149,15 +154,15 @@ func validateDevices(devices []Device, vendorIDs map[vendorID]struct{}) error {
 
 		devicesIDs[d.ID.Value] = struct{}{}
 
-		if !checkRequiredAndNotEmpty(d.ID.Value+".display_name", d.DisplayName) {
+		if !checkRequiredAndNotEmpty("display_name", newNode(d.DisplayName, d.ID)) {
 			resOk = false
 		}
 
-		if !checkRequiredAndNotEmpty(d.ID.Value+".description", d.Description) {
+		if !checkRequiredAndNotEmpty("description", newNode(d.Description, d.ID)) {
 			resOk = false
 		}
 
-		ok, err := validateDeviceIcon(d.ID.Value+".icon", d.IconID)
+		ok, err := validateDeviceIcon("icon", newNode(d.IconID, d.ID))
 		if err != nil {
 			return fmt.Errorf("validate device icon: %w", err)
 		}
@@ -166,7 +171,7 @@ func validateDevices(devices []Device, vendorIDs map[vendorID]struct{}) error {
 			resOk = false
 		}
 
-		ok, err = validateCategory(d.ID.Value+".category", d.CategoryID)
+		ok, err = validateCategory("category", newNode(d.CategoryID, d.ID))
 		if err != nil {
 			return fmt.Errorf("validate device category: %w", err)
 		}
@@ -175,11 +180,11 @@ func validateDevices(devices []Device, vendorIDs map[vendorID]struct{}) error {
 			resOk = false
 		}
 
-		if !validateVendor(d.VendorID, vendorIDs) {
+		if !validateVendor(newNode(d.VendorID, d.ID), vendorIDs) {
 			resOk = false
 		}
 
-		ok, err = validateBlueprintOptions(d.ID.Value+".blueprint_options", d.BlueprintOptions)
+		ok, err = validateBlueprintOptions("blueprint_options", newNode(d.BlueprintOptions, d.ID))
 		if err != nil {
 			return fmt.Errorf("validate device blueprint options: %w", err)
 		}
@@ -196,7 +201,7 @@ func validateDevices(devices []Device, vendorIDs map[vendorID]struct{}) error {
 	return nil
 }
 
-func validateDeviceIcon(name string, node yaml.Node) (bool, error) {
+func validateDeviceIcon(name string, node Node) (bool, error) {
 	if !checkRequiredAndNotEmpty(name, node) {
 		return false, nil
 	}
@@ -215,7 +220,10 @@ func validateDeviceIcon(name string, node yaml.Node) (bool, error) {
 	if !ok {
 		logDeviceWarning(
 			node.Line, node.Column,
-			"icon should be only from enapter icons or material community asset",
+			"icon should be sourced from Enapter Energy Icon "+
+				"(https://handbook.enapter.com/icons.html) or "+
+				"Material Community "+
+				"(https://static.enapter.com/rn/icons/material-community.html) assets only",
 		)
 		return false, nil
 	}
@@ -223,7 +231,7 @@ func validateDeviceIcon(name string, node yaml.Node) (bool, error) {
 	return true, nil
 }
 
-func validateVendor(node yaml.Node, ids map[vendorID]struct{}) bool {
+func validateVendor(node Node, ids map[vendorID]struct{}) bool {
 	if node.Value == "" {
 		return true
 	}
@@ -231,7 +239,7 @@ func validateVendor(node yaml.Node, ids map[vendorID]struct{}) bool {
 	if _, ok := ids[node.Value]; !ok {
 		logDeviceWarning(
 			node.Line, node.Column,
-			fmt.Sprintf("%s vendor id not found at %s", node.Value, vendorsFile),
+			fmt.Sprintf("vendor id %q not found at the %s", node.Value, vendorsFile),
 		)
 		return false
 	}
@@ -239,7 +247,7 @@ func validateVendor(node yaml.Node, ids map[vendorID]struct{}) bool {
 	return true
 }
 
-func validateCategory(name string, node yaml.Node) (bool, error) {
+func validateCategory(name string, node Node) (bool, error) {
 	if !checkRequiredAndNotEmpty(name, node) {
 		return false, nil
 	}
@@ -256,7 +264,7 @@ func validateCategory(name string, node yaml.Node) (bool, error) {
 	return true, nil
 }
 
-func validateBlueprintOptions(name string, node yaml.Node) (bool, error) {
+func validateBlueprintOptions(name string, node Node) (bool, error) {
 	if !checkRequiredValue(name, node) {
 		return false, nil
 	}
@@ -268,12 +276,12 @@ func validateBlueprintOptions(name string, node yaml.Node) (bool, error) {
 	}
 
 	if len(opts) == 0 {
-		logDeviceWarning(node.Line, node.Column, "blueprint options should not be zero")
+		logDeviceWarning(node.Line, node.Column, "blueprint_options is required")
 		return false, nil
 	}
 
 	for _, opt := range opts {
-		if !checkRequiredAndNotEmpty(name+".blueprint", opt.Blueprint) {
+		if !checkRequiredAndNotEmpty("blueprint", newNode(opt.Blueprint, node.Node)) {
 			return false, nil
 		}
 
@@ -289,8 +297,8 @@ func validateBlueprintOptions(name string, node yaml.Node) (bool, error) {
 			return false, err
 		}
 
-		if !checkRequiredAndNotEmpty(name+".verification_level", opt.VerificationLevel) {
-			return false, err
+		if !checkRequiredAndNotEmpty("verification_level", newNode(opt.VerificationLevel, opt.Blueprint)) {
+			return false, nil
 		}
 
 		switch opt.VerificationLevel.Value {
@@ -301,17 +309,18 @@ func validateBlueprintOptions(name string, node yaml.Node) (bool, error) {
 			logDeviceWarning(
 				opt.VerificationLevel.Line,
 				opt.VerificationLevel.Column,
-				"invalid value verification_level should be only verified, community_tested or ready_for_testing",
+				"verification level should be "+
+					"'verified', 'community_tested' or 'ready_for_testing' only",
 			)
 			return false, nil
 		}
 
 		if len(opts) > 1 {
-			if !checkRequiredAndNotEmpty(name+".display_name", opt.DisplayName) {
+			if !checkRequiredAndNotEmpty("display_name", newNode(opt.DisplayName, opt.Blueprint)) {
 				return false, nil
 			}
 
-			if !checkRequiredAndNotEmpty(name+".description", opt.Description) {
+			if !checkRequiredAndNotEmpty("description", newNode(opt.Description, opt.Blueprint)) {
 				return false, nil
 			}
 		}
@@ -320,7 +329,7 @@ func validateBlueprintOptions(name string, node yaml.Node) (bool, error) {
 	return true, nil
 }
 
-func checkRequiredAndNotEmpty(name string, node yaml.Node) bool {
+func checkRequiredAndNotEmpty(name string, node Node) bool {
 	if !checkRequiredValue(name, node) {
 		return false
 	}
@@ -333,9 +342,9 @@ func checkRequiredAndNotEmpty(name string, node yaml.Node) bool {
 	return true
 }
 
-func checkRequiredValue(name string, node yaml.Node) bool {
+func checkRequiredValue(name string, node Node) bool {
 	if node.IsZero() {
-		logDeviceWarning(node.Line, node.Column, fmt.Sprintf("%s is a required field", name))
+		logDeviceWarning(node.Root.Line, node.Root.Column, fmt.Sprintf("%s is required", name))
 		return false
 	}
 	return true
@@ -351,6 +360,18 @@ func checkResourceExistsAtURL(url string) (bool, error) {
 	return r.StatusCode == http.StatusOK, nil
 }
 
+func newNode(node yaml.Node, root yaml.Node) Node {
+	return Node{Node: node, Root: root}
+}
+
 func logDeviceWarning(line, column int, msg string) {
-	fmt.Fprintf(os.Stdout, "::warning file=%s,line=%d,col=%d::%s\n", devicesFile, line, column, msg)
+	var builder strings.Builder
+
+	builder.WriteString(devicesFile)
+	if line != 0 {
+		builder.WriteString(fmt.Sprintf(":%d", line))
+	}
+	builder.WriteString(": " + msg)
+
+	fmt.Fprintf(os.Stdout, "::warning file=%s,line=%d,col=%d::%s\n", devicesFile, line, column, builder.String())
 }

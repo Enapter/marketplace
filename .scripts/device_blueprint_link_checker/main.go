@@ -78,7 +78,7 @@ func run(marketplacePath string) error {
 	}
 
 	for path := range blueprintsPaths {
-		fmt.Fprintf(os.Stdout, "::warning file=%s::%s\n", path, "blueprint should be pinned to device")
+		fmt.Fprintf(os.Stdout, "::warning file=%s::%s\n", path, fmt.Sprintf("%s: blueprint should be pinned to device", path))
 	}
 
 	if len(blueprintsPaths) > 0 {
