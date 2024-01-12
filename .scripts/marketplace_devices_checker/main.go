@@ -56,7 +56,7 @@ func main() {
 
 	if err := run(*marketplacePath, flag.Args()); err != nil {
 		if !errors.Is(err, errLinterFailed) {
-			fmt.Printf("::error:: failed run marketplace devcies validation %s\n", err)
+			fmt.Fprintf(os.Stdout, "::error:: failed run marketplace devcies validation %s\n", err)
 		}
 		os.Exit(1)
 	}
@@ -352,5 +352,5 @@ func checkResourceExistsAtURL(url string) (bool, error) {
 }
 
 func logDeviceWarning(line, column int, msg string) {
-	fmt.Printf("::warning file=%s,line=%d,col=%d::%s\n", devicesFile, line, column, msg)
+	fmt.Fprintf(os.Stdout, "::warning file=%s,line=%d,col=%d::%s\n", devicesFile, line, column, msg)
 }

@@ -28,7 +28,7 @@ func main() {
 
 	if err := run(*marketplacePath); err != nil {
 		if !errors.Is(err, errLinterFailed) {
-			fmt.Printf("::error:: failed run device-blueprint link validation %s\n", err)
+			fmt.Fprintf(os.Stdout, "::error:: failed run device-blueprint link validation %s\n", err)
 		}
 		os.Exit(1)
 	}
@@ -78,7 +78,7 @@ func run(marketplacePath string) error {
 	}
 
 	for path := range blueprintsPaths {
-		fmt.Printf("::warning file=%s::%s\n", path, "blueprint should be pinned to device")
+		fmt.Fprintf(os.Stdout, "::warning file=%s::%s\n", path, "blueprint should be pinned to device")
 	}
 
 	if len(blueprintsPaths) > 0 {

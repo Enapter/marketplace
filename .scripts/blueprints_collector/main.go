@@ -13,7 +13,7 @@ func main() {
 
 	changed, err := changedBlueprints(*marketplacePath, flag.Args())
 	if err != nil {
-		fmt.Printf("::error::failed to get chnaged blueprints: %s\n", err)
+		fmt.Fprintf(os.Stdout, "::error::failed to get chnaged blueprints: %s\n", err)
 		os.Exit(1)
 	}
 
@@ -22,7 +22,7 @@ func main() {
 		paths = append(paths, path)
 	}
 
-	fmt.Printf("blueprints-paths=%s", strings.Join(paths, " "))
+	fmt.Fprintf(os.Stdout, "blueprints-paths=%s", strings.Join(paths, " "))
 }
 
 func changedBlueprints(marketplacePath string, changedFiles []string) (map[string]bool, error) {
