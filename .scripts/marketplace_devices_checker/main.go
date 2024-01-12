@@ -142,10 +142,6 @@ func validateDevices(devices []Device, vendorIDs map[vendorID]struct{}) error {
 	devicesIDs := make(map[string]struct{}, len(devices))
 
 	for _, d := range devices {
-		if !checkRequiredAndNotEmpty("id", newNode(d.ID, d.ID)) {
-			resOk = false
-		}
-
 		if _, found := devicesIDs[d.ID.Value]; found {
 			logDeviceWarning(d.ID.Line, d.ID.Column, "not unique device id")
 			resOk = false
