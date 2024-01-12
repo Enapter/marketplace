@@ -5,9 +5,9 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
-	"net/url"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"gopkg.in/yaml.v3"
@@ -24,9 +24,10 @@ var (
 )
 
 type Vendor struct {
-	ID      yaml.Node `yaml:"id"`
-	IconURL yaml.Node `yaml:"icon_url"`
-	Website yaml.Node `yaml:"website"`
+	ID          yaml.Node `yaml:"id"`
+	DisplayName yaml.Node `yaml:"display_name"`
+	IconURL     yaml.Node `yaml:"icon_url"`
+	Website     yaml.Node `yaml:"website"`
 }
 
 type Node struct {
@@ -110,9 +111,14 @@ func parseVendors(filePath string) ([]Vendor, error) {
 func validateVendors(vendors []Vendor, repoPath string) error {
 	resOk := true
 	vendorIDs := make(map[string]struct{}, len(vendors))
+	urlRegexp := regexp.MustCompile(`^http[s]?://.+$`)
 
 	for _, v := range vendors {
-		if ok := validateVendorWebsite(newNode(v.Website, v.ID)); !ok {
+		if !checkRequiredAndNotEmpty("display_name", newNode(v.DisplayName, v.ID)) {
+			resOk = false
+		}
+
+		if ok := validateVendorWebsite(newNode(v.Website, v.ID), urlRegexp); !ok {
 			resOk = false
 		}
 
@@ -141,16 +147,24 @@ func validateVendors(vendors []Vendor, repoPath string) error {
 	return nil
 }
 
-func validateVendorWebsite(website Node) bool {
-	_, err := url.ParseRequestURI(website.Value)
-	if err != nil {
+func validateVendorWebsite(website Node, regexp *regexp.Regexp) bool {
+	if !checkRequiredAndNotEmpty("website", website) {
+		return false
+	}
+
+	if regexp.FindString(website.Value) != website.Value {
 		logVendorWarning(website.Line, website.Column, "invalid URL format")
 		return false
 	}
+
 	return true
 }
 
 func validateVendorIconURL(iconURL Node, repoPath string) (bool, error) {
+	if !checkRequiredAndNotEmpty("icon_url", iconURL) {
+		return false, nil
+	}
+
 	if !strings.HasPrefix(iconURL.Value, iconURLPrefix) {
 		logVendorWarning(iconURL.Line, iconURL.Column, "icon_url should start with "+iconURLPrefix)
 		return false, nil
@@ -169,6 +183,20 @@ func validateVendorIconURL(iconURL Node, repoPath string) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func checkRequiredAndNotEmpty(name string, node Node) bool {
+	if node.IsZero() {
+		logVendorWarning(node.Root.Line, node.Root.Column, fmt.Sprintf("%s is required", name))
+		return false
+	}
+
+	if node.Value == "" {
+		logVendorWarning(node.Line, node.Column, fmt.Sprintf("%s should not be empty", name))
+		return false
+	}
+
+	return true
 }
 
 func checkResourceExistsAtURL(url string) (bool, error) {
