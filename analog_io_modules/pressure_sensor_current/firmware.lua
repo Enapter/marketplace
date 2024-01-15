@@ -31,7 +31,7 @@ function send_telemetry()
     if not slope or not intercept then
       telemetry.alerts = { 'not_configured' }
     else
-      telemetry.pressure = volt * slope + intercept
+      telemetry.pressure = current * slope + intercept
     end
   end
 
