@@ -1,0 +1,83 @@
+blueprint_spec: device/1.0
+
+display_name: Pressure Sensor
+description: Analog pressure sensor based on 4-20mA signal.
+icon: enapter-gauge
+author: enapter
+contributors:
+  - anataty
+  - nkrasko
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-AI4
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.1.8
+
+properties:
+  calib_slope:
+    display_name: Calibration Slope
+    type: float
+  calib_intercept:
+    display_name: Calibration Intercept
+    type: float
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - error
+  pressure:
+    display_name: Pressure
+    description: Calibrated pressure reading.
+    type: float
+    unit: bar
+  adc_current:
+    display_name: Current
+    description: Raw current reading of the sensor analog signal as it seen by ADC.
+    type: float
+    unit: amps
+
+command_groups:
+  config:
+    display_name: Configuration
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      calib_slope:
+        display_name: Calibration Slope
+        description: "`k` in calibration line equation `Pressure = k * Current + b`"
+        type: float
+        required: true
+      calib_intercept:
+        display_name: Calibration Intercept
+        description: "`b` in calibration line equation `Pressure = k * Current + b`"
+        type: float
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+.cloud:
+  category: sensors
+  mobile_main_chart: pressure
+  mobile_telemetry:
+    - pressure
+    - adc_current
+  mobile_charts:
+    - pressure
+    - adc_current
