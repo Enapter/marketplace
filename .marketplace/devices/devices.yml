@@ -8,13 +8,22 @@
     - blueprint: alarms/alarm_with_sonoff_433_rf_bridge
       verification_level: verified
 
-- id: pressure-sensor
-  display_name: Pressure Sensor
+- id: pressure-sensor-voltage
+  display_name: Voltage Pressure Sensor
   description: Any analog pressure sensor integrated using voltage-based analog input interface.
   icon: enapter-gauge
   category: analog_io_modules
   blueprint_options:
-    - blueprint: analog_io_modules/pressure_sensor
+    - blueprint: analog_io_modules/pressure_sensor_voltage
+      verification_level: verified
+
+- id: pressure-sensor-current
+  display_name: 4-20mA Pressure Sensor
+  description: Any analog pressure sensor integrated using 4-20mA based analog input interface.
+  icon: enapter-gauge
+  category: analog_io_modules
+  blueprint_options:
+    - blueprint: analog_io_modules/pressure_sensor_current
       verification_level: verified
 
 - id: sfere-ucv-4001
