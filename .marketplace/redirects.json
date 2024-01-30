@@ -1,6 +1,6 @@
 [
-  {
-    "source": "pressure-sensor/pressure_sensor",
-    "destination": "pressure-sensor-voltage/pressure_sensor_voltage",
-  },
+    {
+        "source": "pressure-sensor/pressure_sensor",
+        "destination": "pressure-sensor-voltage/pressure_sensor_voltage"
+    }
 ]
