@@ -1,0 +1,48 @@
+blueprint_spec: device/1.0
+
+display_name: Crowcon Xgard Bright
+description: Fixed-point gas detector with ModBus RTU over RS485
+icon: enapter-gas-sensor
+vendor: crowcon
+author: enapter
+contributors:
+  - anataty
+  - Rina-an
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-RS485
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  h2_concentration:
+    type: float
+    unit: '%LEL'
+    display_name: H2 Concentration
+
+alerts:
+  communication_failed:
+    display_name: Communication Failed
+    severity: error
+
+.cloud:
+  category: sensors
+  mobile_telemetry:
+    - h2_concentration
