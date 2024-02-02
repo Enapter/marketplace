@@ -8,10 +8,15 @@ Crowcon Xgard Bright works over RS-485 port. Arrakis MK4 have universal ports wh
 
 1. Reboot IPC and press `Del` button on the keyboard to enter BIOS setup utility.
 2. Navigate to `Advanced` -> `SIO F81804`.
+
     <img src="./.assets/1-arrakis-mk4-advanced.jpeg" alt="SIO F81804" width="25%" />
+
 3. Select the port you would like to use for connection of gas sensor. `UART Port 1 (ttyS0)` or `UART Port 2 (ttyS1)`.
+
     <img src="./.assets/2-arrakis-mk4-f81804-conf.jpeg" alt="Arrakis MK4 UART" width="25%" />
+
 3. Set `Peripheral Type` to `RS485` and press `F10` on keyboard to save and exit configuration
+
     <img src="./.assets/3-arrakis-mk4-uart-1-conf.jpeg" alt="Arrakis MK4 UART" width="25%" />
 
 ## Connect to Enapter
