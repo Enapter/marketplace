@@ -293,6 +293,12 @@
   category: gas_sensors
   blueprint_options:
     - blueprint: gas_sensors/crowcon_xgard_bright
+      display_name: ENP-RS485 UCM Version
+      description: Use Enapter ENP-RS485 to integrate Crowcon Xgard Bright.
+      verification_level: verified
+    - blueprint: gas_sensors/crowcon_xgard_bright_arrakis_mk4
+      display_name: Arrakis MK4 IPC Version
+      description: Use Enapter Gateway on Arrakis MK4 IPC to integrate Crowcon Xgard Bright.
       verification_level: verified
 
 - id: crowcon-xgardiq
