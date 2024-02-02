@@ -11,7 +11,7 @@ local CONNECTION = {}
 local TTY
 
 function main()
- -- Init config & register config management commands
+  -- Init config & register config management commands
   config.init({
     [PORT_CONFIG] = { type = 'string', required = true },
     [ADDRESS_CONFIG] = { type = 'string', required = true },
@@ -55,7 +55,7 @@ function tty_init()
       if TTY then
         return TTY, nil
       else
-        enapter.log('RS485 init failed: '..rs485.err_to_str(result))
+        enapter.log('RS485 init failed: ' .. rs485.err_to_str(result))
         return nil, 'rs485_init_issue'
       end
     end
@@ -65,7 +65,7 @@ end
 function send_telemetry()
   local telemetry = {}
   local alerts = {}
-  local status = "ok"
+  local status = 'ok'
 
   local connection, err = tty_init()
 
@@ -76,7 +76,7 @@ function send_telemetry()
     if data then
       telemetry['h2_concentration'] = tofloat(data)
     else
-      enapter.log('Error reading Modbus: '..result, 'error', true)
+      enapter.log('Error reading Modbus: ' .. result, 'error', true)
       status = 'read_error'
       alerts = { 'communication_failed' }
     end
@@ -92,7 +92,7 @@ function send_telemetry()
 end
 
 function tofloat(register)
-  local raw_str = string.pack('BBBB', register[1]>>8, register[1]&0xff, register[2]>>8, register[2]&0xff)
+  local raw_str = string.pack('BBBB', register[1] >> 8, register[1] & 0xff, register[2] >> 8, register[2] & 0xff)
   return string.unpack('>f', raw_str)
 end
 
