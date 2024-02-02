@@ -50,12 +50,11 @@ function tty_init()
         port = port,
       }
 
-      TTY = modbusrtu.new(port, connection)
+      TTY = modbusrtu.new(port, CONNECTION)
 
       if TTY then
         return TTY, nil
       else
-        enapter.log('RS485 init failed: ' .. rs485.err_to_str(result))
         return nil, 'rs485_init_issue'
       end
     end
