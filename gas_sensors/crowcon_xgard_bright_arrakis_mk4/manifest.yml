@@ -15,7 +15,7 @@ support:
 license: MIT
 
 communication_module:
-  product: ENP-RS485
+  product: ENP-VIRTUAL
   lua_file: firmware.lua
 
 properties:
