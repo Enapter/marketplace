@@ -70,7 +70,6 @@ function send_telemetry()
   local connection, err = tty_init()
 
   if connection then
-
     local data, result = connection:read_inputs(CONNECTION.address, 1000, 2, CONNECTION.read_timeout)
 
     if data then
