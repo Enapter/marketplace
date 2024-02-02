@@ -299,7 +299,7 @@
     - blueprint: gas_sensors/crowcon_xgard_bright_arrakis_mk4
       display_name: Arrakis MK4 IPC Version
       description: Use Enapter Gateway on Arrakis MK4 IPC to integrate Crowcon Xgard Bright.
-      verification_level: verified
+      verification_level: ready_for_testing
 
 - id: crowcon-xgardiq
   display_name: Crowcon XgardIQ

@@ -23,7 +23,7 @@ function main()
 end
 
 function send_properties()
-  enapter.send_properties({ vendor = "Crowcon", model = "Xgard Bright" })
+  enapter.send_properties({ vendor = 'Crowcon', model = 'Xgard Bright' })
 end
 
 function tty_init()
@@ -55,7 +55,7 @@ function tty_init()
       if TTY then
         return TTY, nil
       else
-        enapter.log("RS485 init failed: "..rs485.err_to_str(result))
+        enapter.log('RS485 init failed: '..rs485.err_to_str(result))
         return nil, 'rs485_init_issue'
       end
     end
@@ -74,26 +74,26 @@ function send_telemetry()
     local data, result = connection:read_inputs(CONNECTION.address, 1000, 2, CONNECTION.read_timeout)
 
     if data then
-      telemetry["h2_concentration"] = tofloat(data)
+      telemetry['h2_concentration'] = tofloat(data)
     else
-      enapter.log("Error reading Modbus: "..result, "error", true)
-      status = "read_error"
+      enapter.log('Error reading Modbus: '..result, 'error', true)
+      status = 'read_error'
       alerts = { 'communication_failed' }
     end
   else
-    status = "read_error"
+    status = 'read_error'
     alerts = { err }
   end
 
-  telemetry["alerts"] = alerts
-  telemetry["status"] = status
+  telemetry['alerts'] = alerts
+  telemetry['status'] = status
 
   enapter.send_telemetry(telemetry)
 end
 
 function tofloat(register)
-  local raw_str = string.pack("BBBB", register[1]>>8, register[1]&0xff, register[2]>>8, register[2]&0xff)
-  return string.unpack(">f", raw_str)
+  local raw_str = string.pack('BBBB', register[1]>>8, register[1]&0xff, register[2]>>8, register[2]&0xff)
+  return string.unpack('>f', raw_str)
 end
 
 ---------------------------------
