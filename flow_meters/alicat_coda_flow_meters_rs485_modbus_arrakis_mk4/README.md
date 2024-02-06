@@ -26,7 +26,6 @@ Crowcon Xgard Bright works over RS-485 port. Arrakis MK4 have universal ports wh
 
     <img src="./.assets/3-arrakis-mk4-uart-1-conf.jpeg" alt="Arrakis MK4 UART" width="25%" />
 
-
 ## Connect to Enapter
 
 - Sign up to the Enapter Cloud using the [Web](https://cloud.enapter.com/) or mobile app ([iOS](https://apps.apple.com/app/id1388329910), [Android](https://play.google.com/store/apps/details?id=com.enapter&hl=en)).
