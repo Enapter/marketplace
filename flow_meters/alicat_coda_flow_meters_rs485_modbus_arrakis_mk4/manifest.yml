@@ -1,0 +1,142 @@
+blueprint_spec: device/1.0
+
+display_name: Alicat Scientific Mass Flow Meter
+description: Versatile mass flow meter.
+icon: enapter-module-din-1
+vendor: alicat
+author: enapter
+contributors:
+  - anataty
+  - nkrasko
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
+    allow_dev_dependencies: true
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      - ok
+      - warning
+      - read_error
+  mass_flow:
+    type: float
+    unit: NL/h
+    display_name: Mass Flow
+  volumetric_flow:
+    type: float
+    unit: litreh
+    display_name: Volumetric Flow
+  flow_temp:
+    type: float
+    unit: celsius
+    display_name: Flow temperature
+  proportional_gain:
+    type: float
+    display_name: Proportional gain
+  integral_gain:
+    type: float
+    display_name: Integral gain
+  derivative_gain:
+    type: float
+    display_name: Derivative gain
+
+alerts:
+  no_model:
+    display_name: Device model is not set
+    description: Please set device's model via 'Configure' command
+    severity: info
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: Modbus Connection Not Configured
+    description: Modbus connection not configured. Please set the correct settings using "Configure" command.
+  communication_failed:
+    display_name: Communication Failed
+    severity: error
+  rs485_init_issue:
+    severity: error
+    display_name: Cannot Initialize RS485 Port
+    description: Cannot initialize RS485 port. Check logs for details.
+
+command_groups:
+  config:
+    display_name: Configuration
+
+commands:
+  write_configuration:
+    display_name: Configure
+    group: config
+    populate_values_command: read_configuration
+    ui:
+      icon: file-document-edit-outline
+    arguments:
+      port:
+        display_name: Arrakis MK4 Serial Port
+        description: for example, ttyS0
+        type: string
+        enum:
+          - /dev/ttyS0
+          - /dev/ttyS1
+        required: true
+      address:
+        display_name: Modbus address
+        type: integer
+        required: true
+      baud_rate:
+        display_name: Modbus baudrate
+        type: integer
+        required: true
+        enum:
+          - 9600
+          - 19200
+          - 38400
+          - 57600
+          - 115200
+      parity:
+        display_name: Parity
+        type: string
+        required: true
+        enum:
+          - N
+          - O
+          - E
+      stop_bits:
+        display_name: Modbus stop bits
+        type: integer
+        required: true
+        enum:
+          - 1
+          - 2
+  read_configuration:
+    display_name: Read config Parameters
+    group: config
+    ui:
+      icon: file-check-outline
+
+
+.cloud:
+  category: sensors
+  mobile_main_chart: mass_flow
+  mobile_telemetry:
+    - mass_flow
+    - volumetric_flow
+    - flow_temp
