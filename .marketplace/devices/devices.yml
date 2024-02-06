@@ -179,14 +179,20 @@
       verification_level: verified
 
 - id: alicat-scientific-mass-flow-meter
-  display_name: Alicat scientific Mass Flow Meter
+  display_name: Alicat Scientific Mass Flow Meter
   description: Mass flow meter which monitors mixed gases in changing process conditions.
   icon: enapter-module-din-1
   vendor: alicat
   category: flow_meters
   blueprint_options:
     - blueprint: flow_meters/alicat_flow_meters_rs485_modbus
+      display_name: ENP-RS485 UCM Version
+      description: Use Enapter ENP-RS485 to integrate Alicat Scientific Mass Flow Meter.
       verification_level: verified
+    - blueprint: flow_meters/alicat_flow_meters_rs485_modbus_arrakis_mk4
+      display_name: Arrakis MK4 IPC Version
+      description: Use Enapter Gateway on Arrakis MK4 IPC to integrate Alicat Scientific Mass Flow Meter.
+      verification_level: ready_for_testing
 
 - id: alicat-scientific-coda-mass-flow-meter
   display_name: Alicat scientific CODA Mass Flow Meter
