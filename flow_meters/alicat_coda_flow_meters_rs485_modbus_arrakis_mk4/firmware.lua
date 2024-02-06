@@ -5,7 +5,7 @@ local config = require('enapter.ucm.config')
 PORT_CONFIG = 'port'
 ADDRESS_CONFIG = 'address'
 BAUD_RATE_CONFIG = 'baud_rate'
-STOP_BITS_CONFIG= 'stop_bits'
+STOP_BITS_CONFIG = 'stop_bits'
 PARITY_CONFIG = 'parity'
 
 local CONNECTION = {}
@@ -39,7 +39,12 @@ function tty_init()
     enapter.log('cannot read config: ' .. tostring(err), 'error')
     return nil, 'cannot_read_config'
   else
-    local port, address, baud_rate, stop_bits, parity = values[PORT_CONFIG], values[ADDRESS_CONFIG], values[BAUD_RATE_CONFIG], values[STOP_BITS_CONFIG], values[PARITY_CONFIG]
+    local port, address, baud_rate, stop_bits, parity = 
+      values[PORT_CONFIG],
+      values[ADDRESS_CONFIG],
+      values[BAUD_RATE_CONFIG],
+      values[STOP_BITS_CONFIG],
+      values[PARITY_CONFIG]
     if not port or not address or not baud_rate or not stop_bits or not parity then
       return nil, 'not_configured'
     else
@@ -74,7 +79,6 @@ function send_telemetry()
     status = 'read_error'
     alerts = { err }
   else
-
     local data, result = connection:read_holdings(CONNECTION.address, 1119, 2, CONNECTION.read_timeout)
     if data then
       telemetry['proportional_gain'] = tofloat(data)
@@ -128,7 +132,6 @@ function send_telemetry()
       status = 'read_error'
       alerts = { 'communication_failed' }
     end
-
   end
 
   telemetry['alerts'] = alerts
