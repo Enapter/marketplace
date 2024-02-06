@@ -39,7 +39,7 @@ function tty_init()
     enapter.log('cannot read config: ' .. tostring(err), 'error')
     return nil, 'cannot_read_config'
   else
-    local port, address, baud_rate, stop_bits, parity = 
+    local port, address, baud_rate, stop_bits, parity =
       values[PORT_CONFIG],
       values[ADDRESS_CONFIG],
       values[BAUD_RATE_CONFIG],
