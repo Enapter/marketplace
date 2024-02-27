@@ -3,8 +3,7 @@ local parser = require('parser')
 local commands = require('commands')
 
 function main()
-  local err =
-    rs232.init(voltronic.baudrate, voltronic.data_bits, voltronic.parity, voltronic.stop_bits)
+  local err = rs232.init(voltronic.baudrate, voltronic.data_bits, voltronic.parity, voltronic.stop_bits)
   if err ~= 0 then
     enapter.log('RS232 init failed: ' .. rs232.err_to_str(err), 'error')
     enapter.send_telemetry({ status = 'Error', alerts = { 'init_error' } })
@@ -13,7 +12,6 @@ function main()
 
   scheduler.add(30000, send_properties)
   scheduler.add(1000, send_telemetry)
-
 end
 
 function send_properties()

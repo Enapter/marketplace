@@ -9,8 +9,6 @@ local device_rating_info = commands.device_rating_info
 local general_parameters = commands.general_parameters
 local device_warning_status = commands.device_warning_status
 
-
-
 local parser = {}
 
 function parser:get_protocol_version()
