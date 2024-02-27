@@ -14,7 +14,6 @@ communication_module:
   product: ENP-RS232
   lua:
     dir: src
-    rockspec: voltronic-scc-mppt-dev-1.rockspec
     amalg_mode: nodebug
 
 properties:
