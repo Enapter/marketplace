@@ -1,0 +1,132 @@
+blueprint_spec: device/1.0
+
+display_name: Voltronic SCC-MPPT Charge Controller
+description: MPPT Solar Charge Controller from Voltronic.
+icon: enapter-solar-inverter
+vendor: voltronic
+license: MIT
+author: enapter
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+
+communication_module:
+  product: ENP-RS232
+  lua:
+    dir: src
+    amalg_mode: nodebug
+
+properties:
+  serial_num:
+    display_name: Serial Number
+    type: string
+  fw_ver:
+    display_name: Firmware version
+    type: string
+  protocol_ver:
+    display_name: Protocol version
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - Error
+      - Charging
+      - Not Charging
+  pv_input_voltage:
+    display_name: PV Input Voltage
+    type: float
+    unit: watt
+  battery_voltage:
+    display_name: Battery Voltage
+    type: float
+    unit: watt
+  charging_current:
+    display_name: Charging Current
+    type: float
+    unit: watt
+  charging_current_1:
+    display_name: Charging Current 1
+    type: float
+    unit: watt
+  charging_current_2:
+    display_name: Charging Current 2
+    type: float
+    unit: watt
+  charging_power:
+    display_name: Charging Power
+    type: integer
+    unit: watt
+
+alerts:
+  no_data:
+    severity: error
+    display_name: No data from device
+    description: >
+      Can not get data from device, please check connection between Enapter
+      communication module and the inverter.
+  over_charge_current:
+    severity: error
+    display_name: Over charge current
+    description: Over charge current
+  over_temperature:
+    severity: error
+    display_name: Over temperature
+    description: Over temperature
+  battery_voltage_under:
+    severity: error
+    display_name: Battery voltage under
+    description: Battery voltage under
+  battery_voltage_high:
+    severity: error
+    display_name: Battery voltage high
+    description: Battery voltage high
+  pv_high_loss:
+    severity: error
+    display_name: PV high loss
+    description: PV high loss
+  battery_temperature_too_low:
+    severity: error
+    display_name: Battery temperature too low
+    description: Battery temperature too low
+  battery_temperature_too_high:
+    severity: error
+    display_name: Battery temperature too high
+    description: Battery temperature too high
+  pv_low_loss:
+    severity: warning
+    display_name: PV low loss
+    description: PV low loss
+  pv_high_derating:
+    severity: warning
+    display_name: PV high derating
+    description: PV high derating
+  temperature_high_derating:
+    severity: warning
+    display_name: Temperature high derating
+    description: Temperature high derating
+  battery_temperature_low_alarm:
+    severity: warning
+    display_name: Battery temperature low alarm
+    description: Battery temperature low alarm
+  battery_low_warning:
+    severity: warning
+    display_name: Battery low warning
+    description: Battery low warning
+
+.cloud:
+  category: renewable_energy_sources
+  mobile_main_chart: charging_power
+  mobile_telemetry:
+    - pv_input_voltage
+    - battery_voltage
+    - charging_power
+  mobile_charts:
+    - pv_input_voltage
+    - battery_voltage
+    - charging_power
+    - charging_current
+    - charging_current_1
+    - charging_current_2
