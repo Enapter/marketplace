@@ -3,7 +3,7 @@ blueprint_spec: device/1.0
 display_name: Voltronic SCC-MPPT Charge Controller
 description: MPPT Solar Charge Controller from Voltronic.
 icon: enapter-solar-inverter
-vendor: Voltronic
+vendor: voltronic
 license: MIT
 author: enapter
 support:
