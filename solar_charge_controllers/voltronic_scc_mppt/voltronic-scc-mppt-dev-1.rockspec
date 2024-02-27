@@ -1,5 +1,5 @@
 rockspec_format = '3.0'
-package = 'voltronic_scc_mppt'
+package = 'voltronic-scc-mppt'
 version = 'dev-1'
 source = {
   url = 'developers.enapter.com'
