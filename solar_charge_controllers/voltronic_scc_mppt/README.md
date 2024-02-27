@@ -3,6 +3,7 @@
 This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Voltronic Power SCC-MPPT Charge Controller**. The Blueprint supports protocol over [RS-232 communication interface](https://go.enapter.com/developers-enapter-rs232).
 
 This Blueprint supports visualization of the following metrics in Enapter Cloud and Mobile App:
+
 - PV Input Voltage
 - Battery Voltage
 - Charging Current
