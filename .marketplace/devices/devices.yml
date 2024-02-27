@@ -577,6 +577,16 @@
     - blueprint: solar_charge_controllers/srne_ml-2440
       verification_level: verified
 
+- id: voltronic-power--scc-mppt
+  display_name: Voltronic Power SCC MPPT
+  description: MPPT Solar Charge Controller
+  icon: enapter-inverter-solar
+  vendor: voltronic
+  category: solar_charge_controllers
+  blueprint_options:
+    - blueprint: solar_charge_controllers/voltronic_scc_mppt
+      verification_level: ready_for_testing
+
 - id: mpp-solar
   display_name: MPP Solar Inverter
   description: MPP Solar Inverters.
