@@ -1,6 +1,5 @@
 local voltronic = require('voltronic')
 local parser = require('parser')
-local commands = require('commands')
 
 function main()
   local err = rs232.init(voltronic.baudrate, voltronic.data_bits, voltronic.parity, voltronic.stop_bits)
