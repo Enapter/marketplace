@@ -49,7 +49,7 @@
 - product: ENP-KIT-232-485-CAN
   display_name: ENP-KIT-232-485-CAN
   handbook_url: https://developers.enapter.com/docs/tutorial/ucm-kit/enp-kit-232-485-can
-  icon_url: https://static.enapter.com/modules/ENP-RS485.png
+  icon_url: https://static.enapter.com/modules/ENP-KIT-232-485-CAN.png
   capabilities:
     - serial
     - modbus
