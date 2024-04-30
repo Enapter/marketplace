@@ -1,0 +1,108 @@
+- product: ENP-AI4
+  display_name: ENP-AI4
+  icon_url: https://static.enapter.com/modules/ENP-AI4.png
+  handbook_url: https://handbook.enapter.com/modules/ENP-AI4-50V/ENP-AI4-50V.html
+  capabilities:
+    - ai
+    - led
+
+- product: ENP-AI4-20MA
+  display_name: ENP-AI4-20MA
+  icon_url: https://static.enapter.com/modules/ENP-AI4-20MA.png
+  handbook_url: https://handbook.enapter.com/modules/ENP-AI4-20MA/ENP-AI4-20MA.html
+  capabilities:
+    - ai
+    - led
+
+- product: ENP-AI4-50V
+  display_name: ENP-AI4-50V
+  icon_url: https://static.enapter.com/modules/ENP-AI4-50V.png
+  handbook_url: https://handbook.enapter.com/modules/ENP-AI4-50V/ENP-AI4-50V.html
+  capabilities:
+    - ai
+    - led
+
+- product: ENP-AO4
+  display_name: ENP-AO4
+  icon_url: https://static.enapter.com/modules/ENP-AO4.png
+  handbook_url: https://handbook.enapter.com/modules/ENP-AO4/ENP-AO4.html
+  capabilities:
+    - ao
+    - led
+
+- product: ENP-CAN
+  display_name: ENP-CAN
+  icon_url: https://static.enapter.com/modules/ENP-CAN.png
+  handbook_url: https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html
+  capabilities:
+    - can
+    - led
+
+- product: ENP-DI7
+  display_name: ENP-DI7
+  icon_url: https://static.enapter.com/modules/ENP-DI7.png
+  handbook_url: https://handbook.enapter.com/modules/ENP-DI7/ENP-DI7.html
+  capabilities:
+    - digitalin
+    - led
+
+- product: ENP-KIT-232-485-CAN
+  display_name: ENP-KIT-232-485-CAN
+  handbook_url: https://developers.enapter.com/docs/tutorial/ucm-kit/enp-kit-232-485-can
+  icon_url: https://static.enapter.com/modules/ENP-KIT-232-485-CAN.png
+  capabilities:
+    - serial
+    - modbus
+    - can
+    - led
+
+- product: ENP-KIT-RL1
+  display_name: ENP-KIT-RL1
+  icon_url: https://static.enapter.com/modules/ENP-KIT-RL1.png
+  handbook_url: https://handbook.enapter.com/modules/ENP-KIT-RL1/ENP-KIT-RL1.html
+  capabilities:
+    - rl
+    - digitalout
+    - led
+
+- product: ENP-RL6
+  display_name: ENP-RL6
+  icon_url: https://static.enapter.com/modules/ENP-RL6.png
+  handbook_url: https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html
+  capabilities:
+    - rl
+    - digitalout
+    - led
+
+- product: ENP-RS232
+  display_name: ENP-RS232
+  icon_url: https://static.enapter.com/modules/ENP-RS232.png
+  handbook_url: https://handbook.enapter.com/modules/ENP-RS232/ENP-RS232.html
+  capabilities:
+    - serial
+    - modbus
+    - led
+
+- product: ENP-RS485
+  display_name: ENP-RS485
+  icon_url: https://static.enapter.com/modules/ENP-RS485.png
+  handbook_url: https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html
+  capabilities:
+    - serial
+    - modbus
+    - led
+
+- product: ENP-VIRTUAL
+  display_name: Gateway
+  icon_url: https://static.enapter.com/modules/ENP-VIRTUAL.png
+  handbook_url: https://handbook.enapter.com/software/gateway_software/
+  capabilities:
+    - modbus
+    - serial
+    - rl
+    - digitalin
+    - digitalout
+    - can
+    - opcua
+    - snmp
+    - http
