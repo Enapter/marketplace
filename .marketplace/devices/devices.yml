@@ -719,6 +719,18 @@
     - blueprint: climate_sensors/sonoff_snzb-02d
       verification_level: verified
 
+- id: hunan-rika-electronic-tech_rk_100-02
+  display_name: Hunan Rika Electronic Tech RK100-02
+  description: Professional Plastic Wind Speed Sensor (Wind Anemometer)
+  icon: weather-windy
+  vendor: rikka
+  category: climate_sensors
+  blueprint_options:
+    - blueprint: climate_sensors/hunan-rika-electronic-tech_rk_100-02_arrakis_mk4
+      display_name: Arrakis MK4 IPC Version
+      description: Use Enapter Gateway on Arrakis MK4 IPC to integrate Hunan Rika Electronic Tech RK100-02 Wind Anemometer
+      verification_level: ready_for_testing
+
 - id: xiaomi-jt-bz-01aq-a
   display_name: Xiaomi JT-BZ-01AQ/A
   description: Zigbee Natural Gas Detector
