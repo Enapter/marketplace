@@ -146,12 +146,12 @@
 - id: mpp-solar
   display_name: MPP Solar
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/mpp-solar.png
-  website: https://www.mppsolar.com/v3/
+  website: https://www.mppsolar.com/v3
 
 - id: bronkhorst
   display_name: Bronkhorst
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/bronkhorst.png
-  website: https://www.bronkhorst.com/int/
+  website: https://www.bronkhorst.com/int
 
 - id: mebay
   display_name: Mebay
@@ -161,7 +161,7 @@
 - id: sinexcel
   display_name: Sinexcel
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sinexcel.png
-  website: https://en.sinexcel.com/
+  website: https://en.sinexcel.com
 
 - id: bosch
   display_name: Bosch
@@ -191,12 +191,12 @@
 - id: viessmann
   display_name: Viessmann
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/viessmann.png
-  website: https://www.viessmann.family/
+  website: https://www.viessmann.family
 
 - id: kostal
   display_name: KOSTAL
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/kostal.png
-  website: https://www.kostal.com/
+  website: https://www.kostal.com
 
 - id: igd
   display_name: International Gas Detectors Ltd
@@ -206,7 +206,7 @@
 - id: deye
   display_name: Deye
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/deye.png
-  website: https://www.deyeinverter.com/
+  website: https://www.deyeinverter.com
 
 - id: sunsynk
   display_name: Sunsynk
@@ -216,24 +216,29 @@
 - id: infrasensing
   display_name: InfraSensing
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/infrasensing.jpg
-  website: https://infrasensing.com/
+  website: https://infrasensing.com
 
 - id: seven_sensor_solutions
   display_name: Seven Sensor Solutions
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sevensensor.png
-  website: https://www.sevensensor.com/
+  website: https://www.sevensensor.com
 
 - id: xiaomi
   display_name: Xiaomi
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/xiaomi.png
-  website: https://www.xiaomi.com/
+  website: https://www.xiaomi.com
 
 - id: aqara
   display_name: Aquara
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/aqara.png
-  website: https://www.aqara.com/
+  website: https://www.aqara.com
 
 - id: voltronic
   display_name: Voltronic Power
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/voltronic.png
   website: https://www.voltronicpower.com
+
+- id: rika
+  display_name: Hunan Rika Electronic Tech
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/rika.png
+  website: https://www.rikasensor.com
