@@ -47,12 +47,12 @@ function tty_init()
       }
 
       SERIAL_OPTIONS = {
-				baud_rate = tonumber(baud_rate),
-				parity = "N",
-				stop_bits = 2,
-				data_bits = 8,
-				read_timeout = 1000,
-			}
+        baud_rate = tonumber(baud_rate),
+        parity = "N",
+        stop_bits = 2,
+        data_bits = 8,
+        read_timeout = 1000,
+      }
 
       TTY = modbusrtu.new(port, SERIAL_OPTIONS)
 
