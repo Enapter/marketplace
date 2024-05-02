@@ -8,6 +8,7 @@ ADDRESS_CONFIG = 'address'
 BAUD_RATE_CONFIG = 'baud_rate'
 
 local CONNECTION = {}
+local SERIAL_OPTIONS = {}
 local TTY
 
 function main()
@@ -41,16 +42,19 @@ function tty_init()
       return nil, 'not_configured'
     else
       CONNECTION = {
-        baudrate = tonumber(baud_rate),
-        parity = 'N',
-        stop_bits = '2',
-        data_bits = 8,
         read_timeout = 1000,
         address = tonumber(address),
-        port = port,
       }
 
-      TTY = modbusrtu.new(port, CONNECTION)
+      SERIAL_OPTIONS = {
+				baud_rate = tonumber(baud_rate),
+				parity = "N",
+				stop_bits = 2,
+				data_bits = 8,
+				read_timeout = 1000,
+			}
+
+      TTY = modbusrtu.new(port, SERIAL_OPTIONS)
 
       if TTY then
         return TTY, nil
@@ -69,7 +73,7 @@ function send_telemetry()
   local connection, err = tty_init()
 
   if connection then
-    local data, result = connection:read_inputs(CONNECTION.address, 1000, 2, CONNECTION.read_timeout)
+    local data, result = connection:read_holdings(CONNECTION.address, 1000, 2, CONNECTION.read_timeout)
 
     if data then
       telemetry['h2_concentration'] = tofloat(data)
