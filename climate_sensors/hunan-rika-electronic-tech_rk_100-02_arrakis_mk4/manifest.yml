@@ -1,0 +1,99 @@
+blueprint_spec: device/1.0
+
+display_name: Hunan Rika Electronic Tech RK100-02
+description: Plastic Wind Speed Sensor (Wind Anemometer) with ModBus RTU over RS485
+icon: enapter-gas-sensor
+vendor: rika
+author: enapter
+contributors:
+  - nkrasko
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.3.2-1
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  wind_speed:
+    type: float
+    unit: '%LEL'
+    display_name: H2 Concentration
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: Modbus Connection Not Configured
+    description: Modbus connection not configured. Please set the correct settings using "Configure" command.
+  communication_failed:
+    display_name: Communication Failed
+    severity: error
+  rs485_init_issue:
+    severity: error
+    display_name: Cannot Initialize RS485 Port
+    description: Cannot initialize RS485 port. Check logs for details.
+
+command_groups:
+  config:
+    display_name: Configuration
+  info:
+    display_name: Information
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      port:
+        display_name: Arrakis MK4 Serial Port
+        description: for example, ttyS0
+        type: string
+        enum:
+          - /dev/ttyS0
+          - /dev/ttyS1
+        required: true
+      address:
+        display_name: Modbus RTU Address
+        description: for example, 1
+        type: string
+        required: true
+      baud_rate:
+        display_name: Modbus RTU Baud Rate
+        description: 9600, for example
+        type: string
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: info
+    ui:
+      icon: wrench-outline
+
+.cloud:
+  category: sensors
+  mobile_telemetry:
+    - wind_speed
