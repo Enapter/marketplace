@@ -723,7 +723,7 @@
   display_name: Hunan Rika Electronic Tech RK100-02
   description: Professional Plastic Wind Speed Sensor (Wind Anemometer)
   icon: weather-windy
-  vendor: rikka
+  vendor: rika
   category: climate_sensors
   blueprint_options:
     - blueprint: climate_sensors/hunan-rika-electronic-tech_rk_100-02_arrakis_mk4
