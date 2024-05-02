@@ -3,11 +3,11 @@
 --
 -- See https://developers.enapter.com/docs/reference/vucm/enapter
 
-local config = require("enapter.ucm.config")
+local config = require('enapter.ucm.config')
 
-PORT_CONFIG = "port"
-ADDRESS_CONFIG = "address"
-BAUD_RATE_CONFIG = "baud_rate"
+PORT_CONFIG = 'port'
+ADDRESS_CONFIG = 'address'
+BAUD_RATE_CONFIG = 'baud_rate'
 
 local CONNECTION = {}
 local SERIAL_OPTIONS = {}
@@ -16,9 +16,9 @@ local TTY
 function main()
   -- Init config & register config management commands
   config.init({
-    [PORT_CONFIG] = { type = "string", required = true },
-    [ADDRESS_CONFIG] = { type = "string", required = true },
-    [BAUD_RATE_CONFIG] = { type = "string", required = true },
+    [PORT_CONFIG] = { type = 'string', required = true },
+    [ADDRESS_CONFIG] = { type = 'string', required = true },
+    [BAUD_RATE_CONFIG] = { type = 'string', required = true },
   })
 
   scheduler.add(30000, send_properties)
@@ -26,7 +26,7 @@ function main()
 end
 
 function send_properties()
-  enapter.send_properties({ vendor = "Rika Sensor", model = "RK100-02" })
+  enapter.send_properties({ vendor = 'Rika Sensor', model = 'RK100-02' })
 end
 
 function tty_init()
@@ -36,12 +36,12 @@ function tty_init()
 
   local values, err = config.read_all()
   if err then
-    enapter.log("cannot read config: " .. tostring(err), "error")
-    return nil, "cannot_read_config"
+    enapter.log('cannot read config: ' .. tostring(err), 'error')
+    return nil, 'cannot_read_config'
   else
     local port, address, baud_rate = values[PORT_CONFIG], values[ADDRESS_CONFIG], values[BAUD_RATE_CONFIG]
     if not port or not address or not baud_rate then
-      return nil, "not_configured"
+      return nil, 'not_configured'
     else
       CONNECTION = {
         read_timeout = 1000,
@@ -61,7 +61,7 @@ function tty_init()
       if TTY then
         return TTY, nil
       else
-        return nil, "rs485_init_issue"
+        return nil, 'rs485_init_issue'
       end
     end
   end
@@ -70,7 +70,7 @@ end
 function send_telemetry()
   local telemetry = {}
   local alerts = {}
-  local status = "ok"
+  local status = 'ok'
 
   local connection, err = tty_init()
 
@@ -78,19 +78,19 @@ function send_telemetry()
     local data, result = connection:read_holdings(CONNECTION.address, 0, 1, CONNECTION.read_timeout)
 
     if data then
-      telemetry["wind_speed"] = tonumber(data) / 10
+      telemetry['wind_speed'] = tonumber(data) / 10
     else
-      enapter.log("Error reading Modbus: " .. result, "error", true)
-      status = "read_error"
-      alerts = { "communication_failed" }
+      enapter.log('Error reading Modbus: ' .. result, 'error', true)
+      status = 'read_error'
+      alerts = { 'communication_failed' }
     end
   else
-    status = "read_error"
+    status = 'read_error'
     alerts = { err }
   end
 
-  telemetry["alerts"] = alerts
-  telemetry["status"] = status
+  telemetry['alerts'] = alerts
+  telemetry['status'] = status
 
   enapter.send_telemetry(telemetry)
 end
