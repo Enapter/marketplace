@@ -27,7 +27,7 @@ end
 function send_properties()
   enapter.send_properties({
     vendor = 'IMT Solar',
-    model = 'Si-RS485TC-2T'
+    model = 'Si-RS485TC-2T',
   })
 end
 
@@ -110,7 +110,6 @@ function send_telemetry()
       status = 'read_error'
       alerts = { 'communication_failed' }
     end
-
   end
 
   telemetry['alerts'] = alerts
@@ -120,14 +119,13 @@ function send_telemetry()
 end
 
 function uint16(register)
-  local raw_str = string.pack('BB', register[1]&0xFF, register[1]>>8)
+  local raw_str = string.pack('BB', register[1] & 0xFF, register[1] >> 8)
   return string.unpack('I2', raw_str)
 end
 
 function int16(register)
-  local raw_str = string.pack('BB', register[1]&0xFF, register[1]>>8)
+  local raw_str = string.pack('BB', register[1] & 0xFF, register[1] >> 8)
   return string.unpack('i2', raw_str)
 end
 
 main()
-
