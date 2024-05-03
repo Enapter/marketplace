@@ -9,6 +9,7 @@ STOP_BITS_CONFIG = 'stop_bits'
 PARITY_CONFIG = 'parity'
 
 local CONNECTION = {}
+local SERIAL_OPTIONS = {}
 local TTY
 
 function main()
@@ -49,16 +50,19 @@ function tty_init()
       return nil, 'not_configured'
     else
       CONNECTION = {
-        port = port,
         address = tonumber(address),
-        baudrate = tonumber(baud_rate),
-        stop_bits = tostring(stop_bits),
+        read_timeout = 1000,
+      }
+
+      SERIAL_OPTIONS = {
+        baud_rate = tonumber(baud_rate),
         parity = tostring(parity),
+        stop_bits = tostring(stop_bits),
         data_bits = 8,
         read_timeout = 1000,
       }
 
-      TTY = modbusrtu.new(port, CONNECTION)
+      TTY = modbusrtu.new(port, SERIAL_OPTIONS)
 
       if TTY then
         return TTY, nil
