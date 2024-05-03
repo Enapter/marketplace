@@ -1,0 +1,138 @@
+blueprint_spec: device/1.0
+
+display_name: IMT Solar Irradiance Sensor Si-RS485TC-2T
+description: Irradiance sensor with ModBus RTU
+icon: enapter-solar-panel
+vendor: imt
+author: enapter
+contributors:
+  - anataty
+  - Rina-an
+  - nkrasko
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
+    allow_dev_dependencies: true
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - warning
+      - read_error
+  solar_irrad:
+    display_name: Solar Irradiance
+    type: float
+    unit: W/m2
+  module_temp:
+    display_name: Module Temperature
+    type: float
+    unit: celsius
+  ambient_temp:
+    display_name: Ambient Temperature
+    type: float
+    unit: celsius
+
+alerts:
+  no_model:
+    display_name: Device model is not set
+    description: Please set device's model via 'Configure' command
+    severity: info
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: Modbus Connection Not Configured
+    description: Modbus connection not configured. Please set the correct settings using "Configure" command.
+  communication_failed:
+    display_name: Communication Failed
+    severity: error
+  rs485_init_issue:
+    severity: error
+    display_name: Cannot Initialize RS485 Port
+    description: Cannot initialize RS485 port. Check logs for details.
+
+command_groups:
+  config:
+    display_name: Configuration
+
+commands:
+  write_configuration:
+    display_name: Configure
+    group: config
+    populate_values_command: read_configuration
+    ui:
+      icon: file-document-edit-outline
+    arguments:
+      port:
+        display_name: Arrakis MK4 Serial Port
+        description: for example, ttyS0
+        type: string
+        enum:
+          - /dev/ttyS0
+          - /dev/ttyS1
+        required: true
+      address:
+        display_name: Modbus address
+        type: integer
+        required: true
+      baud_rate:
+        display_name: Modbus baudrate
+        type: integer
+        required: true
+        enum:
+          - 9600
+          - 19200
+          - 38400
+          - 57600
+          - 115200
+      parity:
+        display_name: Parity
+        type: string
+        required: true
+        enum:
+          - N
+          - O
+          - E
+      stop_bits:
+        display_name: Modbus stop bits
+        type: integer
+        required: true
+        enum:
+          - 1
+          - 2
+  read_configuration:
+    display_name: Read config Parameters
+    group: config
+    ui:
+      icon: file-check-outline
+
+.cloud:
+  category: renewable_energy_sources
+  mobile_main_chart: solar_irrad
+  mobile_telemetry:
+    - solar_irrad
+    - module_temp
+  mobile_charts:
+    - solar_irrad
+    - module_temp
