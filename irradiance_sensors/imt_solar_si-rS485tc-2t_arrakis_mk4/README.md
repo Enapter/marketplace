@@ -1,17 +1,10 @@
-# Alicat Scientific Mass Flow Meters CODA-Series
+# IMT Solar Si-RS485TC-2T
 
-This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates series of **Alicat Scientific CODA Flow Meters** - Coriolis mass flow meters which monitor mixed gases in changing process conditions via [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) over [RS-485](https://go.enapter.com/developers-enapter-rs485) optimized for [Arrakis MK4 IPC](https://www.welotec.com/product/fanless-industrial-computer-arrakis-mk4-series/). The device also supports [RS-232 communication interface](https://go.enapter.com/developers-enapter-rs232).
-
-## Supported models
-
-- K-Series;
-- KC-Series;
-- KF-Series;
-- KG-Series;
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **IMT Solar Si-RS485TC-2T** - irradiance sensor with [ModBus RTU](https://go.enapter.com/developers-enapter-modbus) over [RS-485 communication interface](https://go.enapter.com/developers-enapter-rs485) optimized for [Arrakis MK4 IPC](https://www.welotec.com/product/fanless-industrial-computer-arrakis-mk4-series/).
 
 ## Configuring RS485 Ports of Arrakis MK4
 
-Alicat Scientific Mass Flow Meters CODA-Series works over RS-485 port. Arrakis MK4 have universal ports which needs to be configured in BIOS of the IPC to required mode.
+Crowcon Xgard Bright works over RS-485 port. Arrakis MK4 have universal ports which needs to be configured in BIOS of the IPC to required mode.
 
 1. Reboot IPC and press `Del` button on the keyboard to enter BIOS setup utility.
 2. Navigate to `Advanced` -> `SIO F81804`.
@@ -35,5 +28,6 @@ Alicat Scientific Mass Flow Meters CODA-Series works over RS-485 port. Arrakis M
 
 ## References
 
-- [Alicat CODA Coriolis Meters products page](https://go.enapter.com/alicat-coda-flow-meter-product)
+- [IMT Solar Si Series data sheet](https://go.enapter.com/imt-solar-si-datasheet)
+- [Description MODBUS protocol for IMT Solar Si-RS485 sensors](https://go.enapter.com/imt-solar-si-modbus)
 - [Arrakis MK4 IPC](https://www.welotec.com/product/fanless-industrial-computer-arrakis-mk4-series/)
