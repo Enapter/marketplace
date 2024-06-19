@@ -8,12 +8,11 @@ author: enapter
 contributors:
   - anataty
   - Rina-an
+  - nikitug
 support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
 license: MIT
-verification_level: ready_for_testing
-
 
 communication_module:
   product: ENP-VIRTUAL
@@ -43,15 +42,15 @@ telemetry:
       - read_error
   rain_gauge_h:
     display_name: Rain gauge Hour
-    type: integer
+    type: float
     unit: mm/h
   rain_gauge_m:
     display_name: Rain gauge Min
-    type: integer
+    type: float
     unit: mm/min
   rain_gauge_s:
     display_name: Rain gauge Sec
-    type: integer
+    type: float
     unit: mm/sec
 
 alerts:
