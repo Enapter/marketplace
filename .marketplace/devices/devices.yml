@@ -391,13 +391,19 @@
 
 - id: imt-solar-si-rS485tc-2t
   display_name: IMT Solar Irradiance Sensor Si-RS485TC-2T
-  description: Irradiance sensor.
+  description: Professional Irradiance Sensor
   icon: enapter-solar-panel
   vendor: imt
   category: irradiance_sensors
   blueprint_options:
     - blueprint: irradiance_sensors/imt_solar_si-rS485tc-2t
+      display_name: ENP-RS485 UCM Version
+      description: Use Enapter ENP-RS485 to integrate IMT Solar Irradiance Sensor Si-RS485TC-2T
       verification_level: verified
+    - blueprint: irradiance_sensors/imt_solar_si-rS485tc-2t_arrakis_mk4
+      display_name: Arrakis MK4 IPC Version
+      description: Use Enapter Gateway on Arrakis MK4 IPC to integrate IMT Solar Irradiance Sensor Si-RS485TC-2T
+      verification_level: ready_for_testing
 
 - id: eastron-sdm120ct
   display_name: Eastron SDM120CT
@@ -707,7 +713,7 @@
   category: analog_io_modules
   blueprint_options:
     - blueprint: analog_io_modules/seven_sensor_rain_gauge
-      verification_level: ready_for_testing
+      verification_level: verified
 
 - id: sonoff_snzb-02d
   display_name: SONOFF Temperature and Humidity Zigbee Sensor with LCD model SNZB-02D
