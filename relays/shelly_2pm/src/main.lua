@@ -5,7 +5,7 @@ local sha2 = require('sha2')
 -- Configuration variables must be also defined
 -- in `write_configuration` command arguments in manifest.yml
 IP_ADDRESS_CONFIG = 'address'
-PASSWORD='password'
+PASSWORD = 'password'
 
 local CONNECTION = {}
 local TTY
@@ -20,8 +20,8 @@ function get_auth(response, password)
     local www_values = response.headers['Www-Authenticate'][1]
     local realm = www_values:match('realm="([^"]+)"')
     local nonce = www_values:match('nonce="([^"]+)"')
-    local ha1=sha2.sha256('admin:' .. realm .. ':' .. password)
-    local ha2=sha2.sha256('dummy_method:dummy_uri')
+    local ha1 = sha2.sha256('admin:' .. realm .. ':' .. password)
+    local ha2 = sha2.sha256('dummy_method:dummy_uri')
     local result =
       sha2.sha256(tostring(ha1) .. ':' .. tostring(nonce) .. ':1:' .. tostring(cnonce) .. ':auth:' .. tostring(ha2))
     local auth = '"auth": { "realm":"'
@@ -31,7 +31,8 @@ function get_auth(response, password)
       .. '", "nc":"1", "qop":"auth", "cnonce":"'
       .. cnonce
       .. '", "response":"'
-      .. result .. '", "algorithm": "SHA-256"}'
+      .. result
+      .. '", "algorithm": "SHA-256"}'
     return auth, nil
   else
     return nil, 'No data available to make auth data'
@@ -79,7 +80,8 @@ function get_device_status()
       return nil, 'not_configured'
     end
 
-    local request, err = http.request('POST', 'http://' .. ip_address .. '/rpc','{"id":1, "method":"Shelly.GetStatus"}')
+    local request, err =
+      http.request('POST', 'http://' .. ip_address .. '/rpc','{"id":1, "method":"Shelly.GetStatus"}')
     local client = http.client({ timeout = 5 })
     local response, err = client:do_request(request)
 
@@ -87,14 +89,17 @@ function get_device_status()
       enapter.log('Cannot do request: ' .. err, 'error')
       return nil, 'no_connection'
     elseif response.code == 401 then
-
       if not password then
         return nil, 'not_configured'
       end
 
       local auth = get_auth(response, password)
       if auth then
-        local request, err = http.request('POST', 'http://' .. ip_address .. '/rpc', '{"id":1, "method":"Shelly.GetStatus",'..auth..'}')
+        local request, err = http.request(
+          'POST',
+          'http://' .. ip_address .. '/rpc',
+          '{"id":1, "method":"Shelly.GetStatus",' .. auth .. '}'
+        )
         local client = http.client({ timeout = 5 })
         local response, err = client:do_request(request)
 
@@ -136,7 +141,10 @@ function switch_on(switch, ctx)
       return false, 'not_configured'
     end
 
-    local request, err = http.request('POST', 'http://' .. ip_address .. '/rpc','{"id":1, "method":"Switch.Set", "params":{"id":'..switch..',"on":true}}')
+    local request, err = http.request(
+      'POST',
+      'http://' .. ip_address .. '/rpc',
+      '{"id":1, "method":"Switch.Set", "params":{"id":' .. switch .. ',"on":true}}')
     local client = http.client({ timeout = 5 })
     local response, err = client:do_request(request)
 
@@ -145,14 +153,17 @@ function switch_on(switch, ctx)
       ctx.error(tostring(err))
       return false, 'no_connection'
     elseif response.code == 401 then
-
       if not password then
         return false, 'not_configured'
       end
 
       local auth = get_auth(response, password)
       if auth then
-        local request, err = http.request('POST', 'http://' .. ip_address .. '/rpc','{"id":1, "method":"Switch.Set", "params":{"id":'..switch..',"on":true}, '..auth..'}')
+        local request, err = http.request(
+          'POST',
+          'http://' .. ip_address .. '/rpc',
+          '{"id":1, "method":"Switch.Set", "params":{"id":' .. switch .. ',"on":true}, ' .. auth .. '}'
+        )
         local client = http.client({ timeout = 5 })
         local response, err = client:do_request(request)
 
@@ -192,7 +203,11 @@ function switch_off(switch, ctx)
       return false, 'not_configured'
     end
 
-    local request, err = http.request('POST', 'http://' .. ip_address .. '/rpc','{"id":1, "method":"Switch.Set", "params":{"id":'..switch..',"on":false}')
+    local request, err = http.request(
+      'POST',
+      'http://' .. ip_address .. '/rpc',
+      '{"id":1, "method":"Switch.Set","params":{"id":' .. switch .. ',"on":false}'
+    )
     local client = http.client({ timeout = 5 })
     local response, err = client:do_request(request)
 
@@ -201,14 +216,17 @@ function switch_off(switch, ctx)
       ctx.error(tostring(err))
       return false, 'no_connection'
     elseif response.code == 401 then
-
       if not password then
         return false, 'not_configured'
       end
 
       local auth = get_auth(response, password)
       if auth then
-        local request, err = http.request('POST', 'http://' .. ip_address .. '/rpc','{"id":1, "method":"Switch.Set", "params":{"id":'..switch..',"on":false}, '..auth..'}')
+        local request, err = http.request(
+          'POST',
+          'http://' .. ip_address .. '/rpc',
+          '{"id":1, "method":"Switch.Set","params":{"id":' .. switch .. ',"on":false}, ' .. auth .. '}'
+        )
         local client = http.client({ timeout = 5 })
         local response, err = client:do_request(request)
 
@@ -236,7 +254,7 @@ end
 function main()
   config.init({
     [IP_ADDRESS_CONFIG] = { type = 'string', required = true },
-    [PASSWORD] = { type = 'string', defult = ''},
+    [PASSWORD] = { type = 'string', defult = '' },
   })
   scheduler.add(1000, send_properties)
   scheduler.add(1000, send_telemetry)
@@ -284,14 +302,14 @@ function send_telemetry()
     telemetry['rssi'] = data['result']['wifi']['rssi']
 
     for i = 0, 1, 1 do
-      if data['result']['switch:'..i]['output'] then
+      if data['result']['switch:' .. i]['output'] then
         telemetry['switch' .. i] = 'On'
       else
         telemetry['switch' .. i] = 'Off'
       end
 
       telemetry['voltage' .. i] = data['result']['switch:' .. i]['voltage']
-      telemetry['current' .. i] = data['result']['switch:'.. i]['current']
+      telemetry['current' .. i] = data['result']['switch:' .. i]['current']
       telemetry['power' .. i] = data['result']['switch:' .. i]['apower']
 
       if data['result']['input:' .. i]['state'] then

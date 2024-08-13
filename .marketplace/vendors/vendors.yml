@@ -242,3 +242,8 @@
   display_name: Hunan Rika Electronic Tech
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/rika.png
   website: https://www.rikasensor.com
+
+- id: shelly
+  display_name: Shelly
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/shelly.png
+  website: https://www.shelly.com
