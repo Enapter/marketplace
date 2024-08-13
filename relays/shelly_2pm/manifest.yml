@@ -112,7 +112,8 @@ alerts:
   wrong_password:
     severity: error
     display_name: Unable to authenticate into Shelly API.
-    description: Unable to authenticate into Shelly API. Check that you are using valid password in Virtual UCM configuration.
+    description: |
+      Unable to authenticate into Shelly API. Check that you are using valid password in Virtual UCM configuration.
 
 command_groups:
   control:
