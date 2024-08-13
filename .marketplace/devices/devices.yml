@@ -777,3 +777,13 @@
   blueprint_options:
     - blueprint: water_sensors/SJCGQ12LM
       verification_level: verified
+
+- id: shelly-plus-2pm
+  display_name: Shelly Pluse 2PM
+  description: Power metering switch with 2x10A relays
+  icon: enapter-light-switch
+  vendor: shelly
+  category: relays
+  blueprint_options:
+    - blueprint: relays/shelly_2pm
+      verification_level: verified
