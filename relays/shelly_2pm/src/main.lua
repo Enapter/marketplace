@@ -7,9 +7,6 @@ local sha2 = require('sha2')
 IP_ADDRESS_CONFIG = 'address'
 PASSWORD = 'password'
 
-local CONNECTION = {}
-local TTY
-
 function get_auth(response, password)
   if response.headers['Www-Authenticate'] and password then
     math.randomseed(os.time())
@@ -80,7 +77,7 @@ function get_device_status()
       return nil, 'not_configured'
     end
 
-    local request, err =
+    local request =
       http.request('POST', 'http://' .. ip_address .. '/rpc', '{"id":1, "method":"Shelly.GetStatus"}')
     local client = http.client({ timeout = 5 })
     local response, err = client:do_request(request)
@@ -95,13 +92,13 @@ function get_device_status()
 
       local auth = get_auth(response, password)
       if auth then
-        local request, err = http.request(
+        request = http.request(
           'POST',
           'http://' .. ip_address .. '/rpc',
           '{"id":1, "method":"Shelly.GetStatus",' .. auth .. '}'
         )
-        local client = http.client({ timeout = 5 })
-        local response, err = client:do_request(request)
+        client = http.client({ timeout = 5 })
+        response = client:do_request(request)
 
         if response.code == 401 then
           enapter.log('Request returned non-OK code: ' .. response.code, 'error')
@@ -141,7 +138,7 @@ function switch_on(switch, ctx)
       return false, 'not_configured'
     end
 
-    local request, err = http.request(
+    local request = http.request(
       'POST',
       'http://' .. ip_address .. '/rpc',
       '{"id":1, "method":"Switch.Set", "params":{"id":' .. switch .. ',"on":true}}'
@@ -160,13 +157,13 @@ function switch_on(switch, ctx)
 
       local auth = get_auth(response, password)
       if auth then
-        local request, err = http.request(
+        request = http.request(
           'POST',
           'http://' .. ip_address .. '/rpc',
           '{"id":1, "method":"Switch.Set", "params":{"id":' .. switch .. ',"on":true}, ' .. auth .. '}'
         )
-        local client = http.client({ timeout = 5 })
-        local response, err = client:do_request(request)
+        client = http.client({ timeout = 5 })
+        response = client:do_request(request)
 
         if response.code == 401 then
           ctx.error('Request returned non-OK code: ' .. response.code, 'error')
@@ -204,7 +201,7 @@ function switch_off(switch, ctx)
       return false, 'not_configured'
     end
 
-    local request, err = http.request(
+    local request = http.request(
       'POST',
       'http://' .. ip_address .. '/rpc',
       '{"id":1, "method":"Switch.Set","params":{"id":' .. switch .. ',"on":false}'
@@ -223,13 +220,13 @@ function switch_off(switch, ctx)
 
       local auth = get_auth(response, password)
       if auth then
-        local request, err = http.request(
+        request = http.request(
           'POST',
           'http://' .. ip_address .. '/rpc',
           '{"id":1, "method":"Switch.Set","params":{"id":' .. switch .. ',"on":false}, ' .. auth .. '}'
         )
-        local client = http.client({ timeout = 5 })
-        local response, err = client:do_request(request)
+        client = http.client({ timeout = 5 })
+        response = client:do_request(request)
 
         if response.code == 401 then
           ctx.error('Request returned non-OK code: ' .. response.code, 'error')
