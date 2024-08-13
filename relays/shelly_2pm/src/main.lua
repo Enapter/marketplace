@@ -81,7 +81,7 @@ function get_device_status()
     end
 
     local request, err =
-      http.request('POST', 'http://' .. ip_address .. '/rpc','{"id":1, "method":"Shelly.GetStatus"}')
+      http.request('POST', 'http://' .. ip_address .. '/rpc', '{"id":1, "method":"Shelly.GetStatus"}')
     local client = http.client({ timeout = 5 })
     local response, err = client:do_request(request)
 
@@ -144,7 +144,8 @@ function switch_on(switch, ctx)
     local request, err = http.request(
       'POST',
       'http://' .. ip_address .. '/rpc',
-      '{"id":1, "method":"Switch.Set", "params":{"id":' .. switch .. ',"on":true}}')
+      '{"id":1, "method":"Switch.Set", "params":{"id":' .. switch .. ',"on":true}}'
+    )
     local client = http.client({ timeout = 5 })
     local response, err = client:do_request(request)
 
