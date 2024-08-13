@@ -1,6 +1,6 @@
 # Shelly Plus 2PM
 
-This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Shelly Plus 2PMT** - power metering switch with 2x10A relays. It can be used to control external electrical load such as lights, pumps and valves. It also can be used as roller shutter. This blueprint runs on Virtual UCM and integrates using [RPC over HTTP API](), therefore gateway and Shelly Plus 2PM module needs to be in one network. It also supports digest authentication.
+This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integrates **Shelly Plus 2PMT** - power metering switch with 2x10A relays. It can be used to control external electrical load such as lights, pumps and valves. It also can be used as roller shutter. This blueprint runs on Virtual UCM and integrates using [RPC over HTTP API](https://shelly-api-docs.shelly.cloud/gen2/General/RPCProtocol/), therefore gateway and Shelly Plus 2PM module needs to be in one network. It also supports digest authentication.
 
 ## Configuring Shelly Plus 2 PM
 
