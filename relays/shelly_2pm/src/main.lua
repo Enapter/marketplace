@@ -77,8 +77,7 @@ function get_device_status()
       return nil, 'not_configured'
     end
 
-    local request =
-      http.request('POST', 'http://' .. ip_address .. '/rpc', '{"id":1, "method":"Shelly.GetStatus"}')
+    local request = http.request('POST', 'http://' .. ip_address .. '/rpc', '{"id":1, "method":"Shelly.GetStatus"}')
     local client = http.client({ timeout = 5 })
     local response, err = client:do_request(request)
 
