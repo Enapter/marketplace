@@ -27,7 +27,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: v0.16.1
-          args: --check --allow-hidden ${{ steps.changed-lua-files.outputs.all_changed_files }}
+          args: --check --allow-hidden --respect-ignores ${{ steps.changed-lua-files.outputs.all_changed_files }}
       - name: Lint Code Base
         uses: github/super-linter/slim@v4
         env:
