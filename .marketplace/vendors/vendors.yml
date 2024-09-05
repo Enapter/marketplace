@@ -247,3 +247,8 @@
   display_name: Shelly
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/shelly.png
   website: https://www.shelly.com
+
+- id: efoy
+  display_name: EFOY
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/efoy.png
+  website: https://www.efoy.com/

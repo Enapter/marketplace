@@ -787,3 +787,13 @@
   blueprint_options:
     - blueprint: relays/shelly_2pm
       verification_level: verified
+
+- id: efoy-h2-cabinet-n-series
+  display_name: EFOY H2 Cabinet N-Series
+  description: Indoor cabinet solutions for EFOY Hydrogen fuel cells
+  icon: enapter-fuel-cell
+  vendor: efoy
+  category: fuel_cells
+  blueprint_options:
+    - blueprint: fuel_cells/efoy_h2_cabinet_n_series
+      verification_level: ready_for_testing

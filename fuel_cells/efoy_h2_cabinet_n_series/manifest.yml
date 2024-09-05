@@ -1,0 +1,234 @@
+blueprint_spec: device/1.0
+
+display_name: EFOY Hydrogen Cabinet
+description: Indoor cabinet solution for EFOY Hydrogen fuel cells
+icon: enapter-fuel-cell
+vendor: efoy
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.2.1
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  inlet_hydrogen_pressure:
+    type: float
+    unit: bar
+    display_name: Inlet Hydrogen Pressure
+  voltage_dc_bus:
+    type: float
+    unit: volt
+    display_name: Voltage DC Bus
+  load_current:
+    type: float
+    unit: amp
+    display_name: Load Current
+  supply_air_temperature:
+    type: float
+    unit: celsius
+    display_name: Supply Air Temperature
+  rating_fuel_cell_module0:
+    type: float
+    unit: celsius
+    display_name: Rating Fuel Cell Temperature Module 0
+  rating_fuel_cell_module1:
+    type: float
+    unit: celsius
+    display_name: Rating Fuel Cell Temperature Module 1
+  rating_fuel_cell_module2:
+    type: float
+    unit: celsius
+    display_name: Rating Fuel Cell Temperature Module 2
+  rating_fuel_cell_module3:
+    type: float
+    unit: celsius
+    display_name: Rating Fuel Cell Temperature Module 3
+  internal_hydrogen_pressure_rack0:
+    type: float
+    unit: bar
+    display_name: Inlet Hydrogen Pressure Rack 0
+  battery_temperature:
+    type: float
+    unit: celsius
+    display_name: Battery Temperature
+  rack_temperature0:
+    type: float
+    unit: celsius
+    display_name: Rack 0 Temperature
+  lower_start_limit:
+    type: float
+    unit: volt
+    display_name: Lower Start Limit
+  higher_start_limit:
+    type: float
+    unit: volt
+    display_name: Higher Start Limit
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: Modbus Connection Not Configured
+    description: Modbus connection not configured. Please set the correct settings using "Configure" command.
+  communication_failed:
+    display_name: Communication Failed
+    severity: error
+  rs485_init_issue:
+    severity: error
+    display_name: Cannot Initialize RS485 Port
+    description: Cannot initialize RS485 port. Check logs for details.
+  emergency_module0:
+    severity: error
+    display_name: Emergency Power Off Module 0
+  emergency_module1:
+    severity: error
+    display_name: Emergency Power Off Module 1
+  emergency_module2:
+    severity: error
+    display_name: Emergency Power Off Module 2
+  emergency_module3:
+    severity: error
+    display_name: Emergency Power Off Module 3
+  warning_module0:
+    severity: warning
+    display_name: Warning Module 0
+  warning_module1:
+    severity: warning
+    display_name: Warning Module 1
+  warning_module2:
+    severity: warning
+    display_name: Warning Module 2
+  warning_module3:
+    severity: warning
+    display_name: Warning Module 3
+  ready_module0:
+    severity: info
+    display_name: Ready Module 0
+  ready_module1:
+    severity: error
+    display_name: Ready Module 1
+  ready_module2:
+    severity: error
+    display_name: Ready Module 2
+  ready_module3:
+    severity: error
+    display_name: Ready Module 3
+  alarm:
+    severity: error
+    display_name: FC Controller Alarm
+  warning:
+    severity: warning
+    display_name: FC Controller Warning
+  fc_status:
+    severity: info
+    display_name: FC Controller Status
+  fc_running:
+    severity: info
+    display_name: Fuel Cell Running
+  filter_change:
+    severity: warning
+    display_name: Filter Change
+
+command_groups:
+  config:
+    display_name: Configuration
+  control:
+    display_name: Control
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      port:
+        display_name: Arrakis MK4 Serial Port
+        description: for example, ttyS0
+        type: string
+        enum:
+          - /dev/ttyS0
+          - /dev/ttyS1
+        required: true
+      address:
+        display_name: Modbus RTU Address
+        description: for example, 1
+        type: string
+        required: true
+      baud_rate:
+        display_name: Modbus RTU Baud Rate
+        description: 9600, for example
+        type: string
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+  set_lower_start_limit:
+    display_name: Set Lower Start Limit
+    group: control
+    ui:
+      icon: gauge-low
+    arguments:
+      limit:
+        display_name: Lower Limit
+        description: mV
+        type: float
+        required: true
+  set_higher_start_limit:
+    display_name: Set Higher Start Limit
+    group: control
+    ui:
+      icon: gauge-full
+    arguments:
+      limit:
+        display_name: Lower Limit
+        description: mV
+        type: float
+        required: true
+  external_stop:
+    display_name: External Stop
+    group: control
+    ui:
+      icon: chevron-right
+    arguments:
+      action:
+        display_name: Setting
+        description: Stop or Auto mode
+        type: string
+        enum:
+          - stop
+          - auto
+        required: true
+
+.cloud:
+  category: fuel_cells
+  mobile_telemetry:
+    - inlet_hydrogen_pressure
