@@ -12,6 +12,6 @@ repos:
     hooks:
       - id: markdownlint
   - repo: https://github.com/JohnnyMorganz/StyLua
-    rev: v0.16.1
+    rev: v0.20.0
     hooks:
       - id: stylua-github
