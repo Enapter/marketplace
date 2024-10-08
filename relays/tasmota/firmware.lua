@@ -3,7 +3,8 @@ connection = http.client({ timeout = 10 })
 local config = require('enapter.ucm.config')
 
 -- The addres is the local IP adres of the tasmota device
--- The password is optional it is only needed in case the web-admin pasword is set on the tasmota device, be aware that this is only a very thin extra layer of security and you should not purely rely on that.
+-- The password is optional it is only needed in case the web-admin pasword is set on the tasmota device, 
+-- be aware that this is only a very thin extra layer of security and you should not purely rely on that.
 ADDRESS = 'address'
 PASSWORD = 'password'
 
@@ -23,7 +24,7 @@ function main()
   scheduler.add(1000, send_telemetry)
 end
 
-function tasmota_command(ctx, args)
+function tasmota_command(args)
   enapter.log('command arrived ' .. args['command'])
   return control_device(args['command'])
 end
@@ -46,6 +47,10 @@ end
 -- Generic function to control the device
 function control_device(command)
   local config_values, err = config.read_all()
+
+  if err then
+    enapter.log('Could not read config: ' .. err)
+  end
 
   local url = 'http://' .. config_values[ADDRESS] .. '/cm?cmnd=' .. command
 
