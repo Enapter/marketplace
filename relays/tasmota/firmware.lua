@@ -3,7 +3,7 @@ connection = http.client({ timeout = 10 })
 local config = require('enapter.ucm.config')
 
 -- The addres is the local IP adres of the tasmota device
--- The password is optional it is only needed in case the web-admin pasword is set on the tasmota device, 
+-- The password is optional it is only needed in case the web-admin pasword is set on the tasmota device,
 -- be aware that this is only a very thin extra layer of security and you should not purely rely on that.
 ADDRESS = 'address'
 PASSWORD = 'password'
