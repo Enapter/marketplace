@@ -1,4 +1,4 @@
-# Generic Tasmota 
+# Generic Tasmota
 
 This [Enapter Device Blueprint](https://github.com/Enapter/marketplace#blue_book-enapter-device-blueprints) is meant to integrate with any [Tasmota](https://tasmota.github.io/docs/) device. **Tasmota** is opensource firmware, it runs on the ESP32 & ESP8266 chip. Tasmota firmware forms the basis for a lot of smart relays, smart sensors, smart sockets including loads of commercial vendors like [Nous](https://nous.technology/). But the ESP32 & ESP8266 essentially are very small webservers on a chip, and you can include them in any circuit board, so the combination of a chip, the tasmota firmware, and this blue print enables you to connect any device to the enapter cloud.
 
@@ -6,7 +6,7 @@ The blueprint essentially is a wrapper around the Tasmota interface. It enables 
 
 ## Setup
 
-The Tasmota device and the gateway must be able to communicate with each other over a local IP, so make sure that they are linked to the same network. 
+The Tasmota device and the gateway must be able to communicate with each other over a local IP, so make sure that they are linked to the same network.
 
 For any specific questions about Tasmota look at the [Tasmota docs](https://tasmota.github.io/docs/).
 
