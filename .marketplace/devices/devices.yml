@@ -797,3 +797,13 @@
   blueprint_options:
     - blueprint: fuel_cells/efoy_h2_cabinet_n_series
       verification_level: ready_for_testing
+
+- id: tasmota
+  display_name: Tasmota
+  description: Any product running on Tasmota firmware
+  icon: enapter-microchip
+  vendor: tasmota
+  category: relays
+  blueprint_options:
+    - blueprint: relays/tasmota
+      verification_level: ready_for_testing
