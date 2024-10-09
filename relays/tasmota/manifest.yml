@@ -6,12 +6,12 @@ display_name: Tasmota device
 description: A wrapper around the Tasmota interface to connect to any Tasmota powered device.
 icon: light-switch
 vendor: tasmota
-author: Hermanos Energy
+author: hermanos-energy
 support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
 contributors:
-  - Jan Ruijtenberg
+  - SoloJan
 license: MIT
 
 
@@ -31,9 +31,12 @@ properties:
     display_name: Model
 
 telemetry:
-  is_on:
-    type: boolean
-    display_name: Is on
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - "on"
+      - "off"
 
 commands:
   turn_on:

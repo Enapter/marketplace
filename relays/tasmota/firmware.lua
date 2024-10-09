@@ -24,8 +24,8 @@ function main()
   scheduler.add(1000, send_telemetry)
 end
 
-function tasmota_command(args)
-  enapter.log('command arrived ' .. args['command'])
+function tasmota_command(ctx, args)
+  ctx.log('command arrived ' .. args['command'])
   return control_device(args['command'])
 end
 
@@ -40,8 +40,8 @@ function send_telemetry()
   local tasmota_status = control_device('Status0')
   local decoded_status = json.decode(tasmota_status) -- The status line contains all kind of info
   local power = decoded_status.Status.Power -- Access the "Power" field
-  local power_bool = (power == 1)
-  enapter.send_telemetry({ is_on = power_bool })
+  local power_status = (power == 1) and 'on' or 'off'
+  enapter.send_telemetry({ status = power_status })
 end
 
 -- Generic function to control the device
