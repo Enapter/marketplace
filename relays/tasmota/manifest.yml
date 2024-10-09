@@ -5,7 +5,7 @@ blueprint_spec: device/1.0
 display_name: Tasmota device
 description: A wrapper around the Tasmota interface to connect to any Tasmota powered device.
 icon: light-switch
-vendor: Tasmota
+vendor: tasmota
 author: Hermanos Energy
 support:
   url: https://go.enapter.com/enapter-blueprint-support

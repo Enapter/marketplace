@@ -252,3 +252,8 @@
   display_name: EFOY
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/efoy.png
   website: https://www.efoy.com/
+
+- id: tasmota
+  display_name: Tasmota
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/tasmota.png
+  website: https://tasmota.github.io/docs/
