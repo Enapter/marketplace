@@ -1,0 +1,88 @@
+# Manifest for blueprint connection to any Tasmota device
+
+blueprint_spec: device/1.0
+
+display_name: Tasmota device
+description: A wrapper around the Tasmota interface to connect to any Tasmota powered device.
+icon: light-switch
+vendor: tasmota
+author: hermanos-energy
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+contributors:
+  - SoloJan
+license: MIT
+
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
+
+properties:
+  serial_number:
+    type: string
+    display_name: Serial Number
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - "on"
+      - "off"
+
+commands:
+  turn_on:
+    display_name: Turn on
+    group: tasmota
+    ui:
+      icon: led-on
+      quick_access: true
+  turn_off:
+    display_name: Turn off
+    group: tasmota
+    ui:
+      icon: led-of
+      quick_access: true
+  tasmota_command:
+    arguments:
+      command:
+        display_name: command
+        description: A valid tasmota command,
+        type: string
+        required: true
+    display_name: Send any command
+    group: tasmota
+  write_configuration:
+    display_name: Configure
+    group: config
+    populate_values_command: read_configuration
+    ui:
+      icon: file-document-edit-outline
+    arguments:
+      address:
+        display_name: ip address
+        type: string
+        required: true
+      password:
+        display_name: password
+        type: string
+        required: false
+  read_configuration:
+    display_name: Read config Parameters
+    group: config
+    ui:
+      icon: file-check-outline
+
+command_groups:
+  config:
+    display_name: Configuration
+  tasmota:
+    display_name: Tasmota commands
