@@ -2,6 +2,7 @@ local config = require('enapter.ucm.config')
 
 INDEX_CONFIG = 'index'
 SAVE_0x400_CONFIG = 'save_0x400'
+RL6_CONFIG = 'rl6'
 
 VENDOR = 'Intelligent Energy'
 MODEL = 'FCM 804'
@@ -18,6 +19,7 @@ cd_alerts = nil
 
 can_index = 1
 save_0x400 = false
+rl6 = nil
 messages_0x400 = {}
 
 function main()
@@ -32,6 +34,7 @@ function main()
   config.init({
     [INDEX_CONFIG] = { type = 'number', default = 1, required = true },
     [SAVE_0x400_CONFIG] = { type = 'boolean', default = false },
+    [RL6_CONFIG] = { type = 'string' },
   }, {
     after_write = setup_options,
   })
@@ -47,6 +50,7 @@ end
 function setup_options(args)
   can_index = args[INDEX_CONFIG]
   save_0x400 = args[SAVE_0x400_CONFIG]
+  rl6 = args[RL6_CONFIG]
   configured = true
 end
 
@@ -57,6 +61,11 @@ function send_properties()
     info['serial_number'] = serial_number
     is_serial_number_completed = false
   end
+
+  if rl6 ~= nil and rl6 ~= '' then
+    info['rl6'] = rl6
+  end
+
   info['fw_ver'] = fw_ver
 
   enapter.send_properties(info)
@@ -73,8 +82,7 @@ function send_telemetry()
   local str_0x400
   for _, data in pairs(messages_0x400) do
     str_0x400 = str_0x400 or ''
-    local str_0x400_part =
-      string.format('%02x%02x%02x%02x%02x%02x%02x%02x', string.unpack('I1I1I1I1I1I1I1I1', data))
+    local str_0x400_part = string.format('%02x%02x%02x%02x%02x%02x%02x%02x', string.unpack('I1I1I1I1I1I1I1I1', data))
     str_0x400 = str_0x400 .. ' ' .. str_0x400_part
   end
   telemetry['messages_0x400'] = str_0x400
@@ -105,8 +113,7 @@ function can_handler(msg_id, data)
     if not is_serial_number_completed then
       if string.byte(data, 1) > 127 then
         if #temp_serial_number == 8 then
-          local serial_number_part =
-            string.char(string.byte(data, 1, 1) - 128, string.byte(data, 2, 8))
+          local serial_number_part = string.char(string.byte(data, 1, 1) - 128, string.byte(data, 2, 8))
           temp_serial_number = temp_serial_number .. serial_number_part
           serial_number = temp_serial_number
           is_serial_number_completed = true
