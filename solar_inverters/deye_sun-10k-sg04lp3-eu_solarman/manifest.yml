@@ -17,7 +17,7 @@ communication_module:
   lua:
     dir: fw
     dependencies:
-      - enapter-ucm
+      - enapter-ucm ~> 0.3.2
       - net-url ~> 1.1-1
       - lua-hashings ~> scm-1
     allow_dev_dependencies: true
