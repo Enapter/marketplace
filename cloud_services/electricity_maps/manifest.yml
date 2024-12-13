@@ -69,7 +69,8 @@ alerts:
   not_configured:
     severity: info
     display_name: Connection Not Configured
-    description: Electricity Maps API connection not configured. Please set the correct settings using "Configure" command.
+    description: |
+      Electricity Maps API connection not configured. Please set the correct settings using "Configure" command.
   communication_failed:
     display_name: Communication Failed
     severity: error
@@ -81,11 +82,14 @@ alerts:
     severity: error
     display_name: Unable to authenticate into Electricity Maps API.
     description: |
-      Unable to authenticate into Electricity Maps API. Check that you are using valid token in Virtual UCM configuration.
+      Unable to authenticate into Electricity Maps API.
+      Check that you are using valid token in Virtual UCM configuration.
   no_data:
     severity: error
     display_name: Electricity Maps API returned no data for selected location.
-    description: Electricity Maps API returned no data for selected location. It might be parser issue on Electricity Maps API. Check your coordinates in the configuration.
+    description: |
+      Electricity Maps API returned no data for selected location.
+      It might be parser issue on Electricity Maps API. Check your coordinates in the configuration.
 
 
 command_groups:

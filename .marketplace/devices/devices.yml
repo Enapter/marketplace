@@ -810,7 +810,9 @@
 
 - id: electricity_maps
   display_name: Electricity Maps
-  description: Integration with Electricity Maps platform that provides real-time and historical carbon intensity data for electricity grids around the world
+  description: |
+    Integration with Electricity Maps platform to provides real-time and
+    historical carbon intensity data for electricity grids around the world
   icon: leaf
   vendor: electricity_maps
   category: cloud_services
