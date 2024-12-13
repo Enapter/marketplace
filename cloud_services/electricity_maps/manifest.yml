@@ -1,0 +1,130 @@
+blueprint_spec: device/1.0
+
+display_name: Electricity Maps
+description: Electrictity Maps Service Integration for Monitoring Regional Power Generation and Cardbon Footprint
+icon: leaf
+vendor: electricity_maps
+author: enapter
+contributors:
+  - nkrasko
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    dir: src
+    dependencies:
+      - enapter-ucm ~> 0.3.2
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  lat:
+    type: string
+    display_name: Latitude
+  lon:
+    type: string
+    display_name: Longitude
+  zone:
+    type: string
+    display_name: World Zone
+
+telemetry:
+  status:
+    type: string
+    enum:
+      - Online
+      - Offline
+    display_name: Connection Status
+  carbonIntensity:
+    type: float
+    display_name: Carbon Intensity
+    unit: gCO2eq/kWh
+  powerConsumptionTotal:
+    type: float
+    display_name: Total Power Consumption
+    unit: MW
+  powerProductionTotal:
+    type: float
+    display_name: Total Power Production
+    unit: MW
+  fossilFreePercentage:
+    type: float
+    display_name: Fossil Free Energy
+    unit: '%'
+  renewablePercentage:
+    type: float
+    display_name: Renewable Energy
+    unit: '%'
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: Connection Not Configured
+    description: Electricity Maps API connection not configured. Please set the correct settings using "Configure" command.
+  communication_failed:
+    display_name: Communication Failed
+    severity: error
+  wrong_request:
+    severity: error
+    display_name: Electricity Maps API returned invalid response.
+    description: Electricity Maps API returned invalid response. Check that you are using valid token and location.
+  wrong_password:
+    severity: error
+    display_name: Unable to authenticate into Electricity Maps API.
+    description: |
+      Unable to authenticate into Electricity Maps API. Check that you are using valid token in Virtual UCM configuration.
+  no_data:
+    severity: error
+    display_name: Electricity Maps API returned no data for selected location.
+    description: Electricity Maps API returned no data for selected location. It might be parser issue on Electricity Maps API. Check your coordinates in the configuration.
+
+
+command_groups:
+  config:
+    display_name: Configuration
+
+commands:
+  write_configuration:
+    display_name: Configure
+    group: config
+    populate_values_command: read_configuration
+    ui:
+      icon: file-document-edit-outline
+    arguments:
+      token:
+        display_name: Access Token
+        description: Register your API Access token at https://api-portal.electricitymaps.com/
+        type: string
+        required: true
+      lat:
+        display_name: Latitude
+        type: string
+        required: true
+      lon:
+        display_name: Longitude
+        type: string
+        required: true
+
+  read_configuration:
+    display_name: Read Config Parameters
+    group: config
+    ui:
+      icon: file-check-outline
+
+.cloud:
+  category: cloud_services
+  mobile_charts:
+    - carbonIntensity
+    - powerConsumptionTotal
+    - powerProductionTotal
+    - fossilFreePercentage
+    - renewablePercentage
