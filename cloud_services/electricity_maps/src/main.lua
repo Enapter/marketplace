@@ -57,7 +57,7 @@ function get_data()
     local lat = values[LAT_CONFIG]
     local result = {}
 
-    local request = http.request('GET', 'https://api.electricitymap.org/v3/carbon-intensity/latest?lon='..lon..'&lat='..lat)
+    local request = http.request('GET', 'https://api.electricitymap.org/v3/carbon-intensity/latest?lon=' .. lon .. '&lat=' .. lat)
     request:set_header('auth-token', token)
     local client = http.client({ timeout = 5 })
     local response, err = client:do_request(request)
@@ -81,7 +81,7 @@ function get_data()
        end
     end
 
-    local request = http.request('GET', 'https://api.electricitymap.org/v3/power-breakdown/latest?lon='..lon..'&lat='..lat)
+    local request = http.request('GET', 'https://api.electricitymap.org/v3/power-breakdown/latest?lon=' .. lon .. '&lat=' .. lat)
     request:set_header('auth-token', token)
     local client = http.client({ timeout = 5 })
     local response, err = client:do_request(request)
