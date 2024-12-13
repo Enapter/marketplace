@@ -57,7 +57,8 @@ function get_data()
     local lat = values[LAT_CONFIG]
     local result = {}
 
-    local request = http.request('GET', 'https://api.electricitymap.org/v3/carbon-intensity/latest?lon=' .. lon .. '&lat=' .. lat)
+    local request =
+      http.request('GET', 'https://api.electricitymap.org/v3/carbon-intensity/latest?lon=' .. lon .. '&lat=' .. lat)
     request:set_header('auth-token', token)
     local client = http.client({ timeout = 5 })
     local response, err = client:do_request(request)
@@ -72,16 +73,17 @@ function get_data()
       enapter.log('Request returned non-OK code: ' .. response.code, 'error')
       return nil, 'wrong_request'
     else
-       local jb = json.decode(response.body)
-       if jb['error'] then
+      local jb = json.decode(response.body)
+      if jb['error'] then
         return nil, 'no_data'
-       else
+      else
         result['carbonIntensity'] = jb['carbonIntensity']
         result['zone'] = jb['zone']
-       end
+      end
     end
 
-    local request = http.request('GET', 'https://api.electricitymap.org/v3/power-breakdown/latest?lon=' .. lon .. '&lat=' .. lat)
+    local request =
+      http.request('GET', 'https://api.electricitymap.org/v3/power-breakdown/latest?lon=' .. lon .. '&lat=' .. lat)
     request:set_header('auth-token', token)
     local client = http.client({ timeout = 5 })
     local response, err = client:do_request(request)
@@ -96,15 +98,15 @@ function get_data()
       enapter.log('Request returned non-OK code: ' .. response.code, 'error')
       return nil, 'wrong_request'
     else
-       local jb = json.decode(response.body)
-       if jb['error'] then
+      local jb = json.decode(response.body)
+      if jb['error'] then
         return nil, 'no_data'
-       else
+      else
         result['powerConsumptionTotal'] = jb['powerConsumptionTotal']
         result['powerProductionTotal'] = jb['powerProductionTotal']
         result['fossilFreePercentage'] = jb['fossilFreePercentage']
         result['renewablePercentage'] = jb['renewablePercentage']
-       end
+      end
     end
 
     return result, nil
