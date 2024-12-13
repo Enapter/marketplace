@@ -261,4 +261,4 @@
 - id: electricity_maps
   display_name: Electricity Maps
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/electricity_maps.png
-  website: electricitymaps.com
+  website: https://www.electricitymaps.com
