@@ -82,11 +82,11 @@ function get_data()
       end
     end
 
-    local request =
+    request =
       http.request('GET', 'https://api.electricitymap.org/v3/power-breakdown/latest?lon=' .. lon .. '&lat=' .. lat)
     request:set_header('auth-token', token)
-    local client = http.client({ timeout = 5 })
-    local response, err = client:do_request(request)
+    client = http.client({ timeout = 5 })
+    response, err = client:do_request(request)
 
     if err then
       enapter.log('Cannot do request: ' .. err, 'error')
