@@ -807,3 +807,15 @@
   blueprint_options:
     - blueprint: relays/tasmota
       verification_level: ready_for_testing
+
+- id: electricity_maps
+  display_name: Electricity Maps
+  description: |
+    Integration with Electricity Maps platform to provides real-time and
+    historical carbon intensity data for electricity grids around the world
+  icon: leaf
+  vendor: electricity_maps
+  category: cloud_services
+  blueprint_options:
+    - blueprint: cloud_services/electricity_maps
+      verification_level: verified
