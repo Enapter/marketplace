@@ -146,17 +146,17 @@ function prepare_telemetry()
   if err then
     active_alerts = { err }
   elseif data['status'] == 'ok' then
-      active_alerts = {}
-      status = 'Online'
+    active_alerts = {}
+    status = 'Online'
 
-      data, err = get_data()
+    data, err = get_data()
 
-      if err then
-        active_alerts = { err }
-      else
-        telemetry = data
-        ZONE = data['zone']
-      end
+    if err then
+      active_alerts = { err }
+    else
+      telemetry = data
+      ZONE = data['zone']
+    end
   else
     active_alerts = {}
     status = 'Offline'
