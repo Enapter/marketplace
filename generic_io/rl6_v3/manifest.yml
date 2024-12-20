@@ -1,0 +1,221 @@
+blueprint_spec: device/3.0
+
+display_name: Generic IO for ENP-RL6
+description: Generic input/output interface for controlling Enapter 6-port relay module.
+icon: enapter-module-din-2
+author: enapter
+contributors:
+  - nsmak
+  - abakin
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+
+runtime:
+  type: lua
+  requirements:
+    - lua_api_ver_3
+    - rl
+    - rl_6
+  opts:
+    file: firmware.lua
+    luarocks:
+      - enapter-ucm ~> 0.4.0
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - error
+      - ok
+  do_1_closed:
+    type: boolean
+    display_name: Channel 1 Closed
+  do_2_closed:
+    type: boolean
+    display_name: Channel 2 Closed
+  do_3_closed:
+    type: boolean
+    display_name: Channel 3 Closed
+  do_4_closed:
+    type: boolean
+    display_name: Channel 4 Closed
+  do_5_closed:
+    type: boolean
+    display_name: Channel 5 Closed
+  do_6_closed:
+    type: boolean
+    display_name: Channel 6 Closed
+
+command_groups:
+  config:
+    display_name: Configuration
+  relays:
+    display_name: Relays
+commands:
+  close_channel:
+    display_name: Close Channel
+    description: Close Selected Relay Channel
+    group: relays
+    ui:
+      icon: electric-switch-closed
+      quick_access: true
+    arguments:
+      port:
+        display_name: Channel Port
+        type: string
+        enum:
+          - do-1
+          - do-2
+          - do-3
+          - do-4
+          - do-5
+          - do-6
+  close_all_channels:
+    display_name: Close All Channels
+    group: relays
+    ui:
+      icon: electric-switch-closed
+      quick_access: true
+  open_channel:
+    display_name: Open Channel
+    description: Open Selected Relay Channel
+    group: relays
+    ui:
+      icon: electric-switch
+      quick_access: true
+    arguments:
+      port:
+        display_name: Channel Port
+        type: string
+        enum:
+          - do-1
+          - do-2
+          - do-3
+          - do-4
+          - do-5
+          - do-6
+  open_all_channels:
+    display_name: Open All Channels
+    group: relays
+    ui:
+      icon: electric-switch
+      quick_access: true
+  impulse_on_channel:
+    display_name: Impulse on Channel
+    group: relays
+    ui:
+      icon: electric-switch
+    arguments:
+      port:
+        display_name: Channel Port
+        type: string
+        enum:
+          - do-1
+          - do-2
+          - do-3
+          - do-4
+          - do-5
+          - do-6
+      duration:
+        display_name: Impulse duration
+        type: integer
+        unit: ms
+  is_channel_closed:
+    display_name: Channel State
+    group: relays
+    ui:
+      icon: light-switch
+    arguments:
+      port:
+        display_name: Channel Port
+        type: string
+        enum:
+          - do-1
+          - do-2
+          - do-3
+          - do-4
+          - do-5
+          - do-6
+  all_channels_state:
+    display_name: All Channels State
+    group: relays
+    ui:
+      icon: dip-switch
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      on_disconnect:
+        display_name: Channels state on disconnect
+        description: Channels state to use on disconnect from Gateway or Cloud. Respect Current or switch to Default.
+        type: string
+        required: false
+        default: Respect
+        enum:
+          - Respect
+          - Set Default
+      do_1_def:
+        display_name: Channel 1 Default State
+        description: Channel 1 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+      do_2_def:
+        display_name: Channel 2 Default State
+        description: Channel 2 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+      do_3_def:
+        display_name: Channel 3 Default State
+        description: Channel 3 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+      do_4_def:
+        display_name: Channel 4 Default State
+        description: Channel 4 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+      do_5_def:
+        display_name: Channel 5 Default State
+        description: Channel 5 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+      do_6_def:
+        display_name: Channel 6 Default State
+        description: Channel 6 Default State on Boot and on Connection Loss
+        type: boolean
+        required: false
+        default: "false"
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+alerts:
+  cannot_read_channel_state:
+    severity: error
+    display_name: Cannot Read Channel State
+    description: Relay channel might be broken. Check the module logs or contact Enapter support.
+
+.cloud:
+  category: communication_modules
+  mqtt_channel_id: gio

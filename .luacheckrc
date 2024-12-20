@@ -61,6 +61,7 @@ stds.ucm = {
         'err_to_str',
       },
     },
+    relay = { fields = { 'new' } },
     ai4 = {
       fields = { 'read_volts', 'read_milliamps', 'err_to_str' },
     },
