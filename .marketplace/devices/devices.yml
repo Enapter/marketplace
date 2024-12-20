@@ -357,7 +357,13 @@
   category: generic_io
   blueprint_options:
     - blueprint: generic_io/rl6
+      description: Generic IO for ENP-RL6 with Lua API version 1.
+      display_name: Generic IO for ENP-RL6 Lua API 1
       verification_level: verified
+    - blueprint: generic_io/rl6_v3
+      description: Generic IO for ENP-RL6 with Lua API version 3.
+      display_name: Generic IO for ENP-RL6 Lua API 3
+      verification_level: ready_for_testing
 
 - id: generic-rs485
   display_name: Generic IO for ENP-RS485
