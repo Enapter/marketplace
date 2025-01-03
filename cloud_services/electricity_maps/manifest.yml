@@ -32,6 +32,9 @@ properties:
   zone:
     type: string
     display_name: World Zone
+  in_dashboard:
+    type: boolean
+    display_name: Use for Carboon Footprint Dashboard
 
 telemetry:
   status:
@@ -117,6 +120,9 @@ commands:
         display_name: Longitude
         type: string
         required: true
+      in_dashboard:
+        type: boolean
+        display_name: Use for Carboon Footprint Dashboard
 
   read_configuration:
     display_name: Read Config Parameters
