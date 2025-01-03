@@ -8,6 +8,7 @@ active_alerts = {}
 TOKEN_CONFIG = 'token'
 LAT_CONFIG = 'lat'
 LON_CONFIG = 'lon'
+IN_DASHBOARD_CONFIG = 'in_dashboard'
 ZONE = nil
 
 function get_config()
@@ -118,6 +119,7 @@ function main()
     [TOKEN_CONFIG] = { type = 'string', required = true },
     [LON_CONFIG] = { type = 'string', required = true },
     [LAT_CONFIG] = { type = 'string', required = true },
+    [IN_DASHBOARD_CONFIG] = { type = 'boolean', default = false, required = false },
   })
   scheduler.add(5000, send_properties)
   scheduler.add(120000, prepare_telemetry)
@@ -133,6 +135,7 @@ function send_properties()
       lat = data['lat'],
       lon = data['lon'],
       zone = ZONE,
+      in_dashboard = data['in_dashboard'],
     })
   end
 end
