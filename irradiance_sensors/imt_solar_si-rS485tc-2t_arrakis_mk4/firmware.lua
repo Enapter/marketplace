@@ -58,7 +58,7 @@ function tty_init()
       SERIAL_OPTIONS = {
         baud_rate = tonumber(baud_rate),
         parity = tostring(parity),
-        stop_bits = tostring(stop_bits),
+        stop_bits = tonumber(stop_bits),
         data_bits = 8,
         read_timeout = 1000,
       }
