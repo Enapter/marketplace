@@ -218,4 +218,3 @@ alerts:
 
 .cloud:
   category: communication_modules
-  mqtt_channel_id: gio
