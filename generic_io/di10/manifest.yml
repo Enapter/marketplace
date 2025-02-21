@@ -1,0 +1,186 @@
+blueprint_spec: device/3.0
+
+display_name: Generic IO for ENP-DI10 M2
+description: Generic input/output interface for controlling Enapter ENP-DI10 M2 module.
+icon: enapter-module-din-2
+author: enapter
+contributors:
+  - danya
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+license: MIT
+
+runtime:
+  type: lua
+  requirements:
+    - lua_api_ver_3
+    - digitalin
+    - enp_di10_m2_ports
+  opts:
+    file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - error
+      - ok
+  di_1_closed:
+    type: boolean
+    display_name: DI1 Closed
+  di_2_closed:
+    type: boolean
+    display_name: DI2 Closed
+  di_3_closed:
+    type: boolean
+    display_name: DI3 Closed
+  di_4_closed:
+    type: boolean
+    display_name: DI4 Closed
+  di_5_closed:
+    type: boolean
+    display_name: DI5 Closed
+  di_6_closed:
+    type: boolean
+    display_name: DI6 Closed
+  di_7_closed:
+    type: boolean
+    display_name: DI7 Closed
+  di_8_closed:
+    type: boolean
+    display_name: DI8 Closed
+  di_9_closed:
+    type: boolean
+    display_name: DI9 Closed
+  di_10_closed:
+    type: boolean
+    display_name: DI10 Closed
+  di_1_counter:
+    type: integer
+    display_name: DI1 Counter
+  di_2_counter:
+    type: integer
+    display_name: DI2 Counter
+  di_3_counter:
+    type: integer
+    display_name: DI3 Counter
+  di_4_counter:
+    type: integer
+    display_name: DI4 Counter
+  di_5_counter:
+    type: integer
+    display_name: DI5 Counter
+  di_6_counter:
+    type: integer
+    display_name: DI6 Counter
+  di_7_counter:
+    type: integer
+    display_name: DI7 Counter
+  di_8_counter:
+    type: integer
+    display_name: DI8 Counter
+  di_9_counter:
+    type: integer
+    display_name: DI9 Counter
+  di_10_counter:
+    type: integer
+    display_name: DI10 Counter
+
+command_groups:
+  digitalin:
+    display_name: Digital Inputs
+
+commands:
+  get_state:
+    display_name: Get DI Channel State
+    group: digitalin
+    ui:
+      icon: light-switch
+    arguments:
+      port:
+        display_name: DI Port
+        type: string
+        enum:
+          - di-1
+          - di-2
+          - di-3
+          - di-4
+          - di-5
+          - di-6
+          - di-7
+          - di-8
+          - di-9
+          - di-10
+    response:
+      state:
+        display_name: DI Channel State
+        type: string
+        enum:
+          - LOW
+          - HIGH
+  read_counter:
+    display_name: Get DI Channel Counter
+    group: digitalin
+    ui:
+      icon: light-switch
+    arguments:
+      port:
+        display_name: DI Port
+        type: string
+        enum:
+          - di-1
+          - di-2
+          - di-3
+          - di-4
+          - di-5
+          - di-6
+          - di-7
+          - di-8
+          - di-9
+          - di-10
+    response:
+      counter:
+        display_name: Counter Value
+        type: integer
+  reset_counter:
+    display_name: Reset DI Channel Counter
+    group: digitalin
+    ui:
+      icon: light-switch
+    arguments:
+      port:
+        display_name: DI Port
+        type: string
+        enum:
+          - di-1
+          - di-2
+          - di-3
+          - di-4
+          - di-5
+          - di-6
+          - di-7
+          - di-8
+          - di-9
+          - di-10
+
+alerts:
+  cannot_read_channel_state:
+    severity: error
+    display_name: Cannot Read DI State
+    description: DI might be broken.
+    troubleshooting:
+      - Check the device logs.
+      - Contact [Enapter Customer Support](mailto:support@enapter.com).
+
+.cloud:
+  category: communication_modules

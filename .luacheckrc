@@ -75,6 +75,9 @@ stds.ucm = {
         'err_to_str',
       },
     },
+    digitalin = {
+      fields = { 'new', 'LOW', 'HIGH' },
+    },
     rl = {
       fields = {
         'is_closed',

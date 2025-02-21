@@ -6,7 +6,7 @@ icon: enapter-module-din-2
 author: enapter
 contributors:
   - nsmak
-  - abakin
+  - kulti
 support:
   url: https://enapter.com/support
   email: support@enapter.com
@@ -16,8 +16,8 @@ runtime:
   type: lua
   requirements:
     - lua_api_ver_3
-    - rl
-    - rl_6
+    - relay
+    - enp_rl6_ports
   opts:
     file: firmware.lua
     luarocks:
