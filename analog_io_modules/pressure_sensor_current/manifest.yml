@@ -1,7 +1,7 @@
 blueprint_spec: device/1.0
 
 display_name: Pressure Sensor
-description: Analog pressure sensor based on 4-20mA signal.
+description: Analog pressure sensor based on 4-20mA signal (v9).
 icon: enapter-gauge
 author: enapter
 contributors:
