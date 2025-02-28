@@ -1,0 +1,185 @@
+blueprint_spec: device/1.0
+
+display_name: Deye Hybrid Inverter
+description: Three phase hybrid inverter with low battery voltage
+icon: enapter-inverter-solar
+license: MIT
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+verification_level: verified
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+  # dependencies:
+  #   - enapter-ucm
+  #   - enapter-sma
+
+properties:
+  model:
+    display_name: Model
+    type: string
+  serial_num:
+    display_name: Serial Number
+    type: integer
+  vendor:
+    display_name: Vendor
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - no_data
+  total_battery_charge:
+    display_name: Total battery charge
+    type: float
+    unit: kWh
+  total_battery_discharge:
+    display_name: Total battery discharge
+    type: float
+    unit: kWh
+  day_gridbuy_power:
+    display_name: Day grid buy power
+    type: float
+    unit: kWh
+  day_gridsell_power:
+    display_name: Day grid sell power
+    type: float
+    unit: kWh
+  day_load_power:
+    display_name: Day load power
+    type: float
+    unit: kWh
+  battery_voltage:
+    display_name: Battery Voltage
+    type: float
+    unit: V
+  battery_output_power:
+    display_name: Battery output power
+    type: float
+    unit: W
+  battery_output_current:
+    display_name: Battery output current
+    type: float
+    unit: A
+  inner_grid_power_a:
+    display_name: A phase power on inner side of grid
+    type: float
+    unit: W
+  inner_grid_power_b:
+    display_name: B phase power on inner side of grid
+    type: float
+    unit: W
+  inner_grid_power_c:
+    display_name: C phase power on inner side of grid
+    type: float
+    unit: W
+  total_active_power_side_to_side:
+    display_name: Total active power from side to side of the grid
+    type: float
+    unit: W
+  grid_frequency:
+    display_name: Grid-side frequency
+    type: float
+    unit: Hz
+  out_of_grid_power_a:
+    display_name: Out-of-grid power phase A
+    type: float
+    unit: W
+  out_of_grid_power_b:
+    display_name: Out-of-grid power phase B
+    type: float
+    unit: W
+  out_of_grid_power_c:
+    display_name: Out-of-grid power phase C
+    type: float
+    unit: W
+  total_out_of_grid_power:
+    display_name: Out-of-grid total power
+    type: float
+    unit: W
+  grid_power_a:
+    display_name: Grid-side power phase A
+    type: float
+    unit: W
+  grid_power_b:
+    display_name: Grid-side power phase B
+    type: float
+    unit: W
+  grid_power_c:
+    display_name: Grid-side power phase C
+    type: float
+    unit: W
+  total_grid_power:
+    display_name: Grid-side total power
+    type: float
+    unit: W
+  inverter_output_power_a:
+    display_name: Inverter output power phase A
+    type: float
+    unit: W
+  inverter_output_power_b:
+    display_name: Inverter output power phase B
+    type: float
+    unit: W
+  inverter_output_power_c:
+    display_name: Inverter output power phase C
+    type: float
+    unit: W
+  total_inverter_output_power:
+    display_name: Inverter total output power
+    type: float
+    unit: W
+  load_power_a:
+    display_name: Load power phase A
+    type: float
+    unit: W
+  load_power_b:
+    display_name: Load power phase B
+    type: float
+    unit: W
+  load_power_c:
+    display_name: Load power phase C
+    type: float
+    unit: W
+  total_load_power:
+    display_name: Load power phase C
+    type: float
+    unit: W
+
+alerts:
+  communication_failed:
+    display_name: Can't read data from device
+    severity: error
+
+.cloud:
+  category: renewable_energy_sources
+  mobile_main_chart: day_gridsell_power
+  mobile_telemetry:
+    - day_gridbuy_power
+    - day_gridsell_power
+    - total_battery_charge
+    - total_battery_discharge
+    - battery_voltage
+    - battery_output_power
+    - battery_output_current
+
+  mobile_charts:
+    - day_gridbuy_power
+    - day_gridsell_power
+    - total_battery_charge
+    - total_battery_discharge
+    - battery_voltage
+    - battery_output_power
+    - battery_output_current
+    - total_out_of_grid_power
+    - total_grid_power
+    - total_inverter_output_power
+    - total_load_power
