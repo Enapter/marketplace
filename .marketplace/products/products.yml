@@ -61,7 +61,7 @@
   icon_url: https://static.enapter.com/modules/ENP-KIT-RL1.png
   handbook_url: https://handbook.enapter.com/modules/ENP-KIT-RL1/ENP-KIT-RL1.html
   capabilities:
-    - rl
+    - relay
     - digitalout
     - led
 
@@ -70,7 +70,7 @@
   icon_url: https://static.enapter.com/modules/ENP-RL6.png
   handbook_url: https://handbook.enapter.com/modules/ENP-RL6/ENP-RL6.html
   capabilities:
-    - rl
+    - relay
     - digitalout
     - led
 
@@ -99,7 +99,7 @@
   capabilities:
     - modbus
     - serial
-    - rl
+    - relay
     - digitalin
     - digitalout
     - can
