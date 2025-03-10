@@ -1,0 +1,1870 @@
+blueprint_spec: device/1.0
+
+display_name: SMA Cluster Controller
+description: SMA Cluster Controller.
+icon: enapter-inverter-solar
+license: MIT
+author: enapter
+support:
+  url: https://enapter.com/support
+  email: support@enapter.com
+verification_level: verified
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
+      - enapter-sma
+
+properties:
+  serial_num:
+    display_name: Serial Number
+    type: integer
+  fw_ver:
+    display_name: Firmware Version
+    type: string
+  address:
+    display_name: Modbus Address
+    type: string
+  unit_id:
+    display_name: Modbus Unit ID
+    type: integer
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - warning
+      - fault
+      - "off"
+  total_energy:
+    display_name: Total energy fed in
+    type: float
+    unit: kW
+  energy_fed_today:
+    display_name: Energy fed in on current day
+    type: float
+    unit: kW
+  active_power:
+    display_name: Current active power
+    type: float
+    unit: W
+  reactive_power:
+    display_name: Reactive power
+    type: float
+    unit: VAr
+  ambient_temp:
+    display_name: Ambient temperature
+    type: float
+    unit: '°C'
+  pv_temp:
+    display_name: PV module temperature
+    type: float
+    unit: '°C'
+  external_total_irradiation:
+    display_name: Total irradiation on the external sensor
+    type: float
+    unit: 'W⋅m−2'
+
+command_groups:
+  config:
+    display_name: Configuration
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      address:
+        display_name: Modbus Address
+        description: Hostname and port, e.g. 192.168.14.45:502
+        type: string
+        required: true
+      unit_id:
+        display_name: Modbus Unit ID
+        description: Can be obtained from SMA web interface
+        type: integer
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+alerts:
+  cannot_read_config:
+    display_name: Cannot read configuration
+    severity: error
+  not_configured:
+    display_name: Not configured
+    severity: info
+  unknown_event:
+    display_name: Unknown event
+    severity: error
+    description: >
+      Inverter should have returned message code, but it did not.
+      Operation.Evt.Msg (30213) does not equal to NoneMsg (886).
+
+  # yamllint disable rule:line-length
+  #
+  # Auto-generated list of alerts
+  #
+  e2:
+    display_name: Grid overvoltage
+    severity: error
+    description: |
+      The grid voltage is higher than the set conservation value. In general, the inverter is reconnected to the supply grid when it is back in its normal mode.
+      Corrective measures:
+      - Wait until the grid voltage is within the normal range again. In general, the inverter is reconnected to the supply grid when the grid voltage is back within the normal range.
+      - If the error occurs repeatedly, measure the present grid voltage and contact the local grid operator concerning solutions if the supply grid voltage is higher than the set value.
+      - Ensure that the protection parameters are set correctly.
+      - Ensure that the AC cable cross section meets the requirements.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e3:
+    display_name: Temporary grid overvoltage
+    severity: error
+    description: |
+      The transient grid voltage is higher than the standard value.
+      Corrective measures:
+      - Wait until the grid voltage is within the normal range again. In general, the inverter is reconnected to the supply grid when the grid voltage is back within the normal range.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e4:
+    display_name: Grid undervoltage
+    severity: error
+    description: |
+      The grid voltage is lower than the set conservation value.
+      Corrective measures:
+      - Wait until the grid voltage is within the normal range again. In general, the inverter is reconnected to the supply grid when the grid voltage is back within the normal range.
+      - If the error occurs repeatedly, measure the present grid voltage and contact the local grid operator concerning solutions if the supply grid voltage is lower than the set value.
+      - Ensure that the protection parameters are set correctly.
+      - Ensure that the AC cable is correctly connected.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e5:
+    display_name: Low voltage
+    severity: error
+    description: |
+      The grid voltage is lower than the set conservation value.
+      Corrective measures:
+      - Wait until the grid voltage is within the normal range again. In general, the inverter is reconnected to the supply grid when the grid voltage is back within the normal range.
+      - If the error occurs repeatedly, measure the present grid voltage and contact the local grid operator concerning solutions if the supply grid voltage is lower than the set value.
+      - Ensure that the protection parameters are set correctly.
+      - Ensure that the AC cable is correctly connected.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e7:
+    display_name: Temporary AC overcurrent
+    severity: error
+    description: |
+      The AC output current exceeds the permissible upper limit of the inverter.
+      Corrective measures:
+      - Wait until the AC output current is within the normal range again. In general, the inverter is reconnected to the supply grid when the AC output current is back within the normal range.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e8:
+    display_name: Grid overfrequency
+    severity: error
+    description: |
+      The grid frequency exceeds the permissible upper limit of the inverter.
+      Corrective measures:
+      - Wait until the grid frequency is within the normal range again. In general, the inverter is reconnected to the supply grid when the grid frequency is back within the normal range.
+      - If the error occurs repeatedly, measure the present grid frequency and contact the local grid operator concerning solutions if the grid frequency is higher than the set value.
+      - Ensure that the protection parameters are set correctly.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e9:
+    display_name: Grid underfrequency
+    severity: error
+    description: |
+      The grid frequency is below the permissible lower limit of the inverter.
+      Corrective measures:
+      - Wait until the grid frequency is within the normal range again. In general, the inverter is reconnected to the supply grid when the grid frequency is back within the normal range.
+      - If the error occurs repeatedly, measure the present grid frequency and contact the local grid operator concerning solutions if the grid frequency is lower than the set value.
+      - Ensure that the protection parameters are set correctly.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e10:
+    display_name: Grid power failure
+    severity: error
+    description: |
+      Alternating current switch or alternating current circuit is not connected.
+      Corrective measures:
+      - Wait until the alternating current switch or alternating current circuit reconnects again. The inverter is reconnected to the supply grid automatically.
+      - Check whether the supply from the utility grid is normal.
+      - Ensure that the AC cable is correctly connected.
+      - Ensure that the conductors of the AC cables are connected to the correct terminals.
+      - Ensure that AC circuit breaker is connected and switched on.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e11:
+    display_name: Device fault
+    severity: error
+    description: |
+      There is a disturbance in the device.
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e12:
+    display_name: Excessive stray current
+    severity: error
+    description: |
+      This fault may be caused by weak solar irradiation or a moist environment.
+      Corrective measures:
+      - Wait until the ambient conditions improve. The inverter is reconnected to the supply grid.
+      - Ensure that the AC and DC cables are insulated correctly.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e13:
+    display_name: Supply grid fault
+    severity: error
+    description: |
+      The grid voltage or grid frequency is outside the permissible range and the inverter cannot be connected properly to the supply grid.
+      Corrective measures:
+      - Wait until the value is within the normal range again. In general, the inverter is reconnected to the supply grid when the value is back within the normal range.
+      - If the error occurs repeatedly, measure the present grid frequency and contact the local grid operator concerning solutions if the grid frequency is higher than the set value.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e14:
+    display_name: 10-minute grid overvoltage
+    severity: error
+    description: |
+      The grid voltage exceeds the preset alternating voltage of the inverter over an extended period of time.
+      Corrective measures:
+      - Wait until the value is within the normal range again. In general, the inverter is reconnected to the supply grid when the value is back within the normal range.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e15:
+    display_name: Grid overvoltage
+    severity: error
+    description: |
+      The grid voltage is higher than the set conservation value.
+      Corrective measures:
+      - Wait until the grid voltage is within the normal range again.
+      - If the error occurs repeatedly, measure the present grid voltage and contact the local grid operator concerning solutions if the supply grid voltage is higher than the set value.
+      - Ensure that the protection parameters are set correctly.
+      - Ensure that the cross section of the alternating current cable meets the requirements.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e16:
+    display_name: Output overload
+    severity: error
+    description: |
+      The configured PV array power is excessively high and is outside the normal operating range of the inverter.
+      Corrective measures:
+      - Wait until the value is within the normal range again.
+      - If the error occurs repeatedly, contact the Service.
+  e17:
+    display_name: Unbalanced load of grid voltage
+    severity: error
+    description: |
+      The inverter detects an unbalanced three-phase grid voltage
+      Corrective measures:
+      - Wait until the value is within the normal range again.
+      - Measure the current grid voltage. If the grid conductor voltages vary considerably, contact the grid operator concerning proposals for solutions.
+      - If the voltage difference between the 3 line conductors is within the permissible range of the local grid operator, change the parameter for the unbalanced load of the grid voltage.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e36:
+    display_name: Temperature disturbance
+    severity: error
+    description: The temperature in the inverter is excessively high and is outside
+      the safe range.
+  e37:
+    display_name: Communication failure
+    severity: error
+    description: |-
+      Error in the communication processor, the inverter continues feeding in, however. The cause must be determined by the Service.
+      If this message is displayed frequently, contact the Service.
+  e38:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e39:
+    display_name: Low system insulation resistance
+    severity: error
+    description: |
+      Generally, the fault is caused by poor insulation of the module/cable to ground or by rainfall and a moist environment.
+      Corrective measures:
+      - Check whether the ISO insulation conservation value is excessively high and ensure it complies with the local requirements.
+      - Check the resistance of the DC string or DC cable to ground. Rectify the fault if a short circuit or a damaged insulating layer is present.
+      - If the cable shows no abnormalities and the fault occurs on rainy days, check again when the weather is good.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e40:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e41:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e42:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e43:
+    display_name: Low ambient temperature
+    severity: error
+    description: |-
+      The ambient temperature is lower than the operating temperature intended for the inverter during normal operation.
+      Stop and disconnect the inverter. Restart the inverter when the ambient temperature is within the permissible operating range again.
+  e44:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e45:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e46:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e47:
+    display_name: PV input configuration abnormal, PV input mode error
+    severity: error
+    description: Disconnect the inverter. Resetting the input mode of the PV system.
+  e48:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e49:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e50:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e53:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e52:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e54:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e55:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e56:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e59:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e60:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e70:
+    display_name: Fan alarm
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether the fans work properly and whether they are blocked by foreign objects. If they are blocked, remove foreign objects.
+      - If a fan is not working properly, disconnect the inverter from voltage sources and replace the fan.
+  e71:
+    display_name: Alternating current side surge arrester alarm
+    severity: error
+    description: Check the surge arrester and replace, if necessary.
+  e72:
+    display_name: Direct current side surge arrester alarm
+    severity: error
+    description: Check the surge arrester and replace, if necessary.
+  e76:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e78:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e79:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e80:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e81:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e105:
+    display_name: Error during self-test for protective status on the grid side
+    severity: error
+    description: |
+      Corrective measures:
+      - Restart the processor or rectify the error via the user interface.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e106:
+    display_name: Grounding cable defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Ensure that the AC cable is correctly connected.
+      - Ensure that the insulation between the grounding cable and the AC cable is correct.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e116:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e117:
+    display_name: Device fault
+    severity: error
+    description: |
+      Corrective measures:
+      - Wait until the inverter is in normal mode again.
+      - Switch off the AC load-break switches and the DC load-break switches and switch them on again after 15 minutes to restart the inverter.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e220:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - Ensure that the -nth DC fuse is not damaged.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e221:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - Ensure that the -nth DC fuse is not damaged.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e222:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - Ensure that the -nth DC fuse is not damaged.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e223:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - Ensure that the -nth DC fuse is not damaged.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e224:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - Ensure that the -nth DC fuse is not damaged.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e225:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - Ensure that the -nth DC fuse is not damaged.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e226:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - Ensure that the -nth DC fuse is not damaged.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e227:
+    display_name: PV[#] abnormal
+    severity: error
+    description: |
+      Corrective measures:
+      - Check if the -nth PV string must be connected. If not, ignore the event. If so, check the connection state and ensure that there is a reliable connection.
+      - Ensure that the -nth DC fuse is not damaged.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e564:
+    display_name: String [#] reverse polarity alarm
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether there is reverse polarity on the corresponding PV string. If so, open the DC switch and adjust the polarity if the solar irradiation is low and the string electrical current is below 0.5 A.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e565:
+    display_name: String [#] reverse polarity alarm
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether there is reverse polarity on the corresponding PV string. If so, open the DC switch and adjust the polarity if the solar irradiation is low and the string electrical current is below 0.5 A.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e566:
+    display_name: String [#] reverse polarity alarm
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether there is reverse polarity on the corresponding PV string. If so, open the DC switch and adjust the polarity if the solar irradiation is low and the string electrical current is below 0.5 A.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e567:
+    display_name: String [#] reverse polarity alarm
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether there is reverse polarity on the corresponding PV string. If so, open the DC switch and adjust the polarity if the solar irradiation is low and the string electrical current is below 0.5 A.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e568:
+    display_name: String [#] reverse polarity alarm
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether there is reverse polarity on the corresponding PV string. If so, open the DC switch and adjust the polarity if the solar irradiation is low and the string electrical current is below 0.5 A.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e569:
+    display_name: String [#] reverse polarity alarm
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether there is reverse polarity on the corresponding PV string. If so, open the DC switch and adjust the polarity if the solar irradiation is low and the string electrical current is below 0.5 A.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e570:
+    display_name: String [#] reverse polarity alarm
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether there is reverse polarity on the corresponding PV string. If so, open the DC switch and adjust the polarity if the solar irradiation is low and the string electrical current is below 0.5 A.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e571:
+    display_name: String [#] reverse polarity alarm
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether there is reverse polarity on the corresponding PV string. If so, open the DC switch and adjust the polarity if the solar irradiation is low and the string electrical current is below 0.5 A.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e580:
+    display_name: String [#] disturbance of the output current
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether the relevant PV module is protected. If so, remove the protective device and ensure the PV module is clean.
+      - Ensure that the PV module shows no signs of abnormal aging.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e581:
+    display_name: String [#] disturbance of the output current
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether the relevant PV module is protected. If so, remove the protective device and ensure the PV module is clean.
+      - Ensure that the PV module shows no signs of abnormal aging.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e582:
+    display_name: String [#] disturbance of the output current
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether the relevant PV module is protected. If so, remove the protective device and ensure the PV module is clean.
+      - Ensure that the PV module shows no signs of abnormal aging.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e583:
+    display_name: String [#] disturbance of the output current
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether the relevant PV module is protected. If so, remove the protective device and ensure the PV module is clean.
+      - Ensure that the PV module shows no signs of abnormal aging.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e584:
+    display_name: String [#] disturbance of the output current
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether the relevant PV module is protected. If so, remove the protective device and ensure the PV module is clean.
+      - Ensure that the PV module shows no signs of abnormal aging.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e585:
+    display_name: String [#] disturbance of the output current
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether the relevant PV module is protected. If so, remove the protective device and ensure the PV module is clean.
+      - Ensure that the PV module shows no signs of abnormal aging.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e586:
+    display_name: String [#] disturbance of the output current
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether the relevant PV module is protected. If so, remove the protective device and ensure the PV module is clean.
+      - Ensure that the PV module shows no signs of abnormal aging.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e587:
+    display_name: String [#] disturbance of the output current
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether the relevant PV module is protected. If so, remove the protective device and ensure the PV module is clean.
+      - Ensure that the PV module shows no signs of abnormal aging.
+      - If the fault cannot be rectified using the indicated corrective measures, contact Service.
+  e101:
+    display_name: Grid incident
+    severity: error
+    description: |
+      The grid voltage or grid impedance at the connection point of the inverter is too high. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e301:
+    display_name: Grid incident
+    severity: error
+    description: |
+      The ten-minute average value of the grid voltage is no longer within the permissible range. The grid voltage or grid impedance at the connection point is too high. The inverter disconnects from the utility grid to maintain power quality.
+      Corrective measures:
+      - During the feed-in operation, check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e401:
+    display_name: Grid incident
+    severity: error
+    description: |-
+      The inverter has disconnected from the utility grid. A stand-alone grid or a very large change in the grid frequency was detected.
+      Check the grid connection for significant short-term frequency fluctuations.
+  e501:
+    display_name: Grid incident
+    severity: error
+    description: |
+      The power frequency is not within the permissible range. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - If possible, check the power frequency and observe how often fluctuations occur.
+      - If fluctuations occur frequently and this message is displayed often, contact the grid operator and request approval to change the operating parameters of the inverter.
+      - If the grid operator gives his approval, discuss any changes to the operating parameters with the Service.
+  e601:
+    display_name: Grid incident
+    severity: error
+    description: |
+      The inverter has detected an excessively high proportion of direct current in the grid current.
+      Corrective measures:
+      - Check the grid connection for direct current.
+      - If this message is displayed frequently, contact the grid operator and check whether the monitoring threshold on the inverter can be raised.
+  e801:
+    display_name: Waiting for grid voltage > Grid failure > Check AC circuit breaker
+    severity: error
+    description: |
+      The AC cable is not correctly connected or the country data set is not correctly configured.
+      Corrective measures:
+      - Ensure that the miniature circuit breaker is switched on.
+      - Ensure that the AC cable is not damaged and that it is connected correctly.
+      - Ensure that the country data set has been configured correctly.
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e901:
+    display_name: Grounding connection missing > Check connection
+    severity: error
+    description: |-
+      The grounding conductor is not correctly connected.
+      Ensure that the grounding conductor is correctly connected.
+  e3401:
+    display_name: DC overvoltage > Disconnect generator
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Immediately disconnect the inverter from all voltage sources.
+      - Check whether the DC voltage is below the maximum input voltage of the inverter.
+      - If the DC voltage is below the maximum input voltage of the inverter, reconnect the DC connectors to the inverter.
+      - If the DC voltage is above the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact the Service.
+  e3402:
+    display_name: DC overvoltage > Disconnect generator
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Immediately disconnect the inverter from all voltage sources.
+      - Check whether the DC voltage is below the maximum input voltage of the inverter.
+      - If the DC voltage is below the maximum input voltage of the inverter, reconnect the DC connectors to the inverter.
+      - If the DC voltage is above the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact the Service.
+  e3404:
+    display_name: DC overvoltage > Disconnect PV array
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Immediately disconnect the inverter from all voltage sources.
+      - Check whether the DC voltage is below the maximum input voltage of the inverter. If the DC voltage is below the maximum input voltage of the inverter, reconnect the DC connectors to the inverter.
+      - If the DC voltage exceeds the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact Service.
+  e3407:
+    display_name: DC overvoltage > Disconnect PV array
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Immediately disconnect the inverter from all voltage sources.
+      - Check whether the DC voltage is below the maximum input voltage of the inverter. If the DC voltage is below the maximum input voltage of the inverter, reconnect the DC connectors to the inverter.
+      - If the DC voltage exceeds the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact Service.
+  e3410:
+    display_name: DC overvoltage > Disconnect PV array
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Immediately disconnect the inverter from all voltage sources.
+      - Check whether the DC voltage is below the maximum input voltage of the inverter. If the DC voltage is below the maximum input voltage of the inverter, reconnect the DC connectors to the inverter.
+      - If the DC voltage exceeds the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact Service.
+  e3411:
+    display_name: DC overvoltage > Disconnect PV array
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Immediately disconnect the inverter from all voltage sources.
+      - Check whether the DC voltage is below the maximum input voltage of the inverter. If the DC voltage is below the maximum input voltage of the inverter, reconnect the DC connectors to the inverter.
+      - If the DC voltage exceeds the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact Service.
+  e3412:
+    display_name: DC overvoltage > Disconnect PV array
+    severity: error
+    description: |
+      Overvoltage at the DC input. This can destroy the inverter.
+      Corrective measures:
+      - Immediately disconnect the inverter from all voltage sources.
+      - Check whether the DC voltage is below the maximum input voltage of the inverter. If the DC voltage is below the maximum input voltage of the inverter, reconnect the DC connectors to the inverter.
+      - If the DC voltage exceeds the maximum input voltage of the inverter, ensure that the PV array has been correctly rated or contact the installer of the PV array.
+      - If this message is repeated frequently, contact Service.
+  e3501:
+    display_name: Insulation failure > Check generator
+    severity: error
+    description: |-
+      The inverter has detected a ground fault in the PV system.
+      Check the PV system for ground faults.
+  e3701:
+    display_name: Residual current too high > Check PV array
+    severity: error
+    description: |-
+      The inverter has detected a residual current due to temporary grounding of the PV array.
+      Check the PV system for ground faults.
+  e3801:
+    display_name: DC overcurrent > Check generator
+    severity: error
+    description: |-
+      Overcurrent at the DC input. The inverter briefly interrupts feed-in operation.
+      If this message is displayed frequently, ensure that the PV array has been correctly rated and wired.
+  e3802:
+    display_name: DC overcurrent > Check generator
+    severity: error
+    description: |-
+      Overcurrent at the DC input. The inverter briefly interrupts feed-in operation.
+      If this message is displayed frequently, ensure that the PV array has been correctly rated and wired.
+  e3803:
+    display_name: DC overcurrent > Check PV array
+    severity: error
+    description: |-
+      Overcurrent at the DC input. The inverter briefly interrupts feed-in operation.
+      If this message is displayed frequently, ensure that the PV array has been correctly rated and wired.
+  e3805:
+    display_name: DC overcurrent > Check PV array
+    severity: error
+    description: |-
+      Overcurrent at the DC input. The inverter briefly interrupts feed-in operation.
+      If this message is displayed frequently, ensure that the PV array has been correctly rated and wired.
+  e3806:
+    display_name: DC overcurrent > Check PV array
+    severity: error
+    description: |-
+      Overcurrent at the DC input. The inverter briefly interrupts feed-in operation.
+      If this message is displayed frequently, ensure that the PV array has been correctly rated and wired.
+  e3807:
+    display_name: DC overcurrent > Check PV array
+    severity: error
+    description: |-
+      Overcurrent at the DC input. The inverter briefly interrupts feed-in operation.
+      If this message is displayed frequently, ensure that the PV array has been correctly rated and wired.
+  e3808:
+    display_name: DC overcurrent > Check PV array
+    severity: error
+    description: |-
+      Overcurrent at the DC input. The inverter briefly interrupts feed-in operation.
+      If this message is displayed frequently, ensure that the PV array has been correctly rated and wired.
+  e4301:
+    display_name: Electric arc detected
+    severity: error
+    description: The arc-fault circuit interrupter has detected an electric arc. If
+      the arc-fault circuit interrupter is activated using operation inhibition, the
+      operation inhibition function must be reset manually.
+  e4302:
+    display_name: Electric arc detected
+    severity: error
+    description: The arc-fault circuit interrupter has detected an electric arc. If
+      the arc-fault circuit interrupter is activated using operation inhibition, the
+      operation inhibition function must be reset manually.
+  e6502:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the cooling fins on the rear of the enclosure and the air ducts on the top using a soft brush.
+      - Ensure that the inverter has sufficient ventilation.
+      - Ensure that the ambient temperature does not exceed +40 °.
+      - Ensure that the inverter is not exposed to direct solar irradiation.
+  e6512:
+    display_name: Minimum operating temperature not reached
+    severity: error
+    description: The inverter will only recommence grid feed-in once the temperature
+      has reached at least −25°C.
+  e6603:
+    display_name: Self-diagnosis > Overload
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+  e6604:
+    display_name: Self-diagnosis > Overload
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+  e6701:
+    display_name: Communication failure
+    severity: error
+    description: |-
+      Error in the communication processor, the inverter continues feeding in, however. The cause must be determined by the Service.
+      If this message is displayed frequently, contact the Service.
+  e6702:
+    display_name: Communication failure
+    severity: error
+    description: |-
+      Error in the communication processor, the inverter continues feeding in, however. The cause must be determined by the Service.
+      If this message is displayed frequently, contact the Service.
+  e7102:
+    display_name: Parameter file not found or defective
+    severity: error
+    description: |-
+      The parameter file was not found or is defective. Loading the parameter file has failed. The inverter continues to feed in.
+      Copy the parameter file to the correct folder again.
+  e7105:
+    display_name: Param. setting failed
+    severity: error
+    description: |
+      Parameters could not be set using the memory card. The inverter continues feeding power into the grid.
+      Corrective measures:
+      - Ensure that the parameters are set correctly.
+      - Ensure that the SMA Grid Guard code is available.
+  e7106:
+    display_name: Update file defect.
+    severity: error
+    description: |
+      Update file on the memory card is defective.
+      Corrective measures:
+      - Reformat the memory card.
+      - Re-save the files to the memory card.
+  e7110:
+    display_name: No update file found
+    severity: error
+    description: |-
+      No update file has been found.
+      Copy the update file to the memory card folder. Select the folder \UPDATE.
+  e7112:
+    display_name: Update file successfully copied
+    severity: error
+  e7113:
+    display_name: The memory card is full or write-protected
+    severity: error
+  e7201:
+    display_name: Data stor. not poss.
+    severity: error
+    description: |-
+      Internal error. The inverter continues to feed into the utility grid.
+      Contact the service.
+  e7202:
+    display_name: Data stor. not poss.
+    severity: error
+    description: |-
+      Internal error. The inverter continues to feed into the utility grid.
+      Contact the service.
+  e7303:
+    display_name: Host computer update failed
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the Service.
+  e7320:
+    display_name: The device was successfully updated
+    severity: error
+    description: The firmware update was completed successfully.
+  e7330:
+    display_name: Condition test failed
+    severity: error
+    description: The testing of the update conditions was not successful. The firmware
+      update package is not suitable for this inverter.
+  e7331:
+    display_name: Update transport started
+    severity: error
+    description: Update file is being copied.
+  e7332:
+    display_name: Update transport successful
+    severity: error
+    description: Update file was copied successfully to the inverter's internal memory.
+  e7333:
+    display_name: Update transport failed
+    severity: error
+    description: |
+      Update file could not be copied to the inverter's internal memory. In the event of connection with the inverter via Wi-Fi network, a poor connection quality can be the cause.
+      Corrective measures:
+      - Retry update.
+      - For Wi-Fi connection: Improve the Wi-Fi connection quality (e.g. via Wi-Fi repeater) or establish connection with the inverter via Ethernet.
+      - If this message is displayed again, contact the Service.
+  e7341:
+    display_name: Update Bootloader
+    severity: error
+    description: The inverter is performing a bootloader update.
+  e7342:
+    display_name: Update Bootloader failed
+    severity: error
+    description: |
+      The bootloader update failed.
+      Corrective measures:
+      - Retry update.
+      - If this message is displayed again, contact the Service.
+  e7347:
+    display_name: Incompatible file
+    severity: error
+    description: |
+      The configuration file is not suitable for this inverter.
+      Corrective measures:
+      - Ensure that the selected configuration file is suitable for this inverter.
+      - Retry import.
+  e7348:
+    display_name: Incorrect file format
+    severity: error
+    description: |
+      The configuration file is not of the required format or is damaged.
+      Corrective measures:
+      - Ensure that the selected configuration file is of the required format and is not damaged.
+      - Retry import.
+  e7350:
+    display_name: Transfer of a configuration file has started
+    severity: error
+    description: The configuration file is being transferred.
+  e7351:
+    display_name: Update Wi-Fi
+    severity: error
+    description: The inverter is updating the Wi-Fi module.
+  e7352:
+    display_name: Update of Wi-Fi not successful
+    severity: error
+    description: |
+      The update of the Wi-Fi module failed.
+      Corrective measures:
+      - Retry update.
+      - If this message is displayed again, contact the Service.
+  e7353:
+    display_name: Update time zone database
+    severity: error
+    description: The inverter is updating the time zone database.
+  e7354:
+    display_name: Update of time zone database not successful
+    severity: error
+    description: |
+      The update of the time zone database failed.
+      Corrective measures:
+      - Retry update.
+      - If this message is displayed again, contact the Service.
+  e7355:
+    display_name: Update WebUI
+    severity: error
+    description: The inverter is updating the inverter user interface.
+  e7356:
+    display_name: Update of the WebUI not successful
+    severity: error
+    description: |
+      The update of the inverter user interface failed.
+      Corrective measures:
+      - Retry update.
+      - If this message is displayed again, contact the Service.
+  e7619:
+    display_name: Communication fault with meter unit > Check communication to meter
+    severity: error
+    description: |
+      The inverter is not receiving any data from the energy meter.
+      Corrective measures:
+      - Ensure that the energy meter is correctly integrated into the same network as the inverter (see energy meter manual).
+      - For Wi-Fi connection: Improve the Wi-Fi connection quality (e.g., via Wi-Fi repeater) or connect the inverter with the DHCP server (router) via Ethernet.
+  e7622:
+    display_name: No communication with the I/O module
+    severity: error
+    description: This event is displayed during a device-internal communication error
+      with the SMA I/O Module. The inverter will disconnect from the utility grid for
+      safety reasons.
+  e7702:
+    display_name: Self diagnosis > Interference device
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+  e7801:
+    display_name: Fault overvoltage protector
+    severity: error
+    description: |
+      One or more surge arresters have tripped or one or more surge arresters are not inserted correctly.
+      Corrective measures:
+      - Ensure that the surge arrester is inserted correctly.
+      - If surge arresters have tripped, replace the tripped surge arresters with new surge arresters.
+  e8003:
+    display_name: Active power limit temperature
+    severity: error
+    description: |
+      The inverter has reduced its power output for more than 10 minutes due to excessive temperature.
+      Corrective measures:
+      - Clean the cooling fins on the rear of the enclosure and the air ducts on the top using a soft brush.
+      - Ensure that the inverter has sufficient ventilation.
+      - Ensure that the ambient temperature does not exceed +40 °.
+      - Ensure that the inverter is not exposed to direct solar irradiation.
+  e8101:
+    display_name: Communication disturbed
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+  e8102:
+    display_name: Communication disturbed
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+  e8103:
+    display_name: Communication disturbed
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+  e8104:
+    display_name: Communication disturbed
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+  e8208:
+    display_name: 'Self-test for arc fault detection: interference level too high'
+    severity: error
+    description: |-
+      An error has occurred during the self-test of the arc-fault circuit interrupter. The cause must be determined by the Service.
+      Contact the Service.
+  e8209:
+    display_name: 'Self-test for arc fault detection: interference level too low'
+    severity: error
+    description: |-
+      An error has occurred during the self-test of the arc-fault circuit interrupter. The cause must be determined by the Service.
+      Contact the Service.
+  e9002:
+    display_name: SMA Grid Guard code invalid
+    severity: error
+    description: |-
+      The SMA Grid Guard code entered is incorrect. The operating parameters are still protected and cannot be changed.
+      Enter the correct SMA Grid Guard code.
+  e9003:
+    display_name: Grid parameter locked
+    severity: error
+    description: |-
+      The parameters are now locked. You cannot change the parameters.
+      Unlock the parameters with the SMA Grid Guard code.
+  e9005:
+    display_name: Changing of grid parameters not possible > Ensure DC supply
+    severity: error
+    description: |
+      This error can have the following causes:
+      Corrective measures:
+      - Enter the SMA Grid Guard code.
+      - Ensure that at least the DC start voltage is available (green LED is flashing, pulsing or glowing).
+  e9007:
+    display_name: Abort self-test
+    severity: error
+    description: |
+      The self-test (Italy only) was terminated.
+      Corrective measures:
+      - Ensure that the AC connection is correct.
+      - Restart the self-test.
+  e9033:
+    display_name: Rapid Shutdown was triggered
+    severity: error
+    description: The inverter detected the triggering of a Rapid Shutdown. The AC side
+      of the inverter was disconnected.
+  e9034:
+    display_name: Error in Rapid Shutdown System
+    severity: error
+    description: |
+      This message can have the following causes:
+      Corrective measures:
+      - Check the configuration of the Rapid Shutdown function and ensure that the operating mode selected is selected according to the DC disconnection unit used.
+      - Check the functionality of the PV array disconnect switches.
+      - Check the standby voltage of the PV array disconnect switches used and ensure that the standby voltage of all PV array disconnect switches of a string < 30 V.
+  e9035:
+    display_name: Rapid Shutdown successful
+    severity: error
+    description: The voltage at the DC inputs and at the AC output of the inverter was
+      successfully discharged.
+  e9037:
+    display_name: Generator connection not carried out
+    severity: error
+    description: |-
+      The PV array disconnect switches did not connect the PV generator.
+      Check the functionality of the SunSpec-compliant PV array disconnect switches.
+  e9038:
+    display_name: Redundant Rapid Shutdown discharge function not ensured
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the Service.
+  e10108:
+    display_name: Time adjusted / old time
+    severity: error
+  e10109:
+    display_name: Time adjusted / new time
+    severity: error
+  e10110:
+    display_name: 'Time synchronization failed: |tn0|'
+    severity: error
+    description: |
+      No time information could be called up from the set NTP server.
+      Corrective measures:
+      - Ensure that the NTP server was configured correctly.
+      - Ensure that the inverter is integrated into a local network with Internet connection.
+  e10118:
+    display_name: Parameter upload complete
+    severity: error
+    description: The configuration file was loaded successfully.
+  e10248:
+    display_name: "[Interface]: network busy"
+    severity: error
+    description: |
+      The network is busy. Data exchange between the devices is not at an optimum and is greatly delayed.
+      Corrective measures:
+      - Increase the query intervals.
+      - If necessary, reduce the number of devices in the network.
+  e10249:
+    display_name: "[Interface]: network overloaded"
+    severity: error
+    description: |
+      The network is overloaded. There is no data exchange between the devices.
+      Corrective measures:
+      - Reduce the number of devices in the network.
+      - If necessary, increase the data query intervals.
+  e10250:
+    display_name: "[Interface]: package error rate [ok / high]"
+    severity: error
+    description: The package error rate has changed. If the package error rate is high,
+      the network is overloaded or the connection to the network switch or DHCP server
+      (router) is impaired.
+  e10251:
+    display_name: "[Interface]: communication status goes to [OK / Warning / Error /
+      Not connected]"
+    severity: error
+    description: The communication status to the network switch or DHCP server (router)
+      has changed. An additional error message may be displayed.
+  e10252:
+    display_name: "[Interface]: communication disrupted"
+    severity: error
+    description: |
+      There is no valid signal on the network line.
+      Corrective measures:
+      - Ensure that with an Ethernet connection, the network cable and the network connector are not damaged and that the network connectors are correctly plugged.
+      - Ensure that the DHCP server (router) and any network switches are signalizing correct operation.
+  e10253:
+    display_name: "[Interface]: connection speed goes to [100 Mbit / 10 Mbit]"
+    severity: error
+    description: The data transfer rate has changed. The cause for the status [10 Mbit]
+      can be a defective plug, a defective cable or the pulling or plugging of the network
+      connector.
+  e10254:
+    display_name: "[Interface]: duplex mode goes to [Full / Half]"
+    severity: error
+    description: The duplex mode (data transfer mode) has changed. The cause for the
+      status [Half] can be a defective plug, a defective cable or the pulling or plugging
+      of the network connector.
+  e10255:
+    display_name: "[Interface]: Network load OK"
+    severity: error
+    description: The network load has returned to a normal range after being busy.
+  e10282:
+    display_name: "[User group]-Login via [protocol] locked"
+    severity: error
+    description: |-
+      After several incorrect login attempts, login has been blocked for a limited time. In this case, the User login will be blocked for 15 minutes, the Grid Guard login for 12 hours.
+      Wait until the given time has expired and then retry login.
+  e10283:
+    display_name: Wi-Fi module faulty
+    severity: error
+    description: |-
+      The Wi-Fi module integrated in the inverter is defective.
+      Contact the Service.
+  e10284:
+    display_name: No Wi-Fi connection possible
+    severity: error
+    description: |
+      The inverter does not currently have a Wi-Fi connection to the selected network.
+      Corrective measures:
+      - Ensure that the SSID, the Wi-Fi password and the encryption method have been entered correctly. The encryption method is specified by your Wi-Fi router or Wi-Fi access point and can be changed there.
+      - Ensure that the Wi-Fi router or Wi-Fi access point is in range and is signalizing correct operation.
+      - If this message is displayed often, improve the Wi-Fi connection by using a Wi-Fi repeater.
+  e10285:
+    display_name: Wi-Fi connection established
+    severity: error
+    description: Connection to the selected Wi-Fi network has been established.
+  e10286:
+    display_name: Wi-Fi connection lost
+    severity: error
+    description: |
+      The inverter has lost Wi-Fi connection to the selected network.
+      Corrective measures:
+      - Ensure that the Wi-Fi router or Wi-Fi access point is still active.
+      - Ensure that the Wi-Fi router or Wi-Fi access point is in range and is signalizing correct operation.
+      - If this message is displayed often, improve the Wi-Fi connection by using a Wi-Fi repeater.
+  e10339:
+    display_name: Webconnect enabled
+    severity: error
+    description: The Webconnect function has been enabled.
+  e10340:
+    display_name: Webconnect disabled
+    severity: error
+    description: The Webconnect function has been disabled.
+  e10431:
+    display_name: I-V curve measurement successfully carried out
+    severity: error
+  e10502:
+    display_name: Active power limit AC frequency
+    severity: error
+    description: |-
+      The inverter has reduced its power due to a too-high power frequency to ensure grid stability.
+      If possible, check the power frequency and observe how often fluctuations occur. If fluctuations occur frequently and this message is displayed often, contact the grid operator and request approval to change the operating parameters of the inverter. If the grid operator gives his approval, discuss any changes to the operating parameters with the Service.
+  e10513:
+    display_name: 'Grid management service Fast stop: Stop by system control is executed'
+    severity: error
+    description: This event is generated by the monitoring relay of the monitoring unit
+      when the grid and PV system protection device is triggered. The inverter disconnects
+      from the utility grid.
+  e10901:
+    display_name: Start self-test |xx|
+    severity: error
+    description: The self-test is running.
+  e10902:
+    display_name: Current disconnection limit for voltage increase protection |xxx|
+      V
+    severity: error
+    description: Preliminary result of the self-test
+  e10903:
+    display_name: Current disconnection limit for voltage monitoring lower maximum threshold
+      |xxx| V
+    severity: error
+    description: Preliminary result of the self-test
+  e10904:
+    display_name: Current disconnection limit for voltage monitoring upper minimum threshold
+      |xxx| V
+    severity: error
+    description: Preliminary result of the self-test
+  e10905:
+    display_name: Current disconnection limit for voltage monitoring middle minimum
+      threshold |xxx| V
+    severity: error
+    description: Preliminary result of the self-test
+  e10906:
+    display_name: Current disconnection limit for frequency monitoring switchable maximum
+      threshold |xxx| Hz
+    severity: error
+    description: Preliminary result of the self-test
+  e10907:
+    display_name: Current disconnection limit for frequency monitoring switchable minimum
+      threshold |xxx| Hz
+    severity: error
+    description: Preliminary result of the self-test
+  e10908:
+    display_name: Current disconnection limit for frequency monitoring lower maximum
+      threshold |xxx| Hz
+    severity: error
+    description: Preliminary result of the self-test
+  e10909:
+    display_name: Current disconnection limit for frequency monitoring upper minimum
+      threshold |xxx| Hz
+    severity: error
+    description: Preliminary result of the self-test
+  e10910:
+    display_name: Measured disconnection threshold for the running test point |xxx|
+      |xx|
+    severity: error
+    description: Preliminary result of the self-test
+  e10911:
+    display_name: Standard value for the running test point |xxx| |xx|
+    severity: error
+    description: Preliminary result of the self-test
+  e10912:
+    display_name: Measured disconnection time for the running test point |xx| s
+    severity: error
+    description: Preliminary result of the self-test
+  e27103:
+    display_name: Set parameter
+    severity: error
+    description: The parameter changes are being adopted.
+  e27104:
+    display_name: Parameters set successfully
+    severity: error
+    description: The parameter changes were successfully adopted.
+  e27107:
+    display_name: Update file OK
+    severity: error
+    description: The update file found is valid.
+  e27301:
+    display_name: Update communication
+    severity: error
+    description: The inverter is updating the communication component.
+  e27302:
+    display_name: Update main CPU
+    severity: error
+    description: The inverter is updating the inverter component.
+  e27312:
+    display_name: Update completed
+    severity: error
+    description: The inverter has successfully completed the update.
+  e29001:
+    display_name: Inst. code valid
+    severity: error
+    description: The entered Grid Guard code is valid. Protected parameters have now
+      been unlocked and you can adjust the parameters. The parameters will be automatically
+      locked again after 10 feed-in hours.
+  e29004:
+    display_name: Grid parameter unchanged
+    severity: error
+    description: Changing the grid parameters is not possible.
+  e102:
+    display_name: Grid incident
+    severity: error
+    description: |
+      The grid voltage or grid impedance at the connection point of the inverter is too high. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e103:
+    display_name: Grid incident
+    severity: error
+    description: |
+      The grid voltage or grid impedance at the connection point of the inverter is too high. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e202:
+    display_name: Grid incident
+    severity: error
+    description: |
+      The utility grid has been disconnected, the AC cable is damaged or the grid voltage at the connection point of the inverter is too low. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Ensure that the miniature circuit breaker is switched on.
+      - Ensure that the AC cable is not damaged and that it is connected correctly.
+      - Ensure that the country data set has been configured correctly.
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e203:
+    display_name: Grid incident
+    severity: error
+    description: |
+      The utility grid has been disconnected, the AC cable is damaged or the grid voltage at the connection point of the inverter is too low. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Ensure that the miniature circuit breaker is switched on.
+      - Ensure that the AC cable is not damaged and that it is connected correctly.
+      - Ensure that the country data set has been configured correctly.
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e205:
+    display_name: Grid incident
+    severity: error
+    description: |
+      The utility grid has been disconnected, the AC cable is damaged or the grid voltage at the connection point of the inverter is too low. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - Ensure that the miniature circuit breaker is switched on.
+      - Ensure that the AC cable is not damaged and that it is connected correctly.
+      - Ensure that the country data set has been configured correctly.
+      - Check whether the grid voltage at the connection point of the inverter is permanently in the permissible range.
+      - If the grid voltage is outside the permissible range due to local grid conditions, contact the grid operator. The grid operator must agree with an adjustment of the voltage at the feed-in point or with a change of the monitored operating limits.
+      - If the grid voltage is permanently within the permissible range and this message is still displayed, contact the Service.
+  e302:
+    display_name: Temperature AC voltage
+    severity: error
+    description: |
+      The line voltage has exceeded the upper threshold that results in the initiation of measures for power reduction of the inverter.
+      Corrective measures:
+      - If possible, check the grid voltage and observe how often fluctuations occur.
+      - If fluctuations occur frequently and this message is displayed often, contact the grid operator and request approval to change the operating parameters of the inverter. If the grid operator gives his approval, discuss any changes to the operating parameters with the Service.
+  e404:
+    display_name: Grid incident
+    severity: error
+    description: |-
+      The inverter has disconnected from the utility grid. A stand-alone grid or a very large change in the grid frequency was detected.
+      Check the grid connection for significant short-term frequency fluctuations.
+  e701:
+    display_name: Frequency not permitted > Check parameter
+    severity: error
+    description: |
+      The power frequency is not within the permissible range. The inverter has disconnected from the utility grid.
+      Corrective measures:
+      - If possible, check the power frequency and observe how often fluctuations occur.
+      - If fluctuations occur frequently and this message is displayed often, contact the grid operator and request approval to change the operating parameters of the inverter.
+      - If the grid operator gives his approval, discuss any changes to the operating parameters with the Service.
+  e1001:
+    display_name: L / N swapped > Check connection
+    severity: error
+    description: |-
+      The connection of L and N is swapped.
+      Ensure that L and N are correctly connected.
+  e1101:
+    display_name: Installation fault > Check connection
+    severity: error
+    description: |-
+      A second line conductor is connected to N.
+      Connect the neutral conductor to N.
+  e1302:
+    display_name: Waiting for grid voltage > Installation failure grid connection >
+      Check grid and fuses
+    severity: error
+    description: |
+      L or N not connected.
+      Corrective measures:
+      - Ensure that L and N are connected.
+      - Ensure that the miniature circuit breaker is switched on.
+      - Ensure that the AC cable is not damaged and that it is connected correctly.
+  e1501:
+    display_name: Reconnection fault grid
+    severity: error
+    description: |-
+      The changed country data set or the value of a parameter you have set does not correspond to the local requirements. The inverter cannot connect to the utility grid.
+      Ensure that the country data set has been configured correctly. Select the parameter Country data set or CntrySet and check its value.
+  e3301:
+    display_name: Unstable operation
+    severity: error
+    description: |
+      There is not enough power at the DC input of the inverter for stable operation. The inverter cannot connect to the utility grid.
+      Corrective measures:
+      - Ensure that the PV array is designed correctly.
+      - Ensure that the PV array is not covered by snow or otherwise shaded.
+      - Ensure that the PV array is free of errors.
+  e3302:
+    display_name: Unstable operation
+    severity: error
+    description: |
+      There is not enough power at the DC input of the inverter for stable operation. The inverter cannot connect to the utility grid.
+      Corrective measures:
+      - Ensure that the PV array is designed correctly.
+      - Ensure that the PV array is not covered by snow or otherwise shaded.
+      - Ensure that the PV array is free of errors.
+  e3303:
+    display_name: Unstable operation
+    severity: error
+    description: |
+      There is not enough power at the DC input of the inverter for stable operation. The inverter cannot connect to the utility grid.
+      Corrective measures:
+      - Ensure that the PV array is designed correctly.
+      - Ensure that the PV array is not covered by snow or otherwise shaded.
+      - Ensure that the PV array is free of errors.
+  e3901:
+    display_name: Waiting for DC start conditions > Start conditions not met
+    severity: error
+    description: |
+      The feed-in conditions for the utility grid are not yet fulfilled.
+      Corrective measures:
+      - Ensure that the PV array is not covered by snow or otherwise shaded.
+      - Wait for higher irradiation.
+      - If this message is displayed frequently in the morning, increase the voltage limit for starting grid feed-in. Change the parameter Critical voltage to start feed-in.
+      - If this message is displayed frequently with medium irradiation, ensure that the PV array is correctly rated.
+  e3902:
+    display_name: Waiting for DC start conditions > Start conditions not met
+    severity: error
+    description: |
+      The feed-in conditions for the utility grid are not yet fulfilled.
+      Corrective measures:
+      - Ensure that the PV array is not covered by snow or otherwise shaded.
+      - Wait for higher irradiation.
+      - If this message is displayed frequently in the morning, increase the voltage limit for starting grid feed-in. Change the parameter Critical voltage to start feed-in.
+      - If this message is displayed frequently with medium irradiation, ensure that the PV array is correctly rated.
+  e4011:
+    display_name: Bridged strings detected
+    severity: error
+    description: The DC inputs A and B are connected in parallel.
+  e4012:
+    display_name: No bridged strings detected
+    severity: error
+    description: The DC inputs A and B are not connected in parallel.
+  e6501:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the cooling fins on the rear of the enclosure and the air ducts on the top using a soft brush.
+      - Ensure that the inverter has sufficient ventilation.
+      - Ensure that the ambient temperature does not exceed +40 °.
+      - Ensure that the inverter is not exposed to direct solar irradiation.
+  e6509:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the cooling fins on the rear of the enclosure and the air ducts on the top using a soft brush.
+      - Ensure that the inverter has sufficient ventilation.
+      - Ensure that the ambient temperature does not exceed +40 °.
+      - Ensure that the inverter is not exposed to direct solar irradiation.
+  e6602:
+    display_name: Self-diagnosis > Overload
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the Service.
+  e6801:
+    display_name: Self-diagnosis > Input A defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether a string is connected to input A.
+      - Contact the Service.
+  e6802:
+    display_name: Self-diagnosis > Input A defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether a string is connected to input A.
+      - Contact the Service.
+  e6901:
+    display_name: Self-diagnosis > Input B defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether a string is connected to input B.
+      - Contact the Service.
+  e6902:
+    display_name: Self-diagnosis > Input B defective
+    severity: error
+    description: |
+      Corrective measures:
+      - Check whether a string is connected to input B.
+      - Contact the Service.
+  e7349:
+    display_name: Incorrect login rights for configuration file
+    severity: error
+    description: |
+      The user group logged in does not have the user rights necessary to be able to import a configuration.
+      Corrective measures:
+      - Log in as Installer.
+      - Import configuration file again.
+  e7500:
+    display_name: Fan fault > Check inverter electronic and fan
+    severity: error
+    description: Contact the Service.
+  e7501:
+    display_name: Fan fault > Check inverter electronic and fan
+    severity: error
+    description: Contact the Service.
+  e402:
+    display_name: Grid fault
+    severity: error
+    description: |-
+      The inverter is no longer in grid-parallel operation and has stopped feeding into the utility grid.
+      Check the grid connection for significant short-term frequency fluctuations.
+  e403:
+    display_name: Grid fault
+    severity: error
+    description: |-
+      The inverter is no longer in grid-parallel operation and has stopped feeding into the utility grid.
+      Check the grid connection for significant short-term frequency fluctuations.
+  e3601:
+    display_name: High discharge curr. > Check generator
+    severity: error
+    description: |-
+      The leakage currents of the inverter and the PV array are too high. There is a ground fault, a residual current or a malfunction.
+      Check the PV system for ground faults.
+  e6503:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the fans ( > Cleaning the Fans).
+      - Ensure that the inverter has sufficient ventilation.
+  e6504:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the fans ( > Cleaning the Fans).
+      - Ensure that the inverter has sufficient ventilation.
+  e6505:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the fans ( > Cleaning the Fans).
+      - Ensure that the inverter has sufficient ventilation.
+  e6506:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the fans ( > Cleaning the Fans).
+      - Ensure that the inverter has sufficient ventilation.
+  e6507:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the fans ( > Cleaning the Fans).
+      - Ensure that the inverter has sufficient ventilation.
+  e6508:
+    display_name: Self-diagnosis > Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the fans ( > Cleaning the Fans).
+      - Ensure that the inverter has sufficient ventilation.
+  e6511:
+    display_name: Overtemperature
+    severity: error
+    description: |
+      The inverter has switched off due to excessive temperature.
+      Corrective measures:
+      - Clean the fans ( > Cleaning the Fans).
+      - Ensure that the inverter has sufficient ventilation.
+  e6606:
+    display_name: Interference device
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+  e7001:
+    display_name: Sensor fault fan permanently on
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+  e7002:
+    display_name: Sensor fault fan permanently on
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+  e7008:
+    display_name: Disturbance sensor display temperature
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the Service.
+  e7101:
+    display_name: SD memory card defective
+    severity: error
+    description: |
+      The SD memory card is not formatted.
+      Corrective measures:
+      - Re-format the SD memory card.
+      - Re-save the files to the SD memory card.
+  e7305:
+    display_name: Update RS485I module failed
+    severity: error
+    description: |
+      Update of RS485i module failed.
+      Corrective measures:
+      - Retry update.
+      - If the error recurs, contact the Service.
+  e7311:
+    display_name: Update language table failed
+    severity: error
+    description: |
+      Updating the language table failed.
+      Corrective measures:
+      - Retry update.
+      - If the error recurs, contact the Service.
+  e7316:
+    display_name: Update Speedwire module failed
+    severity: error
+    description: |
+      Updating the Speedwire module failed.
+      Corrective measures:
+      - Retry update.
+      - If the error recurs, contact the Service.
+  e7324:
+    display_name: Wait for update conditions
+    severity: error
+    description: The update conditions are not yet fulfilled.
+  e7326:
+    display_name: Webconnect update failed
+    severity: error
+    description: |
+      Update of Webconnect module failed.
+      Corrective measures:
+      - Retry update.
+      - If the error recurs, contact the Service.
+  e7703:
+    display_name: Self diagnosis > Interference device
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+  e8001:
+    display_name: Derating occurred
+    severity: error
+    description: |
+      The inverter has reduced its power output for more than ten minutes due to excessive temperature.
+      Corrective measures:
+      - Clean the cooling fins on the rear of the enclosure and the air ducts on the top using a soft brush.
+      - Ensure that the inverter has sufficient ventilation.
+  e8801:
+    display_name: No display
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the Service.
+  e8802:
+    display_name: No display
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the Service.
+  e8803:
+    display_name: No display
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the Service.
+  e9011:
+    display_name: Connect AC and DC
+    severity: error
+    description: |
+      There is no AC or DC power supply to the inverter.
+      Corrective measures:
+      - Ensure that the DC and AC connections are correct.
+      - Ensure that the DC load-break switch and the circuit breaker are switched on.
+  e9102:
+    display_name: Permanent operation inhibition > Activate feed-in operation
+    severity: error
+    description: |-
+      The inverter is still in the default setting or has stopped the feed-in operation due to a grid fault, for which a manual restart is required.
+      Activate feed-in operation.
+  e7701:
+    display_name: Self diagnosis > Interference device
+    severity: error
+    description: |-
+      The cause must be determined by the Service.
+      Contact the service.
+# yamllint enable rule:line-length
+
+.cloud:
+  category: renewable_energy_sources
+  mobile_main_chart: active_power
+  mobile_telemetry:
+    - energy_fed_today
+    - external_total_irradiation
+    - ambient_temp
+    - pv_temp
+  mobile_charts:
+    - total_energy
+    - energy_fed_today
+    - active_power
+    - reactive_power
+    - external_total_irradiation
+    - ambient_temp
+    - pv_temp
