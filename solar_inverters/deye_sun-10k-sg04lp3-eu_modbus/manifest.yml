@@ -1,0 +1,184 @@
+blueprint_spec: device/1.0
+
+display_name: Deye / Sunsynk Inverter (via Modbus RTU)
+description: Three phase hybrid inverter with low battery voltage 48V.
+icon: enapter-solar-inverter
+license: MIT
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+verification_level: verified
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
+    allow_dev_dependencies: true
+
+properties:
+  serial_number:
+    type: string
+    display_name: Serial number
+
+telemetry:
+  status:
+    type: string
+    display_name: State
+    enum:
+      - ok
+      - warning
+  total_battery_charge:
+    display_name: Total Battery Charge
+    type: float
+    unit: kwatth
+  total_battery_discharge:
+    display_name: Total Battery Discharge
+    type: float
+    unit: kwatth
+  day_gridbuy_power:
+    display_name: Day Grid Buy Power
+    type: float
+    unit: kwatth
+  day_gridsell_power:
+    display_name: Day Grid Sell Power
+    type: float
+    unit: kwatth
+  day_load_power:
+    display_name: Day Load Power
+    type: float
+    unit: kwatth
+  battery_voltage:
+    display_name: Battery Voltage
+    type: float
+    unit: volt
+  battery_output_power:
+    display_name: Battery Output Power
+    type: float
+    unit: watt
+  battery_output_current:
+    display_name: Battery Output Current
+    type: float
+    unit: amp
+  inner_grid_power_a:
+    display_name: Inner Grid Power Phase A
+    type: float
+    unit: watt
+  inner_grid_power_b:
+    display_name: Inner Grid Power Phase B
+    type: float
+    unit: watt
+  inner_grid_power_c:
+    display_name: Inner Grid Power Phase C
+    type: float
+    unit: watt
+  total_active_power_side_to_side:
+    display_name: Total Active Power from side to side of the grid
+    type: float
+    unit: watt
+  grid_frequency:
+    display_name: Grid Frequency
+    type: float
+    unit: hertz
+  out_of_grid_power_a:
+    display_name: Out-of-Grid Power Phase A
+    type: float
+    unit: watt
+  out_of_grid_power_b:
+    display_name: Out-of-Grid Power Phase B
+    type: float
+    unit: watt
+  out_of_grid_power_c:
+    display_name: Out-of-Grid Power Phase C
+    type: float
+    unit: watt
+  total_out_of_grid_power:
+    display_name: Total Out-of-Grid Power
+    type: float
+    unit: watt
+  grid_power_a:
+    display_name: Grid Power Phase A
+    type: float
+    unit: watt
+  grid_power_b:
+    display_name: Grid Power Phase B
+    type: float
+    unit: watt
+  grid_power_c:
+    display_name: Grid Power Phase C
+    type: float
+    unit: watt
+  total_grid_power:
+    display_name: Total Grid Power
+    type: float
+    unit: watt
+  inverter_output_power_a:
+    display_name: Inverter Output Power Phase A
+    type: float
+    unit: watt
+  inverter_output_power_b:
+    display_name: Inverter Output Power Phase B
+    type: float
+    unit: watt
+  inverter_output_power_c:
+    display_name: Inverter Output Power Phase C
+    type: float
+    unit: watt
+  total_inverter_output_power:
+    display_name: Total Inverter Output Power
+    type: float
+    unit: watt
+  load_power_a:
+    display_name: Load Power Phase A
+    type: float
+    unit: watt
+  load_power_b:
+    display_name: Load Power Phase B
+    type: float
+    unit: watt
+  load_power_c:
+    display_name: Load Power Phase C
+    type: float
+    unit: watt
+  total_load_power:
+    display_name: Total Load Power
+    type: float
+    unit: watt
+
+alerts:
+  config_read_error:
+    display_name: Configuration read error
+    severity: warning
+
+command_groups:
+  connection:
+    display_name: Connection
+
+commands:
+  write_configuration:
+    display_name: Set Up Modbus Connection
+    group: connection
+    populate_values_command: read_configuration
+    ui:
+      icon: file-document-edit-outline
+    arguments:
+      address:
+        display_name: Modbus address
+        type: integer
+        required: true
+  read_configuration:
+    display_name: Read Connection Parameters
+    group: connection
+    ui:
+      icon: file-check-outline
+
+.cloud:
+  category: renewable_energy_sources
+  mobile_main_chart: day_grid_sell_power
+  mobile_charts:
+    - total_load_power
+    - battery_voltage
