@@ -41,3 +41,4 @@ For physical RS-232 connection with the inverter you will need:
 ## References
 
 - [MPP Solar homepage](https://go.enapter.com/mpp-solar-website)
+- [Hackster.io Article](https://www.hackster.io/nkrasko/how-to-monitor-and-manage-mpp-solar-inverter-52cf19)
