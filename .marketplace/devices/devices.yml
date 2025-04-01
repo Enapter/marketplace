@@ -383,7 +383,13 @@
   category: generic_io
   blueprint_options:
     - blueprint: generic_io/rs485
+      description: Generic IO for ENP-RS485 with Lua API version 1.
+      display_name: Generic IO for ENP-RS485 Lua API 1
       verification_level: verified
+    - blueprint: generic_io/rs485_v3
+      description: Generic IO for ENP-RS485 with Lua API version 3.
+      display_name: Generic IO for ENP-RS485 Lua API 3
+      verification_level: ready_for_testing
 
 - id: komfovent-ping2
   display_name: Komfovent AHU Ping2

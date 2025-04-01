@@ -62,6 +62,7 @@ stds.ucm = {
       },
     },
     relay = { fields = { 'new' } },
+    modbus = { fields = { 'new' } },
     ai4 = {
       fields = { 'read_volts', 'read_milliamps', 'err_to_str' },
     },
