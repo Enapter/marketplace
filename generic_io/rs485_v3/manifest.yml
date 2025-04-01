@@ -1,0 +1,78 @@
+blueprint_spec: device/3.0
+
+display_name: Generic IO for ENP-RS485
+description: Generic input/output interface for controlling Enapter RS-485 module.
+icon: enapter-module-din-2
+author: enapter
+contributors:
+  - kulti
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+runtime:
+  type: lua
+  requirements:
+    - lua_api_ver_3
+    - modbus
+    - enp_rs485_ports
+  opts:
+    file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - error
+      - ok
+
+alerts:
+  modbus_client_not_initialized:
+    severity: info
+    display_name: Modbus Interface Not Initialized
+    troubleshooting:
+      - See device logs for information.
+
+command_groups:
+  modbus:
+    display_name: Modbus
+commands:
+  read:
+    display_name: Read
+    group: modbus
+    arguments:
+      port:
+        display_name: Channel Port
+        type: string
+        enum:
+          - rs485
+      queries:
+        display_name: Channel Port
+        type: json
+        json_schema: read_queries.json
+  write:
+    display_name: Write
+    group: modbus
+    arguments:
+      port:
+        display_name: Channel Port
+        type: string
+        enum:
+          - rs485
+      queries:
+        display_name: Channel Port
+        type: json
+        json_schema: write_queries.json
+
+.cloud:
+  category: communication_modules
