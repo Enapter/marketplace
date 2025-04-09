@@ -337,6 +337,12 @@
   category: generic_io
   blueprint_options:
     - blueprint: generic_io/can
+      display_name: Generic IO for ENP-CAN Lua API 1
+      description: Generic IO for ENP-CAN with Lua API version 1.
+      verification_level: verified
+    - blueprint: generic_io/can_v3
+      display_name: Generic IO for ENP-CAN Lua API 3
+      description: Generic IO for ENP-CAN with Lua API version 3.
       verification_level: verified
 
 - id: generic-di7

@@ -1,0 +1,197 @@
+blueprint_spec: device/3.0
+
+display_name: Generic IO for ENP-CAN and ENP-RS-CAN-USB M2
+description: Generic input/output interface for controlling Enapter devices with CAN module.
+icon: enapter-module-din-2
+author: enapter
+contributors:
+  - kulti
+  - danya
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+runtime:
+  type: lua
+  requirements:
+    - lua_api_ver_3
+    - can
+    - enp_can_ports
+  opts:
+    file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - error
+
+alerts:
+  can_client_not_initialized:
+    severity: info
+    display_name: Not Initialized
+    troubleshooting:
+      - See device logs for information.
+
+command_groups:
+  can:
+    display_name: CAN
+
+commands:
+  send:
+    display_name: Send
+    group: can
+    arguments:
+      port:
+        display_name: Port
+        type: string
+        required: true
+        enum:
+          - can
+      msg_id:
+        display_name: Message ID
+        type: integer
+        required: true
+      data:
+        display_name: Message Data
+        description: Hex-encoded data to send
+        type: string
+        required: true
+  monitor:
+    display_name: Create Monitor
+    group: can
+    arguments:
+      port:
+        display_name: Port
+        type: string
+        required: true
+        enum:
+          - can
+      msg_ids:
+        display_name: Message IDs
+        type: json
+        json_schema: msg_ids.json
+        required: true
+    response:
+      monitor_id:
+        display_name: Monitor ID
+        type: string
+        required: true
+  monitor_pop:
+    display_name: Pop Monitor
+    group: can
+    arguments:
+      port:
+        display_name: Port
+        type: string
+        required: true
+        enum:
+          - can
+      monitor_id:
+        display_name: Monitor ID
+        type: string
+        required: true
+      msg_ids:
+        display_name: Message IDs
+        type: json
+        json_schema: msg_ids.json
+        required: true
+    response:
+      values:
+        display_name: Values
+        description: List of hex-encoded values
+        type: json
+        json_schema: values.json
+        required: true
+  queue:
+    display_name: Create Queue
+    group: can
+    arguments:
+      port:
+        display_name: Port
+        type: string
+        required: true
+        enum:
+          - can
+      msg_ids:
+        display_name: Message IDs
+        type: json
+        json_schema: msg_ids.json
+        required: true
+      size:
+        display_name: Queue Size
+        type: integer
+        required: true
+      drop_policy:
+        display_name: Queue Drop Policy
+        type: string
+        enum:
+          - DROP_OLDEST
+          - DROP_NEWEST
+    response:
+      queue_id:
+        display_name: Queue ID
+        type: string
+        required: true
+  queue_pop:
+    display_name: Pop Queue
+    group: can
+    arguments:
+      port:
+        display_name: Port
+        type: string
+        required: true
+        enum:
+          - can
+      queue_id:
+        display_name: Queue ID
+        type: string
+        required: true
+      msg_id:
+        display_name: Message ID
+        type: integer
+        required: true
+    response:
+      values:
+        display_name: Values
+        description: List of hex-encoded values
+        type: json
+        json_schema: values.json
+        required: true
+  queue_drops_count:
+    display_name: Read Queue Drops Count
+    group: can
+    arguments:
+      port:
+        display_name: Port
+        type: string
+        required: true
+        enum:
+          - can
+      queue_id:
+        display_name: Queue ID
+        type: string
+        required: true
+      msg_id:
+        display_name: Message ID
+        type: integer
+        required: true
+    response:
+      drops_count:
+        display_name: Values
+        type: string
+        required: true
+
+.cloud:
+  category: communication_modules

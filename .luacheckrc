@@ -79,6 +79,9 @@ stds.ucm = {
     digitalin = {
       fields = { 'new', 'LOW', 'HIGH' },
     },
+    can = {
+      fields = { 'new', 'DROP_OLDEST', 'DROP_NEWEST' }
+    },
     rl = {
       fields = {
         'is_closed',
