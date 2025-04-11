@@ -1,7 +1,7 @@
 blueprint_spec: device/3.0
 
-display_name: Generic IO for ENP-CAN and ENP-RS-CAN-USB M2
-description: Generic input/output interface for controlling Enapter devices with CAN module.
+display_name: Generic IO for ENP-CAN
+description: Generic input/output interface for controlling Enapter CAN module.
 icon: enapter-module-din-2
 author: enapter
 contributors:
