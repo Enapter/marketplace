@@ -645,7 +645,13 @@
   category: solar_inverters
   blueprint_options:
     - blueprint: solar_inverters/sma_sunny_boy
+      display_name: SMA Sunny Boy Lua API 1
+      description: SMA Sunny Boy with Lua API version 1.
       verification_level: verified
+    - blueprint: solar_inverters/sma_sunny_boy_v3
+      display_name: SMA Sunny Boy Lua API 3
+      description: SMA Sunny Boy with Lua API version 3.
+      verification_level: ready_for_testing
 
 - id: sma-sunny-tripower
   display_name: SMA Sunny Tripower
