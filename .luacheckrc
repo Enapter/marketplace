@@ -15,6 +15,9 @@ stds.ucm = {
         'err_to_str',
       },
     },
+    configuration = {
+      fields = { 'on_read', 'before_write', 'on_write', 'after_write', 'read', 'is_all_required_set' },
+    },
     ucm = {
       fields = { 'new' },
     },
