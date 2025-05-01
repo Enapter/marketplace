@@ -12,13 +12,14 @@ contributors:
 support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
+implements: energy.pv_inverter.1_phase
 
 runtime:
   type: lua
   requirements:
     - lua_api_ver_3
     - modbus
-  opts:
+  options:
     dir: src
 
 configuration:
@@ -42,15 +43,19 @@ properties:
   model:
     display_name: Model
     type: string
-  serial_num:
+  vendor:
+    display_name: Vendor
+    type: string
+  serial_number:
     display_name: Serial Number
-    type: integer
-  fw_ver:
+    type: string
+  firmware_version:
     display_name: Firmware Version
     type: string
-  rated_power_va:
+  inverter_nameplate_capacity:
     display_name: Rated Power
     type: integer
+    unit: VA
   country_code:
     display_name: Country Code
     type: string
@@ -65,13 +70,40 @@ telemetry:
   status:
     display_name: Status
     type: string
+    description: Current operational status of the inverter
+    enum:
+      "off":
+        display_name: "Off"
+        description: Inverter is switched off
+      standby:
+        display_name: Standby
+        description: |
+          Inverter is in standby mode waiting for startup conditions.
+          Examples:
+          - AC grid voltage unavailable for grid-tied inverters
+          - DC voltage too low (night time for PV inverters)
+          - External control signal forcing standby
+      starting:
+        display_name: Starting
+        description: Inverter is going through startup procedure
+      operating:
+        display_name: Operating
+        description: Inverter is actively producing power
+      shutting_down:
+        display_name: Shutting Down
+        description: Inverter is going through shutdown procedure
+      fault:
+        display_name: Fault
+        description: Inverter has detected a fault and is not operating
+  health:
+    display_name: Health Status
+    type: string
     enum:
       - ok
       - warning
       - fault
-      - "off"
-  operation_status:
-    display_name: Operation Status
+  operating_status:
+    display_name: Operating Status
     type: string
     enum:
       - standby
@@ -81,12 +113,10 @@ telemetry:
       - shutdown
       - waiting_utilities
       - bolted
-      - standalone
       - derating
       - mpp
       - "off"
       - stop
-      - const_voltage
       - run
   recom_action:
     display_name: Recommended Action
@@ -122,10 +152,16 @@ telemetry:
     display_name: DC Power
     type: float
     unit: W
+    implements: energy.pv_inverter.1_phase.pv_total_power
+  ac_total_power:
+    display_name: AC Total Power
+    type: float
+    unit: W
   ac_power:
     display_name: AC Power
     type: float
     unit: W
+    implements: energy.pv_inverter.1_phase.ac_l1_power
   ac_frequency:
     display_name: AC Frequency
     type: float
@@ -134,6 +170,12 @@ telemetry:
     display_name: AC Voltage
     type: float
     unit: V
+    implements: energy.pv_inverter.1_phase.ac_l1_voltage
+  ac_current:
+    display_name: AC Current
+    type: float
+    unit: A
+    implements: energy.pv_inverter.1_phase.ac_l1_current
   ac_power_var:
     display_name: AC Reavtive Power
     type: float
