@@ -49,9 +49,10 @@ function send_properties()
 
   local properties = {}
   properties.model = parse_model(conn:read_u32_enum(30053))
-  properties.serial_num = conn:read_u32_fix0(30057)
-  properties.fw_ver = parse_firmware_version(conn:read_u32_fix0(30059))
-  properties.rated_power_va = conn:read_u32_fix0(40185)
+  properties.vendor = 'SMA'
+  properties.serial_number = tostring(conn:read_u32_fix0(30057))
+  properties.firmware_version = parse_firmware_version(conn:read_u32_fix0(30059))
+  properties.inverter_nameplate_capacity = conn:read_u32_fix0(40185)
   properties.country_code = parse_country_code(conn:read_u32_fix0(40109))
   if conn_cfg then
     properties.address = conn_cfg.address
@@ -72,14 +73,17 @@ function send_realtime_telemetry()
   end
 
   local started = os.clock()
+  local operating_status = parse_operating_status(conn:read_u32_enum(40029))
   local telemetry = {
     alerts = parse_alerts(conn:read_u32_enum(30213), conn:read_u32_enum(30247)),
-    status = parse_status(conn:read_u32_enum(30201)),
-    operation_status = parse_operation_status(conn:read_u32_enum(40029)),
+    health = parse_health_status(conn:read_u32_enum(30201)),
+    operating_status = operating_status,
+    status = convert_operating_status_to_status(operating_status),
 
     dc_voltage = conn:read_s32_fix2(30771),
     dc_power = conn:read_s32_fix0(30773),
     ac_power = conn:read_s32_fix0(30775),
+    ac_total_power = conn:read_s32_fix0(30777),
     ac_frequency = conn:read_u32_fix2(30803),
   }
   telemetry.read_time = math.ceil((os.clock() - started) * 1000) / 1000 -- round
@@ -273,7 +277,7 @@ function parse_model(value)
   end
 end
 
-function parse_status(value)
+function parse_health_status(value)
   if not value then
     return
   end
@@ -281,7 +285,7 @@ function parse_status(value)
   if value == 35 then
     return 'fault'
   elseif value == 303 then
-    return 'off'
+    return nil
   elseif value == 307 then
     return 'ok'
   elseif value == 455 then
@@ -324,7 +328,7 @@ function parse_grid_relay_closed(value)
   end
 end
 
-function parse_operation_status(value)
+function parse_operating_status(value)
   if not value then
     return
   end
@@ -336,9 +340,9 @@ function parse_operation_status(value)
   elseif value == 1393 then
     return 'waiting_pv_voltage'
   elseif value == 1467 then
-    return 'start'
+    return 'starting'
   elseif value == 1469 then
-    return 'shutdown'
+    return 'shutting_down'
   elseif value == 1480 then
     return 'waiting_utilities'
   elseif value == 1795 then
@@ -356,10 +360,30 @@ function parse_operation_status(value)
   elseif value == 443 then
     return 'const_voltage'
   elseif value == 569 then
-    return 'run'
+    return 'operating'
   else
-    enapter.log('Cannot decode operation status: ' .. tostring(value), 'error')
+    enapter.log('Cannot decode operating status: ' .. tostring(value), 'error')
     return tostring(value)
+  end
+end
+
+function convert_operating_status_to_status(value)
+  if not value then
+    return
+  end
+
+  if value == 'off' or value == 'stop' then
+    return 'off'
+  elseif value == 'standby' or value == 'waiting_pv_voltage' or value == 'waiting_utilities' or value == 'bolted' then
+    return 'standby'
+  elseif value == 'start' then
+    return 'starting'
+  elseif value == 'derating' or value == 'mpp' or value == 'run' then
+    return 'operating'
+  elseif value == 'shutdown' then
+    return 'shutting_down'
+  elseif value == 'fault' then
+    return 'fault'
   end
 end
 
