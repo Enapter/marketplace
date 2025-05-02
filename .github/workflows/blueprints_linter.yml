@@ -1,5 +1,7 @@
 name: Blueprints Linter
 
+permissions: read-all
+
 on:
   pull_request_target:
     branches: [main]
@@ -10,7 +12,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
