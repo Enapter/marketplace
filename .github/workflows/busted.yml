@@ -1,5 +1,7 @@
 name: Busted
 
+permissions: read-all
+
 on:
   push:
     branches: [main]
@@ -12,10 +14,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup ‘lua’
-        uses: leafo/gh-actions-lua@v9
+        uses: leafo/gh-actions-lua@v11
         with:
           luaVersion: 5.3
 
