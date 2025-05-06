@@ -18,7 +18,7 @@ runtime:
     - lua_api_ver_3
     - can
     - enp_can_ports
-  opts:
+  options:
     file: firmware.lua
 
 properties:
