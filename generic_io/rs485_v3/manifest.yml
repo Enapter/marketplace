@@ -17,7 +17,7 @@ runtime:
     - lua_api_ver_3
     - modbus
     - enp_rs485_ports
-  opts:
+  options:
     file: firmware.lua
 
 properties:

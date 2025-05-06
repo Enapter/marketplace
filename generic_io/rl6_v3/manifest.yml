@@ -18,7 +18,7 @@ runtime:
     - lua_api_ver_3
     - relay
     - enp_rl6_ports
-  opts:
+  options:
     file: firmware.lua
     luarocks:
       - enapter-ucm ~> 0.4.0

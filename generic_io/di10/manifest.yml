@@ -17,7 +17,7 @@ runtime:
     - lua_api_ver_3
     - digitalin
     - enp_di10_m2_ports
-  opts:
+  options:
     file: firmware.lua
 
 properties:
