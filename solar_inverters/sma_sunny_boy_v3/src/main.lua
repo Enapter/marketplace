@@ -115,8 +115,8 @@ function send_detailed_telemetry()
     heatsink_temperature = conn:read_s32_fix1(34109),
     internal_temperature = conn:read_s32_fix1(34113),
 
-    total_yield = conn:read_u32_fix0(30529),
-    daily_yield = conn:read_u32_fix0(30535),
+    ac_energy_total = conn:read_u32_fix0(30529),
+    ac_energy_today = conn:read_u32_fix0(30535),
   }
   telemetry.read_time = math.ceil((os.clock() - started) * 1000) / 1000 -- round
 
