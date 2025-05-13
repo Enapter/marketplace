@@ -80,9 +80,11 @@ telemetry:
     enum:
       "off":
         display_name: "Off"
+        color: purple-lighter
         description: Inverter is switched off
       standby:
         display_name: Standby
+        color: blue
         description: |
           Inverter is in standby mode waiting for startup conditions.
           Examples:
@@ -91,15 +93,19 @@ telemetry:
           - External control signal forcing standby
       starting:
         display_name: Starting
+        color: pink-light
         description: Inverter is going through startup procedure
       operating:
         display_name: Operating
+        color: cyan
         description: Inverter is actively producing power
       shutting_down:
         display_name: Shutting Down
+        color: pink-light
         description: Inverter is going through shutdown procedure
       fault:
         display_name: Fault
+        color: red
         description: Inverter has detected a fault and is not operating
   health:
     display_name: Health Status
