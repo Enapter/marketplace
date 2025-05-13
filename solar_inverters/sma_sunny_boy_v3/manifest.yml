@@ -12,7 +12,13 @@ contributors:
 support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
-implements: energy.pv_inverter.1_phase
+implements:
+  - energy.pv_inverter.1_phase
+  - lib.energy.power_quality.power_factor.1_phase
+  - lib.energy.power_quality.power_factor.totals
+  - lib.energy.inverter.ac.energy.today
+  - lib.energy.inverter.ac.energy.total
+  - lib.energy.inverter.temperature
 
 runtime:
   type: lua
@@ -180,13 +186,22 @@ telemetry:
     display_name: AC Reavtive Power
     type: float
     unit: VAR
+    implements:
+      - lib.energy.power_quality.power_factor.1_phase.ac_l1_power_reactive
+      - lib.energy.power_quality.power_factor.totals.ac_total_power_reactive
   ac_power_va:
     display_name: AC Apparent Power
     type: float
     unit: VA
+    implements:
+      - lib.energy.power_quality.power_factor.1_phase.ac_l1_power_apparent
+      - lib.energy.power_quality.power_factor.totals.ac_total_power_apparent
   ac_cos_phi:
     display_name: AC Power Factor
     type: float
+    implements:
+      - lib.energy.power_quality.power_factor.1_phase.ac_l1_power_factor
+      - lib.energy.power_quality.power_factor.totals.ac_power_factor
   residual_amperage:
     display_name: Residual Amperage
     type: float
@@ -195,16 +210,18 @@ telemetry:
     display_name: Heatsink Temperature
     type: float
     unit: Cel
+    implements: lib.energy.inverter.temperature.inverter_heatsink_temperature
   internal_temperature:
     display_name: Internal Temperature
     type: float
     unit: Cel
-  total_yield:
-    display_name: Total Yield
+    implements: lib.energy.inverter.temperature.inverter_internal_temperature
+  ac_energy_total:
+    display_name: Total AC Energy Produced
     type: float
     unit: Wh
-  daily_yield:
-    display_name: Daily Yield
+  ac_energy_today:
+    display_name: AC Energy Produced Today
     type: float
     unit: Wh
 
