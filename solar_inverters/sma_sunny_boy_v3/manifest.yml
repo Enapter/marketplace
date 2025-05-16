@@ -12,6 +12,7 @@ contributors:
 support:
   url: https://go.enapter.com/enapter-blueprint-support
   email: support@enapter.com
+
 implements:
   - energy.pv_inverter.1_phase
   - lib.energy.power_quality.power_factor.1_phase
