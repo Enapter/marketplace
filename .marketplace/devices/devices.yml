@@ -431,9 +431,13 @@
   category: irradiance_sensors
   blueprint_options:
     - blueprint: irradiance_sensors/imt_solar_si-rS485tc-2t
-      display_name: ENP-RS485 UCM Version
+      display_name: ENP-RS485 UCM Lua API 1 Version
       description: Use Enapter ENP-RS485 to integrate IMT Solar Irradiance Sensor Si-RS485TC-2T
       verification_level: verified
+    - blueprint: irradiance_sensors/imt_solar_si-rS485tc-2t_v3
+      display_name: Lua API 3 Version
+      description: Universal integration for IMT Solar Irradiance Sensor
+      verification_level: ready_for_testing
     - blueprint: irradiance_sensors/imt_solar_si-rS485tc-2t_arrakis_mk4
       display_name: Arrakis MK4 IPC Version
       description: Use Enapter Gateway on Arrakis MK4 IPC to integrate IMT Solar Irradiance Sensor Si-RS485TC-2T
