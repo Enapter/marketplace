@@ -1,0 +1,158 @@
+blueprint_spec: device/3.0
+
+display_name: Schneider Electric PM2100 series
+description: Power & Energy Meter with RS485 interface.
+icon: enapter-power-meter
+license: MIT
+author: enapter
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+category: power-meters
+
+implements:
+  - energy.power_meter.ac.3_phase
+
+runtime:
+  type: lua
+  requirements:
+    - lua_api_ver_3
+    - modbus
+  options:
+    dir: src
+
+configuration:
+  connection:
+    display_name: Connection
+    description: Modbus connection options
+    access_level: owner
+    parameters:
+      address:
+        display_name: Modbus Address
+        description: Device address in range 1-247
+        type: integer
+        required: true
+      conn_str:
+        display_name: Connection string
+        description: Connection URI to the runtime device
+        type: string
+        format: connection_uri
+        required: true
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: string
+    display_name: Serial Number
+
+telemetry:
+  status:
+    display_name: Connection Status
+    type: string
+    enum:
+      ok:
+        display_name: OK
+        color: green
+  active_energy_delivered_and_received:
+    type: float
+    unit: Wh
+    display_name: Accumulated Active Energy Delivered + Received
+  energy_total:
+    type: float
+    unit: Wh
+    display_name: Active Energy Consumed by Loads
+  total_power:
+    type: float
+    unit: W
+    display_name: Total Active Power
+  ac_l1_power:
+    type: float
+    unit: W
+    display_name: Active Power A
+  ac_l2_power:
+    type: float
+    unit: W
+    display_name: Active Power B
+  ac_l3_power:
+    type: float
+    unit: W
+    display_name: Active Power C
+  ac_l1_voltage:
+    type: float
+    unit: V
+    display_name: Phase A Voltage
+  ac_l2_voltage:
+    type: float
+    unit: V
+    display_name: Phase B Voltage
+  ac_l3_voltage:
+    type: float
+    unit: V
+    display_name: Phase C Voltage
+  ac_l1_current:
+    type: float
+    unit: A
+    display_name: Phase A Current
+  ac_l2_current:
+    type: float
+    unit: A
+    display_name: Phase B Current
+  ac_l3_current:
+    type: float
+    unit: A
+    display_name: Phase C Current
+  ac_frequency:
+    type: float
+    unit: Hz
+    display_name: Frequency
+
+alerts:
+  conn_error:
+    display_name: Connection error
+    severity: error
+    description: Connection to the device has failed.
+    grace_period: 15s
+    troubleshooting:
+      - Double check the physical connection.
+      - Ensure that Modbus address is the same as in your device.
+      - >
+        Ensure that the UCM's hardware configuration matches your
+        device's connection configuration.
+      - >
+        Ensure you are reading/writing the correct register addresses
+        and ranges as per the device documentation.
+
+.cloud:
+  mobile_main_chart: total_power
+  mobile_telemetry:
+    - active_energy_delivered_and_received
+    - total_power
+    - ac_l1_power
+    - ac_l2_power
+    - ac_l3_power
+    - ac_l1_voltage
+    - ac_l2_voltage
+    - ac_l3_voltage
+    - ac_l1_current
+    - ac_l2_current
+    - ac_l3_current
+    - ac_frequency
+  mobile_charts:
+    - active_energy_delivered_and_received
+    - energy_total
+    - total_power
+    - ac_l1_power
+    - ac_l2_power
+    - ac_l3_power
+    - ac_l1_voltage
+    - ac_l2_voltage
+    - ac_l3_voltage
+    - ac_l1_current
+    - ac_l2_current
+    - ac_l3_current
+    - ac_frequency
