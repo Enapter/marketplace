@@ -1,0 +1,92 @@
+blueprint_spec: device/3.0
+
+display_name: Crowcon Xgard Bright
+description: Fixed-point gas detector with ModBus RTU over RS485
+icon: enapter-gas-sensor
+license: MIT
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+category: sensors
+
+implements:
+  - sensor.hydrogen
+
+runtime:
+  type: lua
+  requirements:
+    - lua_api_ver_3
+    - modbus
+  options:
+    dir: src
+
+configuration:
+  connection:
+    display_name: Connection
+    description: Modbus connection options
+    access_level: owner
+    parameters:
+      address:
+        display_name: Modbus Address
+        description: Device address in range 1-247
+        type: integer
+        required: true
+      conn_str:
+        display_name: Connection string
+        description: Check connection guide
+        type: string
+        format: connection_uri
+        required: true
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: string
+    display_name: Serial Number
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    description: Status of the device
+    enum:
+      ok:
+        display_name: OK
+        color: green
+  h2_concentration:
+    type: float
+    unit: "%LEL"
+    display_name: H2 Concentration
+    description: Measured hydrogen concentration
+    implements: sensor.hydrogen.gas_lel
+
+alerts:
+  conn_error:
+    display_name: Connection error
+    severity: error
+    description: Connection to the device has failed.
+    grace_period: 15s
+    troubleshooting:
+      - Double check the physical connection.
+      - Ensure that Modbus address is the same as in your device.
+      - >
+        Ensure that the UCM's hardware configuration matches your
+        device's connection configuration.
+      - >
+        Ensure you are reading/writing the correct register addresses
+        and ranges as per the device documentation.
+
+.cloud:
+  mobile_main_chart: h2_concentration
+  mobile_telemetry:
+    - h2_concentration
+  mobile_charts:
+    - h2_concentration
