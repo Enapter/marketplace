@@ -3,7 +3,7 @@
   icon_url: https://static.enapter.com/modules/ENP-AI4.png
   handbook_url: https://handbook.enapter.com/modules/ENP-AI4-50V/ENP-AI4-50V.html
   capabilities:
-    - ai
+    - analogin
     - led
 
 - product: ENP-AI4-20MA
@@ -11,7 +11,7 @@
   icon_url: https://static.enapter.com/modules/ENP-AI4-20MA.png
   handbook_url: https://handbook.enapter.com/modules/ENP-AI4-20MA/ENP-AI4-20MA.html
   capabilities:
-    - ai
+    - analogin
     - led
 
 - product: ENP-AI4-50V
@@ -19,7 +19,7 @@
   icon_url: https://static.enapter.com/modules/ENP-AI4-50V.png
   handbook_url: https://handbook.enapter.com/modules/ENP-AI4-50V/ENP-AI4-50V.html
   capabilities:
-    - ai
+    - analogin
     - led
 
 - product: ENP-AO4
@@ -27,7 +27,7 @@
   icon_url: https://static.enapter.com/modules/ENP-AO4.png
   handbook_url: https://handbook.enapter.com/modules/ENP-AO4/ENP-AO4.html
   capabilities:
-    - ao
+    - analogout
     - led
 
 - product: ENP-CAN
