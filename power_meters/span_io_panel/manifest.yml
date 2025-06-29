@@ -1,0 +1,400 @@
+blueprint_spec: device/1.0
+
+display_name: SPAN.IO Smart Breaker Panel
+description: Span Main Breaker
+icon: enapter-power-meter
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  ip_address:
+    display_name: IP Address
+    type: string
+
+alerts:
+  communication_failed:
+    display_name: REST communication failed
+    severity: warning
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  total_power:
+    type: float
+    unit: watt
+    display_name: Total Power
+  breaker_1:
+    type: float
+    unit: watt
+    display_name: B1 Power
+  breaker_1_status:
+    display_name: B1 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_1_name:
+    type: string
+    display_name: B1 Name
+  breaker_1_id:
+    type: string
+    display_name: B1 Id
+  breaker_2:
+    type: float
+    unit: watt
+    display_name: B2 Power
+  breaker_2_name:
+    type: string
+    display_name: B2 Name
+  breaker_2_id:
+    type: string
+    display_name: B2 Id
+  breaker_2_status:
+    display_name: B2 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_3:
+    type: float
+    unit: watt
+    display_name: B3 Power
+  breaker_3_status:
+    display_name: B3 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_4:
+    type: float
+    unit: watt
+    display_name: B4 Power
+  breaker_4_status:
+    display_name: B4 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_5:
+    type: float
+    unit: watt
+    display_name: B5 Power
+  breaker_5_status:
+    display_name: B5 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_6:
+    type: float
+    unit: watt
+    display_name: B6 Power
+  breaker_6_status:
+    display_name: B6 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_7:
+    type: float
+    unit: watt
+    display_name: B7 Power
+  breaker_7_status:
+    display_name: B7 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_8:
+    type: float
+    unit: watt
+    display_name: B8 Power
+  breaker_8_status:
+    display_name: B8 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_9:
+    type: float
+    unit: watt
+    display_name: B9 Power
+  breaker_9_status:
+    display_name: B9 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_10:
+    type: float
+    unit: watt
+    display_name: B10 Power
+  breaker_10_status:
+    display_name: B10 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_11:
+    type: float
+    unit: watt
+    display_name: B11 Power
+  breaker_11_status:
+    display_name: B11 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_12:
+    type: float
+    unit: watt
+    display_name: B12 Power
+  breaker_12_status:
+    display_name: B12 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_13:
+    type: float
+    unit: watt
+    display_name: B13 Power
+  breaker_13_status:
+    display_name: B13 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_14:
+    type: float
+    unit: watt
+    display_name: B14 Power
+  breaker_14_status:
+    display_name: B14 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_15:
+    type: float
+    unit: watt
+    display_name: B15 Power
+  breaker_15_status:
+    display_name: B15 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_16:
+    type: float
+    unit: watt
+    display_name: B16 Power
+  breaker_16_status:
+    display_name: B16 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_17:
+    type: float
+    unit: watt
+    display_name: B17 Power
+  breaker_17_status:
+    display_name: B17 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_18:
+    type: float
+    unit: watt
+    display_name: B18 Power
+  breaker_18_status:
+    display_name: B18 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_19:
+    type: float
+    unit: watt
+    display_name: B19 Power
+  breaker_19_status:
+    display_name: B19 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_20:
+    type: float
+    unit: watt
+    display_name: B20 Power
+  breaker_20_status:
+    display_name: B20 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_21:
+    type: float
+    unit: watt
+    display_name: B21 Power
+  breaker_21_status:
+    display_name: B21 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_22:
+    type: float
+    unit: watt
+    display_name: B22 Power
+  breaker_22_status:
+    display_name: B22 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_23:
+    type: float
+    unit: watt
+    display_name: B23 Power
+  breaker_23_status:
+    display_name: B23 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_24:
+    type: float
+    unit: watt
+    display_name: B24 Power
+  breaker_24_status:
+    display_name: B24 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_25:
+    type: float
+    unit: watt
+    display_name: B25 Power
+  breaker_25_status:
+    display_name: B25 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_26:
+    type: float
+    unit: watt
+    display_name: B26 Power
+  breaker_26_status:
+    display_name: B26 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_27:
+    type: float
+    unit: watt
+    display_name: B27 Power
+  breaker_27_status:
+    display_name: B27 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_28:
+    type: float
+    unit: watt
+    display_name: B28 Power
+  breaker_28_status:
+    display_name: B28 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_29:
+    type: float
+    unit: watt
+    display_name: B29 Power
+  breaker_29_status:
+    display_name: B29 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_30:
+    type: float
+    unit: watt
+    display_name: B30 Power
+  breaker_30_status:
+    display_name: B30 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_31:
+    type: float
+    unit: watt
+    display_name: B31 Power
+  breaker_31_status:
+    display_name: B31 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+  breaker_32:
+    type: float
+    unit: watt
+    display_name: B32 Power
+  breaker_32_status:
+    display_name: B32 Status
+    type: string
+    enum:
+      - OPEN
+      - CLOSED
+
+command_groups:
+  connection:
+    display_name: Connection
+  internals:
+    display_name: Internals
+
+commands:
+  # Connection Config
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Configure Connection
+    group: connection
+    ui:
+      icon: file-settings-outline
+    arguments:
+      ip_address:
+        display_name: IP Address
+        description: IP address of the Span Panel
+        type: string
+        required: true
+  read_configuration:
+    display_name: Read Connection Config
+    group: internals
+    ui:
+      icon: file-settings-outline
+
+.cloud:
+  category: power_meters
+  mobile_telemetry:
+    - total_power
