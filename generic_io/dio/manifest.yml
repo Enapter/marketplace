@@ -1,0 +1,83 @@
+blueprint_spec: device/1.0
+
+display_name: Generic DIO for Arrakis MK4
+description: Generic digital DIO/relay for controlling Arrakis MK4 DIOs.
+icon: enapter-module-din-2
+vendor: enapter
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - error
+      - ok
+  di1:
+    display_name: DI1 is closed
+    type: boolean
+  di2:
+    display_name: DI2 is closed
+    type: boolean
+  di3:
+    display_name: DI3 is closed
+    type: boolean
+  di4:
+    display_name: DI4 is closed
+    type: boolean
+
+command_groups:
+  control:
+    display_name: Control
+
+commands:
+  close:
+    display_name: Close relay
+    group: control
+    ui:
+      icon: clock-in
+    arguments:
+      output:
+        display_name: Output Number
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+  open:
+    display_name: Open relay
+    group: control
+    ui:
+      icon: clock-out
+    arguments:
+      output:
+        display_name: Output Number
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+
+.cloud:
+  category: communication_modules
+  mqtt_channel_id: gio
