@@ -262,3 +262,8 @@
   display_name: Electricity Maps
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/electricity_maps.png
   website: https://www.electricitymaps.com
+
+- id: sorel
+  display_name: SOREL GmbH Mikroelektronik
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sorel.png
+  website: https://www.sorel.de/

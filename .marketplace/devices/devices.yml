@@ -859,3 +859,14 @@
   blueprint_options:
     - blueprint: cloud_services/electricity_maps
       verification_level: verified
+
+- id: sorel_mtdc
+  display_name: SOREL MTDC Solar Controller
+  description: |
+    Integration with “Medium” Temperature Difference Controller for midsize solar collector (thermal) systems.
+  icon: enapter-vacuum-solar-collector
+  vendor: sorel
+  category: solar_collectors
+  blueprint_options:
+    - blueprint: solar_collectors/sorel_mtdc
+      verification_level: verified
