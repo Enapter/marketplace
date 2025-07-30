@@ -15,22 +15,22 @@ function can_handler(msg_id, data)
     -- 100 01 ID 80
     if msg_id == ((0x10 << 24) | (0x01 << 16) | (tonumber(client) << 8) | 0x80) then
       local temperature = string.unpack('<i2', string.sub(data, 2, 3)) / 10
-      dtl_temperatures["s" .. string.byte(data, 1)+1] = temperature
-      enapter.log("Sensor " .. tostring(string.byte(data, 1)+1) .. ": " .. tostring(temperature) .. "°C")
+      dtl_temperatures['s' .. string.byte(data, 1)+1] = temperature
+      enapter.log('Sensor ' .. tostring(string.byte(data, 1)+1) .. ': ' .. tostring(temperature) .. '°C')
     end
 
     -- 100 02 ID 80
     if msg_id == ((0x10 << 24) | (0x02 << 16) | (tonumber(client) << 8) | 0x80) then
       local signal = string.byte(data, 3)
-      dtl_relays["r" .. string.byte(data, 1)+1] = signal
-      enapter.log("Relay " .. tostring(string.byte(data, 1)+1) .. ": " .. tostring(signal))
+      dtl_relays['r' .. string.byte(data, 1)+1] = signal
+      enapter.log('Relay ' .. tostring(string.byte(data, 1)+1) .. ': ' .. tostring(signal))
     end
   end
 end
 
 result = can.init(250, can_handler)
 if result ~= 0 then
-  enapter.log("CAN failed: " .. result .. " " .. can.err_to_str(result), "error", true)
+  enapter.log('CAN failed: ' .. result .. ' ' .. can.err_to_str(result), 'error', true)
 end
 
 function main()
@@ -71,7 +71,6 @@ function send_properties()
     model = 'MTDC',
   })
 end
-
 
 function send_telemetry()
   local telemetry = {}
