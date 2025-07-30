@@ -9,7 +9,6 @@ local dtl_relays = {}
 local active_alerts = {}
 
 function can_handler(msg_id, data)
-
   local client, err = get_can_id()
   if not err then
     -- 100 01 ID 80
