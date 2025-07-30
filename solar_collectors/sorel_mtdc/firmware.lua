@@ -27,15 +27,16 @@ function can_handler(msg_id, data)
   end
 end
 
-result = can.init(250, can_handler)
-if result ~= 0 then
-  enapter.log('CAN failed: ' .. result .. ' ' .. can.err_to_str(result), 'error', true)
-end
-
 function main()
   config.init({
     [CAN_ID] = { type = 'number', required = true },
   })
+
+  -- Init CAN interface
+  local result = can.init(250, can_handler)
+  if result ~= 0 then
+    enapter.log('CAN failed: ' .. result .. ' ' .. can.err_to_str(result), 'error', true)
+  end
 
   -- Send properties every 30s
   scheduler.add(30000, send_properties)
