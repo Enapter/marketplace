@@ -9,7 +9,7 @@ This blueprint runs on ENP-CAN.
 1. In case you have only ENP-CAN and MTDC on the bus, you need to ensure that terminating resistors of 120 Ohm present on both ends of the bus. Internal terminating resistor on ENP-CAN can be enabled using jumper.
 2. MTDC comes with 2 ports for CAN Bus. Unfortunatelly connector not included in the package therefore easiest way is to use dupont cables: use High pin on one connector and on Low pin on other.
 
-    <img src="./.assets/01_SOREL_MTDC_Connection.png" alt="SOREL MTDC connection to Enapter ENP-CAN" width="25%" />
+<img src="./.assets/01_SOREL_MTDC_Connection.png" alt="SOREL MTDC connection to Enapter ENP-CAN" width="25%" />
 
 3. Connect ENP-CAN module High and Low cables
 
@@ -23,21 +23,20 @@ This blueprint runs on ENP-CAN.
 
 3. Upload thie Blueprint using [Enapter Marketplace](https://marketplace.enapter.com) on your mobile device. Advanced users can upload using Web IDE or CLI by following [Developer Documentation](https://developers.enapter.com/docs/tutorial/uploading-blueprint/).
 
-5. As soon as Blueprint will start the `CAN Bus ID Not Configured` event will be triggered.
+4. As soon as Blueprint will start the `CAN Bus ID Not Configured` event will be triggered.
 
-6. Click `Commands` on device screen.
+5. Click `Commands` on device screen.
 
-    <img src="./.assets/06_Commands.jpg" alt="SOREL MTDC Blueprint Commands" width="25%" />
+<img src="./.assets/06_Commands.jpg" alt="SOREL MTDC Blueprint Commands" width="25%" />
 
-7. On the commands list screen click on `Main Configuration` command:
+6. On the commands list screen click on `Main Configuration` command:
 
-    <img src="./.assets/07_Configuration.jpg" alt="SOREL MTDC Blueprint Configuration Settings" width="25%" />
+   <img src="./.assets/07_Configuration.jpg" alt="SOREL MTDC Blueprint Configuration Settings" width="25%" />
 
-    You need to set the following parameters:
+   You need to set the following parameters:
+   - CAN Bus ID
 
-    - CAN Bus ID
-
-9. Press `Run` button
+7. Press `Run` button
 
 The status data should be available on your dashboard as well as you will be able to use the valuies in [Enapter Rules Engine](https://developers.enapter.com/docs/reference/rules/time)
 
