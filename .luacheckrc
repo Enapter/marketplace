@@ -49,6 +49,9 @@ stds.ucm = {
     rs485 = {
       fields = { 'init', 'send', 'receive', 'err_to_str' },
     },
+    can = {
+      fields = { 'init', 'send', 'err_to_str' },
+    },
     rl6 = {
       fields = {
         'get',
@@ -80,8 +83,7 @@ stds.ucm = {
       fields = { 'new', 'LOW', 'HIGH' },
     },
     can = {
-      fields = { 'new', 'DROP_OLDEST', 'DROP_NEWEST', 'init', 'send', 'err_to_str' },
-    },
+      fields = { 'new', 'DROP_OLDEST', 'DROP_NEWEST', 'init', 'send', 'err_to_str' }
     },
     rl = {
       fields = {
