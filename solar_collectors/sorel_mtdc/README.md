@@ -34,7 +34,7 @@ This blueprint runs on ENP-CAN.
     <img src="./.assets/04_Configuration.jpg" alt="SOREL MTDC Blueprint Configuration Settings" width="25%" />
 
   You need to set the following parameters:
-  - CAN Bus ID
+    - CAN Bus ID
 
 7. Press `Run` button
 
