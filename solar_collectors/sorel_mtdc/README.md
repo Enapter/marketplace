@@ -7,7 +7,7 @@ This blueprint runs on ENP-CAN.
 ## Connecting Sorel MTDC to ENP-CAN
 
 1. In case you have only ENP-CAN and MTDC on the bus, you need to ensure that terminating resistors of 120 Ohm present on both ends of the bus. Internal terminating resistor on ENP-CAN can be enabled using jumper.
-2. MTDC comes with 2 ports for CAN Bus. Unfortunatelly connector not included in the package therefore easiest way is to use dupont cables: use High pin on one connector and on Low pin on other. <br><img src="./.assets/01_SOREL_MTDC_Connection.png" alt="SOREL MTDC connection to Enapter ENP-CAN" width="25%" />
+2. MTDC comes with 2 ports for CAN Bus. Unfortunatelly connector not included in the package therefore easiest way is to use dupont cables: use High pin on one connector and on Low pin on other. <br><br><img src="./.assets/01_SOREL_MTDC_Connection.png" alt="SOREL MTDC connection to Enapter ENP-CAN" width="25%" />
 
 3. Connect ENP-CAN module High and Low cables
 
@@ -23,9 +23,9 @@ This blueprint runs on ENP-CAN.
 
 4. As soon as Blueprint will start the `CAN Bus ID Not Configured` event will be triggered.
 
-5. Click `Commands` on device screen. <br><img src="./.assets/03_Commands.jpg" alt="SOREL MTDC Blueprint Commands" width="25%" />
+5. Click `Commands` on device screen. <br><br><img src="./.assets/03_Commands.jpg" alt="SOREL MTDC Blueprint Commands" width="25%" />
 
-6. On the commands list screen click on `Main Configuration` command: <br><img src="./.assets/04_Configuration.jpg" alt="SOREL MTDC Blueprint Configuration Settings" width="25%" />
+6. On the commands list screen click on `Main Configuration` command: <br><br><img src="./.assets/04_Configuration.jpg" alt="SOREL MTDC Blueprint Configuration Settings" width="25%" />
 
 You need to set the following parameters: CAN Bus ID
 
