@@ -1,0 +1,103 @@
+# Manifest describes the core concepts of your device: properties,
+# telemetry, alerts, and commands.
+#
+# See https://developers.enapter.com/docs/reference
+
+blueprint_spec: device/1.0
+
+display_name: Sorel MTDC
+icon: enapter-vacuum-solar-collector
+description: Temperature Difference Controller for midsize systems
+author: nkrasko
+contributors:
+  - nkrasko
+support:
+  url: http://yerapter.com
+license: MIT
+
+communication_module:
+  product: ENP-CAN
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.3.2
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  serial_number:
+    type: string
+    display_name: Serial Number
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      - Idle
+      - Loading Storage
+      - Waiting Data
+      - Error
+  s1:
+    type: float
+    unit: °C
+    display_name: Solar Collector Temperature
+  s2:
+    type: float
+    unit: °C
+    display_name: Storage Tank Temperature
+  dt:
+    type: float
+    unit: °C
+    display_name: ΔT
+  pump:
+    type: float
+    unit: "%"
+    display_name: Pump speed
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from flash storage. Check the logs.
+  not_configured:
+    severity: info
+    display_name: CAN Bus ID Not Configured
+    description: CAN Bus ID not configured. Please set the correct settings using "Configure" command.
+
+command_groups:
+  config:
+    display_name: Configuration
+  info:
+    display_name: Information
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      can_id:
+        display_name: CAN Bus ID
+        description: You can find this ID in the device settings.
+        type: string
+        required: true
+  read_configuration:
+    display_name: Read Configuration
+    group: info
+    ui:
+      icon: wrench-outline
+
+.cloud:
+  category: renewable_energy_sources
+  mobile_main_chart: s2
+  mobile_charts:
+    - s1
+    - s2
+    - dt
+    - pump

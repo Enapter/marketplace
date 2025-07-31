@@ -83,7 +83,7 @@ stds.ucm = {
       fields = { 'new', 'LOW', 'HIGH' },
     },
     can = {
-      fields = { 'new', 'DROP_OLDEST', 'DROP_NEWEST' }
+      fields = { 'new', 'DROP_OLDEST', 'DROP_NEWEST', 'init', 'send', 'err_to_str' }
     },
     rl = {
       fields = {
