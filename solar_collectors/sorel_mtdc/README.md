@@ -27,11 +27,11 @@ This blueprint runs on ENP-CAN.
 
 5. Click `Commands` on device screen.
 
-<img src="./.assets/06_Commands.jpg" alt="SOREL MTDC Blueprint Commands" width="25%" />
+   <img src="./.assets/03_Commands.jpg" alt="SOREL MTDC Blueprint Commands" width="25%" />
 
 6. On the commands list screen click on `Main Configuration` command:
 
-   <img src="./.assets/07_Configuration.jpg" alt="SOREL MTDC Blueprint Configuration Settings" width="25%" />
+   <img src="./.assets/04_Configuration.jpg" alt="SOREL MTDC Blueprint Configuration Settings" width="25%" />
 
    You need to set the following parameters:
    - CAN Bus ID
