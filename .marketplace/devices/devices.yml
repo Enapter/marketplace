@@ -301,13 +301,17 @@
   category: gas_sensors
   blueprint_options:
     - blueprint: gas_sensors/crowcon_xgard_bright
-      display_name: ENP-RS485 UCM Version
+      display_name: ENP-RS485 UCM Lua API 1 Version
       description: Use Enapter ENP-RS485 to integrate Crowcon Xgard Bright.
       verification_level: verified
     - blueprint: gas_sensors/crowcon_xgard_bright_arrakis_mk4
-      display_name: Arrakis MK4 IPC Version
+      display_name: Arrakis MK4 IPC Lua API 1 Version
       description: Use Enapter Gateway on Arrakis MK4 IPC to integrate Crowcon Xgard Bright.
       verification_level: verified
+    - blueprint: gas_sensors/crowcon_xgard_bright_v3
+      display_name: Lua API 3 Version
+      description: Universal integration for Crowcon Xgard Bright.
+      verification_level: ready_for_testing
 
 - id: crowcon-xgardiq
   display_name: Crowcon XgardIQ
@@ -672,6 +676,12 @@
   blueprint_options:
     - blueprint: solar_inverters/sma_sunny_tripower
       verification_level: verified
+      display_name: SMA Sunny Tripower Lua API 1 Version
+      description: SMA Sunny Tripower with Lua API version 1.
+    - blueprint: solar_inverters/sma_sunny_tripower_v3
+      display_name: SMA Sunny Tripower Lua API 3 Version
+      description: SMA Sunny Tripower with Lua API version 3.
+      verification_level: ready_for_testing
 
 - id: bwt-thero-120-h2-mb
   display_name: BWT Thero 120 H2 MB
