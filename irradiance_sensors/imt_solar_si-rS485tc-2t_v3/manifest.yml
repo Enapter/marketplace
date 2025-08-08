@@ -1,0 +1,100 @@
+blueprint_spec: device/3.0
+
+display_name: IMT Solar Irradiance Sensor Si-RS485TC-2T
+description: Irradiance sensor with ModBus RTU
+icon: enapter-solar-panel
+license: MIT
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+category: sensors
+
+implements:
+  - sensor.solar_irradiance
+  - lib.sensor.temperature.ambient
+
+runtime:
+  type: lua
+  requirements:
+    - lua_api_ver_3
+    - modbus
+  options:
+    dir: src
+
+configuration:
+  connection:
+    display_name: Connection
+    description: Modbus connection options
+    access_level: owner
+    parameters:
+      address:
+        display_name: Modbus Address
+        description: Device address in range 1-247
+        type: integer
+        required: true
+      conn_str:
+        display_name: Connection string
+        description: Connection URI to the runtime device
+        type: string
+        format: connection_uri
+        required: true
+
+properties:
+  vendor:
+    display_name: Vendor
+    type: string
+  model:
+    display_name: Model
+    type: string
+  serial_number:
+    display_name: Serial Number
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      ok:
+        display_name: OK
+        color: green
+  solar_irradiance:
+    display_name: Solar Irradiance
+    type: float
+    unit: W/m2
+  module_temperature:
+    display_name: Module Temperature
+    type: float
+    unit: Cel
+  ambient_temperature:
+    display_name: Ambient Temperature
+    type: float
+    unit: Cel
+
+alerts:
+  conn_error:
+    display_name: Connection error
+    severity: error
+    description: Connection to the device has failed.
+    grace_period: 15s
+    troubleshooting:
+      - Double check the physical connection.
+      - Ensure that Modbus address is the same as in your device.
+      - >
+        Ensure that the UCM's hardware configuration matches your
+        device's connection configuration.
+      - >
+        Ensure you are reading/writing the correct register addresses
+        and ranges as per the device documentation.
+
+.cloud:
+  mobile_main_chart: solar_irradiance
+  mobile_telemetry:
+    - solar_irradiance
+    - module_temperature
+  mobile_charts:
+    - solar_irradiance
+    - module_temperature
