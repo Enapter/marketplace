@@ -1,0 +1,616 @@
+blueprint_spec: device/3.0
+display_name: Deye / Sunsynk Inverter
+description: Deye / Sunsynk inverter.
+icon: enapter-solar-inverter
+license: MIT
+author: enapter
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+category: solar-generators
+
+implements:
+  - energy.battery_inverter.3_phase
+  - lib.energy.inverter.grid.status
+  - lib.energy.inverter.grid.power
+  - lib.energy.inverter.load.power
+  - lib.energy.inverter.temperature
+  - lib.energy.battery.temperature
+  - lib.energy.battery.soh
+  - lib.energy.battery.energy
+  - lib.energy.pv.throttling
+  - lib.energy.pv.current
+  - lib.energy.pv.power
+  - lib.energy.pv.stats.energy.today
+  - lib.energy.pv.stats.energy.total
+
+runtime:
+  type: lua
+  requirements:
+    - lua_api_ver_3
+    - modbus
+  options:
+    file: main.lua
+
+configuration:
+  connection:
+    display_name: Connection
+    description: Modbus connection options
+    access_level: owner
+    parameters:
+      address:
+        display_name: Modbus Address
+        description: Device address in range 1-247
+        type: integer
+        required: true
+      conn_str:
+        display_name: Connection string
+        description: Connection URI to the runtime device
+        type: string
+        format: connection_uri
+        required: true
+  device_info:
+    display_name: Device information
+    description: Device information
+    access_level: owner
+    parameters:
+      vendor:
+        display_name: Vendor
+        description: Deye or Sunsynk
+        type: string
+      pv_string_voltage:
+        display_name: PV string voltage threshold
+        description: The threshold to detect PV string presence.
+        type: integer
+        default: 30
+
+properties:
+  vendor:
+    display_name: Vendor
+    type: string
+    description: Manufacturer of the device
+  model:
+    display_name: Model
+    type: string
+    description: Model name/number
+  serial_number:
+    display_name: Serial Number
+    type: string
+    description: Unique serial number of the device
+  firmware_version:
+    display_name: Firmware Version
+    type: string
+    description: Version of the device firmware
+  communication_protocol_version:
+    display_name: Communication Protocol Version
+    type: string
+    description: Version of the communication protocol used by the device
+
+  inverter_nameplate_capacity:
+    display_name: Nameplate Capacity
+    type: integer
+    unit: VA
+    description: Maximum power rating of the inverter
+
+  battery_type:
+    display_name: Battery Type
+    description: Main type of the battery system
+    type: string
+    enum:
+      lead_based:
+        display_name: Lead-based
+      lithium_based:
+        display_name: Lithium-based
+      nickel_based:
+        display_name: Nickel-based
+      flow:
+        display_name: Flow
+      sodium_based:
+        display_name: Sodium-based
+      other:
+        display_name: Other
+        description: Other battery type, not covered by the standard types
+  battery_nameplate_capacity:
+    display_name: Battery Nameplate Capacity
+    description: Nameplate energy capacity of connected batteries according to manufacturer specifications
+    type: float
+    unit: Wh
+
+  parallel_enabled:
+    display_name: Parallel Mode Enabled
+    type: boolean
+  parallel_role:
+    display_name: Parallel Device Role
+    type: string
+  parallel_phase:
+    display_name: Parallel Phase
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      "off":
+        display_name: "Off"
+        description: Inverter is switched off
+      standby:
+        display_name: Standby
+        description: Inverter is in standby mode waiting for startup conditions
+      starting:
+        display_name: Starting
+        description: Inverter is going through startup procedure
+      operating:
+        display_name: Operating
+        description: Inverter is actively producing power
+      shutting_down:
+        display_name: Shutting Down
+        description: Inverter is going through shutdown procedure
+      fault:
+        display_name: Fault
+        description: Inverter has detected a fault and is not operating
+
+  ac_frequency:
+    display_name: AC Frequency
+    type: float
+    unit: Hz
+  ac_total_power:
+    display_name: AC Power
+    type: float
+    unit: W
+    description: >
+      Current total AC power at inverter output (positive - discharging/delivering to loads/grid,
+      negative - charging battery from grid/AC source)
+  # Phase L1
+  ac_l1_voltage:
+    display_name: L1 Voltage
+    description: Voltage on phase L1 to neutral
+    type: float
+    unit: V
+  ac_l1_current:
+    display_name: L1 Current
+    type: float
+    unit: A
+  ac_l1_power:
+    display_name: L1 Power
+    type: float
+    unit: W
+  # Phase L2
+  ac_l2_voltage:
+    display_name: L2 Voltage
+    description: Voltage on phase L2 to neutral
+    type: float
+    unit: V
+  ac_l2_current:
+    display_name: L2 Current
+    type: float
+    unit: A
+  ac_l2_power:
+    display_name: L2 Power
+    type: float
+    unit: W
+  # Phase L3
+  ac_l3_voltage:
+    display_name: L3 Voltage
+    description: Voltage on phase L3 to neutral
+    type: float
+    unit: V
+  ac_l3_current:
+    display_name: L3 Current
+    type: float
+    unit: A
+  ac_l3_power:
+    display_name: L3 Power
+    type: float
+    unit: W
+
+  heatsink_temperature:
+    display_name: Heatsink Temperature
+    type: float
+    unit: Cel
+    implements: lib.energy.inverter.temperature.inverter_heatsink_temperature
+  internal_temperature:
+    display_name: DC Transformer Temperature
+    type: float
+    unit: Cel
+    implements: lib.energy.inverter.temperature.inverter_internal_temperature
+
+  grid_status:
+    display_name: Grid Connection Status
+    type: string
+    enum:
+      disconnected:
+        display_name: Disconnected
+        description: Grid is actively disconnected due to intentional island/off-grid mode
+      connected:
+        display_name: Connected
+        description: Operating in grid-connected mode, grid connection is active
+      fault:
+        display_name: Fault
+        description: >
+          Grid parameters out of specified range (voltage, frequency, etc.), grid connection is temporarily disabled
+  grid_power:
+    display_name: Grid Power
+    type: float
+    unit: W
+    description: Power exchange with grid (positive for import, negative for export)
+    implements: energy.battery_inverter.3_phase.grid_total_power
+
+  load_total_power:
+    display_name: Load Power
+    type: float
+    unit: W
+    description: Power consumed by local loads on inverter AC output (positive) or fed back to grid/battery (negative)
+
+  pv_throttled:
+    display_name: PV Throttled
+    type: boolean
+    description: Whether the PV system is operating at reduced power output, e.g. due to high temperature
+  pv_voltage:
+    display_name: PV Voltage
+    type: float
+    unit: V
+    description: DC voltage of the solar panels
+  pv_current:
+    display_name: PV Current
+    type: float
+    unit: A
+    description: DC current flow from the solar panels
+    implements: lib.energy.pv.current.pv_total_current
+  pv_total_power:
+    display_name: PV Power
+    type: float
+    unit: W
+    description: DC power generated by the solar panels
+
+  pv_energy_total:
+    display_name: Total PV Energy Produced
+    description: Cumulative energy produced by PV since installation
+    type: float
+    unit: Wh
+  pv_energy_today:
+    display_name: PV Energy Produced Today
+    description: Energy produced by PV today
+    type: float
+    unit: Wh
+
+  battery_voltage:
+    display_name: Battery Voltage
+    type: float
+    unit: V
+    description: Current DC voltage of the battery bank
+  battery_current:
+    display_name: Battery Current
+    type: float
+    unit: A
+    description: Current DC current flow to/from the battery bank (positive for charge, negative for discharge)
+  battery_power:
+    display_name: Battery Power
+    type: float
+    unit: W
+    description: Current DC power (positive for discharge, negative for charge)
+  battery_soc:
+    display_name: State of Charge
+    type: float
+    unit: "%"
+    description: Battery state of charge percentage
+  battery_soh:
+    display_name: State of Health
+    type: float
+    unit: "%"
+    description: Battery state of health percentage
+  battery_temperature:
+    display_name: Battery Temperature
+    type: float
+    unit: Cel
+    description: Current battery temperature
+
+  battery_charged_energy_total:
+    display_name: Total Energy Charged
+    type: float
+    unit: Wh
+    description: Cumulative energy charged to batteries since installation
+  battery_discharged_energy_total:
+    display_name: Total Energy Discharged
+    type: float
+    unit: Wh
+    description: Cumulative energy discharged from batteries since installation
+
+alerts:
+  conn_error:
+    display_name: Connection error
+    severity: error
+    description: Connection to the device has failed.
+    grace_period: 15s
+    troubleshooting:
+      - Double check the physical connection.
+      - Ensure that Modbus address is the same as in your device.
+      - >
+        Ensure that the UCM's hardware configuration matches your
+        device's connection configuration.
+      - >
+        Ensure you are reading/writing the correct register addresses
+        and ranges as per the device documentation.
+  fan_warning:
+    display_name: Fan malfunction
+    severity: warning
+    description: The device has detected a malfunction of the fan.
+    troubleshooting:
+      - Check the operating status of the fan.
+      - Open the cover of the inverter to inspect the connection of the fan.
+      - If the problem persists, get help from the vendor.
+  grid_phase_warning:
+    display_name: Wrong grid phase
+    severity: warning
+    description: Incorrect grid phase sequence detected; verify phase order and wiring.
+    troubleshooting:
+      - Check the phase order of the power grid.
+      - Confirm the grid type in settings matches your supply.
+      - >
+        Verify country/grid standard settings (voltage/frequency limits)
+        align with local utility requirements.
+      - >
+        For parallel systems, ensure each inverter's phase assignment (A/B/C)
+        matches the physical phase and the rotation is consistent across units.
+      - If the problem persists, get help from the vendor.
+  lithium_battery_loss_warning:
+    display_name: No lithium battery
+    severity: warning
+    description: No lithium battery detected.
+      - Check whether the BMS connection is stable.
+      - Verify the BMS data.
+      - If the problem persists, get help from the vendor.
+  parallel_communication_quality_warning:
+    display_name: Parallel communication failed
+    severity: warning
+    description: Unstable parallel communication.
+    troubleshooting:
+      - Check cable quality and routing; keep away from interference.
+      - Reseat and secure connectors; confirm correct wiring orientation.
+      - Confirm the parallel dip switch is on.
+      - If the problem persists, get help from the vendor.
+  dc_inversed_failure: # F01
+    display_name: DC inversed
+    severity: error
+    description: Incorrect DC input polarity.
+    troubleshooting:
+      - Verify the PV input polarity
+      - If the problem persists, get help from the vendor.
+  dc_start_failure: # F07
+    display_name: DC/DC soft start failure
+    severity: error
+    troubleshooting:
+      - Confirm DC input is present and in range.
+      - Restart the inverter.
+      - If the problem persists, get help from the vendor.
+  aux_power_board_failure: # F10
+    display_name: Auxiliary power supply failure
+    severity: error
+    troubleshooting:
+      - first check whether the inverter switch is open,
+      - restart the inverter 3 times and restore the factory settings
+      - If the problem persists, get help from the vendor.
+  working_mode_change: # F13
+    display_name: Inverter work mode changed
+    severity: error
+    description: Grid mode changed
+    troubleshooting:
+      - >
+        Confirm if you recently changed grid type/frequency or set Battery Mode to “No battery”;
+        F13 in these cases is expected and typically clears on its own.
+      - >
+        Be aware that older firmware may show F13 whenever the system work mode changes;
+        monitor briefly to see if it disappears.
+      - If F13 persists, power down both DC and AC, wait 1 minute, then power DC and AC back on.
+      - If the fault remains, restore intended settings (grid type/frequency, battery mode) and contact vendor support.
+  ac_over_current_sw_failure: # F15
+    display_name: AC side over current fault
+    severity: error
+    troubleshooting:
+      - Check that backup-load and common-load power are within rated limits.
+      - Restart the inverter and verify operation returns to normal.
+      - If the problem persists, get help from the vendor.
+  dc_ground_leakage_current_fault: # F16
+    display_name: Leakage current fault
+    severity: error
+    troubleshooting:
+      - Check the PV side cable ground connection.
+      - Restart the system 2-3 times.
+      - If the problem persists, get help from the vendor.
+  ac_over_current_tz: # F18
+    display_name: Overcurrent fault
+    severity: error
+    troubleshooting:
+      - >
+        Please check whether the backup load power and common load power are within range.
+      - Restart and check if it is normal.
+      - If the problem persists, get help from the vendor.
+  dc_over_current: # F20
+    display_name: DC side overcurrent fault
+    severity: error
+    troubleshooting:
+      - Check PV module connect and battery connect.
+      - >
+        When the inverter starts up with a high power load in off-grid mode,
+        it may report F20. Please reduce the connected power load.
+      - >
+        Turn off the DC and AC switches, wait for one minute and
+        then turn on the switches again.
+      - If the problem persists, get help from the vendor.
+  remote_emergency_stop: # F22
+    display_name: Remotely shutdown
+    severity: error
+    description: An indication that the inverter is remotely controlled
+  ac_leakage_current_is_transient_over_current: # F23
+    display_name: Leakage current and overcurrent fault
+    severity: error
+    troubleshooting:
+      - Check the PV side cable ground connection.
+      - Restart the system 2-3 times.
+      - If the problem persists, get help from the vendor.
+  dc_insulation_impedance: # F24
+    display_name: PV isolation resistance is too low
+    severity: error
+    troubleshooting:
+      - Check that the connection between the PV panels and the inverter is firm and correct.
+      - Ensure that the PE cable of the inverter is connected to the ground.
+      - If the problem persists, get help from the vendor.
+  dc_busbar_imbalanced: # F26
+    display_name: Bus unbalance
+    severity: error
+    troubleshooting:
+      - Wait a while and see if it's normal.
+      - If the load power of the three phases differs significantly, it will report F26.
+      - When there is a DC leakage current, it will report F26.
+      - Restart the system two to three times.
+      - If the problem persists, get help from the vendor.
+  parallel_comms_cable: # F29
+    display_name: Parallel CAN bus fault
+    severity: error
+    troubleshooting:
+      - >
+        In parallel mode, check the parallel communication, cable connection,
+        and hybrid inverter communication address settings.
+      - >
+        During the parallel system startup period, the inverters will report F29.
+        However, when all inverters are in the ON status, the error will disappear automatically.
+      - If the problem persists, get help from the vendor.
+  ac_overload_backup: # F34
+    display_name: AC overload
+    severity: error
+    troubleshooting:
+      - >
+        Check that the backup load is connected and that its power
+        level is within the acceptable range.
+      - If the problem persists, get help from the vendor.
+  no_ac_grid: # F35
+    display_name: No electricity
+    severity: error
+    troubleshooting:
+      - Check the voltage and frequency of the grid to see if it's functioning properly.
+      - Get in touch with the technical staff in the industry to find a solution.
+  parallel_system_stopped: # F41
+    display_name: Parallel system stopped
+    severity: error
+    troubleshooting:
+      - >
+        Check the status of the hybrid inverter. If one of the hybrid inverters
+        stops working, all of them will report the F41 fault.
+      - If the problem persists, get help from the vendor.
+  ac_line_low_voltage: # F42
+    display_name: Grid voltage fault
+    severity: error
+    troubleshooting:
+      - Make sure the AC voltage is within the normal range.
+      - Make sure the AC cables in the grid are connected properly.
+      - If the problem persists, get help from the vendor.
+  battery_1_fault: # F46
+    display_name: Battery 1 fault
+    severity: error
+    troubleshooting:
+      - Check the battery capacity.
+      - Check the connection between batteries and inverters.
+      - >
+        If the inverter doesn't return to normal after reducing the load,
+        contact the vendor for assistance.
+  battery_2_fault: # F49
+    display_name: Battery 2 fault
+    severity: error
+    troubleshooting:
+      - Check the battery capacity.
+      - Check the connection between batteries and inverters.
+      - >
+        If the inverter doesn't return to normal after reducing the load,
+        contact the vendor for assistance.
+  ac_grid_freq_too_high: # F47
+    display_name: Grid frequency is too high
+    severity: error
+    troubleshooting:
+      - Make sure the frequency is within the specified range.
+      - Make sure the AC cables are firmly and correctly connected.
+      - If the problem persists, get help from the vendor.
+  ac_grid_freq_too_low: # F48
+    display_name: Grid frequency is too low
+    severity: error
+    troubleshooting:
+      - Make sure the frequency is within the specified range.
+      - Make sure the AC cables are firmly and correctly connected.
+      - If the problem persists, get help from the vendor.
+  dc_voltage_too_high: # F52
+    display_name: DC voltage is too high
+    severity: error
+    troubleshooting:
+      - Restart the inverter three times and then reset it to the factory settings.
+      - If the problem persists, get help from the vendor.
+  dc_voltage_too_low: # F53
+    display_name: DC voltage is too low
+    severity: error
+    troubleshooting:
+      - Restart the inverter three times and then reset it to the factory settings.
+      - If the problem persists, get help from the vendor.
+  battery_1_voltage_high: # F54
+    display_name: Battery 1 high voltage
+    severity: error
+    troubleshooting:
+      - Check the voltage of the battery's terminals.
+      - Restart the inverter three times and reset it to the factory settings.
+      - If the problem persists, get help from the vendor.
+  battery_2_voltage_high: # F55
+    display_name: Battery 2 high voltage
+    severity: error
+    troubleshooting:
+      - Check the voltage of the battery's terminals.
+      - Restart the inverter three times and reset it to the factory settings.
+      - If the problem persists, get help from the vendor.
+  battery_1_voltage_low: # F56
+    display_name: Battery 1 low voltage
+    severity: error
+    troubleshooting:
+      - Check battery voltage.
+      - If low, use PV or grid to charge.
+      - If the problem persists, get help from the vendor.
+  battery_2_voltage_low: # F57
+    display_name: Battery 2 low voltage
+    severity: error
+    troubleshooting:
+      - Check battery voltage.
+      - If low, use PV or grid to charge.
+      - If the problem persists, get help from the vendor.
+  bms_communication_lost: # F58
+    display_name: Connection with BMS lost
+    severity: error
+    troubleshooting:
+      - BMS_Err-Stop disables communication between the hybrid inverter and battery BMS.
+      - Disable "BMS_Err-Stop" on the LCD to prevent this.
+      - If the problem persists, get help from the vendor.
+  drm_stop_activated: # F62
+    display_name: DRM
+    description: The Demand Response Module (DRM) function is only for use in the Australian market.
+    severity: error
+    troubleshooting:
+      - The DRM function is for the Australian market. Check if it's active.
+      - If the problem persists, get help from the vendor.
+  arc_fault: # F63
+    display_name: ARC fault
+    severity: error
+    description: ARC fault detection is only for the US market.
+    troubleshooting:
+      - Check the PV module cable connection and clear the fault.
+      - If the problem persists, get help from the vendor.
+  heat_sink_temp_failure: # F64
+    display_name: Heat sink temperature is too high
+    severity: error
+    description: ARC fault detection is only for the US market.
+    troubleshooting:
+      - Check if the work environment is too hot.
+      - Turn off the inverter for 10 minutes and then turn it back on.
+      - If the problem persists, get help from the vendor.
+
+.cloud:
+  mobile_main_chart: day_grid_sell_power
+  mobile_charts:
+    - total_load_power
+    - battery_voltage
+
+.platform:
+  silently_drop_unknown_telemetry: true

@@ -93,6 +93,9 @@ stds.ucm = {
         'impulse',
       },
     },
+    system = {
+      fields = { 'delay', 'uptime' }
+    },
   },
 }
 
