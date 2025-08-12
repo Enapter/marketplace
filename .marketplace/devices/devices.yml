@@ -484,6 +484,12 @@
   blueprint_options:
     - blueprint: power_meters/schneider_electric_pm2100
       verification_level: verified
+      display_name: Schneider Electric PM2100 series Lua API 1 Version
+      description: Multifunction energy and power meters.
+    - blueprint: power_meters/schneider_electric_pm2100_v3
+      display_name: Schneider Electric PM2100 series Lua API 3 Version
+      description: Multifunction energy and power meters.
+      verification_level: ready_for_testing
 
 - id: seneca-s203t
   display_name: Seneca S203T
