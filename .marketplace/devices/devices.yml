@@ -736,23 +736,35 @@
       verification_level: verified
 
 - id: deye-3-phase-hybrid-inverter
-  display_name: Deye Three-Phase Hybrid Inverter
-  description: Three-phase hybrid inverter models Deye SUN-4/5/6/7/8/10/12/15K-G06P3-EU-AM2.
+  display_name: Deye Inverter
+  description: Deye inverter.
   icon: enapter-inverter-solar
   vendor: deye
   category: solar_inverters
   blueprint_options:
     - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
+      display_name: Lua API 1 Version
+      description: Three-phase hybrid inverter models Deye SUN-4/5/6/7/8/10/12/15K-G06P3-EU-AM2.
       verification_level: verified
+    - blueprint: solar_inverters/deye_sunsynk
+      display_name: Lua API 3 Version
+      description: Universal intergration for Deye/Sunsynk inverters.
+      verification_level: ready_for_testing
 
 - id: sunsynk-3-phase-hybrid-inverter
-  display_name: Sunsynk Three-Phase Hybrid Inverter
-  description: Three-phase hybrid inverter models Sunsynk SYNK-8K-SG04LP3 / SYNK-10K-SG04LP3 / SYNK-12K-SG04LP3.
+  display_name: Sunsynk Inverter
+  description: Sunsynk Inverter.
   icon: enapter-inverter-solar
   vendor: sunsynk
   category: solar_inverters
   blueprint_options:
     - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
+      display_name: Lua API 1 Version
+      description: Three-phase hybrid inverter models Sunsynk SYNK-8K-SG04LP3 / SYNK-10K-SG04LP3 / SYNK-12K-SG04LP3.
+      verification_level: ready_for_testing
+    - blueprint: solar_inverters/deye_sunsynk
+      display_name: Lua API 3 Version
+      description: Universal intergration for Deye/Sunsynk inverters.
       verification_level: ready_for_testing
 
 - id: infrasensing_env-thum
