@@ -682,6 +682,12 @@
   blueprint_options:
     - blueprint: solar_inverters/sma_sunny_tripower
       verification_level: verified
+      display_name: SMA Sunny Tripower Lua API 1 Version
+      description: SMA Sunny Tripower with Lua API version 1.
+    - blueprint: solar_inverters/sma_sunny_tripower_v3
+      display_name: SMA Sunny Tripower Lua API 3 Version
+      description: SMA Sunny Tripower with Lua API version 3.
+      verification_level: ready_for_testing
 
 - id: bwt-thero-120-h2-mb
   display_name: BWT Thero 120 H2 MB
