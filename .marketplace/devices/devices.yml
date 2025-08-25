@@ -300,6 +300,10 @@
   vendor: crowcon
   category: gas_sensors
   blueprint_options:
+    - blueprint: gas_sensors/crowcon_xgard_bright_v3
+      display_name: Lua API 3 Version
+      description: Universal integration for Crowcon Xgard Bright.
+      verification_level: ready_for_testing
     - blueprint: gas_sensors/crowcon_xgard_bright
       display_name: ENP-RS485 UCM Lua API 1 Version
       description: Use Enapter ENP-RS485 to integrate Crowcon Xgard Bright.
@@ -308,10 +312,6 @@
       display_name: Arrakis MK4 IPC Lua API 1 Version
       description: Use Enapter Gateway on Arrakis MK4 IPC to integrate Crowcon Xgard Bright.
       verification_level: verified
-    - blueprint: gas_sensors/crowcon_xgard_bright_v3
-      display_name: Lua API 3 Version
-      description: Universal integration for Crowcon Xgard Bright.
-      verification_level: ready_for_testing
 
 - id: crowcon-xgardiq
   display_name: Crowcon XgardIQ
@@ -340,13 +340,13 @@
   vendor: enapter
   category: generic_io
   blueprint_options:
-    - blueprint: generic_io/can
-      display_name: Generic IO for ENP-CAN Lua API 1
-      description: Generic IO for ENP-CAN with Lua API version 1.
-      verification_level: verified
     - blueprint: generic_io/can_v3
       display_name: Generic IO for ENP-CAN Lua API 3
       description: Generic IO for ENP-CAN with Lua API version 3.
+      verification_level: verified
+    - blueprint: generic_io/can
+      display_name: Generic IO for ENP-CAN Lua API 1
+      description: Generic IO for ENP-CAN with Lua API version 1.
       verification_level: verified
 
 - id: generic-di7
@@ -356,13 +356,13 @@
   vendor: enapter
   category: generic_io
   blueprint_options:
-    - blueprint: generic_io/di7
-      display_name: Generic IO for ENP-CAN Lua API 1
-      description: Generic IO for ENP-CAN with Lua API version 1.
-      verification_level: verified
     - blueprint: generic_io/di7_v3
       display_name: Generic IO for ENP-CAN Lua API 3
       description: Generic IO for ENP-CAN with Lua API version 3.
+      verification_level: verified
+    - blueprint: generic_io/di7
+      display_name: Generic IO for ENP-CAN Lua API 1
+      description: Generic IO for ENP-CAN with Lua API version 1.
       verification_level: verified
 
 - id: generic-di10
@@ -382,13 +382,13 @@
   vendor: enapter
   category: generic_io
   blueprint_options:
-    - blueprint: generic_io/rl6
-      description: Generic IO for ENP-RL6 with Lua API version 1.
-      display_name: Generic IO for ENP-RL6 Lua API 1
-      verification_level: verified
     - blueprint: generic_io/rl6_v3
       description: Generic IO for ENP-RL6 with Lua API version 3.
       display_name: Generic IO for ENP-RL6 Lua API 3
+      verification_level: verified
+    - blueprint: generic_io/rl6
+      description: Generic IO for ENP-RL6 with Lua API version 1.
+      display_name: Generic IO for ENP-RL6 Lua API 1
       verification_level: verified
 
 - id: generic-rs485
@@ -398,14 +398,14 @@
   vendor: enapter
   category: generic_io
   blueprint_options:
-    - blueprint: generic_io/rs485
-      description: Generic IO for ENP-RS485 with Lua API version 1.
-      display_name: Generic IO for ENP-RS485 Lua API 1
-      verification_level: verified
     - blueprint: generic_io/rs485_v3
       description: Generic IO for ENP-RS485 with Lua API version 3.
       display_name: Generic IO for ENP-RS485 Lua API 3
       verification_level: ready_for_testing
+    - blueprint: generic_io/rs485
+      description: Generic IO for ENP-RS485 with Lua API version 1.
+      display_name: Generic IO for ENP-RS485 Lua API 1
+      verification_level: verified
 
 - id: komfovent-ping2
   display_name: Komfovent AHU Ping2
@@ -434,14 +434,14 @@
   vendor: imt
   category: irradiance_sensors
   blueprint_options:
-    - blueprint: irradiance_sensors/imt_solar_si-rS485tc-2t
-      display_name: ENP-RS485 UCM Lua API 1 Version
-      description: Use Enapter ENP-RS485 to integrate IMT Solar Irradiance Sensor Si-RS485TC-2T
-      verification_level: verified
     - blueprint: irradiance_sensors/imt_solar_si-rS485tc-2t_v3
       display_name: Lua API 3 Version
       description: Universal integration for IMT Solar Irradiance Sensor
       verification_level: ready_for_testing
+    - blueprint: irradiance_sensors/imt_solar_si-rS485tc-2t
+      display_name: ENP-RS485 UCM Lua API 1 Version
+      description: Use Enapter ENP-RS485 to integrate IMT Solar Irradiance Sensor Si-RS485TC-2T
+      verification_level: verified
     - blueprint: irradiance_sensors/imt_solar_si-rS485tc-2t_arrakis_mk4
       display_name: Arrakis MK4 IPC Version
       description: Use Enapter Gateway on Arrakis MK4 IPC to integrate IMT Solar Irradiance Sensor Si-RS485TC-2T
@@ -486,14 +486,14 @@
   vendor: schneider-electric
   category: power_meters
   blueprint_options:
-    - blueprint: power_meters/schneider_electric_pm2100
-      verification_level: verified
-      display_name: Schneider Electric PM2100 series Lua API 1 Version
-      description: Multifunction energy and power meters.
     - blueprint: power_meters/schneider_electric_pm2100_v3
       display_name: Schneider Electric PM2100 series Lua API 3 Version
       description: Multifunction energy and power meters.
       verification_level: ready_for_testing
+    - blueprint: power_meters/schneider_electric_pm2100
+      verification_level: verified
+      display_name: Schneider Electric PM2100 series Lua API 1 Version
+      description: Multifunction energy and power meters.
 
 - id: seneca-s203t
   display_name: Seneca S203T
@@ -664,14 +664,14 @@
   vendor: sma
   category: solar_inverters
   blueprint_options:
-    - blueprint: solar_inverters/sma_sunny_boy
-      display_name: SMA Sunny Boy Lua API 1
-      description: SMA Sunny Boy with Lua API version 1.
-      verification_level: verified
     - blueprint: solar_inverters/sma_sunny_boy_v3
       display_name: SMA Sunny Boy Lua API 3
       description: SMA Sunny Boy with Lua API version 3.
       verification_level: ready_for_testing
+    - blueprint: solar_inverters/sma_sunny_boy
+      display_name: SMA Sunny Boy Lua API 1
+      description: SMA Sunny Boy with Lua API version 1.
+      verification_level: verified
 
 - id: sma-sunny-tripower
   display_name: SMA Sunny Tripower
@@ -680,14 +680,14 @@
   vendor: sma
   category: solar_inverters
   blueprint_options:
-    - blueprint: solar_inverters/sma_sunny_tripower
-      verification_level: verified
-      display_name: SMA Sunny Tripower Lua API 1 Version
-      description: SMA Sunny Tripower with Lua API version 1.
     - blueprint: solar_inverters/sma_sunny_tripower_v3
       display_name: SMA Sunny Tripower Lua API 3 Version
       description: SMA Sunny Tripower with Lua API version 3.
       verification_level: ready_for_testing
+    - blueprint: solar_inverters/sma_sunny_tripower
+      verification_level: verified
+      display_name: SMA Sunny Tripower Lua API 1 Version
+      description: SMA Sunny Tripower with Lua API version 1.
 
 - id: bwt-thero-120-h2-mb
   display_name: BWT Thero 120 H2 MB
@@ -742,14 +742,14 @@
   vendor: deye
   category: solar_inverters
   blueprint_options:
-    - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
-      display_name: Lua API 1 Version
-      description: Three-phase hybrid inverter models Deye SUN-4/5/6/7/8/10/12/15K-G06P3-EU-AM2.
-      verification_level: verified
     - blueprint: solar_inverters/deye_sunsynk
       display_name: Lua API 3 Version
       description: Universal intergration for Deye/Sunsynk inverters.
       verification_level: ready_for_testing
+    - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
+      display_name: Lua API 1 Version
+      description: Three-phase hybrid inverter models Deye SUN-4/5/6/7/8/10/12/15K-G06P3-EU-AM2.
+      verification_level: verified
 
 - id: sunsynk-3-phase-hybrid-inverter
   display_name: Sunsynk Inverter
@@ -758,13 +758,13 @@
   vendor: sunsynk
   category: solar_inverters
   blueprint_options:
-    - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
-      display_name: Lua API 1 Version
-      description: Three-phase hybrid inverter models Sunsynk SYNK-8K-SG04LP3 / SYNK-10K-SG04LP3 / SYNK-12K-SG04LP3.
-      verification_level: ready_for_testing
     - blueprint: solar_inverters/deye_sunsynk
       display_name: Lua API 3 Version
       description: Universal intergration for Deye/Sunsynk inverters.
+      verification_level: ready_for_testing
+    - blueprint: solar_inverters/deye_sun-10k-sg04lp3-eu_solarman
+      display_name: Lua API 1 Version
+      description: Three-phase hybrid inverter models Sunsynk SYNK-8K-SG04LP3 / SYNK-10K-SG04LP3 / SYNK-12K-SG04LP3.
       verification_level: ready_for_testing
 
 - id: infrasensing_env-thum
