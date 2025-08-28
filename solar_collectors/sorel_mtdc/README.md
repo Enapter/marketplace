@@ -4,6 +4,8 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integ
 
 This blueprint runs on ENP-CAN.
 
+<img src="./.assets/06_Enapter_Gateway_EMS_3_Enterprise_Sorel.png" alt="Enapter Local First Gateway 3.0 Screenshot" width="25%" />
+
 ## Connecting Sorel MTDC to ENP-CAN
 
 1. In case you have only ENP-CAN and MTDC on the bus, you need to ensure that terminating resistors of 120 Ohm present on both ends of the bus. Internal terminating resistor on ENP-CAN can be enabled using jumper.
