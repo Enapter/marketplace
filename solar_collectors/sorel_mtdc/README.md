@@ -4,7 +4,7 @@ This [Enapter Device Blueprint](https://go.enapter.com/marketplace-readme) integ
 
 This blueprint runs on ENP-CAN.
 
-<img aligin="center" src="./.assets/06_Enapter_Gateway_EMS_3_Enterprise_Sorel.png" alt="Enapter Local First Gateway 3.0 Screenshot" width="75%" />
+<img src="./.assets/06_Enapter_Gateway_EMS_3_Enterprise_Sorel.png" alt="Enapter Local First Gateway 3.0 Screenshot" width="75%" />
 
 ## Connecting Sorel MTDC to ENP-CAN
 
