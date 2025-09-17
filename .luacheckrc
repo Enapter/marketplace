@@ -97,6 +97,11 @@ stds.ucm = {
       fields = { 'delay', 'uptime' }
     },
   },
+  globals = {
+    enapter = {
+      fields = { 'main' }
+    }
+  }
 }
 
 stds.vucm = {
