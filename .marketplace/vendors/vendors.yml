@@ -267,3 +267,8 @@
   display_name: SOREL GmbH Mikroelektronik
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/sorel.png
   website: https://www.sorel.de/
+
+- id: wiren-board
+  display_name: Wiren Board
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/wiren-board.png
+  website: https://wirenboard.com/en/

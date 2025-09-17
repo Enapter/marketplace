@@ -1,0 +1,113 @@
+blueprint_spec: device/3.0
+
+display_name: WB-M1W2 v.3 Temperature Measurement Module
+description: WB-M1W2 v.3 module to monitor DS18B20 temperature sensors
+icon: home-thermometer-outline
+license: MIT
+author: enapter
+contributors:
+  - danya
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+
+implements:
+  - lib.firmware.version
+  - sensor.ambient_temperature
+
+runtime:
+  type: lua
+  requirements:
+    - lua_api_ver_3
+    - modbus
+  options:
+    file: firmware.lua
+
+configuration:
+  connection:
+    display_name: Connection
+    description: Modbus and 1-Wire connection parameters
+    ui:
+      icon: connection
+    parameters:
+      connection_uri:
+        display_name: Modbus Connection URI
+        description: Connection URI for Modbus client
+        type: string
+        format: connection_uri
+        required: true
+      unit_id:
+        display_name: Modbus Unit ID
+        description: Modbus address of the temperature sensor device
+        type: integer
+        min: 1
+        max: 247
+        required: true
+      timeout:
+        display_name: Modbus Timeout
+        description: Modbus request timeout in milliseconds
+        type: integer
+        default: 500
+      input:
+        display_name: 1-Wire Bus Input
+        description: 1-Wire bus input to which the sensor is connected
+        type: integer
+        enum:
+          - 1
+          - 2
+        required: true
+
+properties:
+  vendor:
+    display_name: Vendor
+    type: string
+    description: Manufacturer of the device
+  model:
+    display_name: Model
+    type: string
+    description: Model name/number.
+  serial_number:
+    display_name: Serial Number
+    type: string
+    description: Unique serial number of the device
+  firmware_version:
+    display_name: Firmware Version
+    type: string
+    description: Version of the device firmware
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      - ok
+      - error
+  ambient_temperature:
+    type: float
+    display_name: Ambient Temperature
+    description: DS18B20 sensor temperature
+    unit: Cel
+
+alerts:
+  not_configured:
+    severity: info
+    display_name: Not configured
+    description: Device is not configured
+    troubleshooting:
+      - Navigate to Device Settings → Connection Configuration and set the connection parameters.
+  sensor_not_connected:
+    severity: error
+    display_name: Sensor Not Connected
+    description: No DS18B20 sensor is connected to the selected 1-Wire bus input
+    troubleshooting:
+      - Check the physical connection of the DS18B20 sensors to the 1-Wire bus.
+      - Verify that the correct 1-Wire bus input is selected in the configuration.
+      - Ensure that the sensors are powered on and functioning properly.
+  modbus_error:
+    severity: error
+    display_name: Modbus Communication Failed
+    description: Modbus communication with the device failed
+    troubleshooting:
+      - Check the physical connection of the RS-485 bus to the device.
+      - Verify that the Modbus parameters (URI, Unit ID, Timeout) are correct.
+      - Ensure that the device is powered on and functioning properly.

@@ -902,3 +902,13 @@
   blueprint_options:
     - blueprint: solar_collectors/sorel_mtdc
       verification_level: verified
+
+- id: wiren_board_wb-m1w2_v.3
+  display_name: Wiren Board WB-M1W2 v.3
+  description: Wiren Board WB-M1W2 v.3 module to monitor DS18B20 temperature sensors
+  icon: home-thermometer-outline
+  vendor: wiren-board
+  category: climate_sensors
+  blueprint_options:
+    - blueprint: climate_sensors/wiren_board_wb-m1w2_v.3
+      verification_level: verified
