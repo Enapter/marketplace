@@ -272,3 +272,8 @@
   display_name: Wiren Board
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/wiren-board.png
   website: https://wirenboard.com/en/
+
+- id: carlo-gavazzi
+  display_name: Carlo Gavazzi
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/carlo-gavazzi.png
+  website: https://www.gavazziautomation.com

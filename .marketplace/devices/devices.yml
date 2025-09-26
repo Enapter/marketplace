@@ -447,6 +447,16 @@
       description: Use Enapter Gateway on Arrakis MK4 IPC to integrate IMT Solar Irradiance Sensor Si-RS485TC-2T
       verification_level: ready_for_testing
 
+- id: carlo-gavazzi-em111
+  display_name: Carlo Gavazzi EM111
+  description: Single phase energy meter for DIN rail mounting.
+  icon: enapter-power-meter
+  vendor: carlo-gavazzi
+  category: power_meters
+  blueprint_options:
+    - blueprint: power_meters/carlo_gavazzi_em111
+      verification_level: ready_for_testing
+
 - id: eastron-sdm120ct
   display_name: Eastron SDM120CT
   description: Single phase 5A CT operated MID.
