@@ -64,7 +64,6 @@ function send_properties()
   })
 end
 
-
 function read_register(register, length, scale)
   -- Use MODBUS function 04 (Read Input Registers)
   local data, result = modbus.read_inputs(MODBUS_MASTER_ID, register, length, READ_TIMEOUT)
@@ -94,7 +93,7 @@ function send_telemetry()
   if not rs485_configured then
     enapter.send_telemetry({
       status = 'read_error',
-      alerts = { 'rs485_not_configured' }
+      alerts = { 'rs485_not_configured' },
     })
     return
   end
