@@ -35,8 +35,8 @@ function main()
   end
 
   -- Schedule periodic tasks
-  scheduler.add(1000, send_telemetry)    -- Every 5 seconds
-  scheduler.add(30000, send_properties)  -- Every 30 seconds
+  scheduler.add(1000, send_telemetry)
+  scheduler.add(30000, send_properties)
 end
 
 function setup_rs485(config_values)
@@ -70,22 +70,22 @@ function read_register(register, length, scale)
   local data, result = modbus.read_inputs(MODBUS_MASTER_ID, register, length, READ_TIMEOUT)
 
   if not data then
-    enapter.log("Failed to read register " .. register .. ": " .. modbus.err_to_str(result), "error")
+    enapter.log('Failed to read register ' .. register .. ': ' .. modbus.err_to_str(result), 'error')
     return nil
   end
 
   if length == 1 then
     -- Single 16-bit register - convert to signed int16
-    local packed = string.pack(">I2", data[1])
-    return string.unpack(">i2", packed) * scale
+    local packed = string.pack('>I2', data[1])
+    return string.unpack('>i2', packed) * scale
   elseif length == 2 then
     -- Two 16-bit registers forming a 32-bit integer (LSW first)
     local lsw = data[1]
     local msw = data[2]
-    local packed = string.pack(">I2I2", msw, lsw)
-    return string.unpack(">i4", packed) * scale
+    local packed = string.pack('>I2I2', msw, lsw)
+    return string.unpack('>i4', packed) * scale
   else
-    enapter.log("Unsupported register length: " .. length, "error")
+    enapter.log('Unsupported register length: ' .. length, 'error')
     return nil
   end
 end
@@ -105,7 +105,7 @@ function send_telemetry()
     current_l1 = read_register(2, 2, 0.001),
     power_l1 = read_register(4, 2, 0.1),
     acc_power_l1 = read_register(16, 2, 0.1),
-    freq = read_register(15, 1, 0.1)
+    freq = read_register(15, 1, 0.1),
   })
 end
 
