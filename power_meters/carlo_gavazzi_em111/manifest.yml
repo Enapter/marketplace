@@ -101,7 +101,7 @@ commands:
         type: string
         required: true
         default: N
-        enum: ["N", "O", "E"]
+        enum: [N, O, E]
       stop_bits:
         display_name: Stop Bits
         description: Number of stop bits
