@@ -1,0 +1,125 @@
+blueprint_spec: device/1.0
+
+display_name: Carlo Gavazzi EM111
+description: Single phase energy meter for DIN rail mounting
+icon: enapter-power-meter
+vendor: carlo-gavazzi
+author: enapter
+contributors:
+  - nkrasko
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-RS485
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.3.2
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - read_error
+  volt_l1n:
+    type: float
+    unit: V
+    display_name: Phase 1 Voltage
+  current_l1:
+    type: float
+    unit: A
+    display_name: Phase 1 Current
+  power_l1:
+    type: float
+    unit: W
+    display_name: Phase 1 Power
+  acc_power_l1:
+    type: float
+    unit: Wh
+    display_name: Phase 1 Accumulated Energy
+  freq:
+    type: float
+    unit: Hz
+    display_name: Frequency
+
+alerts:
+  rs485_not_configured:
+    severity: error
+    display_name: RS485 Not Configured
+    description: RS485 communication is not properly configured. Check configuration parameters.
+
+command_groups:
+  config:
+    display_name: Configuration
+
+commands:
+  write_configuration:
+    display_name: Configure Connection
+    group: config
+    populate_values_command: read_configuration
+    ui:
+      icon: file-document-edit-outline
+    arguments:
+      device_address:
+        display_name: Modbus Address
+        description: Modbus device address (1-247)
+        type: integer
+        required: true
+        min: 1
+        max: 247
+        default: 1
+      baud_rate:
+        display_name: Baud Rate
+        description: Serial communication speed
+        type: integer
+        required: true
+        default: 9600
+        enum: [1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200]
+      data_bits:
+        display_name: Data Bits
+        description: Number of data bits
+        type: integer
+        required: true
+        default: 8
+        enum: [7, 8]
+      parity:
+        display_name: Parity
+        description: Parity check setting
+        type: string
+        required: true
+        default: N
+        enum: [N, O, E]
+      stop_bits:
+        display_name: Stop Bits
+        description: Number of stop bits
+        type: integer
+        required: true
+        default: 1
+        enum: [1, 2]
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: file-check-outline
+
+.cloud:
+  category: power_meters
+  mobile_telemetry:
+    - acc_power_l1
+    - power_l1
+    - volt_l1n
+    - current_l1
+    - freq

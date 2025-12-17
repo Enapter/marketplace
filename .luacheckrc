@@ -41,6 +41,7 @@ stds.ucm = {
         'write_multiple_coils',
         'write_multiple_holdings',
         'err_to_str',
+        'new',
       },
     },
     rs232 = {
@@ -65,7 +66,6 @@ stds.ucm = {
       },
     },
     relay = { fields = { 'new' } },
-    modbus = { fields = { 'new' } },
     ai4 = {
       fields = { 'read_volts', 'read_milliamps', 'err_to_str' },
     },
