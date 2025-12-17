@@ -87,6 +87,12 @@ After uploading the blueprint, your device data will appear on the device page i
 
 Take a look at our [Contributing](./CONTRIBUTING.md) guideline.
 
+Meet our contributors!
+
+<a href="https://github.com/enapter/marketplace/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=enapter/marketplace" />
+</a>
+
 # Community and Support
 
 - <a href="https://go.enapter.com/discord_handbook"><img align="center" src="https://img.shields.io/badge/Discord-Channel-%235865F2?logo=discord&style=for-the-badge&logoColor=white"></a>&nbsp; Join our Discord community!
