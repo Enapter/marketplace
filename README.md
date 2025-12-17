@@ -18,6 +18,7 @@ It describes which charts will be shown on a dashboard on mobile app or web, whi
 
 Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
 <br>
+
 <p align="center">
 <a href="https://www.youtube.com/watch?v=1ErvFE6UHTY">
   <img height="auto" width="auto" src=".assets/blueprint-video.png" style="max-width: 100%;" alt="video about blueprints">
