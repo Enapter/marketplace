@@ -90,7 +90,7 @@ Take a look at our [Contributing](./CONTRIBUTING.md) guideline.
 Meet our contributors!
 
 <a href="https://github.com/enapter/marketplace/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=enapter/marketplace" />
+  <img alt="Enapter Marketplace contributors list" src="https://contrib.rocks/image?repo=enapter/marketplace" />
 </a>
 
 # Community and Support
