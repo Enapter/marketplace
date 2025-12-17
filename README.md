@@ -95,6 +95,6 @@ Meet our contributors!
 
 # Community and Support
 
-- <a href="https://go.enapter.com/discord_handbook"><img align="center" src="https://img.shields.io/badge/Discord-Channel-%235865F2?logo=discord&style=for-the-badge&logoColor=white"></a>&nbsp; Join our Discord community!
-- <a href="https://developers.enapter.com"><img align="center" src="https://img.shields.io/badge/Developers%20Documentation-Documentation-%2330cccc?logo=readthedocs&style=for-the-badge&logoColor=white"></a>&nbsp; Take a look on our documentation.
-- <a href="https://github.com/Enapter/marketplace/discussions"><img align="center" src="https://img.shields.io/badge/GitHub-Discussions-black?logo=github&style=for-the-badge&logoColor=white"></a>&nbsp; Open thread on GitHub!
+- <a href="https://go.enapter.com/discord_handbook"><img alt="Join Enapter Discord" align="center" src="https://img.shields.io/badge/Discord-Channel-%235865F2?logo=discord&style=for-the-badge&logoColor=white"></a>&nbsp; Join our Discord community!
+- <a href="https://developers.enapter.com"><img alt="Enapter Developers Documentation" align="center" src="https://img.shields.io/badge/Developers%20Documentation-Documentation-%2330cccc?logo=readthedocs&style=for-the-badge&logoColor=white"></a>&nbsp; Take a look on our documentation.
+- <a href="https://github.com/Enapter/marketplace/discussions"><img alt="Enapter Discussions" align="center" src="https://img.shields.io/badge/GitHub-Discussions-black?logo=github&style=for-the-badge&logoColor=white"></a>&nbsp; Open thread on GitHub!
