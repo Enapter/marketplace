@@ -18,6 +18,7 @@ It describes which charts will be shown on a dashboard on mobile app or web, whi
 
 Go through [the tutorial](https://developers.enapter.com/docs/) to learn about the blueprint concept and development workflow.
 <br>
+
 <p align="center">
 <a href="https://www.youtube.com/watch?v=1ErvFE6UHTY">
   <img height="auto" width="auto" src=".assets/blueprint-video.png" style="max-width: 100%;" alt="video about blueprints">
@@ -87,8 +88,14 @@ After uploading the blueprint, your device data will appear on the device page i
 
 Take a look at our [Contributing](./CONTRIBUTING.md) guideline.
 
+Meet our contributors!
+
+<a href="https://github.com/enapter/marketplace/graphs/contributors">
+  <img alt="Enapter Marketplace contributors list" src="https://contrib.rocks/image?repo=enapter/marketplace" />
+</a>
+
 # Community and Support
 
-- <a href="https://go.enapter.com/discord_handbook"><img align="center" src="https://img.shields.io/badge/Discord-Channel-%235865F2?logo=discord&style=for-the-badge&logoColor=white"></a>&nbsp; Join our Discord community!
-- <a href="https://developers.enapter.com"><img align="center" src="https://img.shields.io/badge/Developers%20Documentation-Documentation-%2330cccc?logo=readthedocs&style=for-the-badge&logoColor=white"></a>&nbsp; Take a look on our documentation.
-- <a href="https://github.com/Enapter/marketplace/discussions"><img align="center" src="https://img.shields.io/badge/GitHub-Discussions-black?logo=github&style=for-the-badge&logoColor=white"></a>&nbsp; Open thread on GitHub!
+- <a href="https://go.enapter.com/discord_handbook"><img alt="Join Enapter Discord" align="center" src="https://img.shields.io/badge/Discord-Channel-%235865F2?logo=discord&style=for-the-badge&logoColor=white"></a>&nbsp; Join our Discord community!
+- <a href="https://developers.enapter.com"><img alt="Enapter Developers Documentation" align="center" src="https://img.shields.io/badge/Developers%20Documentation-Documentation-%2330cccc?logo=readthedocs&style=for-the-badge&logoColor=white"></a>&nbsp; Take a look on our documentation.
+- <a href="https://github.com/Enapter/marketplace/discussions"><img alt="Enapter Discussions" align="center" src="https://img.shields.io/badge/GitHub-Discussions-black?logo=github&style=for-the-badge&logoColor=white"></a>&nbsp; Open thread on GitHub!
