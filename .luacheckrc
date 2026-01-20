@@ -109,6 +109,9 @@ stds.vucm = {
     modbustcp = {
       fields = { 'new', 'err_to_str' },
     },
+    modbusrtu = {
+      fields = { 'new', 'err_to_str' },
+    },
     http = {
       fields = { 'get', 'post', 'post_form', 'client', 'request' },
     },
