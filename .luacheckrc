@@ -96,6 +96,9 @@ stds.ucm = {
     system = {
       fields = { 'delay', 'uptime' }
     },
+    json = {
+      fields = { 'encode', 'decode' }
+    },
   },
   globals = {
     enapter = {
