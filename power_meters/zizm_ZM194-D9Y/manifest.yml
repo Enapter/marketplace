@@ -1,0 +1,189 @@
+blueprint_spec: device/1.0
+display_name: Zizm ZM194-D9Y
+description: 3-Phase Multi-function Power Meter.
+icon: enapter-power-meter
+vendor: zizm
+author: enapter
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+verification_level: verified
+
+communication_module:
+  product: ENP-RS485
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Modbus status
+    type: string
+    enum:
+      - ok
+      - read_error
+  total_active_power:
+    type: float
+    unit: kwatt
+    display_name: Total Active Power
+  total_active_electric_energy:
+    type: float
+    unit: kwatth
+    display_name: Total Active Electric Energy
+  active_power_a:
+    type: float
+    unit: kwatt
+    display_name: Active Power A
+  active_power_b:
+    type: float
+    unit: watt
+    display_name: Active Power B
+  active_power_c:
+    type: float
+    unit: kwatt
+    display_name: Active Power C
+  voltage_a:
+    type: float
+    unit: volt
+    display_name: Phase A Voltage
+  voltage_b:
+    type: float
+    unit: volt
+    display_name: Phase B Voltage
+  voltage_c:
+    type: float
+    unit: volt
+    display_name: Phase C Voltage
+  line_voltage_ab:
+    type: float
+    unit: volt
+    display_name: Line Voltage AB
+  line_voltage_bc:
+    type: float
+    unit: volt
+    display_name: Line Voltage BC
+  line_voltage_ca:
+    type: float
+    unit: volt
+    display_name: Line Voltage CA
+  current_a:
+    type: float
+    unit: amp
+    display_name: Phase A Current
+  current_b:
+    type: float
+    unit: amp
+    display_name: Phase B Current
+  current_c:
+    type: float
+    unit: amp
+    display_name: Phase C Current
+  frequency:
+    type: float
+    unit: hertz
+    display_name: Frequency
+  total_reactive_power:
+    type: float
+    unit: watt
+    display_name: Total Reactive Power
+  reactive_power_a:
+    type: float
+    unit: watt
+    display_name: Reactive Power A
+  reactive_power_b:
+    type: float
+    unit: watt
+    display_name: Reactive Power B
+  reactive_power_c:
+    type: float
+    unit: watt
+    display_name: Reactive Power C
+  forward_active_electric_energy:
+    type: float
+    unit: kwatth
+    display_name: Forward Active Electric Energy
+  reverse_active_electric_energy:
+    type: float
+    unit: kwatth
+    display_name: Reverse Active Electric Energy
+
+command_groups:
+  connection:
+    display_name: Connection
+
+commands:
+  # TODO: mark commands containing secrets
+  write_configuration:
+    display_name: Set Up Connection
+    description: Set Modbus RTU connection
+    group: connection
+    populate_values_command: read_configuration
+    ui:
+      icon: file-document-edit-outline
+    arguments:
+      baudrate:
+        display_name: Baudrate
+        type: integer
+        required: true
+        enum:
+          - 2400
+          - 4800
+          - 9600
+      address:
+        display_name: Modbus address
+        type: integer
+        required: true
+        min: 1
+        max: 247
+      parity:
+        display_name: Parity
+        type: string
+        required: true
+        enum:
+          - N
+          - E
+          - O
+  read_configuration:
+    display_name: Read Connection Parameters
+    group: connection
+    ui:
+      icon: file-check-outline
+.cloud:
+  category: power_meters
+  mobile_main_chart: total_active_power
+  mobile_telemetry:
+    - total_active_electric_energy
+    - total_active_power
+    - active_power_a
+    - active_power_b
+    - active_power_c
+    - voltage_a
+    - voltage_b
+    - voltage_c
+    - current_a
+    - current_b
+    - current_c
+    - frequency
+  mobile_charts:
+    - total_active_electric_energy
+    - total_active_power
+    - active_power_a
+    - active_power_b
+    - active_power_c
+    - voltage_a
+    - voltage_b
+    - voltage_c
+    - current_a
+    - current_b
+    - current_c
+    - frequency
