@@ -878,6 +878,13 @@
   category: fuel_cells
   blueprint_options:
     - blueprint: fuel_cells/efoy_h2_cabinet_n_series
+      display_name: Lua API 1 Version
+      description: Use Enapter Gateway on Arrakis MK4 IPC to integrate EFOY H2 Cabinet N-Series
+      verification_level: ready_for_testing
+    - blueprint: fuel_cells/efoy_h2_cabinet_n_series_v3
+      display_name: Lua API 3 Version
+      description: |
+        You can use either Enapter ENP-RS485 or Enapter Gateway on Arrakis MK4 IPC to integrate EFOY H2 Cabinet N-Series
       verification_level: ready_for_testing
 
 - id: tasmota

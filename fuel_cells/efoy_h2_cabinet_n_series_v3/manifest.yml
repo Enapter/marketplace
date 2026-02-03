@@ -1,0 +1,262 @@
+blueprint_spec: device/3.0
+
+display_name: EFOY Hydrogen Cabinet
+description: Indoor cabinet solution for EFOY Hydrogen fuel cells
+icon: enapter-fuel-cell
+license: MIT
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+
+implements:
+  - energy.fuel_cell.general
+  - lib.energy.fuel_cell.cooling_control_duty
+
+runtime:
+  type: lua
+  requirements:
+    - modbus
+
+configuration:
+  connection:
+    display_name: Connection
+    description: Modbus RTU connection parameters
+    access_level: owner
+    parameters:
+      conn_str:
+        display_name: Modbus Connection URI
+        description: Connection URI for Modbus RTU (e.g., port://rs485)
+        type: string
+        format: connection_uri
+        required: true
+      address:
+        display_name: Modbus Address
+        description: Device address on the Modbus network (1-247)
+        type: integer
+        required: true
+        default: 121
+        min: 1
+        max: 247
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: string
+    display_name: Serial Number
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    description: Device communication status
+    enum:
+      ok:
+        display_name: OK
+        description: Normal operation
+      conn_error:
+        display_name: Connection Error
+        description: Cannot connect to device
+  hydrogen_inlet_pressure:
+    type: float
+    unit: bar
+    display_name: Inlet Hydrogen Pressure
+    description: Hydrogen pressure at inlet
+  output_voltage:
+    type: float
+    unit: V
+    display_name: Voltage DC Bus
+    description: DC bus voltage output
+    aliases:
+      - voltage_dc_bus
+  output_current:
+    type: float
+    unit: A
+    display_name: Load Current
+    description: Current supplied to load
+    aliases:
+      - load_current
+  output_power:
+    display_name: Output Power
+    type: float
+    unit: W
+    description: Current DC power output of the fuel cell.
+  inlet_temperature:
+    type: float
+    unit: Cel
+    display_name: Supply Air Temperature
+    description: Intake air temperature
+    aliases:
+      - supply_air_temperature
+  outlet_temperature:
+    display_name: Outlet Temperature
+    type: float
+    unit: Cel
+    description: Temperature of the reactant at the fuel cell outlet.
+  rating_fuel_cell_module0:
+    type: float
+    unit: Cel
+    display_name: Rating Fuel Cell Temperature Module 0
+    description: Fuel cell module 0 temperature
+  rating_fuel_cell_module1:
+    type: float
+    unit: Cel
+    display_name: Rating Fuel Cell Temperature Module 1
+    description: Fuel cell module 1 temperature
+  rating_fuel_cell_module2:
+    type: float
+    unit: Cel
+    display_name: Rating Fuel Cell Temperature Module 2
+    description: Fuel cell module 2 temperature
+  rating_fuel_cell_module3:
+    type: float
+    unit: Cel
+    display_name: Rating Fuel Cell Temperature Module 3
+    description: Fuel cell module 3 temperature
+  internal_hydrogen_pressure_rack0:
+    type: float
+    unit: bar
+    display_name: Inlet Hydrogen Pressure Rack 0
+    description: Internal hydrogen pressure in rack 0
+  battery_temperature:
+    type: float
+    unit: Cel
+    display_name: Battery Temperature
+    description: Battery pack temperature
+  rack_temperature0:
+    type: float
+    unit: Cel
+    display_name: Rack 0 Temperature
+    description: Rack enclosure temperature
+  lower_start_limit:
+    type: float
+    unit: V
+    display_name: Lower Start Limit
+    description: Lower voltage threshold for start
+  higher_start_limit:
+    type: float
+    unit: V
+    display_name: Higher Start Limit
+    description: Higher voltage threshold for start
+  conn_alerts:
+    type: alerts
+    display_name: Device Connection Alerts
+    description: Alerts for communication issues
+
+command_groups:
+  control:
+    display_name: Control
+
+commands:
+  set_lower_start_limit:
+    display_name: Set Lower Start Limit
+    group: control
+    ui:
+      icon: gauge-low
+    arguments:
+      limit:
+        display_name: Lower Limit
+        description: Voltage limit in volts
+        type: float
+        required: true
+  set_higher_start_limit:
+    display_name: Set Higher Start Limit
+    group: control
+    ui:
+      icon: gauge-full
+    arguments:
+      limit:
+        display_name: Higher Limit
+        description: Voltage limit in volts
+        type: float
+        required: true
+  external_stop:
+    display_name: External Stop
+    group: control
+    ui:
+      icon: chevron-right
+    arguments:
+      action:
+        display_name: Setting
+        description: Stop or Auto mode
+        type: string
+        enum:
+          - stop
+          - auto
+        required: true
+
+alerts:
+  not_configured:
+    severity: info
+    display_name: Device Not Configured
+    description: Device connection not configured. Please set the correct settings.
+  communication_failed:
+    severity: error
+    display_name: Communication Failed
+    description: |
+      Failed to communicate with device via Modbus. Please check the logs to understand the cause.
+  emergency_module0:
+    severity: error
+    display_name: Emergency Power Off Module 0
+  emergency_module1:
+    severity: error
+    display_name: Emergency Power Off Module 1
+  emergency_module2:
+    severity: error
+    display_name: Emergency Power Off Module 2
+  emergency_module3:
+    severity: error
+    display_name: Emergency Power Off Module 3
+  warning_module0:
+    severity: warning
+    display_name: Warning Module 0
+  warning_module1:
+    severity: warning
+    display_name: Warning Module 1
+  warning_module2:
+    severity: warning
+    display_name: Warning Module 2
+  warning_module3:
+    severity: warning
+    display_name: Warning Module 3
+  ready_module0:
+    severity: info
+    display_name: Ready Module 0
+  ready_module1:
+    severity: error
+    display_name: Ready Module 1
+  ready_module2:
+    severity: error
+    display_name: Ready Module 2
+  ready_module3:
+    severity: error
+    display_name: Ready Module 3
+  alarm:
+    severity: error
+    display_name: FC Controller Alarm
+  warning:
+    severity: warning
+    display_name: FC Controller Warning
+  fc_status:
+    severity: info
+    display_name: FC Controller Status
+  fc_running:
+    severity: info
+    display_name: Fuel Cell Running
+  filter_change:
+    severity: warning
+    display_name: Filter Change
+
+.cloud:
+  category: fuel_cells
+  mobile_telemetry:
+    - hydrogen_inlet_pressure
+    - output_voltage
+    - output_current
