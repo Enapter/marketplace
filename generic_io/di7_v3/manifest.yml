@@ -17,7 +17,7 @@ runtime:
     - digitalin
     - enp_di7_ports
   options:
-    file: firmware.lua
+    file: main.lua
 
 properties:
   vendor:

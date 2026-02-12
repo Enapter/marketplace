@@ -20,7 +20,7 @@ runtime:
   requirements:
     - modbus
   options:
-    file: firmware.lua
+    file: main.lua
 
 configuration:
   connection:

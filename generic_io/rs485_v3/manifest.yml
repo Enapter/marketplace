@@ -17,7 +17,7 @@ runtime:
     - modbus
     - enp_rs485_ports
   options:
-    file: firmware.lua
+    file: main.lua
 
 properties:
   vendor:

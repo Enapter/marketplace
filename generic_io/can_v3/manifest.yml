@@ -18,7 +18,7 @@ runtime:
     - can
     - enp_can_ports
   options:
-    file: firmware.lua
+    file: main.lua
 
 properties:
   vendor:

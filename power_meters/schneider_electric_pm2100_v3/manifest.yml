@@ -18,7 +18,7 @@ runtime:
   requirements:
     - modbus
   options:
-    dir: src
+    file: main.lua
 
 configuration:
   connection:
