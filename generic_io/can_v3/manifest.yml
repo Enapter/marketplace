@@ -15,7 +15,6 @@ license: MIT
 runtime:
   type: lua
   requirements:
-    - lua_api_ver_3
     - can
     - enp_can_ports
   options:

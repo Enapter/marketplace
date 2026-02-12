@@ -19,7 +19,6 @@ implements:
 runtime:
   type: lua
   requirements:
-    - lua_api_ver_3
     - modbus
   options:
     dir: src
