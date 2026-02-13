@@ -224,7 +224,13 @@
   vendor: h2sys
   category: fuel_cells
   blueprint_options:
+    - blueprint: fuel_cells/h2sys_acs_1000_v3
+      display_name: Lua API 3 Version
+      description: Universal integration for H2SYS ACS 1000 via CAN bus.
+      verification_level: ready_for_testing
     - blueprint: fuel_cells/h2sys_acs_1000
+      display_name: ENP-CAN UCM Lua API 1 Version
+      description: Use Enapter ENP-CAN to integrate H2SYS ACS 1000.
       verification_level: verified
 
 - id: hydrogenics-hypm-hd-8
