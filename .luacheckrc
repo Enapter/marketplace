@@ -93,9 +93,12 @@ stds.ucm = {
         'impulse',
       },
     },
+    serial = {
+      fields = { 'new' }
+    },
     system = {
       fields = { 'delay', 'uptime' }
-    },
+    }
   },
   globals = {
     enapter = {

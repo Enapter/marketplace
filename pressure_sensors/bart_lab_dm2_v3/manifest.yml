@@ -1,0 +1,77 @@
+blueprint_spec: device/3.0
+
+display_name: Bart LAB-DM2
+description: Digital pressure gauge with RS232 ASCII serial interface.
+icon: enapter-gauge
+category: sensors
+
+author: enapter
+contributors:
+  - anataty
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+runtime:
+  type: lua
+  options:
+    file: main.lua
+
+properties:
+  vendor:
+    display_name: Vendor
+    type: string
+  model:
+    display_name: Model
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      ok:
+        display_name: OK
+        color: green-lighter
+      error:
+        display_name: Error
+        color: red
+  conn_alerts:
+    display_name: Connection Alerts
+    description: Alerts indicating connection and configuration issues.
+    type: alerts
+  pressure:
+    display_name: Pressure
+    type: float
+    unit: bar
+
+alerts:
+  not_configured:
+    severity: info
+    display_name: Device Not Configured
+    description: Connection parameters are not set. Please configure the device.
+  communication_failed:
+    severity: error
+    display_name: Communication Failed
+    description: >
+      Failed to communicate with Bart LAB-DM2.
+      Check RS232 wiring and connection string settings.
+
+configuration:
+  connection:
+    display_name: Connection
+    description: RS232 serial connection parameters.
+    access_level: owner
+    parameters:
+      conn_str:
+        display_name: Connection String
+        description: e.g. port://rs232-1
+        type: string
+        format: connection_uri
+        required: true
+      device_id:
+        display_name: Device ID
+        description: Two-character device address (default 00). Matches the ID configured on the instrument.
+        type: string
+        default: "00"

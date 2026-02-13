@@ -524,6 +524,10 @@
   blueprint_options:
     - blueprint: pressure_sensors/bart_lab_dmm2
       verification_level: verified
+    - blueprint: pressure_sensors/bart_lab_dm2_v3
+      display_name: Lua API V3 Version
+      description: Digital pressure gauge with RS232 ASCII serial interface (Lua API V3)
+      verification_level: ready_for_testing
 
 - id: enp-di7-mobile-notifier
   display_name: ENP-DI7 Mobile Notifier
