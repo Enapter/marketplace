@@ -1,0 +1,98 @@
+blueprint_spec: device/3.0
+
+display_name: Michell Easidew Online Hygrometer
+description: Dew point and moisture content measurement with Modbus RTU over RS-485.
+icon: enapter-gas-sensor
+category: sensors
+license: MIT
+author: enapter
+contributors:
+  - enapter-assistant
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+
+runtime:
+  type: lua
+  requirements:
+    - modbus
+  options:
+    file: main.lua
+
+configuration:
+  connection:
+    display_name: Connection
+    description: Modbus connection options
+    access_level: owner
+    parameters:
+      address:
+        display_name: Modbus Address
+        description: Device address in range 1-247
+        type: integer
+        required: true
+      conn_str:
+        display_name: Connection String
+        description: e.g. port://rs485
+        type: string
+        format: connection_uri
+        required: true
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      ok:
+        display_name: OK
+        color: green
+      conn_error:
+        display_name: Communication Error
+        color: red
+  dew_point:
+    display_name: Dew Point
+    description: Measured dew point temperature.
+    type: float
+    unit: Cel
+  moisture_content:
+    display_name: Moisture Content
+    description: Measured moisture content.
+    type: float
+    unit: "[ppm]"
+  conn_alerts:
+    display_name: Connection Alerts
+    description: Alerts indicating connection and configuration issues.
+    type: alerts
+
+alerts:
+  not_configured:
+    severity: info
+    display_name: Not Configured
+    description: Device not set up. Go to Configuration to connect.
+  communication_failed:
+    severity: error
+    display_name: Communication Failed
+    description: Failed to read data from the device.
+    grace_period: 15s
+    troubleshooting:
+      - Double check the physical connection.
+      - Ensure that Modbus address is the same as in your device.
+      - >
+        Ensure that the UCM's hardware configuration matches your
+        device's connection configuration (baud rate, parity, stop bits).
+
+.cloud:
+  mobile_main_chart: dew_point
+  mobile_telemetry:
+    - dew_point
+    - moisture_content
+  mobile_charts:
+    - dew_point
+    - moisture_content

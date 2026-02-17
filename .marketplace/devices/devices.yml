@@ -852,6 +852,18 @@
       description: Integration of PST GPR-x500 Oxygen Analyzer via 4-20 mA analog input (Lua API V3).
       verification_level: ready_for_testing
 
+- id: michell-easidew
+  display_name: Michell Easidew Online Hygrometer
+  description: Dew point and moisture content measurement with Modbus RTU over RS-485.
+  icon: enapter-gas-sensor
+  vendor: michell
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/michell_easidew
+      display_name: Lua API V3 Version
+      description: Michell Easidew Online Hygrometer integration (Lua API V3).
+      verification_level: ready_for_testing
+
 - id: xiaomi-sjcgq12lm
   display_name: Xiaomi SJCGQ12LM
   description: Zigbee Water Leak Sensor
