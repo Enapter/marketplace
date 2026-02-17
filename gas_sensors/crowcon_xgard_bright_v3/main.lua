@@ -2,7 +2,7 @@ local conn = nil
 local conn_cfg = nil
 local conn_error_msg = nil
 
-function main()
+function enapter.main()
   reconnect()
   configuration.after_write('connection', function()
     conn = nil
@@ -89,5 +89,3 @@ function tofloat(registers)
   local raw_str = string.pack('BBBB', registers[1] >> 8, registers[1] & 0xff, registers[2] >> 8, registers[2] & 0xff)
   return string.unpack('>f', raw_str)
 end
-
-main()

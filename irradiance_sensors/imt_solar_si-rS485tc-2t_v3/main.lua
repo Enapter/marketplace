@@ -2,7 +2,7 @@ local conn = nil
 local conn_cfg = nil
 local conn_error_msg = nil
 
-function main()
+function enapter.main()
   reconnect()
   configuration.after_write('connection', function()
     conn = nil
@@ -113,5 +113,3 @@ function int16(register)
   local raw_str = string.pack('BB', register[1] & 0xFF, register[1] >> 8)
   return string.unpack('i2', raw_str)
 end
-
-main()

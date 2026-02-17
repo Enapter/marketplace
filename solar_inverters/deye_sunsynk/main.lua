@@ -2,7 +2,7 @@ local conn
 local conn_cfg
 local conn_error_msg
 
-function main()
+function enapter.main()
   reconnect()
   configuration.after_write('connection', function()
     conn = nil
@@ -457,5 +457,3 @@ function s16(value)
     return value
   end
 end
-
-main()

@@ -2,7 +2,7 @@ local conn = nil
 local conn_cfg = nil
 local conn_error_msg = nil
 
-function main()
+function enapter.main()
   reconnect()
   configuration.after_write('connection', function()
     conn = nil
@@ -245,5 +245,3 @@ function get_model(data)
   end
   return model
 end
-
-main()
