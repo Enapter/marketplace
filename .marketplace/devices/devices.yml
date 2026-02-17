@@ -54,7 +54,13 @@
   category: battery_inverters
   blueprint_options:
     - blueprint: battery_inverters/sma_sunny_island
+      display_name: Lua API V1 Version
+      description: SMA Sunny Island battery inverter (Lua API V1)
       verification_level: verified
+    - blueprint: battery_inverters/sma_sunny_island_v3
+      display_name: Lua API V3 Version
+      description: SMA Sunny Island battery inverter (Lua API V3)
+      verification_level: ready_for_testing
 
 - id: tesla-powerwall
   display_name: Tesla Powerwall
