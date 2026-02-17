@@ -1,0 +1,169 @@
+blueprint_spec: device/3.0
+
+display_name: H2SYS ACS 1000
+description: Air-cooled hydrogen fuel cell system communicating over CAN bus.
+icon: enapter-fuel-cell
+category: fuel_cells
+
+author: enapter
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+runtime:
+  type: lua
+  options:
+    file: main.lua
+
+properties:
+  vendor:
+    display_name: Vendor
+    type: string
+  model:
+    display_name: Model
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      ok:
+        display_name: OK
+        color: green
+      auto_check:
+        display_name: Auto Check
+        color: green-lighter
+      h2_inlet_pressure:
+        display_name: H2 Inlet Pressure Check
+        color: green-lighter
+      waiting:
+        display_name: Waiting
+        color: green-lighter
+      start_up:
+        display_name: Starting Up
+        color: cyan-dark
+      idle:
+        display_name: Idle
+        color: green-lighter
+      operation:
+        display_name: Operating
+        color: green
+      switch_off:
+        display_name: Switching Off
+        color: green-dark
+      locked_out:
+        display_name: Locked Out
+        color: red-darker
+      error:
+        display_name: Error
+        color: red
+      communication_failed:
+        display_name: Communication Failed
+        color: orange
+  conn_alerts:
+    display_name: Connection Alerts
+    description: Alerts indicating connection and configuration issues.
+    type: alerts
+  voltage:
+    display_name: Voltage
+    type: float
+    unit: V
+  current:
+    display_name: Current
+    type: float
+    unit: A
+  temperature:
+    display_name: Temperature
+    type: float
+    unit: Cel
+  internal_h2_pressure:
+    display_name: Internal H2 Pressure
+    type: float
+    unit: bar
+
+alerts:
+  not_configured:
+    severity: info
+    display_name: Not Configured
+    description: CAN connection is not configured. Use the configuration section to set the connection string.
+  communication_failed:
+    severity: error
+    display_name: Communication Failed
+    description: |
+      Failed to communicate with H2SYS ACS 1000 over CAN bus.
+      Check wiring and connection settings.
+  low_cell_voltage:
+    severity: error
+    display_name: Low Cell Voltage
+  fuel_cell_high_temperature:
+    severity: error
+    display_name: Fuel Cell High Temperature
+  fuel_cell_low_voltage:
+    severity: error
+    display_name: Fuel Cell Low Voltage
+  low_h2_pressure:
+    severity: error
+    display_name: Low H2 Pressure
+  auxilary_voltage:
+    severity: error
+    display_name: Auxiliary Voltage Error
+  start_phase_error:
+    severity: error
+    display_name: Start Phase Error
+  fcvm_board:
+    severity: warning
+    display_name: FCVM Board Warning
+  idle_state:
+    severity: warning
+    display_name: Idle State Warning
+  fccc_board:
+    severity: error
+    display_name: FCCC Board Error
+  can_fail:
+    severity: error
+    display_name: CAN Failure
+  fuel_cell_current:
+    severity: error
+    display_name: Fuel Cell Current Error
+  fan_error:
+    severity: error
+    display_name: Fan Error
+  h2_leakage:
+    severity: error
+    display_name: H2 Leakage Detected
+  low_internal_pressure:
+    severity: error
+    display_name: Low Internal Pressure
+  high_internal_pressure:
+    severity: error
+    display_name: High Internal Pressure
+  fuel_cell_temperature_variation:
+    severity: error
+    display_name: Fuel Cell Temperature Variation
+
+commands:
+  start:
+    display_name: Start
+    description: Send start command to the fuel cell.
+    ui:
+      icon: play-circle-outline
+  stop:
+    display_name: Stop
+    description: Send stop command to the fuel cell.
+    ui:
+      icon: stop-circle-outline
+
+configuration:
+  connection:
+    display_name: Connection
+    description: CAN bus connection parameters.
+    access_level: owner
+    parameters:
+      conn_str:
+        display_name: Connection String
+        description: e.g. port://can-1
+        type: string
+        format: connection_uri
+        required: true

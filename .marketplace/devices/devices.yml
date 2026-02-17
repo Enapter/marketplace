@@ -224,7 +224,13 @@
   vendor: h2sys
   category: fuel_cells
   blueprint_options:
+    - blueprint: fuel_cells/h2sys_acs_1000_v3
+      display_name: Lua API 3 Version
+      description: Universal integration for H2SYS ACS 1000 via CAN bus.
+      verification_level: ready_for_testing
     - blueprint: fuel_cells/h2sys_acs_1000
+      display_name: ENP-CAN UCM Lua API 1 Version
+      description: Use Enapter ENP-CAN to integrate H2SYS ACS 1000.
       verification_level: verified
 
 - id: hydrogenics-hypm-hd-8
@@ -524,6 +530,10 @@
   blueprint_options:
     - blueprint: pressure_sensors/bart_lab_dmm2
       verification_level: verified
+    - blueprint: pressure_sensors/bart_lab_dm2_v3
+      display_name: Lua API V3 Version
+      description: Digital pressure gauge with RS232 ASCII serial interface (Lua API V3)
+      verification_level: ready_for_testing
 
 - id: enp-di7-mobile-notifier
   display_name: ENP-DI7 Mobile Notifier
