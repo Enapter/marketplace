@@ -46,14 +46,15 @@ end
 
 function send_telemetry()
   if not conn_cfg then
-    enapter.send_telemetry({ alerts = { 'not_configured' } })
+    enapter.send_telemetry({ status = 'ok', conn_alerts = { 'not_configured' } })
     return
   end
 
   if not conn then
     enapter.send_telemetry({
-      alerts = { 'conn_error' },
-      alert_details = { conn_error = { errmsg = conn_error_msg } },
+      status = 'conn_error',
+      conn_alerts = { 'communication_failed' },
+      alert_details = { communication_failed = { errmsg = conn_error_msg } },
     })
     enapter.log(conn_error_msg, 'error', true)
     return
@@ -65,7 +66,7 @@ function send_telemetry()
 
   local data, err = conn:read_inputs(conn_cfg.address, 0, 1, 1000)
   if err then
-    alert = 'conn_error'
+    alert = 'communication_failed'
     alert_msg = 'failed to read register 0: ' .. err
     enapter.log(alert_msg, 'error', true)
   else
@@ -74,7 +75,7 @@ function send_telemetry()
 
   local data, err = conn:read_inputs(conn_cfg.address, 7, 2, 1000)
   if err then
-    alert = 'conn_error'
+    alert = 'communication_failed'
     alert_msg = 'failed to read registers 7-8: ' .. err
     enapter.log(alert_msg, 'error', true)
   else
@@ -83,8 +84,8 @@ function send_telemetry()
   end
 
   if alert then
-    telemetry.alerts = { alert }
-    telemetry.alert_details = { conn_error = { errmsg = alert_msg } }
+    telemetry.conn_alerts = { alert }
+    telemetry.alert_details = { communication_failed = { errmsg = alert_msg } }
   end
 
   enapter.send_telemetry(telemetry)

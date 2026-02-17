@@ -68,14 +68,14 @@ end
 
 function send_realtime_telemetry()
   if not conn_cfg then
-    enapter.send_telemetry({ alerts = { 'not_configured' } })
+    enapter.send_telemetry({ conn_alerts = { 'not_configured' } })
     return
   end
 
   if not conn then
     enapter.send_telemetry({
-      alerts = { 'conn_error' },
-      alert_details = { conn_error = { errmsg = conn_error_msg } },
+      conn_alerts = { 'communication_failed' },
+      alert_details = { communication_failed = { errmsg = conn_error_msg } },
     })
     enapter.log(conn_error_msg, 'error', true)
     return
@@ -99,14 +99,13 @@ function send_realtime_telemetry()
   telemetry.pv_power = reader:parse_s32_fix0(data, 30773 - base + 1)
   telemetry.ac_total_power = reader:parse_s32_fix0(data, 30775 - base + 1)
   telemetry.read_time = math.ceil((os.clock() - started) * 1000) / 1000 -- round
-
+  if not telemetry.alerts then
+    telemetry.alerts = {}
+  end
   if reader.has_error then
-    if not telemetry.alerts then
-      telemetry.alerts = {}
-    end
-    table.insert(telemetry.alerts, 'conn_error')
+    table.insert(telemetry.conn_alerts, 'communication_failed')
     telemetry.alert_details = {
-      conn_error = {
+      communication_failed = {
         errmsg = 'Realtime telemetry reading errors occurred. See the device logs for more information.',
       },
     }
@@ -194,12 +193,9 @@ function send_detailed_telemetry()
   telemetry.read_time = math.ceil((os.clock() - started) * 1000) / 1000 -- round
 
   if reader.has_error then
-    if not telemetry.alerts then
-      telemetry.alerts = {}
-    end
-    table.insert(telemetry.alerts, 'conn_error')
+    table.insert(telemetry.conn_alerts, 'communication_failed')
     telemetry.alert_details = {
-      conn_error = {
+      communication_failed = {
         errmsg = 'Detailed telemetry reading errors occurred. See the device logs for more information.',
       },
     }

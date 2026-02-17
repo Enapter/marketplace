@@ -64,11 +64,11 @@ end
 
 function send_realtime_telemetry()
   if not conn_cfg then
-    enapter.send_telemetry({ status = 'ok', alerts = { 'not_configured' } })
+    enapter.send_telemetry({ conn_alerts = { 'not_configured' } })
     return
   end
   if not conn then
-    enapter.send_telemetry({ status = 'error', alerts = { 'cannot_connect' } })
+    enapter.send_telemetry({ conn_alerts = { 'communication_failed' } })
     return
   end
 
@@ -87,6 +87,7 @@ function send_realtime_telemetry()
     ac_frequency = conn:read_u32_fix2(30803),
   }
   telemetry.read_time = math.ceil((os.clock() - started) * 1000) / 1000 -- round
+  telemetry.conn_alerts = {}
 
   enapter.send_telemetry(telemetry)
 end

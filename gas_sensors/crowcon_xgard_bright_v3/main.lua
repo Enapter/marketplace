@@ -49,13 +49,14 @@ end
 
 function send_telemetry()
   if not conn_cfg then
-    enapter.send_telemetry({ alerts = { 'not_configured' } })
+    enapter.send_telemetry({ status = 'ok', conn_alerts = { 'not_configured' } })
     return
   end
 
   if not conn then
     enapter.send_telemetry({
-      alerts = { 'conn_error' },
+      status = 'conn_error',
+      conn_alerts = { 'communication_failed' },
       alert_details = { conn_error = { errmsg = conn_error_msg } },
     })
     enapter.log(conn_error_msg, 'error', true)
@@ -77,8 +78,8 @@ function send_telemetry()
   end
 
   if read_err_msg then
-    telemetry.alerts = { 'conn_error' }
-    telemetry.alert_details = { conn_error = { errmsg = read_err_msg } }
+    telemetry.conn_alerts = { 'communication_failed' }
+    telemetry.alert_details = { communication_failed = { errmsg = read_err_msg } }
     enapter.log(read_err_msg, 'error', true)
   end
 
