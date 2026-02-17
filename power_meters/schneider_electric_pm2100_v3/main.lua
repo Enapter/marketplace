@@ -2,7 +2,7 @@ local conn = nil
 local conn_cfg = nil
 local conn_error_msg = nil
 
-function main()
+function enapter.main()
   reconnect()
   configuration.after_write('connection', function()
     conn = nil
@@ -63,14 +63,15 @@ end
 
 function send_telemetry()
   if not conn_cfg then
-    enapter.send_telemetry({ alerts = { 'not_configured' } })
+    enapter.send_telemetry({ status = 'ok', conn_alerts = { 'not_configured' } })
     return
   end
 
   if not conn then
     enapter.send_telemetry({
-      alerts = { 'conn_error' },
-      alert_details = { conn_error = { errmsg = conn_error_msg } },
+      status = 'conn_error',
+      conn_alerts = { 'communication_failed' },
+      alert_details = { communication_failed = { errmsg = conn_error_msg } },
     })
     enapter.log(conn_error_msg, 'error', true)
     return
@@ -100,7 +101,7 @@ function send_telemetry()
   end
 
   if alert_error_msg then
-    telemetry.alerts = { 'conn_error' }
+    telemetry.conn_alerts = { 'communication_failed' }
     telemetry.alert_details = { conn_error = { errmsg = alert_error_msg } }
   end
   enapter.send_telemetry(telemetry)
@@ -245,5 +246,3 @@ function get_model(data)
   end
   return model
 end
-
-main()

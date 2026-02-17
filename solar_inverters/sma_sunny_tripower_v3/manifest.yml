@@ -27,7 +27,6 @@ implements:
 runtime:
   type: lua
   requirements:
-    - lua_api_ver_3
     - modbus
   options:
     dir: src
@@ -310,9 +309,19 @@ telemetry:
     type: integer
     unit: s
 
+  conn_alerts:
+    display_name: Connection Alerts
+    description: Alerts indicating connection and configuration issues.
+    type: alerts
+
 alerts:
-  conn_error:
-    display_name: Connection error
+  not_configured:
+    severity: info
+    display_name: Not Configured
+    description: |
+      Device not set up. Go to Configuration to connect.
+  communication_failed:
+    display_name: Communication Failed
     severity: error
     description: >
       Connection to the device has failed. Incoming data may be missing or outdated

@@ -14,11 +14,10 @@ license: MIT
 runtime:
   type: lua
   requirements:
-    - lua_api_ver_3
     - digitalin
     - enp_di7_ports
   options:
-    file: firmware.lua
+    file: main.lua
 
 properties:
   vendor:

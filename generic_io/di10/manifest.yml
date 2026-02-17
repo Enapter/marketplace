@@ -14,7 +14,6 @@ license: MIT
 runtime:
   type: lua
   requirements:
-    - lua_api_ver_3
     - digitalin
     - enp_di10_m2_ports
   options:

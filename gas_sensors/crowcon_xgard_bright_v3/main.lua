@@ -2,7 +2,7 @@ local conn = nil
 local conn_cfg = nil
 local conn_error_msg = nil
 
-function main()
+function enapter.main()
   reconnect()
   configuration.after_write('connection', function()
     conn = nil
@@ -49,13 +49,14 @@ end
 
 function send_telemetry()
   if not conn_cfg then
-    enapter.send_telemetry({ alerts = { 'not_configured' } })
+    enapter.send_telemetry({ status = 'ok', conn_alerts = { 'not_configured' } })
     return
   end
 
   if not conn then
     enapter.send_telemetry({
-      alerts = { 'conn_error' },
+      status = 'conn_error',
+      conn_alerts = { 'communication_failed' },
       alert_details = { conn_error = { errmsg = conn_error_msg } },
     })
     enapter.log(conn_error_msg, 'error', true)
@@ -77,8 +78,8 @@ function send_telemetry()
   end
 
   if read_err_msg then
-    telemetry.alerts = { 'conn_error' }
-    telemetry.alert_details = { conn_error = { errmsg = read_err_msg } }
+    telemetry.conn_alerts = { 'communication_failed' }
+    telemetry.alert_details = { communication_failed = { errmsg = read_err_msg } }
     enapter.log(read_err_msg, 'error', true)
   end
 
@@ -89,5 +90,3 @@ function tofloat(registers)
   local raw_str = string.pack('BBBB', registers[1] >> 8, registers[1] & 0xff, registers[2] >> 8, registers[2] & 0xff)
   return string.unpack('>f', raw_str)
 end
-
-main()

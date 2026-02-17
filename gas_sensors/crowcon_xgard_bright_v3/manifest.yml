@@ -18,10 +18,9 @@ implements:
 runtime:
   type: lua
   requirements:
-    - lua_api_ver_3
     - modbus
   options:
-    dir: src
+    file: main.lua
 
 configuration:
   connection:
@@ -61,16 +60,28 @@ telemetry:
       ok:
         display_name: OK
         color: green
+      conn_error:
+        display_name: Communication Failed
+        color: orange
   h2_concentration:
     type: float
     unit: "%LEL"
     display_name: H2 Concentration
     description: Measured hydrogen concentration
     implements: sensor.hydrogen.gas_lel
+  conn_alerts:
+    display_name: Connection Alerts
+    description: Alerts indicating connection and configuration issues.
+    type: alerts
 
 alerts:
-  conn_error:
-    display_name: Connection error
+  not_configured:
+    severity: info
+    display_name: Not Configured
+    description: |
+      Device not set up. Go to Configuration to connect.
+  communication_failed:
+    display_name: Communication Failed
     severity: error
     description: Connection to the device has failed.
     grace_period: 15s

@@ -14,11 +14,10 @@ license: MIT
 runtime:
   type: lua
   requirements:
-    - lua_api_ver_3
     - modbus
     - enp_rs485_ports
   options:
-    file: firmware.lua
+    file: main.lua
 
 properties:
   vendor:

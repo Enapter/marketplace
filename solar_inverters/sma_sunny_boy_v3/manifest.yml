@@ -24,7 +24,6 @@ implements:
 runtime:
   type: lua
   requirements:
-    - lua_api_ver_3
     - modbus
   options:
     dir: src
@@ -231,14 +230,31 @@ telemetry:
     display_name: AC Energy Produced Today
     type: float
     unit: Wh
+  conn_alerts:
+    display_name: Connection Alerts
+    description: Alerts indicating connection and configuration issues.
+    type: alerts
 
 alerts:
   not_configured:
-    display_name: Not configured
     severity: info
-  cannot_connect:
-    display_name: Cannot dial Modbus connection
+    display_name: Not Configured
+    description: |
+      Device not set up. Go to Configuration to connect.
+  communication_failed:
+    display_name: Communication Failed
     severity: error
+    description: Connection to the device has failed.
+    grace_period: 15s
+    troubleshooting:
+      - Double check the physical connection.
+      - Ensure that Modbus address is the same as in your device.
+      - >
+        Ensure that the UCM's hardware configuration matches your
+        device's connection configuration.
+      - >
+        Ensure you are reading/writing the correct register addresses
+        and ranges as per the device documentation.
   unknown_event:
     display_name: Unknown event
     severity: error

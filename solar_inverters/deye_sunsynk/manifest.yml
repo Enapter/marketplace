@@ -27,7 +27,6 @@ implements:
 runtime:
   type: lua
   requirements:
-    - lua_api_ver_3
     - modbus
   options:
     file: main.lua
@@ -316,9 +315,14 @@ telemetry:
     unit: Wh
     description: Cumulative energy discharged from batteries since installation
 
+  conn_alerts:
+    display_name: Connection Alerts
+    description: Alerts indicating connection and configuration issues.
+    type: alerts
+
 alerts:
-  conn_error:
-    display_name: Connection error
+  communication_failed:
+    display_name: Communication Failed
     severity: error
     description: Connection to the device has failed.
     grace_period: 15s

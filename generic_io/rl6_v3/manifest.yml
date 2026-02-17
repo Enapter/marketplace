@@ -15,11 +15,10 @@ license: MIT
 runtime:
   type: lua
   requirements:
-    - lua_api_ver_3
     - relay
     - enp_rl6_ports
   options:
-    file: firmware.lua
+    file: main.lua
     luarocks:
       - enapter-ucm ~> 0.4.0
 
