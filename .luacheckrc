@@ -99,6 +99,9 @@ stds.ucm = {
     analogin = {
       fields = { 'new' }
     },
+    json = {
+      fields = { 'decode', 'encode' }
+    },
     system = {
       fields = { 'delay', 'uptime' }
     },
