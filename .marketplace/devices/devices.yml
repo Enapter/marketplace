@@ -840,6 +840,18 @@
     - blueprint: gas_sensors/JT-BZ-01AQ-A
       verification_level: verified
 
+- id: pst-gpr-x500
+  display_name: PST GPR-x500 Oxygen Analyzer
+  description: Trace oxygen measurement device with 4-20 mA analog output.
+  icon: enapter-gauge
+  vendor: pst
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/pst_gpr_x500
+      display_name: Lua API V3 Version
+      description: Integration of PST GPR-x500 Oxygen Analyzer via 4-20 mA analog input (Lua API V3).
+      verification_level: ready_for_testing
+
 - id: xiaomi-sjcgq12lm
   display_name: Xiaomi SJCGQ12LM
   description: Zigbee Water Leak Sensor

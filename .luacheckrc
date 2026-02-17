@@ -93,6 +93,12 @@ stds.ucm = {
         'impulse',
       },
     },
+    serial = {
+      fields = { 'new' }
+    },
+    analogin = {
+      fields = { 'new' }
+    },
     system = {
       fields = { 'delay', 'uptime' }
     },
