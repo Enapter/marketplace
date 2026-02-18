@@ -42,4 +42,4 @@ jobs:
           YAML_CONFIG_FILE: .yamllint.yml
           LUA_CONFIG_FILE: .luacheckrc
           MARKDOWN_CONFIG_FILE: .markdownlint.yml
-          FILTER_REGEX_EXCLUDE: .scripts/.*
+          FILTER_REGEX_EXCLUDE: '(.scripts/.*|\.claude/.*)'
