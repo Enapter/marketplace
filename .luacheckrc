@@ -93,6 +93,15 @@ stds.ucm = {
         'impulse',
       },
     },
+    serial = {
+      fields = { 'new' }
+    },
+    analogin = {
+      fields = { 'new' }
+    },
+    json = {
+      fields = { 'decode', 'encode' }
+    },
     system = {
       fields = { 'delay', 'uptime' }
     },

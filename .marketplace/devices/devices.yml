@@ -54,7 +54,13 @@
   category: battery_inverters
   blueprint_options:
     - blueprint: battery_inverters/sma_sunny_island
+      display_name: Lua API V1 Version
+      description: SMA Sunny Island battery inverter (Lua API V1)
       verification_level: verified
+    - blueprint: battery_inverters/sma_sunny_island_v3
+      display_name: Lua API V3 Version
+      description: SMA Sunny Island battery inverter (Lua API V3)
+      verification_level: ready_for_testing
 
 - id: tesla-powerwall
   display_name: Tesla Powerwall
@@ -840,6 +846,30 @@
     - blueprint: gas_sensors/JT-BZ-01AQ-A
       verification_level: verified
 
+- id: pst-gpr-x500
+  display_name: PST GPR-x500 Oxygen Analyzer
+  description: Trace oxygen measurement device with 4-20 mA analog output.
+  icon: enapter-gauge
+  vendor: pst
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/pst_gpr_x500
+      display_name: Lua API V3 Version
+      description: Integration of PST GPR-x500 Oxygen Analyzer via 4-20 mA analog input (Lua API V3).
+      verification_level: ready_for_testing
+
+- id: michell-easidew
+  display_name: Michell Easidew Online Hygrometer
+  description: Dew point and moisture content measurement with Modbus RTU over RS-485.
+  icon: enapter-gas-sensor
+  vendor: michell
+  category: gas_sensors
+  blueprint_options:
+    - blueprint: gas_sensors/michell_easidew
+      display_name: Lua API V3 Version
+      description: Michell Easidew Online Hygrometer integration (Lua API V3).
+      verification_level: ready_for_testing
+
 - id: xiaomi-sjcgq12lm
   display_name: Xiaomi SJCGQ12LM
   description: Zigbee Water Leak Sensor
@@ -899,7 +929,13 @@
   vendor: electricity_maps
   category: cloud_services
   blueprint_options:
+    - blueprint: cloud_services/electricity_maps_v3
+      display_name: Lua API V3 Version
+      description: Electricity Maps API integration (Lua API V3).
+      verification_level: ready_for_testing
     - blueprint: cloud_services/electricity_maps
+      display_name: Lua API V1 Version
+      description: Electricity Maps API integration (Lua API V1).
       verification_level: verified
 
 - id: sorel_mtdc

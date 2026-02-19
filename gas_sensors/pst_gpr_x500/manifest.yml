@@ -1,0 +1,91 @@
+blueprint_spec: device/3.0
+
+display_name: GPR-x500 Oxygen Analyzer
+description: Integration of GPR-x500 Oxygen Analyzer via 4-20 mA analog input.
+icon: enapter-gauge
+license: MIT
+author: enapter
+contributors:
+  - enapter-assistant
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+category: sensors
+
+runtime:
+  type: lua
+  requirements:
+    - analogin
+  options:
+    file: main.lua
+
+configuration:
+  connection:
+    display_name: Connection
+    description: Analog input connection settings
+    access_level: owner
+    parameters:
+      conn_str:
+        display_name: Connection String
+        description: e.g. port://ai-1
+        type: string
+        format: connection_uri
+        required: true
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    display_name: Model
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      ok:
+        display_name: OK
+        color: green
+      conn_error:
+        display_name: Communication Error
+        color: orange
+  oxygen_concentration:
+    display_name: Oxygen Concentration
+    description: Measured oxygen concentration.
+    type: float
+    unit: "[ppm]"
+  adc_current:
+    display_name: ADC Current
+    description: Raw current reading of the sensor analog signal.
+    type: float
+    unit: mA
+  conn_alerts:
+    display_name: Connection Alerts
+    description: Alerts indicating connection and configuration issues.
+    type: alerts
+
+alerts:
+  not_configured:
+    severity: info
+    display_name: Not Configured
+    description: Device not set up. Go to Configuration to connect.
+  communication_failed:
+    severity: error
+    display_name: Communication Failed
+    description: Failed to read data from the analog input.
+    grace_period: 15s
+    troubleshooting:
+      - Double check the physical connection to the analog input port.
+      - Ensure that the connection string matches the correct analog input port.
+      - Verify that the sensor is powered and outputting a valid 4-20 mA signal.
+
+.cloud:
+  mobile_main_chart: oxygen_concentration
+  mobile_telemetry:
+    - oxygen_concentration
+    - adc_current
+  mobile_charts:
+    - oxygen_concentration
+    - adc_current
