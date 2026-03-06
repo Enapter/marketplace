@@ -21,6 +21,12 @@ function send_properties()
   if sma then
     properties.serial_num = sma:read_u32_fix0(30057)
     properties.model = parse_model(sma:read_u32_enum(30053))
+
+    local nominal_capacity_ah = sma:read_u32_fix0(40031)
+    local nominal_voltage = sma:read_u32_fix0(40037)
+    if nominal_capacity_ah and nominal_voltage then
+      properties.nominal_capacity = nominal_capacity_ah * nominal_voltage / 1000
+    end
   end
 
   local values, err = config.read_all()
