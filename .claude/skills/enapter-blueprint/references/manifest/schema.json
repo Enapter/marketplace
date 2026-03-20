@@ -1,0 +1,1005 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api.enapter.com/schemas/json/blueprints/v3/device/schema.json",
+  "title": "Blueprint manifest",
+  "description": "Device Blueprint for Enapter Cloud",
+  "type": "object",
+  "required": [
+    "blueprint_spec",
+    "display_name",
+    "runtime"
+  ],
+  "patternProperties": {
+    "^\\.\\w*$": {}
+  },
+  "additionalProperties": false,
+  "properties": {
+    "blueprint_spec": {
+      "description": "Version of Enapter Cloud Blueprint used for this manifest",
+      "$comment": "Add { const: 3.x } for any new minor blueprint specification version",
+      "anyOf": [
+        {
+          "const": "device/3.0"
+        }
+      ]
+    },
+    "implements": {
+      "$ref": "#/definitions/implements"
+    },
+    "implements_draft": {
+      "$ref": "#/definitions/implements"
+    },
+    "category": {
+      "description": "Category of the device. It is used to group devices in the Cloud UI.",
+      "type": "string",
+      "enum": [
+        "hydrogen-storage",
+        "electrolysers",
+        "solar-generators",
+        "fuel-cells",
+        "water-treatment",
+        "battery-systems",
+        "power-meters",
+        "hvac",
+        "electric-vehicles",
+        "control",
+        "data-providers",
+        "sensors"
+      ]
+    },
+    "display_name": {
+      "description": "Display name to be shown to users in Blueprints Marketplace.",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description to be shown to users in Blueprints Marketplace.",
+      "type": "string"
+    },
+    "icon": {
+      "description": "Device icon to show in the UI. Must be one from [the full list of available icons](https://static.enapter.com/rn/icons/material-community.html).",
+      "type": "string"
+    },
+    "properties": {
+      "description": "Properties are Device metadata which unlike telemetry does not change during device normal operation. It could be firmware version, device model, serial number and similar.",
+      "type": "object",
+      "$comment": "$ref by unique local IDs currently not supported by yaml service (at least), see https://git.io/JUAea, thus paths must be used",
+      "patternProperties": {
+        "^[A-Za-z][A-Za-z0-9_]*$": {
+          "$ref": "#/definitions/property"
+        }
+      },
+      "additionalProperties": false
+    },
+    "telemetry": {
+      "description": "Telemetry contains of Device's metrics or states which must be tracked during device operations as a timeseries data. For example, sensors data and internal device states goes into this category.",
+      "type": "object",
+      "patternProperties": {
+        "^[A-Za-z][A-Za-z0-9_]*$": {
+          "$ref": "#/definitions/telemetryAttribute"
+        }
+      },
+      "additionalProperties": false
+    },
+    "command_groups": {
+      "description": "Commands could be grouped. If command groups are declared, it's required to set group ID for each command. It's not necessary to use groups, but convenient when device has many commands.",
+      "type": "object",
+      "patternProperties": {
+        "^[A-Za-z][A-Za-z0-9_]*$": {
+          "$ref": "#/definitions/commandGroup"
+        }
+      },
+      "additionalProperties": false
+    },
+    "commands": {
+      "description": "Commands which can be performed on device. Lua firmware on the module must implement methods with names according to command IDs",
+      "type": "object",
+      "patternProperties": {
+        "^[A-Za-z][A-Za-z0-9_]*$": {
+          "$ref": "#/definitions/command"
+        }
+      },
+      "additionalProperties": false
+    },
+    "alerts": {
+      "description": "Alerts are faulty device states, e.g. \"overheated heatsink\".\nLua firmware must send IDs of these alerts in `alerts` field inside telemetry JSON if device is in active alert state. All IDs sent by device, that not declared in this list will still be considered as alerts of severity `error` with display_name equal to alert ID.",
+      "type": "object",
+      "patternProperties": {
+        "^[A-Za-z0-9_-]+$": {
+          "$ref": "#/definitions/alert"
+        }
+      },
+      "additionalProperties": false
+    },
+    "runtime": {
+      "type": "object",
+      "description": "The runtime section describes the type of runtime, options, and requirements necessary to implement device integration.",
+      "$ref": "#/definitions/runtime"
+    },
+    "author": {
+      "description": "Blueprint author username on GitHub.",
+      "type": "string"
+    },
+    "contributors": {
+      "description": "Users, who have contributed to this blueprint.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "support": {
+      "description": "Support information contains web address and email.",
+      "type": "object",
+      "$ref": "#/definitions/support"
+    },
+    "license": {
+      "description": "License type, which blueprint based on.",
+      "type": "string"
+    },
+    "units": {
+      "type": "object",
+      "description": "Contains custom units which are not supported by UCUM but make sense for user.",
+      "additionalProperties": {
+        "$ref": "#/definitions/unit"
+      }
+    },
+    "configuration": {
+      "type": "object",
+      "description": "Configuration settings for the device.",
+      "patternProperties": {
+        "^[A-Za-z][A-Za-z0-9_]*$": {
+          "$ref": "#/definitions/configurationBucket"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "definitions": {
+    "property": {
+      "type": "object",
+      "required": [
+        "type",
+        "display_name"
+      ],
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/typeField"
+        },
+        "implements": {
+          "$ref": "#/definitions/implements"
+        },
+        "aliases": {
+          "$ref": "#/definitions/aliases"
+        },
+        "unit": {
+          "description": "Unit identifier, used in charts and telemetry-related UIs. Most of the commonly used units are covered in the supported units list (https://ucum.org/docs/common-units). You can still provide your own units via global units section.",
+          "type": "string"
+        },
+        "allow_unit_c": {
+          "description": "Allow to use C unit symbol as Coulomb. It's frequently missused for Celsius and this option allows to disable validation warning.",
+          "type": "boolean"
+        },
+        "allow_unit_f": {
+          "description": "Allow to use F unit symbol as Farad. It's frequently missused for Fahrenheit and this option allows to disable validation warning.",
+          "type": "boolean"
+        },
+        "auto_scale": {
+          "description": "Specifies the units to which the property value can be scaled within the UI.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "display_name": {
+          "description": "Display name which will be shown to the users in the UI.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional property description is shown to user in UIs. If not given, description will be empty.",
+          "type": "string"
+        },
+        "enum": {
+          "$ref": "#/definitions/enumField"
+        },
+        "access_level": {
+          "$ref": "#/definitions/accessLevel",
+          "description": "User should have required access level for reading property"
+        },
+        "json_schema": {
+          "description": "JSON schema or path to file with it",
+          "type": "string"
+        }
+      }
+    },
+    "telemetryAttribute": {
+      "type": "object",
+      "required": [
+        "type",
+        "display_name"
+      ],
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "Lua firmware should send data according to type declarations. Supported types are: boolean, string, integer, float, array_of_strings",
+          "type": "string",
+          "enum": [
+            "boolean",
+            "string",
+            "integer",
+            "float",
+            "array_of_strings",
+            "alerts"
+          ]
+        },
+        "implements": {
+          "$ref": "#/definitions/implements"
+        },
+        "aliases": {
+          "$ref": "#/definitions/aliases"
+        },
+        "display_name": {
+          "description": "Display name which will be shown to the users in the UI.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional property description is shown to user in UIs. If not given, description will be empty.",
+          "type": "string"
+        },
+        "enum": {
+          "$ref": "#/definitions/enumFieldTelemetry"
+        },
+        "unit": {
+          "description": "Unit identifier, used in charts and telemetry-related UIs. Most of the commonly used units are covered in the supported units list (https://ucum.org/docs/common-units). You can still provide your own units via global units section.",
+          "type": "string"
+        },
+        "allow_unit_c": {
+          "description": "Allow to use C unit symbol as Coulomb. It's frequently missused for Celsius and this option allows to disable validation warning.",
+          "type": "boolean"
+        },
+        "allow_unit_f": {
+          "description": "Allow to use F unit symbol as Farad. It's frequently missused for Fahrenheit and this option allows to disable validation warning.",
+          "type": "boolean"
+        },
+        "auto_scale": {
+          "description": "Specifies the units to which the telemetry value can be scaled within the UI.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "access_level": {
+          "$ref": "#/definitions/accessLevel",
+          "description": "User should have required access level for reading telemetry"
+        }
+      }
+    },
+    "commandGroup": {
+      "type": "object",
+      "required": [
+        "display_name"
+      ],
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "type": "string",
+          "description": "Display name which will be shown as a heading of the commands group on the commands screen."
+        },
+        "description": {
+          "description": "Optional command group description to show in UIs. If not provided, will be omitted.",
+          "type": "string"
+        },
+        "ui": {
+          "type": "object",
+          "patternProperties": {
+            "^\\.\\w*$": {}
+          },
+          "additionalProperties": false,
+          "properties": {
+            "icon": {
+              "type": "string",
+              "description": "Optional command icon, string key from [Material UI](https://static.enapter.com/rn/icons/material-community.html)"
+            }
+          }
+        }
+      }
+    },
+    "command": {
+      "type": "object",
+      "required": [
+        "group",
+        "display_name"
+      ],
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "implements": {
+          "$ref": "#/definitions/implements"
+        },
+        "aliases": {
+          "$ref": "#/definitions/aliases"
+        },
+        "group": {
+          "type": "string",
+          "description": "Define in which command group this command will belong to. Should match with one of the command groups name. Refer to `command_groups` field description"
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Display name which will be shown to the users in the UI."
+        },
+        "description": {
+          "description": "Optional command description to show in UIs. If not provided, will be omitted.",
+          "type": "string"
+        },
+        "arguments": {
+          "type": "object",
+          "description": "Arguments to be supplied to command. Corresponding function in Lua firmware should accept these as a named arguments.",
+          "patternProperties": {
+            "^[A-Za-z][A-Za-z0-9_]*$": {
+              "$ref": "#/definitions/commandArgument"
+            }
+          },
+          "additionalProperties": false
+        },
+        "response": {
+          "type": "object",
+          "description": "Response returned by the command after execution.",
+          "additionalProperties": {
+            "$ref": "#/definitions/commandResponse"
+          }
+        },
+        "ui": {
+          "type": "object",
+          "patternProperties": {
+            "^\\.\\w*$": {}
+          },
+          "additionalProperties": false,
+          "properties": {
+            "icon": {
+              "type": "string",
+              "description": "Optional command icon, string key from [Material UI](https://static.enapter.com/rn/icons/material-community.html)"
+            },
+            "quick_access": {
+              "type": "boolean",
+              "description": "Optional property for displaying command in quick access command menu in mobile"
+            }
+          }
+        },
+        "confirmation": {
+          "type": "object",
+          "required": [
+            "severity",
+            "title"
+          ],
+          "patternProperties": {
+            "^\\.\\w*$": {}
+          },
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "description": "Main text for confirmation dialog before execution command",
+              "type": "string"
+            },
+            "severity": {
+              "description": "Severity level for confirmation dialog",
+              "type": "string",
+              "enum": [
+                "info",
+                "warning"
+              ]
+            },
+            "title": {
+              "description": "Title for confirmation dialog before execution command",
+              "type": "string"
+            }
+          }
+        },
+        "access_level": {
+          "$ref": "#/definitions/accessLevel",
+          "description": "User should have required access level for executing command"
+        },
+        "read_access_level": {
+          "$ref": "#/definitions/accessLevel",
+          "description": "User should have required access level for reading command execution logs"
+        },
+        "populate_values_command": {
+          "type": "string",
+          "description": "The name of the command which should be used for reading the values for the arguments form pre-population. This read command should return a Lua table with the same keys as the arguments in the write command."
+        }
+      }
+    },
+    "commandArgument": {
+      "type": "object",
+      "required": [
+        "type",
+        "display_name"
+      ],
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "type": "string",
+          "description": "Display name which will be shown to the users in the UI."
+        },
+        "description": {
+          "type": "string",
+          "description": "A more detailed description of the argument. It will be shown next to the argument field in the arguments form."
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "type": {
+          "$ref": "#/definitions/typeField"
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "enum": {
+          "$ref": "#/definitions/enumField"
+        },
+        "format": {
+          "type": "string",
+          "description": "Predefined format for string type can be used."
+        },
+        "json_schema": {
+          "description": "JSON schema or path to file with it",
+          "type": "string"
+        },
+        "sensitive": {
+          "type": "boolean"
+        },
+        "default": {
+          "description": "Default value to be supplied to command if is not present in user input. Must be the same type as declared type of the argument",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        }
+      }
+    },
+    "commandResponse": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "type": "string",
+          "description": "Display name which will be shown to the users in the UI."
+        },
+        "description": {
+          "type": "string",
+          "description": "A more detailed description of the response."
+        },
+        "type": {
+          "$ref": "#/definitions/typeField"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "enum": {
+          "$ref": "#/definitions/enumField"
+        },
+        "format": {
+          "type": "string",
+          "description": "Predefined format for string type can be used."
+        },
+        "json_schema": {
+          "description": "JSON schema or path to file with it",
+          "type": "string"
+        }
+      }
+    },
+    "alert": {
+      "type": "object",
+      "required": [
+        "severity",
+        "display_name"
+      ],
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "severity": {
+          "type": "string",
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ],
+          "description": "Supported severities are: info, warning, error."
+        },
+        "code": {
+          "type": "string",
+          "description": "Vendor-specific alert code, which may be useful, for example, for checking in the device manual."
+        },
+        "grace_period": {
+          "type": "string",
+          "description": "Period in duration format (1m, 2m30s) when soft fail become hard fail. If empty grace period is equal zero."
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Display name which will be shown to the users in the UI."
+        },
+        "description": {
+          "description": "Optional alert description to show in UIs. If not provided, will be omitted.",
+          "type": "string"
+        },
+        "troubleshooting": {
+          "description": "Troubleshooting steps to show in UIs.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "telemetry": {
+          "description": "Telemetry attributes that are related to the alert.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "components": {
+          "description": "Device components that are related to the alert.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conditions": {
+          "description": "Conditions which may cause the alert raising.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "lua",
+            "embedded"
+          ]
+        },
+        "options": {
+          "description": "The options section describes options that may be needed to configure runtime.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/luaOptions"
+            }
+          ]
+        },
+        "requirements": {
+          "type": "array",
+          "description": "Requirements describe what is needed for the blueprint to function successfully. This field provides information on where to run the blueprint.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "luaOptions": {
+      "type": "object",
+      "description": "Options describe settings that may needed for lua runtime.",
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "dir": {
+          "type": "string",
+          "description": "Directory with Lua files. It should contain main.lua as an entrypoint. Cannot be used alongside with file."
+        },
+        "file": {
+          "type": "string",
+          "description": "Lua script. Cannot be used alongside with dir."
+        },
+        "rockspec": {
+          "type": "string",
+          "description": "Rockspec file name. Cannot be used alongside with luarocks."
+        },
+        "luarocks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Lua script dependencies. Every item is a rockspec package. Cannot be used alongside with rockspec."
+        },
+        "allow_dev_luarocks": {
+          "type": "boolean",
+          "description": "Allow to use luarocks dev packages."
+        },
+        "amalg_mode": {
+          "description": "Optional mode to use for amalgamation.",
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "isolate",
+                "nodebug"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "isolate",
+                  "nodebug"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "support": {
+      "type": "object",
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Web address when user can to get any support about blueprint."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address for user's support mails."
+        }
+      }
+    },
+    "typeField": {
+      "description": "Lua firmware should send/accept data according to type declarations. Supported types are: boolean, string, integer, float, json",
+      "type": "string",
+      "enum": [
+        "boolean",
+        "string",
+        "integer",
+        "float",
+        "array_of_strings",
+        "json"
+      ]
+    },
+    "accessLevel": {
+      "type": "string",
+      "enum": [
+        "readonly",
+        "user",
+        "owner",
+        "installer",
+        "vendor",
+        "system"
+      ]
+    },
+    "enumField": {
+      "description": "Enumerables restrict possible field values. Values should be of the same type as defined in `type` field.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/enumItemField"
+          }
+        }
+      ]
+    },
+    "enumFieldTelemetry": {
+      "description": "Enumerables restrict possible field values. Values should be of the same type as defined in `type` field.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/enumItemFieldTelemetry"
+          }
+        }
+      ]
+    },
+    "enumItemField": {
+      "description": "One of the possible fields' values.",
+      "type": "object",
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "description": "Display name which will be shown to the users in the UI.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional description to show in UIs. If not provided, will be omitted.",
+          "type": "string"
+        }
+      }
+    },
+    "enumItemFieldTelemetry": {
+      "description": "One of the possible fields' values.",
+      "type": "object",
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "description": "Display name which will be shown to the users in the UI.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional description to show in UIs. If not provided, will be omitted.",
+          "type": "string"
+        },
+        "color": {
+          "description": "Optional color to show in UIs. If not provided, will be omitted.",
+          "type": "string",
+          "enum": [
+            "blue-lighter",
+            "blue-light",
+            "blue",
+            "blue-dark",
+            "blue-darker",
+            "yellow-lighter",
+            "yellow-light",
+            "yellow",
+            "yellow-dark",
+            "yellow-darker",
+            "green-lighter",
+            "green-light",
+            "green",
+            "green-dark",
+            "green-darker",
+            "red-lighter",
+            "red-light",
+            "red",
+            "red-dark",
+            "red-darker",
+            "cyan-lighter",
+            "cyan-light",
+            "cyan",
+            "cyan-dark",
+            "cyan-darker",
+            "pink-lighter",
+            "pink-light",
+            "pink",
+            "pink-dark",
+            "pink-darker",
+            "purple-lighter",
+            "purple-light",
+            "purple",
+            "purple-dark",
+            "purple-darker",
+            "orange-lighter",
+            "orange-light",
+            "orange",
+            "orange-dark",
+            "orange-darker"
+          ]
+        }
+      }
+    },
+    "implements": {
+      "description": "List of implement device profiles",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "aliases": {
+      "description": "List of aliases for command, property or telemetry attribute",
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_]+$"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_]+$"
+          }
+        }
+      ]
+    },
+    "unit": {
+      "description": "User-defined unit",
+      "type": "object",
+      "required": [
+        "symbol"
+      ],
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "symbol": {
+          "description": "Unit's representation in UI",
+          "type": "string"
+        },
+        "display_name": {
+          "description": "Unit's text representation",
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional unit description to show in UIs.",
+          "type": "string"
+        }
+      }
+    },
+    "configurationBucket": {
+      "type": "object",
+      "required": [
+        "display_name",
+        "parameters"
+      ],
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "description": "Display name for the configuration bucket.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Description of the configuration bucket.",
+          "type": "string"
+        },
+        "access_level": {
+          "$ref": "#/definitions/accessLevel"
+        },
+        "ui": {
+          "type": "object",
+          "patternProperties": {
+            "^\\.\\w*$": {}
+          },
+          "additionalProperties": false,
+          "properties": {
+            "icon": {
+              "type": "string",
+              "description": "Optional command icon, string key from [Material UI](https://static.enapter.com/rn/icons/material-community.html)"
+            }
+          }
+        },
+        "parameters": {
+          "type": "object",
+          "patternProperties": {
+            "^[A-Za-z][A-Za-z0-9_]*$": {
+              "$ref": "#/definitions/configurationParameter"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "configurationParameter": {
+      "type": "object",
+      "required": [
+        "display_name",
+        "type"
+      ],
+      "patternProperties": {
+        "^\\.\\w*$": {}
+      },
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "description": "Display name for the parameter.",
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "description": "A more detailed description of the parameter."
+        },
+        "type": {
+          "$ref": "#/definitions/typeField"
+        },
+        "default": {
+          "description": "Default value to be supplied if is not present in user input. Must be the same type as declared type of the parameter",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        },
+        "required": {
+          "description": "Indicates if the parameter is required.",
+          "type": "boolean"
+        },
+        "sensitive": {
+          "description": "Indicates if the parameter is sensitive.",
+          "type": "boolean"
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "enum": {
+          "$ref": "#/definitions/enumField"
+        },
+        "format": {
+          "type": "string",
+          "description": "Predefined format for string type can be used."
+        }
+      }
+    }
+  }
+}

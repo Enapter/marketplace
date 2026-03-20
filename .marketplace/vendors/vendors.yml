@@ -277,3 +277,13 @@
   display_name: Carlo Gavazzi
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/carlo-gavazzi.png
   website: https://www.gavazziautomation.com
+
+- id: pst
+  display_name: Process Sensing Technologies
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/pst.png
+  website: https://www.processsensing.com
+
+- id: michell
+  display_name: Michell Instruments
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/michell.jpg
+  website: https://www.michell.com

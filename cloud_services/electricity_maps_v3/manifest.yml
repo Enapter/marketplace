@@ -1,0 +1,138 @@
+blueprint_spec: device/3.0
+
+display_name: Electricity Maps
+description: Electricity Maps API integration for monitoring regional power generation and carbon footprint.
+icon: leaf
+category: data-providers
+license: MIT
+author: enapter
+contributors:
+  - nkrasko
+  - enapter-assistant
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+
+runtime:
+  type: lua
+  options:
+    file: main.lua
+
+units:
+  gCO2eq_per_kWh:
+    symbol: gCO2eq/kWh
+    display_name: Grams of CO2 equivalent per kilowatt-hour
+
+configuration:
+  connection:
+    display_name: API Connection
+    description: Electricity Maps API credentials and location
+    access_level: owner
+    parameters:
+      token:
+        display_name: Access Token
+        description: Register at https://api-portal.electricitymaps.com/
+        type: string
+        required: true
+        sensitive: true
+      lat:
+        display_name: Latitude
+        description: Latitude of your energy system location
+        type: string
+        required: true
+      lon:
+        display_name: Longitude
+        description: Longitude of your energy system location
+        type: string
+        required: true
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  zone:
+    type: string
+    display_name: World Zone
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      ok:
+        display_name: Online
+        color: green
+      conn_error:
+        display_name: Offline
+        color: red
+  carbon_intensity:
+    display_name: Carbon Intensity
+    type: float
+    unit: gCO2eq_per_kWh
+  power_consumption_total:
+    display_name: Total Power Consumption
+    type: float
+    unit: MW
+  power_production_total:
+    display_name: Total Power Production
+    type: float
+    unit: MW
+  fossil_free_percentage:
+    display_name: Fossil Free Energy
+    type: float
+    unit: "%"
+  renewable_percentage:
+    display_name: Renewable Energy
+    type: float
+    unit: "%"
+  conn_alerts:
+    display_name: Connection Alerts
+    description: Alerts indicating connection and configuration issues.
+    type: alerts
+
+alerts:
+  not_configured:
+    severity: info
+    display_name: Not Configured
+    description: API connection not configured. Go to Configuration to set token and coordinates.
+  communication_failed:
+    severity: error
+    display_name: Communication Failed
+    description: Failed to reach Electricity Maps API.
+    grace_period: 30s
+    troubleshooting:
+      - Check your internet connection.
+      - Verify the API token is valid.
+  wrong_credentials:
+    severity: error
+    display_name: Authentication Failed
+    description: Electricity Maps API rejected the access token.
+    troubleshooting:
+      - Verify that the API token in Configuration is correct.
+      - Check your subscription at https://api-portal.electricitymaps.com/
+  invalid_response:
+    severity: error
+    display_name: Invalid API Response
+    description: Electricity Maps API returned an unexpected response.
+    troubleshooting:
+      - Check that your coordinates point to a supported region.
+      - The API service may be temporarily unavailable.
+  no_data:
+    severity: error
+    display_name: No Data for Location
+    description: |
+      Electricity Maps API returned no data for the selected location.
+      Check your coordinates in Configuration.
+
+.cloud:
+  mobile_main_chart: carbon_intensity
+  mobile_telemetry:
+    - carbon_intensity
+    - fossil_free_percentage
+    - renewable_percentage
+  mobile_charts:
+    - carbon_intensity
+    - power_consumption_total
+    - power_production_total
+    - fossil_free_percentage
+    - renewable_percentage
