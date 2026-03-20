@@ -31,7 +31,7 @@ function reconnect()
 
   conn_cfg = cfg
   local client, err = modbus.new(conn_cfg.conn_str)
-  if not err then
+  if err ~= nil then
     conn_error_msg = 'failed to connect: ' .. err
     return
   end
