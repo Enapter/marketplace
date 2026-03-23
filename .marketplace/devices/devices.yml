@@ -275,9 +275,13 @@
       description: Use ENP-RL6 to control your fuel cell. It does not include monitoring functions.
       verification_level: verified
     - blueprint: fuel_cells/intelligent_energy_fcm_804
-      display_name: Full Integration with Gateway
+      display_name: Full Integration with Gateway Lua API V1 Version
       description: Use Enapter Gateway and Generic IO to integrate fuel cell as a single devices.
       verification_level: verified
+    - blueprint: fuel_cells/intelligent_energy_fcm_804_v3
+      display_name: Lua API V3 Version
+      description: Full integration with monitoring and control using Lua API V3.
+      verification_level: ready_for_testing
 
 - id: m-field-energy-fuel-cell
   display_name: M-Field Fuel Cell
