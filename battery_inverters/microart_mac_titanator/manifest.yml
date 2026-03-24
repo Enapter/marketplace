@@ -37,7 +37,7 @@ telemetry:
     type: string
     display_name: Status
     enum:
-      - 'Off'
+      - "Off"
       - Off Grid Present
       - On Battery
       - On Grid
@@ -81,7 +81,7 @@ telemetry:
   battery_soc:
     type: float
     display_name: Battery State of Charge
-    unit: '%'
+    unit: "%"
 
   battery_remaining_ah:
     type: float
