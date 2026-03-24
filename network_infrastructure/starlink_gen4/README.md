@@ -31,36 +31,36 @@ The request and response are encoded as Protocol Buffers. The blueprint implemen
 
 ### Connectivity
 
-| Telemetry | Description |
-|-----------|-------------|
-| Downlink Throughput | Current download speed (Mbps) |
-| Uplink Throughput | Current upload speed (Mbps) |
-| Ping Latency | Round-trip latency to SpaceX PoP (ms) |
-| Ping Drop Rate | Packet loss percentage |
-| Status | Connectivity status from SpaceX service (Connected, Roam Restricted, etc.) |
+| Telemetry           | Description                                                                |
+| ------------------- | -------------------------------------------------------------------------- |
+| Downlink Throughput | Current download speed (Mbps)                                              |
+| Uplink Throughput   | Current upload speed (Mbps)                                                |
+| Ping Latency        | Round-trip latency to SpaceX PoP (ms)                                      |
+| Ping Drop Rate      | Packet loss percentage                                                     |
+| Status              | Connectivity status from SpaceX service (Connected, Roam Restricted, etc.) |
 
 ### Signal & Antenna
 
-| Telemetry | Description |
-|-----------|-------------|
-| Obstruction | Percentage of sky view blocked |
-| Antenna Azimuth | Dish pointing azimuth (degrees) |
-| Antenna Elevation | Dish pointing elevation (degrees) |
-| SNR Above Noise Floor | Signal quality indicator |
+| Telemetry             | Description                       |
+| --------------------- | --------------------------------- |
+| Obstruction           | Percentage of sky view blocked    |
+| Antenna Azimuth       | Dish pointing azimuth (degrees)   |
+| Antenna Elevation     | Dish pointing elevation (degrees) |
+| SNR Above Noise Floor | Signal quality indicator          |
 
 ### System
 
-| Telemetry | Description |
-|-----------|-------------|
-| GPS Valid | GPS lock status |
-| GPS Satellites | Number of GPS satellites tracked |
-| Uptime | Time since last reboot (seconds) |
-| Software Update State | Firmware update progress |
+| Telemetry             | Description                      |
+| --------------------- | -------------------------------- |
+| GPS Valid             | GPS lock status                  |
+| GPS Satellites        | Number of GPS satellites tracked |
+| Uptime                | Time since last reboot (seconds) |
+| Software Update State | Firmware update progress         |
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
+| Command     | Description                        |
+| ----------- | ---------------------------------- |
 | Reboot Dish | Sends a reboot command to the dish |
 
 ## References
