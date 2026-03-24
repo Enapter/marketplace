@@ -1,3 +1,15 @@
+- id: starlink-gen4
+  display_name: Starlink Gen4 Dish
+  description: >
+    SpaceX Starlink Generation 4 satellite dish with real-time connectivity
+    monitoring via the local gRPC API.
+  icon: enapter-satellite-internet
+  vendor: spacex
+  category: network_infrastructure
+  blueprint_options:
+    - blueprint: network_infrastructure/starlink_gen4
+      verification_level: verified
+
 - id: alarm-with-sonoff-433-rf-bridge
   display_name: Alarm sensor connected to Sonoff 433 RF Bridge
   description: Alarm sensor connected to Sonoff 433 RF Bridge via eWelink REST API Server.
