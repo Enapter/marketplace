@@ -71,11 +71,11 @@ telemetry:
   ping_drop_rate:
     display_name: Ping Drop Rate
     type: float
-    unit: '%'
+    unit: "%"
   fraction_obstructed:
     display_name: Obstruction
     type: float
-    unit: '%'
+    unit: "%"
   azimuth_deg:
     display_name: Antenna Azimuth
     type: float
