@@ -3,6 +3,11 @@
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/enapter.png
   website: https://enapter.com
 
+- id: spacex
+  display_name: SpaceX
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/spacex.png
+  website: https://www.starlink.com
+
 - id: pylontech
   display_name: Pylontech
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/pylontech.png

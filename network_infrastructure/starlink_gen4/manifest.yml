@@ -1,0 +1,214 @@
+blueprint_spec: device/1.0
+
+display_name: Starlink Gen4 Dish
+description: >
+  SpaceX Starlink Generation 4 satellite dish with real-time connectivity
+  monitoring via the local gRPC API. Reports throughput, latency, obstruction
+  statistics, GPS, and antenna pointing data.
+icon: enapter-satellite-internet
+vendor: spacex
+license: MIT
+author: enapter
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua_file: firmware.lua
+
+properties:
+  id:
+    display_name: Device ID
+    type: string
+  hardware_version:
+    display_name: Hardware Version
+    type: string
+  software_version:
+    display_name: Software Version
+    type: string
+  country_code:
+    display_name: Country Code
+    type: string
+  eth_speed_mbps:
+    display_name: Ethernet Speed
+    type: integer
+    unit: Mbps
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - Connected
+      - No active account
+      - Too far from service address
+      - In ocean
+      - Blocked country
+      - Data overage
+      - Cell disabled
+      - Roam restricted
+      - Unknown location
+      - Account disabled
+      - Unsupported version
+      - Moving too fast
+      - Aviation flyover limits
+      - Blocked area
+      - No data
+      - Unknown
+  downlink_throughput_mbps:
+    display_name: Downlink Throughput
+    type: float
+    unit: Mbps
+  uplink_throughput_mbps:
+    display_name: Uplink Throughput
+    type: float
+    unit: Mbps
+  ping_latency_ms:
+    display_name: Ping Latency
+    type: float
+    unit: ms
+  ping_drop_rate:
+    display_name: Ping Drop Rate
+    type: float
+    unit: "%"
+  fraction_obstructed:
+    display_name: Obstruction
+    type: float
+    unit: "%"
+  azimuth_deg:
+    display_name: Antenna Azimuth
+    type: float
+    unit: °
+  elevation_deg:
+    display_name: Antenna Elevation
+    type: float
+    unit: °
+  snr_above_noise_floor:
+    display_name: SNR Above Noise Floor
+    type: boolean
+  gps_valid:
+    display_name: GPS Valid
+    type: boolean
+  gps_sats:
+    display_name: GPS Satellites
+    type: integer
+  uptime_s:
+    display_name: Uptime
+    type: integer
+    unit: s
+  power_w:
+    display_name: Power Consumption
+    type: float
+    unit: W
+  software_update_state:
+    display_name: Software Update State
+    type: string
+    enum:
+      idle:
+        display_name: Idle
+      fetching:
+        display_name: Fetching Update
+      pre_check:
+        display_name: Pre-check
+      writing:
+        display_name: Writing
+      post_check:
+        display_name: Post-check
+      reboot_required:
+        display_name: Reboot Required
+      disabled:
+        display_name: Disabled
+      faulted:
+        display_name: Faulted
+      unknown:
+        display_name: Unknown
+
+alerts:
+  no_data:
+    severity: error
+    display_name: No Data From Dish
+    description: >
+      Cannot reach the Starlink dish at 192.168.100.1:9200.
+      Ensure the Enapter Virtual UCM is on the same network as the dish.
+  obstructed:
+    severity: warning
+    display_name: Dish Currently Obstructed
+    description: The dish field of view is currently blocked by an obstruction.
+  motors_stuck:
+    severity: error
+    display_name: Motors Stuck
+    description: Dish actuator motors are stuck and cannot move.
+  thermal_shutdown:
+    severity: error
+    display_name: Thermal Shutdown
+    description: Dish has shut down due to overheating.
+  thermal_throttle:
+    severity: warning
+    display_name: Thermal Throttling
+    description: Dish performance is reduced due to high temperature.
+  mast_not_near_vertical:
+    severity: warning
+    display_name: Mast Not Vertical
+    description: The dish mast is not sufficiently vertical for optimal performance.
+  slow_ethernet_speeds:
+    severity: warning
+    display_name: Slow Ethernet Speeds
+    description: Ethernet link is operating below expected speed.
+  is_heating:
+    severity: info
+    display_name: Snow Melt Active
+    description: Dish heating element is active for snow/ice melting.
+  power_supply_thermal_throttle:
+    severity: warning
+    display_name: Power Supply Thermal Throttle
+    description: Power supply is throttling due to high temperature.
+  dish_water_detected:
+    severity: error
+    display_name: Water Detected in Dish
+    description: Water ingress detected in the dish enclosure.
+  no_ethernet_link:
+    severity: error
+    display_name: No Ethernet Link
+    description: Ethernet link between dish and router is not established.
+  roaming:
+    severity: info
+    display_name: Roaming
+    description: Dish is operating in a roaming location outside home service area.
+  unexpected_location:
+    severity: warning
+    display_name: Unexpected Location
+    description: Dish is operating in an unexpected location.
+  install_pending:
+    severity: info
+    display_name: Installation Pending
+    description: Dish installation has not been completed.
+  power_save_idle:
+    severity: info
+    display_name: Power Save Idle
+    description: Dish is idle in power save mode.
+
+commands:
+  reboot:
+    display_name: Reboot Dish
+    group: dish
+    ui:
+      icon: restart
+      quick_access: false
+
+command_groups:
+  dish:
+    display_name: Dish
+
+.cloud:
+  category: network_infrastructure
+  mobile_main_chart: downlink_throughput_mbps
+  mobile_charts:
+    - downlink_throughput_mbps
+    - uplink_throughput_mbps
+    - ping_latency_ms
+    - ping_drop_rate
+    - fraction_obstructed
+    - power_w
+    - elevation_deg
+    - azimuth_deg
