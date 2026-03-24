@@ -1,0 +1,287 @@
+blueprint_spec: device/1.0
+
+display_name: MAC Titanator Inverter
+description: MAC(MAP) Titanator battery inverter / UPS with HTTP REST API
+icon: power-plug
+vendor: microart
+author: nkrasko
+contributors:
+  - nkrasko
+support:
+  url: http://enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.3.2
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  fw:
+    type: string
+    display_name: Firmware Version
+  uid:
+    type: string
+    display_name: Device S/N
+
+telemetry:
+  status:
+    type: string
+    display_name: Status
+    enum:
+      - Off
+      - Off Grid Present
+      - On Battery
+      - On Grid
+      - On Grid Charging
+      - Forced Generation
+      - Tariff Forced Generation
+      - Tariff Min
+      - Grid Eco
+      - Grid Sell
+      - Waiting Charge
+      - Tariff Grid Eco
+      - Tariff Grid Sell
+      - Pumping Pmax
+      - Unknown
+      - Error
+      - Not Configured
+
+  # Battery
+  battery_voltage:
+    type: float
+    display_name: Battery Voltage
+    unit: V
+
+  battery_current:
+    type: float
+    display_name: Battery Current
+    unit: A
+    description: Positive = charging, negative = discharging
+
+  battery_power:
+    type: float
+    display_name: Battery Power
+    unit: W
+    description: Positive = charging, negative = discharging
+
+  battery_temp:
+    type: float
+    display_name: Battery Temperature
+    unit: °C
+
+  battery_soc:
+    type: float
+    display_name: Battery State of Charge
+    unit: '%'
+
+  battery_remaining_ah:
+    type: float
+    display_name: Battery Remaining Capacity
+    unit: Ah
+
+  time_to_go:
+    type: integer
+    display_name: Time to Go
+    unit: s
+    description: Estimated seconds until full discharge. Zero when not discharging.
+
+  # Grid / AC input
+  grid_voltage:
+    type: float
+    display_name: Grid Input Voltage
+    unit: V
+
+  grid_current:
+    type: float
+    display_name: Grid Input Current
+    unit: A
+    description: Positive = consuming from grid, negative = exporting to grid
+
+  grid_power:
+    type: float
+    display_name: Grid Input Power
+    unit: VA
+    description: Positive = consuming from grid, negative = exporting to grid
+
+  grid_frequency:
+    type: float
+    display_name: Grid Input Frequency
+    unit: Hz
+
+  # AC output
+  output_voltage:
+    type: float
+    display_name: Output Voltage
+    unit: V
+
+  output_frequency:
+    type: float
+    display_name: Output Frequency
+    unit: Hz
+
+  output_power:
+    type: float
+    display_name: Output Power
+    unit: W
+    description: Total power delivered to loads (grid + battery discharge)
+
+  output_current:
+    type: float
+    display_name: Output Current
+    unit: A
+    description: Computed as output_power / output_voltage
+
+  # Temperatures
+  transistor_temp:
+    type: float
+    display_name: Transistor Temperature
+    unit: °C
+
+  # Renewable sources (from connected I2C controllers)
+  mppt_current:
+    type: float
+    display_name: Total MPPT Current
+    unit: A
+
+  mppt_power:
+    type: integer
+    display_name: Total MPPT Power
+    unit: W
+
+  wind_current:
+    type: float
+    display_name: Wind Generator Current
+    unit: A
+
+  wind_power:
+    type: integer
+    display_name: Wind Generator Power
+    unit: W
+
+  solar_power_day:
+    type: integer
+    display_name: Solar Energy Today
+    unit: Wh
+    description: Energy produced by renewable sources today
+
+  # Energy counters
+  energy_from_grid:
+    type: float
+    display_name: Energy Consumed from Grid
+    unit: kWh
+
+  energy_from_battery:
+    type: float
+    display_name: Energy Generated from Battery
+    unit: kWh
+
+  energy_to_battery:
+    type: float
+    display_name: Energy Charged to Battery
+    unit: kWh
+
+  # Misc
+  cooler_speed:
+    type: integer
+    display_name: Cooler Fan Speed
+
+  relay1:
+    type: integer
+    display_name: Relay 1 State
+
+  relay2:
+    type: integer
+    display_name: Relay 2 State
+
+alerts:
+  not_configured:
+    severity: info
+    display_name: Not Configured
+    description: Use the "Configure" command to set the inverter IP address.
+
+  http_error:
+    severity: error
+    display_name: HTTP Error
+    description: Cannot connect to the inverter. Check IP address and network connectivity.
+
+  battery_overload:
+    severity: error
+    display_name: Battery Overload
+    description: Battery current overload detected.
+
+  grid_overload:
+    severity: error
+    display_name: Grid Overload
+    description: Grid current overload detected.
+
+  rs_error:
+    severity: error
+    display_name: RS Communication Error
+    description: RS bus communication error reported by the inverter.
+
+  i2c_error:
+    severity: error
+    display_name: I2C Bus Error
+    description: I2C bus communication error (connected MPPT controllers).
+
+commands:
+  write_configuration:
+    display_name: Configure
+    group: config
+    populate_values_command: read_configuration
+    ui:
+      icon: wrench-outline
+    arguments:
+      ip_address:
+        display_name: IP Address
+        description: IP address of the МАП Титанатор (Малина gateway)
+        type: string
+        required: true
+
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+command_groups:
+  config:
+    display_name: Configuration
+
+.cloud:
+  category: batteries
+  mobile_main_chart: battery_soc
+  mobile_charts:
+    - battery_soc
+    - battery_power
+    - battery_voltage
+    - battery_current
+    - grid_power
+    - grid_voltage
+    - grid_current
+    - output_power
+    - output_current
+    - output_voltage
+    - mppt_power
+  mobile_telemetry:
+    - battery_soc
+    - time_to_go
+    - battery_power
+    - battery_voltage
+    - battery_current
+    - grid_power
+    - grid_voltage
+    - grid_current
+    - output_power
+    - output_current
+    - output_voltage
+    - mppt_power

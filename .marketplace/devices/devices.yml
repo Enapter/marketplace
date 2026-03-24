@@ -72,6 +72,16 @@
     - blueprint: battery_inverters/tesla_powerwall
       verification_level: verified
 
+- id: microart-mac-titanator
+  display_name: MicroArt MAC Titanator
+  description: MAC(MAP) Titanator battery inverter / UPS with HTTP REST API via built-in Malina2 gateway.
+  icon: enapter-inverter-battery
+  vendor: microart
+  category: battery_inverters
+  blueprint_options:
+    - blueprint: battery_inverters/microart_mac_titanator
+      verification_level: ready_for_testing
+
 - id: lg-resu-prime
   display_name: LG RESU Prime
   description: LG RESU 10h and LG RESU 16h Prime lithium battery control and monitoring.

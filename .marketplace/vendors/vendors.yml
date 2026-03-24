@@ -287,3 +287,8 @@
   display_name: Michell Instruments
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/michell.jpg
   website: https://www.michell.com
+
+- id: microart
+  display_name: MicroArt
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/microart.png
+  website: https://microart.ru
