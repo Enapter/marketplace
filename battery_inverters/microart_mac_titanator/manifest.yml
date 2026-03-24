@@ -37,7 +37,7 @@ telemetry:
     type: string
     display_name: Status
     enum:
-      - Off
+      - 'Off'
       - Off Grid Present
       - On Battery
       - On Grid
