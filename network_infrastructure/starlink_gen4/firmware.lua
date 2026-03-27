@@ -3,7 +3,7 @@
 -- Service: SpaceX.API.Device.Device/Handle
 --
 -- Two RPCs:
---   GetStatus  (field 1004 → field 2004 response): real-time metrics, every 30s
+--   GetStatus  (field 1004 → field 2004 response): real-time metrics, every 15s
 --   GetHistory (field 1007 → field 2006 response): power consumption, every 60s
 
 local DISH_IP = '192.168.100.1'
@@ -55,6 +55,12 @@ local SOFTWARE_UPDATE_STATE = {
   [7] = 'disabled',
   [8] = 'faulted',
 }
+
+-- Persistent HTTP/2 clients – created once in main() and reused across calls
+-- to avoid opening a new gRPC connection on every fetch.
+local status_client
+local history_client
+local reboot_client
 
 -- Cached state; fetch_status/fetch_history update these, send_telemetry reads them
 local status_cache = {}
@@ -128,13 +134,12 @@ local function pb_parse(data, from, to)
   return r
 end
 
-local function grpc_request(body, timeout)
+local function grpc_request(client, body)
   local url = 'http://' .. DISH_IP .. ':' .. GRPC_PORT .. GRPC_PATH
   local req = http.request('POST', url, body)
   req:set_header('Content-Type', 'application/grpc')
   req:set_header('TE', 'trailers')
 
-  local client = http.client({ timeout = timeout, http2 = true })
   local resp, err = client:do_request(req)
   if err then
     return nil, 'HTTP error: ' .. tostring(err)
@@ -204,7 +209,14 @@ local function decode_status(body)
   if st[1004] then
     local obs = pb_parse(st[1004], 1, #st[1004])
     d.fraction_obstructed = obs[1]
-    d.currently_obstructed = (obs[5] == 1)
+    -- Gen4 firmware removed the real-time currently_obstructed boolean (f5);
+    -- use a 5% fraction threshold as a proxy instead.
+  end
+
+  -- Router device ID connected to this dish (field 1050, sub-field 1)
+  if st[1050] then
+    local ri = pb_parse(st[1050], 1, #st[1050])
+    d.router_id = ri[1]
   end
 
   if st[1005] then
@@ -271,7 +283,7 @@ local function decode_history_power(body)
 end
 
 local function fetch_status()
-  local body, err = grpc_request(STATUS_REQUEST, 5)
+  local body, err = grpc_request(status_client, STATUS_REQUEST)
   if not body then
     enapter.log(tostring(err), 'error')
     status_err = 'no_data'
@@ -292,13 +304,16 @@ local function fetch_status()
     device_info.country_code = data.country_code
     device_info.eth_speed_mbps = data.eth_speed_mbps
   end
+  if data.router_id then
+    device_info.router_id = data.router_id
+  end
 
   status_cache = data
   status_err = nil
 end
 
 local function fetch_history()
-  local body, err = grpc_request(HISTORY_REQUEST, 30)
+  local body, err = grpc_request(history_client, HISTORY_REQUEST)
   if not body then
     enapter.log('History request failed: ' .. tostring(err), 'error')
     return
@@ -317,6 +332,7 @@ local function send_properties()
     software_version = device_info.software_version,
     country_code = device_info.country_code,
     eth_speed_mbps = device_info.eth_speed_mbps,
+    router_id = device_info.router_id,
   })
 end
 
@@ -329,7 +345,9 @@ local function send_telemetry()
   local d = status_cache
   local al = {}
 
-  if d.currently_obstructed then
+  -- Gen4 removed the real-time currently_obstructed flag; trigger when
+  -- more than 5% of the recent measurement window was obstructed.
+  if d.fraction_obstructed and d.fraction_obstructed > 0.05 then
     table.insert(al, 'obstructed')
   end
   if d.alert_motors_stuck == 1 then
@@ -378,7 +396,7 @@ local function send_telemetry()
     downlink_throughput_mbps = d.downlink_throughput_bps and d.downlink_throughput_bps / 1e6,
     uplink_throughput_mbps = d.uplink_throughput_bps and d.uplink_throughput_bps / 1e6,
     ping_latency_ms = d.latency_ms,
-    ping_drop_rate = d.ping_drop_rate and d.ping_drop_rate * 100,
+    ping_drop_rate = d.ping_drop_rate and d.ping_drop_rate * 100 or 0,
     azimuth_deg = d.azimuth_deg,
     elevation_deg = d.elevation_deg,
     fraction_obstructed = d.fraction_obstructed and d.fraction_obstructed * 100,
@@ -392,17 +410,21 @@ local function send_telemetry()
 end
 
 local function cmd_reboot(ctx, _args)
-  local _, err = grpc_request(REBOOT_REQUEST, 10)
+  local _, err = grpc_request(reboot_client, REBOOT_REQUEST)
   if err then
     ctx.error('Reboot failed: ' .. err)
   end
 end
 
 local function main()
+  status_client = http.client({ timeout = 5, http2 = true })
+  history_client = http.client({ timeout = 30, http2 = true })
+  reboot_client = http.client({ timeout = 10, http2 = true })
+
   enapter.register_command_handler('reboot', cmd_reboot)
 
   scheduler.add(1000, send_telemetry)
-  scheduler.add(30000, fetch_status)
+  scheduler.add(15000, fetch_status)
   scheduler.add(60000, fetch_history)
   scheduler.add(30000, send_properties)
 
