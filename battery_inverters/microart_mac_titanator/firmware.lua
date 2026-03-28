@@ -192,11 +192,8 @@ function send_telemetry()
 
   t.grid_voltage = num(map_data._UNET)
   -- Use precise current (_INET_16_4), fall back to coarse (_INET).
-  -- The MAP reports negative = consuming from grid, so negate to match intuitive convention.
-  local raw_grid_current = num(map_data._INET_16_4) or num(map_data._INET)
-  t.grid_current = raw_grid_current and -raw_grid_current or nil
-  local raw_grid_power = num(map_data._PNET_calc) or num(map_data._PNET)
-  t.grid_power = raw_grid_power and -raw_grid_power or nil
+  t.grid_current = num(map_data._INET_16_4) or num(map_data._INET)
+  t.grid_power = num(map_data._PNET_calc) or num(map_data._PNET)
   t.grid_frequency = num(map_data._TFNET)
 
   t.output_voltage = num(map_data._UOUTmed)
