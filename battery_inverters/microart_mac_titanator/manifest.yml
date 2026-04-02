@@ -31,6 +31,14 @@ properties:
   uid:
     type: string
     display_name: Device S/N
+  battery_capacity:
+    type: float
+    display_name: Battery Capacity
+    unit: Ah
+  battery_nominal_voltage:
+    type: float
+    display_name: Battery Nominal Voltage
+    unit: V
 
 telemetry:
   status:
@@ -246,6 +254,20 @@ commands:
         description: IP address of the МАП Титанатор (Малина gateway)
         type: string
         required: true
+      bat_capacity:
+        display_name: Battery Capacity
+        description: Total battery capacity in Ah
+        type: float
+        required: false
+      bat_voltage:
+        display_name: Battery Nominal Voltage
+        description: Nominal battery voltage
+        type: string
+        required: false
+        enum:
+          - "12"
+          - "24"
+          - "48"
 
   read_configuration:
     display_name: Read Configuration
