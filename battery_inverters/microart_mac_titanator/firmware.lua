@@ -5,6 +5,8 @@ local config = require('enapter.ucm.config')
 local json = require('json')
 
 local CONFIG_IP = 'ip_address'
+local CONFIG_BATTERY_CAPACITY = 'bat_capacity'
+local CONFIG_BATTERY_VOLTAGE = 'bat_voltage'
 local HTTP_TIMEOUT = 10
 
 -- Operating mode name lookup table
@@ -35,6 +37,8 @@ function main()
   -- read_configuration commands — do NOT define them manually.
   config.init({
     [CONFIG_IP] = { type = 'string', required = true },
+    [CONFIG_BATTERY_CAPACITY] = { type = 'number', required = false },
+    [CONFIG_BATTERY_VOLTAGE] = { type = 'string', required = false },
   })
 
   scheduler.add(30000, send_properties)
@@ -56,6 +60,17 @@ function send_properties()
   if map_data._UID then
     props.uid = tostring(map_data._UID)
   end
+
+  local values, err = config.read_all()
+  if not err and values then
+    if values[CONFIG_BATTERY_CAPACITY] then
+      props.battery_capacity = values[CONFIG_BATTERY_CAPACITY]
+    end
+    if values[CONFIG_BATTERY_VOLTAGE] then
+      props.battery_nominal_voltage = tonumber(values[CONFIG_BATTERY_VOLTAGE])
+    end
+  end
+
   enapter.send_properties(props)
 end
 
