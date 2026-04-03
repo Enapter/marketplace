@@ -297,3 +297,8 @@
   display_name: MicroArt
   icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/microart.png
   website: https://microart.ru
+
+- id: ubiquiti
+  display_name: Ubiquiti
+  icon_url: https://raw.githubusercontent.com/Enapter/marketplace/main/.marketplace/vendors/icons/ubiquiti.png
+  website: https://www.ui.com
