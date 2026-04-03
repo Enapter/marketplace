@@ -1,0 +1,158 @@
+blueprint_spec: device/1.0
+
+display_name: Ubiquiti UniFi Dream Machine
+description: >
+  Ubiquiti UniFi Dream Machine (UDM/UDM-Pro/UDM-SE) monitoring via the
+  UniFi Integration API with API Key authentication. Reports throughput,
+  connected clients, adopted devices, and system resource utilization.
+icon: enapter-router-wifi
+vendor: ubiquiti
+license: MIT
+author: enapter
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.3.2
+
+properties:
+  model:
+    display_name: Model
+    type: string
+  firmware_version:
+    display_name: Firmware Version
+    type: string
+  hostname:
+    display_name: Hostname
+    type: string
+
+telemetry:
+  status:
+    display_name: Status
+    type: string
+    enum:
+      - ok
+      - error
+      - unknown
+  wan_status:
+    display_name: WAN Status
+    type: string
+    enum:
+      - ok
+      - error
+      - unknown
+  wan_download_mbps:
+    display_name: WAN Download
+    type: float
+    unit: Mbps
+  wan_upload_mbps:
+    display_name: WAN Upload
+    type: float
+    unit: Mbps
+  lan_status:
+    display_name: LAN Status
+    type: string
+    enum:
+      - ok
+      - error
+      - unknown
+  wlan_status:
+    display_name: WLAN Status
+    type: string
+    enum:
+      - ok
+      - error
+      - unknown
+  num_devices:
+    display_name: Adopted Devices
+    type: integer
+  num_clients:
+    display_name: Total Clients
+    type: integer
+  num_lan_clients:
+    display_name: LAN Clients
+    type: integer
+  num_wlan_clients:
+    display_name: WLAN Clients
+    type: integer
+  uptime_s:
+    display_name: UDM Uptime
+    type: integer
+    unit: s
+  cpu_util:
+    display_name: CPU Utilization
+    type: float
+    unit: "%"
+  mem_util:
+    display_name: Memory Utilization
+    type: float
+    unit: "%"
+
+alerts:
+  no_data:
+    severity: error
+    display_name: No Data From UDM
+    description: >
+      Cannot reach the UniFi Dream Machine Integration API. Check that the
+      IP address, API key, and network connectivity are correct.
+  high_cpu:
+    severity: warning
+    display_name: High CPU Usage
+    description: UDM CPU utilization exceeds 90%.
+  high_memory:
+    severity: warning
+    display_name: High Memory Usage
+    description: UDM memory utilization exceeds 90%.
+
+command_groups:
+  config:
+    display_name: Configuration
+  info:
+    display_name: Information
+
+commands:
+  write_configuration:
+    populate_values_command: read_configuration
+    display_name: Main Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+    arguments:
+      ip_address:
+        display_name: UDM IP Address
+        description: IP address of the UniFi Dream Machine (e.g. 192.168.1.1)
+        type: string
+        required: true
+      api_key:
+        display_name: API Key
+        description: >
+          API key generated in UniFi OS Settings → Integrations.
+        type: string
+        required: true
+      site:
+        display_name: Site Name
+        description: >
+          UniFi site name. Leave empty for the default site.
+        type: string
+        required: false
+  read_configuration:
+    display_name: Read Configuration
+    group: info
+    ui:
+      icon: wrench-outline
+
+.cloud:
+  category: network_infrastructure
+  mobile_main_chart: num_clients
+  mobile_charts:
+    - num_clients
+    - num_devices
+    - wan_download_mbps
+    - wan_upload_mbps
+    - cpu_util
+    - mem_util

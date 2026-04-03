@@ -10,6 +10,19 @@
     - blueprint: network_infrastructure/starlink_gen4
       verification_level: verified
 
+- id: unifi-udm
+  display_name: UniFi Dream Machine
+  description: >
+    Ubiquiti UniFi Dream Machine (UDM/UDM-Pro/UDM-SE) monitoring via the
+    UniFi Integration API. Reports throughput, clients, devices, and system
+    resource utilization.
+  icon: enapter-router-wifi
+  vendor: ubiquiti
+  category: network_infrastructure
+  blueprint_options:
+    - blueprint: network_infrastructure/unifi_udm
+      verification_level: ready_for_testing
+
 - id: alarm-with-sonoff-433-rf-bridge
   display_name: Alarm sensor connected to Sonoff 433 RF Bridge
   description: Alarm sensor connected to Sonoff 433 RF Bridge via eWelink REST API Server.
