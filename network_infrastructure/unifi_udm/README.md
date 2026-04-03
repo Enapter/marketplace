@@ -52,12 +52,12 @@ network health, client counts, throughput, and system resource utilization.
 The blueprint authenticates using the `Authorization: Bearer <API_KEY>` header
 and polls the following Integration API endpoints every 15 seconds:
 
-| Endpoint | Data |
-|----------|------|
-| `GET /integration/v1/sites` | Resolve site name to UUID |
-| `GET /integration/v1/sites/{id}/devices` | Adopted device list, gateway identification |
-| `GET /integration/v1/sites/{id}/devices/{id}/statistics/latest` | CPU, memory, uptime, uplink throughput |
-| `GET /integration/v1/sites/{id}/clients` | Total, wired, and wireless client counts |
+| Endpoint                                                        | Data                                        |
+| --------------------------------------------------------------- | ------------------------------------------- |
+| `GET /integration/v1/sites`                                     | Resolve site name to UUID                   |
+| `GET /integration/v1/sites/{id}/devices`                        | Adopted device list, gateway identification |
+| `GET /integration/v1/sites/{id}/devices/{id}/statistics/latest` | CPU, memory, uptime, uplink throughput      |
+| `GET /integration/v1/sites/{id}/clients`                        | Total, wired, and wireless client counts    |
 
 ## References
 
