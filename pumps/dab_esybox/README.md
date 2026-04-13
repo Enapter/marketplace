@@ -1,5 +1,7 @@
 # DAB EsyBox Pump
 
+![DAB EsyBox Pump Enapter Dashboard](.assets/dab-esybox-pump-enapter-dashboard.png)
+
 This blueprint integrates with DAB EsyBox intelligent pump systems through the [DConnect](https://internetofpumps.com) cloud service, providing real-time telemetry and pump control.
 
 Beyond basic monitoring, it enables preventive diagnostics for cold and hot water systems. The built-in pressure alerts help identify:
