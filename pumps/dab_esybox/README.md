@@ -73,4 +73,5 @@ Control commands require a **Professional/Installer** role account in DConnect.
 ## Support
 
 For issues with:
-- **Enapter Blueprint:** Contact Enapter support at support@enapter.com
+
+- **Enapter Blueprint:** Contact Enapter support at <support@enapter.com>
