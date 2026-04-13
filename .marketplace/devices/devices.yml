@@ -1003,7 +1003,7 @@
   description: >
     DAB EsyBox intelligent pump system with real-time pressure, flow, energy
     monitoring, and pump control via the DConnect cloud API.
-  icon: water-drop
+  icon: water-pump
   vendor: dab
   category: pumps
   blueprint_options:

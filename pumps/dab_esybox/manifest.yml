@@ -2,7 +2,7 @@ blueprint_spec: device/1.0
 
 display_name: DAB EsyBox Pump
 description: Integration for DAB EsyBox intelligent pump system with pressure, flow, and energy monitoring
-icon: water-drop
+icon: water-pump
 vendor: dab
 author: enapter
 contributors:
