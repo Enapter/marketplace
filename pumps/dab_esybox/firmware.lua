@@ -404,7 +404,7 @@ function load_parameter_config(config_id)
 end
 
 -- Read device status from DConnect
-function read_device_status(serial, telemetry, alerts)
+function read_device_status(serial, telemetry, _alerts)
   local client = get_http_client()
 
   local request = http.request('GET', DCONNECT_BASE_URL .. '/dumstate/' .. serial)
@@ -627,7 +627,7 @@ function process_telemetry(telemetry, alerts)
 end
 
 -- Configuration command handlers
-function write_configuration(username, password, installation_id, device_serial, verbose_logging)
+function write_configuration(username, password, installation_id, device_serial, verbose_logging) -- luacheck: ignore
   -- Write required fields
   local ok1 = config.write(CONFIG_USERNAME, username)
   local ok2 = config.write(CONFIG_PASSWORD, password)
@@ -635,7 +635,6 @@ function write_configuration(username, password, installation_id, device_serial,
   -- Write optional fields
   local ok3 = true
   local ok4 = true
-  local ok5 = true
 
   if installation_id and installation_id ~= '' then
     ok3 = config.write(CONFIG_INSTALLATION_ID, installation_id)
@@ -646,7 +645,7 @@ function write_configuration(username, password, installation_id, device_serial,
   end
 
   -- Write verbose logging setting (default to false if nil)
-  ok5 = config.write(CONFIG_VERBOSE_LOGGING, verbose_logging or false)
+  local ok5 = config.write(CONFIG_VERBOSE_LOGGING, verbose_logging or false)
 
   local result = ok1 and ok2 and ok3 and ok4 and ok5
 
@@ -664,7 +663,7 @@ function write_configuration(username, password, installation_id, device_serial,
   return result
 end
 
-function read_configuration()
+function read_configuration() -- luacheck: ignore
   local values, err = config.read_all()
   if err then
     enapter.log('Cannot read configuration: ' .. err, 'error')
@@ -692,7 +691,7 @@ function set_device_param(param_name, param_value)
   end
 
   -- Ensure authentication
-  local auth_ok, auth_err = ensure_authenticated(values[CONFIG_USERNAME], values[CONFIG_PASSWORD])
+  local auth_ok = ensure_authenticated(values[CONFIG_USERNAME], values[CONFIG_PASSWORD])
   if not auth_ok then
     return nil, 'auth_failed'
   end
