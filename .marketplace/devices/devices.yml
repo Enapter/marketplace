@@ -997,3 +997,15 @@
   blueprint_options:
     - blueprint: climate_sensors/wiren_board_wb-m1w2_v.3
       verification_level: verified
+
+- id: dab-esybox
+  display_name: DAB EsyBox
+  description: >
+    DAB EsyBox intelligent pump system with real-time pressure, flow, energy
+    monitoring, and pump control via the DConnect cloud API.
+  icon: water-drop
+  vendor: dab
+  category: pumps
+  blueprint_options:
+    - blueprint: pumps/dab_esybox
+      verification_level: ready_for_testing

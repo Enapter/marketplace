@@ -1,0 +1,258 @@
+blueprint_spec: device/1.0
+
+display_name: DAB EsyBox Pump
+description: Integration for DAB EsyBox intelligent pump system with pressure, flow, and energy monitoring
+icon: water-drop
+vendor: dab
+author: enapter
+contributors:
+  - nkrasko
+support:
+  url: https://go.enapter.com/enapter-blueprint-support
+  email: support@enapter.com
+license: MIT
+
+communication_module:
+  product: ENP-VIRTUAL
+  lua:
+    file: firmware.lua
+    dependencies:
+      - enapter-ucm ~> 0.3.2
+
+properties:
+  vendor:
+    type: string
+    display_name: Vendor
+  model:
+    type: string
+    display_name: Model
+  serial_number:
+    type: string
+    display_name: Serial Number
+  firmware_version:
+    type: string
+    display_name: Firmware Version
+
+telemetry:
+  status:
+    type: string
+    display_name: Pump Status
+    enum:
+      - idle
+      - running
+      - alarm
+      - standby
+      - disabled
+      - error
+      - not_configured
+      - discoveryneeded
+
+  # Water Flow and Pressure
+  flow_rate:
+    type: float
+    display_name: Flow Rate
+    unit: l/min
+    description: Current water flow rate
+
+  total_flow:
+    type: float
+    display_name: Total Delivered Flow
+    unit: m³
+    description: Total accumulated water flow
+
+  pressure:
+    type: float
+    display_name: Current Pressure
+    unit: bar
+    description: Current water pressure
+
+  pressure_setpoint:
+    type: float
+    display_name: Pressure Setpoint
+    unit: bar
+    description: Target pressure setpoint
+
+  # Temperature
+  temperature:
+    type: float
+    display_name: Heatsink Temperature
+    unit: celsius
+    description: Pump heatsink temperature
+
+  water_temperature:
+    type: float
+    display_name: Water Temperature
+    unit: celsius
+    description: Water temperature
+
+  # Operating Hours and Counters
+  power_on_hours:
+    type: float
+    display_name: Power On Hours
+    unit: hours
+    description: Total hours the pump has been powered on
+
+  run_hours:
+    type: float
+    display_name: Run Hours
+    unit: hours
+    description: Total hours the pump has been running
+
+  start_count:
+    type: integer
+    display_name: Start Count
+    description: Total number of pump starts
+
+  # Power and Energy
+  power:
+    type: float
+    display_name: Power
+    unit: watt
+    description: Current power consumption
+
+  energy:
+    type: float
+    display_name: Energy Consumption
+    unit: kwh
+    description: Total energy consumed
+
+  # Operational State
+  pump_running:
+    type: boolean
+    display_name: Pump Running
+    description: Indicates if pump is currently running
+
+  alarm_active:
+    type: boolean
+    display_name: Alarm Active
+    description: Indicates if any alarm is active
+
+  system_status:
+    type: string
+    display_name: System Status
+    description: Detailed system status code
+
+alerts:
+  cannot_read_config:
+    severity: error
+    display_name: Cannot Read Configuration
+    description: Cannot read configuration from the Enapter Virtual UCM
+
+  not_configured:
+    severity: info
+    display_name: Not Configured
+    description: Use "Configure" command to setup DConnect credentials
+
+  auth_failed:
+    severity: error
+    display_name: Authentication Failed
+    description: Failed to authenticate with DConnect service. Check username and password.
+
+  config_load_failed:
+    severity: error
+    display_name: Configuration Load Failed
+    description: Failed to load device configuration from DConnect
+
+  no_connection:
+    severity: error
+    display_name: No Connection
+    description: Cannot connect to the DAB EsyBox pump via DConnect service
+
+  pump_alarm:
+    severity: error
+    display_name: Pump Alarm
+    description: The pump has an active alarm condition
+
+  high_temperature:
+    severity: error
+    display_name: High Temperature
+    description: Pump heatsink temperature is too high
+
+  low_pressure:
+    severity: error
+    display_name: Low Pressure
+    description: Water pressure is below minimum threshold
+
+  high_pressure:
+    severity: error
+    display_name: High Pressure
+    description: Water pressure is above maximum threshold
+
+commands:
+  read_configuration:
+    display_name: Read Configuration
+    group: config
+    ui:
+      icon: wrench-outline
+
+  write_configuration:
+    display_name: Configure
+    group: config
+    populate_values_command: read_configuration
+    ui:
+      icon: wrench-outline
+    arguments:
+      username:
+        display_name: Username (Email)
+        description: DConnect account email address
+        type: string
+        required: true
+      password:
+        display_name: Password
+        description: DConnect account password
+        type: string
+        required: true
+      installation_id:
+        display_name: Installation ID (optional)
+        description: DConnect installation ID (leave empty for auto-discovery)
+        type: string
+        required: false
+      device_serial:
+        display_name: Device Serial (optional)
+        description: EsyBox device serial number (leave empty for auto-discovery)
+        type: string
+        required: false
+      verbose_logging:
+        display_name: Enable Verbose Logging
+        description: Enable detailed logging for debugging (shows all decoded parameters and telemetry values)
+        type: boolean
+        required: false
+        default: false
+
+  start_pump:
+    display_name: Start Pump
+    group: control
+    ui:
+      icon: play
+
+  stop_pump:
+    display_name: Stop Pump
+    group: control
+    ui:
+      icon: stop
+
+command_groups:
+  config:
+    display_name: Configuration
+  control:
+    display_name: Pump Control
+
+.cloud:
+  category: pumps
+  mobile_main_chart: flow_rate
+  mobile_charts:
+    - status
+    - flow_rate
+    - pressure
+    - pressure_setpoint
+    - temperature
+    - water_temperature
+    - total_flow
+    - power
+    - energy
+    - power_on_hours
+    - run_hours
+    - start_count
+    - pump_running
+    - alarm_active
+  mobile_telemetry_timestamp: true
