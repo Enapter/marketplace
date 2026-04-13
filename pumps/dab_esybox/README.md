@@ -26,30 +26,30 @@ All telemetry is stored locally on the Enapter Gateway and synced to Enapter Clo
 
 ## Monitored Data
 
-| Telemetry | Description | Unit |
-|-----------|-------------|------|
-| Flow Rate | Current water flow rate | L/min |
-| Pressure | Current water pressure | bar |
-| Pressure Setpoint | Target pressure setpoint | bar |
-| Total Delivered Flow | Accumulated water flow | m3 |
-| Heatsink Temperature | Pump heatsink temperature | C |
-| Water Temperature | Water temperature | C |
-| Power | Current power consumption | W |
-| Energy Consumption | Total energy consumed | kWh |
-| Power On Hours | Total hours powered on | hours |
-| Run Hours | Total hours running | hours |
-| Start Count | Total number of pump starts | - |
-| Pump Running | Whether pump is currently running | boolean |
-| Alarm Active | Whether any alarm is active | boolean |
-| Status | Operating status (idle, running, alarm, standby, disabled) | - |
+| Telemetry            | Description                                                | Unit    |
+| -------------------- | ---------------------------------------------------------- | ------- |
+| Flow Rate            | Current water flow rate                                    | L/min   |
+| Pressure             | Current water pressure                                     | bar     |
+| Pressure Setpoint    | Target pressure setpoint                                   | bar     |
+| Total Delivered Flow | Accumulated water flow                                     | m3      |
+| Heatsink Temperature | Pump heatsink temperature                                  | C       |
+| Water Temperature    | Water temperature                                          | C       |
+| Power                | Current power consumption                                  | W       |
+| Energy Consumption   | Total energy consumed                                      | kWh     |
+| Power On Hours       | Total hours powered on                                     | hours   |
+| Run Hours            | Total hours running                                        | hours   |
+| Start Count          | Total number of pump starts                                | -       |
+| Pump Running         | Whether pump is currently running                          | boolean |
+| Alarm Active         | Whether any alarm is active                                | boolean |
+| Status               | Operating status (idle, running, alarm, standby, disabled) | -       |
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| Start Pump | Enable pump operation |
-| Stop Pump | Disable pump operation |
-| Configure | Set DConnect credentials and device selection |
+| Command    | Description                                   |
+| ---------- | --------------------------------------------- |
+| Start Pump | Enable pump operation                         |
+| Stop Pump  | Disable pump operation                        |
+| Configure  | Set DConnect credentials and device selection |
 
 Control commands require a **Professional/Installer** role account in DConnect.
 
