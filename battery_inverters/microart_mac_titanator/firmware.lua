@@ -42,9 +42,9 @@ function main()
   })
 
   scheduler.add(30000, send_properties)
-  scheduler.add(5000, poll_map)
-  scheduler.add(30000, poll_bat)
-  scheduler.add(5000, send_telemetry)
+  scheduler.add(1000, poll_map)
+  scheduler.add(1000, poll_bat)
+  scheduler.add(1000, send_telemetry)
 
   send_properties()
 end
