@@ -162,8 +162,10 @@ function send_telemetry()
   local status_ok = read_device_status(values[CONFIG_DEVICE_SERIAL], telemetry, alerts)
   if not status_ok then
     consecutive_failures = consecutive_failures + 1
-    enapter.log('Failed to read device status (failure ' ..
-      consecutive_failures .. '/' .. FAILURE_THRESHOLD .. ')', 'error')
+    enapter.log(
+      'Failed to read device status (failure ' .. consecutive_failures .. '/' .. FAILURE_THRESHOLD .. ')',
+      'error'
+    )
 
     -- Only report offline after threshold consecutive failures
     if consecutive_failures >= FAILURE_THRESHOLD then
@@ -451,7 +453,9 @@ function read_device_status(serial, telemetry, alerts)
 
   -- Log parameter map size
   local param_count = 0
-  for _ in pairs(param_map) do param_count = param_count + 1 end
+  for _ in pairs(param_map) do
+    param_count = param_count + 1
+  end
   enapter.log('Parameter map has ' .. tostring(param_count) .. ' entries', 'info')
 
   -- Decode status values using parameter map
@@ -462,7 +466,17 @@ function read_device_status(serial, telemetry, alerts)
       local decoded_value = decode_param_value(value, param)
       if decoded_value ~= nil then
         -- Log each decoded parameter (verbose only)
-        log_verbose('Decoded: ' .. key .. ' = ' .. tostring(value) .. ' -> ' .. tostring(decoded_value) .. ' (type: ' .. param.type .. ')')
+        log_verbose(
+          'Decoded: '
+            .. key
+            .. ' = '
+            .. tostring(value)
+            .. ' -> '
+            .. tostring(decoded_value)
+            .. ' (type: '
+            .. param.type
+            .. ')'
+        )
 
         -- Map to telemetry fields
         map_status_to_telemetry(key, decoded_value, telemetry)
@@ -556,7 +570,14 @@ function map_status_to_telemetry(key, value, telemetry)
     -- PumpStatus enum: 0=StandBy, 1=Go, 2=Fault, 3=Manual Disable, 4=Test:Go,
     -- 5=Test:StandBy, 6=Warning, 7=Not Configurated, 8-10=Function F1/F3/F4, 11=No State.
     -- Only 'Go' (1) and 'Test Mode: Go' (4) mean the pump is actually running.
-    telemetry.pump_running = (value == 'Go' or value == 'Test Mode: Go' or value == 1 or value == '1' or value == 4 or value == '4')
+    telemetry.pump_running = (
+      value == 'Go'
+      or value == 'Test Mode: Go'
+      or value == 1
+      or value == '1'
+      or value == 4
+      or value == '4'
+    )
     if value == 'Fault' or value == 2 or value == '2' then
       telemetry.alarm_active = true
     elseif value == 'Manual Disable' or value == 3 or value == '3' then
