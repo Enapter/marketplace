@@ -112,6 +112,7 @@ function parse_metrics1(telemetry, data)
   local base = 500
   telemetry.grid_status = get_grid_status(data, base)
   telemetry.status = get_device_status(data, base)
+  telemetry.inverter_status = to_inverter_status(telemetry.status)
   telemetry.alerts = get_alerts(data, base)
   -- XXX: check again on low/high word registers
   telemetry.internal_temperature = data[540 - base + 1] * 0.1 - 100
@@ -122,6 +123,7 @@ function parse_metrics1(telemetry, data)
   telemetry.battery_soc = data[588 - base + 1]
   telemetry.battery_power = s16(data[590 - base + 1])
   telemetry.battery_current = s16(data[591 - base + 1]) * 0.01
+  telemetry.battery_charge_status = to_battery_charge_status(telemetry.battery_power)
 
   telemetry.battery_charged_energy_total = ((data[517 - base + 1] << 16) + data[516 - base + 1]) * 0.1 * 1000
   telemetry.battery_discharged_energy_total = ((data[519 - base + 1] << 16) + data[518 - base + 1]) * 0.1 * 1000
@@ -212,6 +214,38 @@ function get_device_status(data, base)
   elseif run_state == 5 then
     -- 0005  激活中
     return 'starting'
+  end
+end
+
+function to_battery_charge_status(power)
+  if not power then
+    return
+  end
+
+  if power > 0 then
+    return 'charging'
+  elseif power < 0 then
+    return 'discharging'
+  else
+    return 'idle'
+  end
+end
+
+function to_inverter_status(value)
+  if not value then
+    return
+  end
+
+  if value == 'standby' then
+    return 'standby'
+  elseif value == 'starting' then
+    return 'starting'
+  elseif value == 'operating' then
+    return 'operating'
+  elseif value == 'fault' then
+    return 'fault'
+  else
+    enapter.log('unmapped vendor status: ' .. tostring(value), 'warn')
   end
 end
 

@@ -46,6 +46,8 @@ The blueprint is an entity containing all aspects pertaining to device integrati
 - [`manifest.yml`](https://developers.enapter.com/docs/reference) describes your device interfaces (telemetry it sends, commands it executes, alerts it raises);
 - `firmware.lua` implements these interfaces for the specific piece of hardware using the [Lua](https://www.lua.org) programming language and high-level platform APIs.
 
+Blueprints can implement [profiles](https://github.com/Enapter/profiles) — standardized interfaces that define common telemetry, properties, and commands for specific device categories (e.g. battery inverters, PV inverters). When a blueprint declares a profile in its `implements` section, it must provide all telemetry defined by that profile with matching types and enum values.
+
 There are two types of hardware that can run your blueprint:
 
 - a physical [Enapter UCM](https://handbook.enapter.com/modules/modules.html) that implements communication through [RS-485](https://handbook.enapter.com/modules/ENP-RS485/ENP-RS485.html), [CAN](https://handbook.enapter.com/modules/ENP-CAN/ENP-CAN.html), your own hardware based on [UCM Kit](https://go.enapter.com/ucmkit-enpkit) and other standards,
