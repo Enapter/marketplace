@@ -1,0 +1,6 @@
+*
+!src/
+!manifest.yml
+!*.lua
+!*.json
+!*.rockspec

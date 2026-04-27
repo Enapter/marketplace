@@ -1,0 +1,6 @@
+*
+!mpp_solar_fw/
+!manifest.yml
+!*.lua
+!*.json
+!*.rockspec
