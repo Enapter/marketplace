@@ -68,7 +68,6 @@ telemetry:
     display_name: Is On Battery
     description: True when the inverter is running on battery (Mode "On Battery"), false otherwise.
 
-
   # Battery
   battery_voltage:
     type: float
