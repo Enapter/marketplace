@@ -172,13 +172,13 @@ end
 function send_telemetry()
   -- Not configured
   if map_error == 'not_configured' then
-    enapter.send_telemetry({ status = 'Not Configured', alerts = { 'not_configured' } })
+    enapter.send_telemetry({ status = 'Not Configured', alerts = { 'not_configured' }, is_on_battery = false })
     return
   end
 
   -- Connection failed and we have no cached data yet
   if map_error == 'http_error' and next(map_data) == nil then
-    enapter.send_telemetry({ status = 'Error', alerts = { 'http_error' } })
+    enapter.send_telemetry({ status = 'Error', alerts = { 'http_error' }, is_on_battery = false })
     return
   end
 
@@ -189,6 +189,7 @@ function send_telemetry()
   if mode_num then
     t.status = MODE_NAMES[mode_num] or ('mode_' .. tostring(mode_num))
   end
+  t.is_on_battery = mode_num == 2
 
   t.battery_voltage = num(map_data._Uacc)
   -- Use precise current value (_IAcc_med_A_u16), fall back to coarse (_Iacc)
