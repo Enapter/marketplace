@@ -73,12 +73,12 @@ function send_realtime_telemetry()
   end
 
   local started = os.clock()
-  local operating_status = parse_operating_status(conn:read_u32_enum(40029))
+  local vendor_status = parse_vendor_status(conn:read_u32_enum(40029))
   local telemetry = {
     alerts = parse_alerts(conn:read_u32_enum(30213), conn:read_u32_enum(30247)),
     health = parse_health_status(conn:read_u32_enum(30201)),
-    operating_status = operating_status,
-    status = convert_operating_status_to_status(operating_status),
+    status = vendor_status,
+    inverter_status = to_inverter_status(vendor_status),
 
     dc_voltage = conn:read_s32_fix2(30771),
     dc_power = conn:read_s32_fix0(30773),
@@ -329,7 +329,7 @@ function parse_grid_relay_closed(value)
   end
 end
 
-function parse_operating_status(value)
+function parse_vendor_status(value)
   if not value then
     return
   end
@@ -363,28 +363,32 @@ function parse_operating_status(value)
   elseif value == 569 then
     return 'operating'
   else
-    enapter.log('Cannot decode operating status: ' .. tostring(value), 'error')
+    enapter.log('Cannot decode operation status: ' .. tostring(value), 'error')
     return tostring(value)
   end
 end
 
-function convert_operating_status_to_status(value)
+function to_inverter_status(value)
   if not value then
     return
   end
 
   if value == 'off' or value == 'stop' then
-    return 'off'
+    return 'idle'
   elseif value == 'standby' or value == 'waiting_pv_voltage' or value == 'waiting_utilities' or value == 'bolted' then
     return 'standby'
-  elseif value == 'start' then
+  elseif value == 'starting' then
     return 'starting'
-  elseif value == 'derating' or value == 'mpp' or value == 'run' then
+  elseif value == 'operating' or value == 'mpp' or value == 'const_voltage' then
     return 'operating'
-  elseif value == 'shutdown' then
-    return 'shutting_down'
+  elseif value == 'derating' then
+    return 'throttled'
+  elseif value == 'shutting_down' then
+    return 'stopping'
   elseif value == 'fault' then
     return 'fault'
+  else
+    enapter.log('unmapped vendor status: ' .. tostring(value), 'warn')
   end
 end
 

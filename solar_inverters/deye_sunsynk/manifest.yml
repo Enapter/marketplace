@@ -109,10 +109,15 @@ properties:
       other:
         display_name: Other
         description: Other battery type, not covered by the standard types
+  battery_nominal_voltage:
+    display_name: Battery Nominal Voltage
+    description: Nominal DC bus voltage of the battery system.
+    type: float
+    unit: V
   battery_nameplate_capacity:
     display_name: Battery Nameplate Capacity
     description: Nameplate energy capacity of connected batteries according to manufacturer specifications
-    type: float
+    type: integer
     unit: Wh
 
   parallel_enabled:
@@ -130,24 +135,71 @@ telemetry:
     display_name: Status
     type: string
     enum:
-      "off":
-        display_name: "Off"
-        description: Inverter is switched off
+      - standby
+      - operating
+      - fault
+      - starting
+  inverter_status:
+    display_name: Inverter Status
+    type: string
+    description: Current operational status of the inverter.
+    enum:
+      idle:
+        display_name: Idle
+        description: >
+          Inverter is powered and ready to operate but is not converting power.
+          It will not start until commanded by a user or a rule.
       standby:
         display_name: Standby
-        description: Inverter is in standby mode waiting for startup conditions
+        description: >
+          Inverter is not converting power but will autonomously resume
+          operation when conditions are met. No command is required.
       starting:
         display_name: Starting
-        description: Inverter is going through startup procedure
+        description: >
+          Inverter is executing its startup sequence.
       operating:
         display_name: Operating
-        description: Inverter is actively producing power
-      shutting_down:
-        display_name: Shutting Down
-        description: Inverter is going through shutdown procedure
+        description: >
+          Inverter is actively converting power at its operating setpoint.
+      throttled:
+        display_name: Throttled
+        description: >
+          Inverter is operating at reduced power output due to an external
+          constraint or internal condition.
+      stopping:
+        display_name: Stopping
+        description: >
+          Inverter is executing a controlled stop sequence.
       fault:
         display_name: Fault
-        description: Inverter has detected a fault and is not operating
+        description: >
+          Inverter has detected a condition that prevents normal operation.
+          Operator attention is required before the device can resume.
+      maintenance:
+        display_name: Maintenance
+        description: >
+          Inverter is in a maintenance or configuration mode.
+
+  battery_charge_status:
+    display_name: Battery Charge Status
+    type: string
+    description: Current charge direction or mode of the battery.
+    enum:
+      idle:
+        display_name: Idle
+        description: Battery is not charging or discharging.
+      charging:
+        display_name: Charging
+        description: Battery is actively absorbing energy.
+      discharging:
+        display_name: Discharging
+        description: Battery is actively delivering energy.
+      float:
+        display_name: Float
+        description: >
+          Battery is fully charged and receiving trickle current to
+          maintain full state of charge.
 
   ac_frequency:
     display_name: AC Frequency

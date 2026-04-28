@@ -76,37 +76,62 @@ telemetry:
   status:
     display_name: Status
     type: string
-    description: Current operational status of the inverter
     enum:
-      "off":
-        display_name: "Off"
-        color: purple-lighter
-        description: Inverter is switched off
+      - standby
+      - fault
+      - waiting_pv_voltage
+      - starting
+      - shutting_down
+      - waiting_utilities
+      - bolted
+      - standalone
+      - derating
+      - mpp
+      - "off"
+      - stop
+      - const_voltage
+      - operating
+  inverter_status:
+    display_name: Inverter Status
+    type: string
+    description: Current operational status of the inverter.
+    enum:
+      idle:
+        display_name: Idle
+        description: >
+          Inverter is powered and ready to operate but is not converting power.
+          It will not start until commanded by a user or a rule.
       standby:
         display_name: Standby
-        color: blue
-        description: |
-          Inverter is in standby mode waiting for startup conditions.
-          Examples:
-          - AC grid voltage unavailable for grid-tied inverters
-          - DC voltage too low (night time for PV inverters)
-          - External control signal forcing standby
+        description: >
+          Inverter is not converting power but will autonomously resume
+          operation when conditions are met. No command is required.
       starting:
         display_name: Starting
-        color: pink-light
-        description: Inverter is going through startup procedure
+        description: >
+          Inverter is executing its startup sequence.
       operating:
         display_name: Operating
-        color: cyan
-        description: Inverter is actively producing power
-      shutting_down:
-        display_name: Shutting Down
-        color: pink-light
-        description: Inverter is going through shutdown procedure
+        description: >
+          Inverter is actively converting power at its operating setpoint.
+      throttled:
+        display_name: Throttled
+        description: >
+          Inverter is operating at reduced power output due to an external
+          constraint or internal condition.
+      stopping:
+        display_name: Stopping
+        description: >
+          Inverter is executing a controlled stop sequence.
       fault:
         display_name: Fault
-        color: red
-        description: Inverter has detected a fault and is not operating
+        description: >
+          Inverter has detected a condition that prevents normal operation.
+          Operator attention is required before the device can resume.
+      maintenance:
+        display_name: Maintenance
+        description: >
+          Inverter is in a maintenance or configuration mode.
   health:
     display_name: Health Status
     type: string
@@ -114,22 +139,6 @@ telemetry:
       - ok
       - warning
       - fault
-  operating_status:
-    display_name: Operating Status
-    type: string
-    enum:
-      - standby
-      - fault
-      - waiting_pv_voltage
-      - start
-      - shutdown
-      - waiting_utilities
-      - bolted
-      - derating
-      - mpp
-      - "off"
-      - stop
-      - run
   recom_action:
     display_name: Recommended Action
     type: string
@@ -205,6 +214,7 @@ telemetry:
   ac_cos_phi:
     display_name: AC Power Factor
     type: float
+    unit: "1"
     implements:
       - lib.energy.power_quality.power_factor.1_phase.ac_l1_power_factor
       - lib.energy.power_quality.power_factor.totals.ac_power_factor

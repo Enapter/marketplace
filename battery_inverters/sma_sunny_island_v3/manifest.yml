@@ -73,9 +73,14 @@ properties:
       - flow
       - sodium_based
       - other
+  battery_nominal_voltage:
+    display_name: Battery Nominal Voltage
+    description: Nominal DC bus voltage of the battery system.
+    type: float
+    unit: V
   battery_nameplate_capacity:
     display_name: Battery Nameplate Capacity
-    type: float
+    type: integer
     unit: Wh
   country_code:
     display_name: Country Code
@@ -90,43 +95,6 @@ properties:
 telemetry:
   status:
     display_name: Status
-    type: string
-    description: Current operational status of the inverter
-    enum:
-      "off":
-        display_name: "Off"
-        color: purple-lighter
-        description: Inverter is switched off
-      standby:
-        display_name: Standby
-        color: blue
-        description: >
-          Inverter is in standby mode waiting for startup conditions.
-      starting:
-        display_name: Starting
-        color: pink-light
-        description: Inverter is going through startup procedure
-      operating:
-        display_name: Operating
-        color: cyan
-        description: Inverter is actively operating
-      shutting_down:
-        display_name: Shutting Down
-        color: pink-light
-        description: Inverter is going through shutdown procedure
-      fault:
-        display_name: Fault
-        color: red
-        description: Inverter has detected a fault and is not operating
-  health:
-    display_name: Health Status
-    type: string
-    enum:
-      - ok
-      - warning
-      - fault
-  operating_status:
-    display_name: Operating Status
     type: string
     enum:
       - standby
@@ -144,6 +112,75 @@ telemetry:
       - const_voltage
       - warning
       - run
+  inverter_status:
+    display_name: Inverter Status
+    type: string
+    description: Current operational status of the inverter.
+    enum:
+      idle:
+        display_name: Idle
+        description: >
+          Inverter is powered and ready to operate but is not converting power.
+          It will not start until commanded by a user or a rule.
+      standby:
+        display_name: Standby
+        description: >
+          Inverter is not converting power but will autonomously resume
+          operation when conditions are met. No command is required.
+      starting:
+        display_name: Starting
+        description: >
+          Inverter is executing its startup sequence.
+      operating:
+        display_name: Operating
+        description: >
+          Inverter is actively converting power at its operating setpoint.
+      throttled:
+        display_name: Throttled
+        description: >
+          Inverter is operating at reduced power output due to an external
+          constraint or internal condition.
+      stopping:
+        display_name: Stopping
+        description: >
+          Inverter is executing a controlled stop sequence.
+      fault:
+        display_name: Fault
+        description: >
+          Inverter has detected a condition that prevents normal operation.
+          Operator attention is required before the device can resume.
+      maintenance:
+        display_name: Maintenance
+        description: >
+          Inverter is in a maintenance or configuration mode.
+  battery_charge_status:
+    display_name: Battery Charge Status
+    type: string
+    description: Current charge direction or mode of the battery.
+    implements:
+      - lib.energy.battery.charge_status.battery_charge_status
+    enum:
+      idle:
+        display_name: Idle
+        description: Battery is not charging or discharging.
+      charging:
+        display_name: Charging
+        description: Battery is actively absorbing energy.
+      discharging:
+        display_name: Discharging
+        description: Battery is actively delivering energy.
+      float:
+        display_name: Float
+        description: >
+          Battery is fully charged and receiving trickle current to
+          maintain full state of charge.
+  health:
+    display_name: Health Status
+    type: string
+    enum:
+      - ok
+      - warning
+      - fault
   recom_action:
     display_name: Recommended Action
     type: string
@@ -251,10 +288,11 @@ telemetry:
   ac_power_factor:
     display_name: AC Power Factor
     type: float
+    unit: "1"
   residual_current:
     display_name: Residual Current
     type: float
-    unit: A
+    unit: mA
     implements: lib.energy.inverter.residual_current.inverter_residual_current
   internal_temperature:
     display_name: Internal Temperature

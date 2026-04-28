@@ -87,9 +87,9 @@ function send_realtime_telemetry()
   local started = os.clock()
   local telemetry = {}
 
-  local operating_status = reader:read_u32_enum(40029)
-  telemetry.operating_status = parse_operating_status(operating_status)
-  telemetry.status = convert_operating_status_to_status(operating_status)
+  local vendor_status = reader:read_u32_enum(40029)
+  telemetry.status = parse_vendor_status(vendor_status)
+  telemetry.inverter_status = to_inverter_status(telemetry.status)
   telemetry.alerts = parse_alerts(reader:read_u32_enum(30213), reader:read_u32_enum(30247))
   telemetry.ac_frequency = reader:read_u32_enum(30803)
 
@@ -182,7 +182,7 @@ function send_detailed_telemetry()
   telemetry.ac_l3_current = reader:parse_s32_fix3(results.get(6), 31439 - base + 1)
 
   base = 31247
-  telemetry.residual_current = reader:parse_s32_fix3(results.get(7), 31247 - base + 1)
+  telemetry.residual_current = reader:parse_s32_fix3(results.get(7), 31247 - base + 1) * 1000
 
   base = 34109
   telemetry.heatsink_temperature = reader:parse_s32_fix1(results.get(8), 34109 - base + 1)
@@ -327,7 +327,7 @@ function parse_grid_relay_closed(value)
   end
 end
 
-function parse_operating_status(value)
+function parse_vendor_status(value)
   if not value then
     return
   end
@@ -368,23 +368,27 @@ function parse_operating_status(value)
   end
 end
 
-function convert_operating_status_to_status(value)
+function to_inverter_status(value)
   if not value then
     return
   end
 
   if value == 'off' or value == 'stop' then
-    return 'off'
+    return 'idle'
   elseif value == 'standby' or value == 'waiting_pv_voltage' or value == 'waiting_utilities' or value == 'bolted' then
     return 'standby'
-  elseif value == 'start' then
+  elseif value == 'starting' then
     return 'starting'
-  elseif value == 'derating' or value == 'mpp' or value == 'run' then
+  elseif value == 'operating' or value == 'mpp' or value == 'const_voltage' or value == 'warning' then
     return 'operating'
-  elseif value == 'shutdown' then
-    return 'shutting_down'
+  elseif value == 'derating' then
+    return 'throttled'
+  elseif value == 'shutting_down' then
+    return 'stopping'
   elseif value == 'fault' then
     return 'fault'
+  else
+    enapter.log('unmapped vendor status: ' .. tostring(value), 'warn')
   end
 end
 

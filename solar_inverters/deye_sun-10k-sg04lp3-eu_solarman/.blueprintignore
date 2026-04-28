@@ -1,0 +1,6 @@
+*
+!fw/
+!manifest.yml
+!*.lua
+!*.json
+!*.rockspec

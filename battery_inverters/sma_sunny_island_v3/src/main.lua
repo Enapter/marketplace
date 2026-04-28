@@ -55,7 +55,8 @@ function send_properties()
   properties.inverter_nameplate_capacity = 8000
   properties.grid_mode = 'off_grid'
   properties.battery_type = parse_battery_type(conn:read_u32_enum(40035))
-  properties.battery_nameplate_capacity = (conn:read_u32_fix0(40031) or 0) * 48
+  properties.battery_nominal_voltage = 48
+  properties.battery_nameplate_capacity = (conn:read_u32_fix0(40031) or 0) * properties.battery_nominal_voltage
   properties.country_code = parse_country_code(conn:read_u32_fix0(40109))
   if conn_cfg then
     properties.address = conn_cfg.address
@@ -87,9 +88,10 @@ function send_realtime_telemetry()
   local telemetry = {
     alerts = parse_alerts(conn:read_u32_enum(30213), conn:read_u32_enum(30247)),
     health = parse_health_status(conn:read_u32_enum(30201)),
-    status = convert_operating_status_to_status(operating_status),
-    operating_status = operating_status,
+    status = operating_status,
+    inverter_status = to_inverter_status(operating_status),
 
+    battery_charge_status = to_battery_charge_status(battery_current),
     battery_soc = conn:read_u32_fix0(30845),
     battery_soh = conn:read_u32_fix0(30847),
     battery_voltage = battery_voltage,
@@ -134,7 +136,7 @@ function send_detailed_telemetry()
     ac_power_apparent = conn:read_s32_fix0(30813),
     ac_power_factor = conn:read_u32_fix3(30949),
 
-    residual_current = conn:read_s32_fix3(31247),
+    residual_current = (conn:read_s32_fix3(31247) or 0) * 1000,
     internal_temperature = conn:read_s32_fix1(34113),
 
     load_power = conn:read_s32_fix0(30861),
@@ -239,30 +241,41 @@ function parse_operating_status(value)
   return tostring(value)
 end
 
-function convert_operating_status_to_status(value)
+function to_inverter_status(value)
   if not value then
     return
   end
 
   if value == 'off' or value == 'stop' then
-    return 'off'
+    return 'idle'
   elseif value == 'standby' or value == 'waiting_pv_voltage' or value == 'waiting_utilities' or value == 'bolted' then
     return 'standby'
   elseif value == 'start' then
     return 'starting'
-  elseif
-    value == 'derating'
-    or value == 'mpp'
-    or value == 'run'
-    or value == 'standalone'
-    or value == 'const_voltage'
-    or value == 'warning'
-  then
+  elseif value == 'run' or value == 'mpp' or value == 'const_voltage' or value == 'warning' then
     return 'operating'
+  elseif value == 'derating' then
+    return 'throttled'
   elseif value == 'shutdown' then
-    return 'shutting_down'
+    return 'stopping'
   elseif value == 'fault' then
     return 'fault'
+  else
+    enapter.log('unmapped vendor status: ' .. tostring(value), 'warn')
+  end
+end
+
+function to_battery_charge_status(current)
+  if not current then
+    return
+  end
+
+  if current > 0 then
+    return 'charging'
+  elseif current < 0 then
+    return 'discharging'
+  else
+    return 'idle'
   end
 end
 

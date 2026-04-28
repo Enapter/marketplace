@@ -21,6 +21,7 @@ implements:
   - lib.energy.inverter.ac.energy.today
   - lib.energy.inverter.ac.energy.total
   - lib.energy.inverter.residual_current
+  - lib.energy.inverter.status
   - lib.energy.pv.throttling
   - lib.energy.inverter.temperature
 
@@ -81,39 +82,6 @@ telemetry:
     display_name: Status
     type: string
     enum:
-      "off":
-        display_name: "Off"
-        color: purple-lighter
-        description: Inverter is switched off
-      standby:
-        display_name: Standby
-        color: blue
-        description: |
-          Inverter is in standby mode waiting for startup conditions.
-          Examples:
-          - AC grid voltage unavailable for grid-tied inverters
-          - DC voltage too low (night time for PV inverters)
-          - External control signal forcing standby
-      starting:
-        display_name: Starting
-        color: pink-light
-        description: Inverter is going through startup procedure
-      operating:
-        display_name: Operating
-        color: cyan
-        description: Inverter is actively producing power
-      shutting_down:
-        display_name: Shutting Down
-        color: pink-light
-        description: Inverter is going through shutdown procedure
-      fault:
-        display_name: Fault
-        color: red
-        description: Inverter has detected a fault and is not operating
-  operating_status:
-    display_name: Operating Status
-    type: string
-    enum:
       - standby
       - fault
       - waiting_pv_voltage
@@ -129,6 +97,47 @@ telemetry:
       - const_voltage
       - warning
       - operating
+  inverter_status:
+    display_name: Inverter Status
+    type: string
+    description: Current operational status of the inverter.
+    enum:
+      idle:
+        display_name: Idle
+        description: >
+          Inverter is powered and ready to operate but is not converting power.
+          It will not start until commanded by a user or a rule.
+      standby:
+        display_name: Standby
+        description: >
+          Inverter is not converting power but will autonomously resume
+          operation when conditions are met. No command is required.
+      starting:
+        display_name: Starting
+        description: >
+          Inverter is executing its startup sequence.
+      operating:
+        display_name: Operating
+        description: >
+          Inverter is actively converting power at its operating setpoint.
+      throttled:
+        display_name: Throttled
+        description: >
+          Inverter is operating at reduced power output due to an external
+          constraint or internal condition.
+      stopping:
+        display_name: Stopping
+        description: >
+          Inverter is executing a controlled stop sequence.
+      fault:
+        display_name: Fault
+        description: >
+          Inverter has detected a condition that prevents normal operation.
+          Operator attention is required before the device can resume.
+      maintenance:
+        display_name: Maintenance
+        description: >
+          Inverter is in a maintenance or configuration mode.
   pv_throttled:
     display_name: PV Throttled
     type: boolean
@@ -193,6 +202,7 @@ telemetry:
   ac_cos_phi:
     display_name: AC Power Factor
     type: float
+    unit: "1"
     implements:
       - lib.energy.power_quality.power_factor.totals.ac_power_factor
 
@@ -271,17 +281,22 @@ telemetry:
   ac_l1_power_factor:
     display_name: AC Phase 1 Power Factor
     type: float
+    unit: "1"
   ac_l2_power_factor:
     display_name: AC Phase 2 Power Factor
     type: float
+    unit: "1"
   ac_l3_power_factor:
     display_name: AC Phase 3 Power Factor
     type: float
+    unit: "1"
 
   residual_current:
     display_name: Residual Amperage
     type: float
-    unit: A
+    unit: mA
+    implements:
+      - lib.energy.inverter.residual_current.inverter_residual_current
   heatsink_temperature:
     display_name: Heatsink Temperature
     type: float

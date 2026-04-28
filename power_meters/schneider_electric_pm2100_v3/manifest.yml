@@ -65,6 +65,7 @@ telemetry:
     type: float
     unit: Wh
     display_name: Active Energy Consumed by Loads
+    implements: energy.power_meter.ac.3_phase.energy_lifetime
   total_power:
     type: float
     unit: W
